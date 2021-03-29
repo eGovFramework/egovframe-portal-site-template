@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FaqManageDAO">
+
+
+	<resultMap id="FaqManage" type="egovframework.let.uss.olh.faq.service.FaqManageVO">
+		<result property="faqId" column="FAQ_ID"/>
+		<result property="qestnSj" column="QESTN_SJ"/>
+		<result property="qestnCn" column="QESTN_CN"/>
+		<result property="answerCn" column="ANSWER_CN"/>
+		<result property="inqireCo" column="RDCNT"/>
+		<result property="atchFileId" column="ATCH_FILE_ID"/>		
+		<result property="frstRegisterPnttm" column="FRST_REGIST_PNTTM"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDT_PNTTM"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID"/>				
+	</resultMap>
+	
+	<select id="selectFaqListDetail" resultMap="FaqManage">
+				
+			SELECT 	FAQ_ID, QESTN_SJ, QESTN_CN, ANSWER_CN, RDCNT, ATCH_FILE_ID,
+					TO_CHAR(FRST_REGIST_PNTTM,'YYYY-MM-DD') FRST_REGIST_PNTTM   , FRST_REGISTER_ID, 
+					TO_CHAR(LAST_UPDT_PNTTM,'YYYY-MM-DD')   LAST_UPDT_PNTTM	    , LAST_UPDUSR_ID			 			  			 			  
+			FROM	LETTNFAQINFO				
+			WHERE	FAQ_ID=#{faqId}					
+		
+	</select>
+	
+	<select id="selectFaqList" parameterType="egovframework.let.uss.olh.faq.service.FaqManageDefaultVO" resultType="egovMap">
+		
+			SELECT FAQ_ID, QESTN_SJ, QESTN_CN, ANSWER_CN, RDCNT AS INQIRE_CO, ATCH_FILE_ID,  
+				   FRST_REGIST_PNTTM	  , FRST_REGISTER_ID, 
+				   LAST_UPDT_PNTTM	  , LAST_UPDUSR_ID		
+			FROM
+				   (
+				   SELECT  ROWNUM RNUM,FAQ.*
+				   FROM
+				   	   	  (
+						  SELECT  FAQ_ID, QESTN_SJ, QESTN_CN, ANSWER_CN, RDCNT, ATCH_FILE_ID,  
+						  		  FRST_REGIST_PNTTM	  , FRST_REGISTER_ID, 
+								  LAST_UPDT_PNTTM	  , LAST_UPDUSR_ID			 
+						   FROM	  LETTNFAQINFO
+						   WHERE   1=1   			
+							
+			<if test="searchCondition == &quot;qestnSj&quot;">AND
+				QESTN_SJ LIKE '%' || #{searchKeyword} || '%'
+			</if>
+					
+						  ORDER BY FAQ_ID DESC								   
+						  ) FAQ
+				   ) Z
+			WHERE ROWNUM &lt;= #{recordCountPerPage} and RNUM &gt; #{firstIndex}						
+					
+	</select>
+	
+	<select id="selectFaqListTotCnt" parameterType="egovframework.let.uss.olh.faq.service.FaqManageDefaultVO" resultType="int">
+		
+			SELECT 	COUNT(*) totcnt
+			FROM 	LETTNFAQINFO
+			WHERE 	1=1
+					
+			<if test="searchCondition == &quot;qestnSj&quot;">AND
+				QESTN_SJ LIKE '%' || #{searchKeyword} || '%'
+			</if>
+	</select>
+	
+	<insert id="insertFaqCn">	
+			
+			INSERT INTO LETTNFAQINFO
+				   (FAQ_ID
+				  , QESTN_SJ
+				  , QESTN_CN
+				  , ANSWER_CN
+				  , RDCNT
+				  , ATCH_FILE_ID
+				  , FRST_REGIST_PNTTM 
+				  , FRST_REGISTER_ID 
+				  , LAST_UPDT_PNTTM 
+				  , LAST_UPDUSR_ID) 
+			VALUES ( #{faqId}
+				  , #{qestnSj}
+				  , #{qestnCn}
+				  , #{answerCn}
+				  , 0
+				  , #{atchFileId}
+				  , SYSDATETIME
+				  , #{frstRegisterId}
+				  , SYSDATETIME
+				  , #{lastUpdusrId} )
+		
+	</insert>
+	
+	<update id="updateFaqInqireCo">
+				
+			UPDATE	LETTNFAQINFO	SET
+				    RDCNT= NVL(RDCNT,0) + 1				  			
+				  , LAST_UPDT_PNTTM=SYSDATETIME
+				  , LAST_UPDUSR_ID=#{lastUpdusrId}
+ 			WHERE  FAQ_ID=#{faqId}
+		
+	</update>
+
+	<update id="updateFaqCn">
+		
+			UPDATE	LETTNFAQINFO	SET
+					FAQ_ID=#{faqId} 
+				  , QESTN_SJ=#{qestnSj}
+				  , QESTN_CN=#{qestnCn}
+				  , ANSWER_CN=#{answerCn}
+				  , ATCH_FILE_ID=#{atchFileId}				  			
+				  , LAST_UPDT_PNTTM=SYSDATETIME
+				  , LAST_UPDUSR_ID=#{lastUpdusrId}
+ 			WHERE  FAQ_ID=#{faqId}
+		
+	</update>
+	
+	<delete id="deleteFaqCn">
+		
+			DELETE FROM LETTNFAQINFO 
+			WHERE  FAQ_ID=#{faqId}
+		
+	</delete>
+	
+</mapper>

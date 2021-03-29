@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="menuManageDAO">
+
+	
+	<select id="selectMainMenuHead" parameterType="egovframework.let.sym.mnu.mpm.service.MenuManageVO" resultType="egovMap">
+		 
+            SELECT
+			      B.MENU_NO           AS "menuNo"
+				, B.MENU_ORDR         AS "menuOrdr"
+				, B.MENU_NM           AS "menuNm"
+				, B.UPPER_MENU_NO     AS "upperMenuId"
+				, B.MENU_DC           AS "menuDc"
+				, B.RELATE_IMAGE_PATH AS "relateImagePath"
+				, B.RELATE_IMAGE_NM   AS "relateImageNm"
+				, B.PROGRM_FILE_NM    AS "progrmFileNm"
+				, (SELECT C.URL FROM LETTNPROGRMLIST C WHERE B.PROGRM_FILE_NM = C.PROGRM_FILE_NM) AS "chkURL"
+			FROM LETTNMENUCREATDTLS A, LETTNMENUINFO B 
+			WHERE  B.Menu_NO &gt; 0 
+			AND    B.UPPER_MENU_NO = 0  
+			AND    A.MENU_NO  = B.MENU_NO 
+			AND    A.AUTHOR_CODE = (SELECT C.AUTHOR_CODE from LETTNEMPLYRSCRTYESTBS C
+	                                WHERE  C.SCRTY_DTRMN_TRGET_ID = #{tmp_UniqId})
+			ORDER BY MENU_ORDR
+		 
+	</select>
+
+	<select id="selectMainMenuLeft" parameterType="egovframework.let.sym.mnu.mpm.service.MenuManageVO" resultType="egovMap">
+		 
+			SELECT
+			       B.MENU_NO           AS "menuNo"
+				 , B.MENU_ORDR         AS "menuOrdr"
+				 , B.MENU_NM           AS "menuNm"
+				 , B.UPPER_MENU_NO     AS "upperMenuId"
+				 , B.RELATE_IMAGE_PATH AS "relateImagePath"
+				 , B.RELATE_IMAGE_NM   AS "relateImageNm"
+				 , (SELECT C.URL FROM LETTNPROGRMLIST C WHERE B.PROGRM_FILE_NM = C.PROGRM_FILE_NM) AS "chkURL"	
+			FROM   LETTNMENUCREATDTLS A, LETTNMENUINFO B
+			WHERE  A.MENU_NO  = B.MENU_NO 
+			AND    A.AUTHOR_CODE = (SELECT AUTHOR_CODE from LETTNEMPLYRSCRTYESTBS
+	                                WHERE  SCRTY_DTRMN_TRGET_ID = #{tmp_UniqId})
+			ORDER BY B.MENU_ORDR
+		 
+	</select>
+
+	<select id="selectLastMenuURL" parameterType="egovframework.let.sym.mnu.mpm.service.MenuManageVO" resultType="String">
+		 
+			SELECT URL 
+			FROM   LETTNPROGRMLIST
+			WHERE  PROGRM_FILE_NM =
+			       (SELECT PROGRM_FILE_NM FROM LETTNMENUINFO
+				    WHERE MENU_NO = #{menuNo})
+		 
+	</select>
+
+	<select id="selectLastMenuNo" parameterType="egovframework.let.sym.mnu.mpm.service.MenuManageVO" resultType="int">
+		 
+			select MIN(MENU_NO) 
+			from   LETTNMENUINFO
+			where  UPPER_MENU_NO = #{menuNo}
+			and    MENU_ORDR =
+			      (select MIN(MENU_ORDR) 
+			       from LETTNMENUCREATDTLS A, LETTNMENUINFO B
+			       where A.MENU_NO = B.MENU_NO
+			       AND   A.AUTHOR_CODE = (SELECT AUTHOR_CODE from LETTNEMPLYRSCRTYESTBS
+	                                      WHERE  SCRTY_DTRMN_TRGET_ID = #{tempValue})
+			       AND   B.UPPER_MENU_NO = #{menuNo})
+		 
+	</select>
+
+	<select id="selectLastMenuNoCnt" parameterType="egovframework.let.sym.mnu.mpm.service.MenuManageVO" resultType="int">
+		 
+			select count(MENU_NO) 
+			from   LETTNMENUINFO
+			where  UPPER_MENU_NO = #{menuNo}
+			and    MENU_ORDR =
+			      (select MIN(MENU_ORDR) 
+			       from LETTNMENUCREATDTLS A, LETTNMENUINFO B
+			       where A.MENU_NO = B.MENU_NO
+			       AND   A.AUTHOR_CODE = (SELECT AUTHOR_CODE from LETTNEMPLYRSCRTYESTBS
+	                                      WHERE  SCRTY_DTRMN_TRGET_ID = #{tempValue})
+			       AND   B.UPPER_MENU_NO = #{menuNo})
+		 
+	</select>
+	
+	<select id="selectMainMenuHeadByAuthor" parameterType="egovframework.let.sym.mnu.mpm.service.MenuManageVO" resultType="egovMap">
+         
+            SELECT
+                  B.MENU_NO AS menuNo
+                , B.MENU_ORDR AS menuOrdr
+                , B.MENU_NM AS menuNm
+                , B.UPPER_MENU_NO AS upperMenuId
+                , B.MENU_DC AS menuDc
+                , B.RELATE_IMAGE_PATH AS relateImagePath
+                , B.RELATE_IMAGE_NM AS relateImageNm
+                , B.PROGRM_FILE_NM AS progrmFileNm
+                , (SELECT C.URL FROM LETTNPROGRMLIST C WHERE B.PROGRM_FILE_NM = C.PROGRM_FILE_NM) AS chkURL
+            FROM LETTNMENUCREATDTLS A, LETTNMENUINFO B 
+            WHERE  B.Menu_NO &gt; 0 
+            AND    B.UPPER_MENU_NO = 0  
+            AND    A.MENU_NO  = B.MENU_NO 
+            AND    A.AUTHOR_CODE = #{authorCode}
+            ORDER BY B.MENU_ORDR
+         
+    </select>
+
+    <select id="selectMainMenuLeftByAuthor" parameterType="egovframework.let.sym.mnu.mpm.service.MenuManageVO" resultType="egovMap">
+         
+            SELECT
+                   B.MENU_NO AS menuNo
+                 , B.MENU_ORDR AS menuOrdr
+                 , B.MENU_NM AS menuNm
+                 , B.UPPER_MENU_NO AS upperMenuId
+                 , B.RELATE_IMAGE_PATH AS relateImagePath
+                 , B.RELATE_IMAGE_NM AS relateImageNm
+                 , (SELECT C.URL FROM LETTNPROGRMLIST C WHERE B.PROGRM_FILE_NM = C.PROGRM_FILE_NM) AS chkURL    
+            FROM   LETTNMENUCREATDTLS A, LETTNMENUINFO B
+            WHERE  A.MENU_NO  = B.MENU_NO 
+            AND    A.AUTHOR_CODE =  #{authorCode}
+            ORDER BY B.MENU_ORDR
+         
+    </select>
+</mapper>
