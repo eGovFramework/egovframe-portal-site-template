@@ -70,7 +70,7 @@ public class EgovFileMngServiceImpl extends EgovAbstractServiceImpl implements E
 		if (fvoList.size() != 0) {
 			atchFileId = fileMngDAO.insertFileInfs(fvoList);
 		}
-		if (atchFileId == "") {
+		if ("".equals(atchFileId) ) {
 			atchFileId = null;
 		}
 		return atchFileId;
