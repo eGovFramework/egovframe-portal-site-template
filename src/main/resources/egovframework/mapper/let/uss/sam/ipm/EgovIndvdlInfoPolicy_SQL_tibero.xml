@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="IndvdlInfoPolicy">
+
+	<!-- ::ResultMap 선언 -->
+	<resultMap id="IndvdlInfoPolicyVO" type="egovframework.let.uss.sam.ipm.service.IndvdlInfoPolicy">
+		<result property="indvdlInfoId" column="INDVDL_INFO_POLICY_ID"/>
+		<result property="indvdlInfoNm" column="INDVDL_INFO_POLICY_NM"/>
+		<result property="indvdlInfoDc" column="INDVDL_INFO_POLICY_CN"/>
+		<result property="indvdlInfoYn" column="INDVDL_INFO_POLICY_AGRE_AT"/>
+		
+		<result property="frstRegisterPnttm" column="FRST_REGIST_PNTTM"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDT_PNTTM"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID"/> 			
+	</resultMap> 
+	
+	<!-- 개인정보보호정책확인::목록조회 게시물정보 -->
+	<select id="selectIndvdlInfoPolicy" parameterType="comDefaultVO" resultType="egovMap">
+		
+	SELECT *
+	FROM (
+	SELECT T0.*, ROWNUM RNUM
+		FROM (
+	
+	 
+		SELECT
+		A.INDVDL_INFO_POLICY_ID AS "indvdlInfoId",
+        A.INDVDL_INFO_POLICY_NM AS "indvdlInfoNm",
+        A.INDVDL_INFO_POLICY_CN AS "indvdlInfoDc",
+        A.INDVDL_INFO_POLICY_AGRE_AT AS "indvdlInfoYn",
+        A.FRST_REGISTER_ID AS "frstRegisterId",
+		TO_CHAR(A.FRST_REGIST_PNTTM,'YYYY-MM-DD') AS "frstRegistPnttm",
+		(SELECT MBER_NM FROM LETTNGNRLMBER WHERE ESNTL_ID = A.FRST_REGISTER_ID) AS "frstRegisterNm"
+		FROM LETTNINDVDLINFOPOLICY A
+		WHERE 1=1
+	 
+	 <if test="searchKeyword != null and searchKeyword != ''">
+	 	
+	 		
+	 		    <if test="searchCondition == &quot;INDVDL_INFO_POLICY_NM&quot;">
+                AND INDVDL_INFO_POLICY_NM LIKE '%' || #{searchKeyword} || '%'
+	            </if>
+	            <if test="searchCondition == &quot;INDVDL_INFO_POLICY_CN&quot;">
+	                AND INDVDL_INFO_POLICY_CN LIKE '%' || #{searchKeyword} || '%'
+	            </if>
+	 		
+	 	
+	 </if>
+	 
+		ORDER BY A.FRST_REGIST_PNTTM DESC
+	
+		
+		) T0
+	) 
+	WHERE RNUM BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
+		
+	</select>
+	<!-- 개인정보보호정책확인::목록조회_게시물 총갯수  -->
+	<select id="selectIndvdlInfoPolicyCnt" parameterType="comDefaultVO" resultType="int">
+		SELECT 
+		COUNT(*) totcnt
+		FROM LETTNINDVDLINFOPOLICY
+		WHERE 1=1
+	 <if test="searchKeyword != null and searchKeyword != ''">
+	 	
+	 		
+	 		    <if test="searchCondition == &quot;INDVDL_INFO_POLICY_NM&quot;">
+                AND INDVDL_INFO_POLICY_NM LIKE '%' || #{searchKeyword} || '%'
+                </if>
+                <if test="searchCondition == &quot;INDVDL_INFO_POLICY_CN&quot;">
+                    AND INDVDL_INFO_POLICY_CN LIKE '%' || #{searchKeyword} || '%'
+                </if>
+	 		
+	 	
+	 </if>
+	</select>
+	
+    <!-- 개인정보보호정책확인::삭제  -->
+	<delete id="deleteIndvdlInfoPolicy">
+		
+			DELETE FROM LETTNINDVDLINFOPOLICY 
+			WHERE INDVDL_INFO_POLICY_ID=#{indvdlInfoId}
+		
+	</delete>
+
+	<!-- 개인정보보호정책확인::수정  -->
+	<update id="updateIndvdlInfoPolicy">
+ 
+UPDATE LETTNINDVDLINFOPOLICY 
+SET
+INDVDL_INFO_POLICY_NM = #{indvdlInfoNm},
+INDVDL_INFO_POLICY_CN = #{indvdlInfoDc},
+INDVDL_INFO_POLICY_AGRE_AT = #{indvdlInfoYn},  
+LAST_UPDT_PNTTM = sysdate,
+LAST_UPDUSR_ID = #{lastUpdusrId}
+WHERE INDVDL_INFO_POLICY_ID=#{indvdlInfoId}
+ 
+	</update>
+	
+	<!-- 개인정보보호정책확인::상세보기 -->
+	<select id="selectIndvdlInfoPolicyDetail" resultMap="IndvdlInfoPolicyVO">
+	SELECT 
+		A.INDVDL_INFO_POLICY_ID,
+		A.INDVDL_INFO_POLICY_NM,
+		A.INDVDL_INFO_POLICY_CN,
+		A.INDVDL_INFO_POLICY_AGRE_AT,
+		A.FRST_REGIST_PNTTM,
+		A.FRST_REGISTER_ID,
+		A.LAST_UPDT_PNTTM,
+		A.LAST_UPDUSR_ID  
+		FROM LETTNINDVDLINFOPOLICY A
+		WHERE 1=1
+		AND A.INDVDL_INFO_POLICY_ID=#{indvdlInfoId}
+	</select>
+
+	<!-- 개인정보보호정책확인::입력  -->
+	<insert id="insertIndvdlInfoPolicy">	     
+	 
+	
+	INSERT INTO LETTNINDVDLINFOPOLICY ( 
+	INDVDL_INFO_POLICY_ID,
+	INDVDL_INFO_POLICY_NM,
+	INDVDL_INFO_POLICY_CN,
+	INDVDL_INFO_POLICY_AGRE_AT,
+	FRST_REGIST_PNTTM,
+	FRST_REGISTER_ID,
+	LAST_UPDT_PNTTM,
+	LAST_UPDUSR_ID
+	)VALUES( 
+	#{indvdlInfoId},
+	#{indvdlInfoNm},
+	#{indvdlInfoDc},
+	#{indvdlInfoYn},
+	sysdate,
+	#{frstRegisterId},
+	sysdate,
+	#{lastUpdusrId} 
+	)
+	 
+	</insert>
+	
+
+
+</mapper>

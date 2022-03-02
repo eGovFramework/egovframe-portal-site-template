@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+               http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+               http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+
+	<!-- /EgovPageLink.do 화이트 리스트 처리 (대상목록) -->
+	<util:list id="egovPageLinkWhitelist" value-type="java.lang.String">
+		<value>main/sample_menu/EgovServiceIssuance</value>
+		<value>main/sample_menu/EgovServiceManage</value>
+		<value>main/sample_menu/EgovServiceResult</value>
+		<value>main/sample_menu/EgovAboutSite</value>
+		<value>main/sample_menu/EgovHistory</value>
+		<value>main/sample_menu/EgovOrganization</value>
+		<value>main/sample_menu/EgovLocation</value>
+		<value>main/sample_menu/Intro</value>
+		<value>main/inc/EgovIncHeaderOld</value>
+		<value>main/inc/EgovIncFooterOld</value>
+		<value>main/inc/EgovIncTborder</value>
+	</util:list>
+
+</beans>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC 
+    "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" 
+    "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+
+    <formset>
+
+        <form name="qustnrManageVO"> 
+			<field property="qestnrSj" depends="required, maxlength">
+        		<arg0 key="설문제목" resource="false"/>
+        		<arg1 key="100" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>250</var-value>
+				</var>
+			</field>
+        	<field property="qestnrPurps" depends="required, maxlength">
+        		<arg0 key="설문목적" resource="false"/>
+        		<arg1 key="1000" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>1000</var-value>
+				</var>
+			</field>
+        	<field property="qestnrWritngGuidanceCn" depends="required, maxlength">
+        		<arg0 key="설문작성안내 내용" resource="false"/>
+        		<arg1 key="2000" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>2000</var-value>
+				</var>
+			</field>
+			
+        	<field property="qestnrTrget" depends="required,">
+        		<arg0 key="설문대상" resource="false"/>
+			</field>
+			
+        	<field property="qestnrBeginDe" depends="required, date">
+        		<arg0 key="설문기간  시작일자" resource="false"/>
+				<var>
+				<var-name>datePatternStrict</var-name>
+				<var-value>yyyy-MM-dd</var-value> 
+				</var>
+			</field>
+        	<field property="qestnrEndDe" depends="required, date">
+        		<arg0 key="설문기간  종료일자" resource="false"/>
+				<var>
+				<var-name>datePatternStrict</var-name>
+				<var-value>yyyy-MM-dd</var-value>
+				</var>
+			</field>
+		</form>
+		
+    </formset>
+
+</form-validation>

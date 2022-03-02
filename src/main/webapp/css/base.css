@@ -1,0 +1,95 @@
+@charset "utf-8";
+
+/* Web Font */
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 300;
+    src: url(https://fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff2) format('woff2'),
+    url(https://fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff) format('woff'),
+    url(https://fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.otf) format('opentype');} 
+    
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 400;src: 
+    url(https://fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2) format('woff2'),
+    url(https://fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff) format('woff'),
+    url(https://fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format('opentype');} 
+    
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 500;
+    src: url(https://fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff2) format('woff2'),
+    url(https://fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff) format('woff'),
+    url(https://fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf) format('opentype');} 
+    
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 700;
+    src: url(https://fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2) format('woff2'),
+    url(https://fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff) format('woff'),
+    url(https://fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf) format('opentype');}
+
+/* Reset style */
+* {word-break: keep-all; word-wrap: break-word; box-sizing: border-box; -webkit-box-sizing: border-box;}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+blockquote, pre, a, abbr, acronym, address, big, cite, code, del, em, font, img, ins, q, s, small, strike, strong, sub, sup,
+dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, thead, tbody, tfoot, tr, th, td, input {
+    margin: 0; padding: 0;
+}
+
+blockquote, button, fieldset, iframe {border: 0;}
+cite, em, u, address, i {font-style: normal;}
+img {border: 0; vertical-align: top;}
+hr, legend {position: absolute; left: -9999px; top: -9999px;}
+caption {text-indent: -9999px; font-size: 0;}
+li {list-style: none;}
+table {width: 100%; table-layout: fixed; border-collapse: collapse;}
+a:link, a:visited, a:hover, a:active {text-decoration: none;}
+
+/* Blind 숨김처리 */
+.blind {position: absolute; left: -9999px; top: -9999px;}
+.skip {position: absolute; left: -9999px; top: -9999px;}
+
+body {font-family: 'Noto Sans KR', sans-serif; font-size: 16px;}
+button, textarea {font-family: 'Noto Sans KR', sans-serif;}
+button {cursor: pointer;}
+
+
+/* 정렬 */
+.al_c {text-align: center;}
+.al_r {text-align: right;}
+
+.vat {vertical-align: top;}
+.vam {vertical-align: middle;}
+
+
+/* 가로길이 */
+.w_full {width: 100% !important;}
+.w_half {width: 50% !important;}
+.w_quarter {width: 25% !important;}
+.w_20 {width: 20px !important;}
+.w_50 {width: 50px !important;}
+.w_80 {width: 80px !important;}
+.w_100 {width: 100px !important;}
+.w_130 {width: 130px !important;}
+.w_150 {width: 150px !important;}
+.w_200 {width: 200px !important;}
+.w_250 {width: 250px !important;}
+.w_300 {width: 300px !important;}
+.w_350 {width: 350px !important;}
+.w_500 {width: 500px !important;}
+
+.h_30 {height: 30px !important;}
+.h_80 {height: 80px !important;}
+.h_200 {height: 200px !important;}
+.h_400 {height: 400px !important;}
+
+
+/* 여백 */
+.mt0 {margin-top: 0 !important;}
+.mt10 {margin-top: 10px !important;}
+.mt40 {margin-top: 40px !important;}
+.pb10 {padding-bottom: 10px !important;}
+.mr5 {margin-right: 5px !important;}
+.mr10 {margin-right: 10px !important;}
+.mr15 {margin-right: 15px !important;}
+.mr20 {margin-right: 20px !important;}
+.mr30 {margin-right: 30px !important;}
+.ml5 {margin-left: 5px !important;}
+.ml10 {margin-left: 10px !important;}
+.ml15 {margin-left: 15px !important;}
+.ml20 {margin-left: 20px !important;}
+
+.pt20 {padding-top: 20px !important;}

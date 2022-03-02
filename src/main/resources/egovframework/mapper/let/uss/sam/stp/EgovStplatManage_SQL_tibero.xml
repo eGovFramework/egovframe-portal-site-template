@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="StplatManageDAO">
+
+
+	<resultMap id="StplatManage" type="egovframework.let.uss.sam.stp.service.StplatManageVO">
+		<result property="useStplatId" column="USE_STPLAT_ID"/>
+		<result property="useStplatNm" column="USE_STPLAT_NM"/>		
+		<result property="useStplatCn" column="USE_STPLAT_CN"/>
+		<result property="infoProvdAgreCn" column="INFO_PROVD_AGRE_CN"/>
+		<result property="frstRegisterPnttm" column="FRST_REGIST_PNTTM"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDT_PNTTM"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID"/>				
+	</resultMap>
+	
+	<select id="selectStplatDetail" resultMap="StplatManage">
+				
+			SELECT 	USE_STPLAT_ID, USE_STPLAT_NM, USE_STPLAT_CN,  INFO_PROVD_AGRE_CN,  
+					TO_CHAR(FRST_REGIST_PNTTM,'YYYY-MM-DD') FRST_REGIST_PNTTM   , FRST_REGISTER_ID, 
+					TO_CHAR(LAST_UPDT_PNTTM,'YYYY-MM-DD')   LAST_UPDT_PNTTM	  , LAST_UPDUSR_ID			 			  			 			  
+			FROM	LETTNSTPLATINFO		
+			WHERE	USE_STPLAT_ID=#{useStplatId}					
+		
+	</select>
+	
+	<select id="selectStplatList" parameterType="egovframework.let.uss.sam.stp.service.StplatManageDefaultVO" resultType="egovMap">
+		
+			SELECT USE_STPLAT_ID, USE_STPLAT_NM, USE_STPLAT_CN,  INFO_PROVD_AGRE_CN,  
+				   FRST_REGIST_PNTTM	  , FRST_REGISTER_ID, 
+				   LAST_UPDT_PNTTM	  , LAST_UPDUSR_ID		
+			FROM
+				   (
+				   SELECT  ROWNUM RNUM,STP.*
+				   FROM
+				   	   	  (
+				   		   SELECT 	USE_STPLAT_ID, USE_STPLAT_NM, TO_CHAR(USE_STPLAT_CN) USE_STPLAT_CN,  TO_CHAR(INFO_PROVD_AGRE_CN) INFO_PROVD_AGRE_CN,  
+						   			FRST_REGIST_PNTTM	  , FRST_REGISTER_ID, 
+									LAST_UPDT_PNTTM	  , LAST_UPDUSR_ID			 
+						   FROM		LETTNSTPLATINFO                               			
+						   WHERE	1=1   			
+							
+			<if test="searchCondition == &quot;useStplatNm&quot;">AND
+				USE_STPLAT_NM LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test="searchCondition == &quot;useStplatCn&quot;">AND
+				USE_STPLAT_CN LIKE '%' || #{searchKeyword} || '%'
+			</if>		
+				
+							ORDER BY USE_STPLAT_NM DESC								   
+						  ) STP
+				   ) 
+			WHERE ROWNUM &lt;= #{recordCountPerPage} and RNUM &gt; #{firstIndex}	
+						
+	</select>
+	
+	<select id="selectStplatListTotCnt" parameterType="egovframework.let.uss.sam.stp.service.StplatManageDefaultVO" resultType="int">
+		
+			SELECT 	COUNT(*) totcnt
+			FROM 	LETTNSTPLATINFO
+			WHERE 	1=1
+					
+			<if test="searchCondition == &quot;siteNm&quot;">AND
+				RECOMEND_SITE_NM LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test="searchCondition == &quot;siteUrl&quot;">AND
+				RECOMEND_SITE_URL  LIKE '%' || #{searchKeyword} || '%'
+			</if>
+	</select>
+	
+	<insert id="insertStplatCn">	
+			
+			INSERT INTO LETTNSTPLATINFO
+				   (USE_STPLAT_ID
+				  , USE_STPLAT_NM				   
+				  , USE_STPLAT_CN
+				  , INFO_PROVD_AGRE_CN
+				  , FRST_REGIST_PNTTM 
+				  , FRST_REGISTER_ID 
+				  , LAST_UPDT_PNTTM 
+				  , LAST_UPDUSR_ID) 
+			VALUES ( #{useStplatId}
+				  , #{useStplatNm}			
+				  , #{useStplatCn}
+				  , #{infoProvdAgreCn}
+				  , sysdate
+				  , #{frstRegisterId}
+				  , sysdate
+				  , #{lastUpdusrId} )
+		
+	</insert>
+	
+	<update id="updateStplatCn">
+		
+			UPDATE	LETTNSTPLATINFO	SET 
+				   	USE_STPLAT_NM=#{useStplatNm}
+				  ,	USE_STPLAT_CN=#{useStplatCn}				  
+				  ,	INFO_PROVD_AGRE_CN=#{infoProvdAgreCn}
+				  , LAST_UPDT_PNTTM=sysdate
+				  , LAST_UPDUSR_ID=#{lastUpdusrId}
+ 			WHERE  USE_STPLAT_ID=#{useStplatId}
+		
+	</update>
+	
+	<delete id="deleteStplatCn">
+		
+			DELETE FROM LETTNSTPLATINFO 
+			WHERE  USE_STPLAT_ID=#{useStplatId}
+		
+	</delete>
+	
+</mapper>
