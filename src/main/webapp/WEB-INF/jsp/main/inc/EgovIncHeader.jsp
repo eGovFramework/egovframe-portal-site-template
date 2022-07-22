@@ -42,6 +42,36 @@ function fn_egov_modal_remove() {
 	$('#modalPan').remove();
 }
 
+
+function getCurrentDate()
+{
+    var date = new Date();
+    var year = date.getFullYear().toString();
+
+    var month = date.getMonth() + 1;
+    month = month < 10 ? '0' + month.toString() : month.toString();
+
+    var day = date.getDate();
+    day = day < 10 ? '0' + day.toString() : day.toString();
+
+    var hour = date.getHours();
+    hour = hour < 10 ? '0' + hour.toString() : hour.toString();
+
+    var minites = date.getMinutes();
+    minites = minites < 10 ? '0' + minites.toString() : minites.toString();
+
+    var seconds = date.getSeconds();
+    seconds = seconds < 10 ? '0' + seconds.toString() : seconds.toString();
+
+    document.getElementById("currentDate").innerHTML = year + "-" + month + "-" + day + " " + hour + ":" + minites + ":" + seconds;
+
+}
+
+$(document).ready(function(){
+
+    getCurrentDate();
+
+});
 </script>
 
 <!-- Header -->
@@ -80,7 +110,7 @@ function fn_egov_modal_remove() {
 		<c:set var="loginName" value="<%= loginVO.getName()%>"/>
 	    <div class="top_menu">
             <span class="t"><span onclick="alert('개인정보 확인 등의 링크 제공'); return false;" style="cursor: pointer;">${loginName}님</span>, 로그인하셨습니다.</span>
-            <span class="d">2021-06-30 12:45</span>
+            <span id="currentDate" class="d"></span>
         </div>
 <% } %>
 
