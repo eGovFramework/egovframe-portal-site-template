@@ -49,7 +49,7 @@
                    SORT_ORDR,           
                    REFLCT_AT,
                    FRST_REGISTER_ID,
-                   FRST_REGIST_PNTTM     
+                   DATE_FORMAT(FRST_REGIST_PNTTM, '%Y-%m-%d') as FRST_REGIST_PNTTM
               FROM LETTNBANNER   
              WHERE 1=1
             <if test="searchCondition == 1">AND
@@ -80,7 +80,7 @@
                    SORT_ORDR,            
                    REFLCT_AT,            
                    FRST_REGISTER_ID,
-                   FRST_REGIST_PNTTM     
+                   DATE_FORMAT(FRST_REGIST_PNTTM, '%Y-%m-%d') as FRST_REGIST_PNTTM
               FROM LETTNBANNER
              WHERE BANNER_ID = #{bannerId}    
         

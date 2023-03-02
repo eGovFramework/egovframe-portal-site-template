@@ -7,8 +7,8 @@
 	<resultMap id="StplatManage" type="egovframework.let.uss.sam.stp.service.StplatManageVO">
 		<result property="useStplatId" column="USE_STPLAT_ID"/>
 		<result property="useStplatNm" column="USE_STPLAT_NM"/>		
-		<result property="useStplatCn" column="USE_STPLAT_CN" jdbcType="CLOB" typeHandler="egovframework.com.cmm.AltibaseClobStringTypeHandler"/>
-		<result property="infoProvdAgreCn" column="INFO_PROVD_AGRE_CN" jdbcType="CLOB" typeHandler="egovframework.com.cmm.AltibaseClobStringTypeHandler"/>
+		<result property="useStplatCn" column="USE_STPLAT_CN" jdbcType="CLOB" typeHandler="org.apache.ibatis.type.BlobTypeHandler"/>
+		<result property="infoProvdAgreCn" column="INFO_PROVD_AGRE_CN" jdbcType="CLOB" typeHandler="org.apache.ibatis.type.BlobTypeHandler"/>
 		<result property="frstRegisterPnttm" column="FRST_REGIST_PNTTM"/>
 		<result property="frstRegisterId" column="FRST_REGISTER_ID"/>
 		<result property="lastUpdusrPnttm" column="LAST_UPDT_PNTTM"/>

@@ -147,7 +147,7 @@ function fn_egov_delete_QustnrQestnManage(){
                                             <td>
                                             	<c:forEach items="${cmmCode018}" var="comCodeList" varStatus="status">
 													<c:if test="${comCodeList.code eq resultList[0].qestnTyCode}">  
-														<c:out value="${fn:replace(comCodeList.codeNm , crlf , '<br/>')}" escapeXml="false" />
+														<c:out value="${fn:replace(comCodeList.codeNm , crlf , '<br/>')}" escapeXml="true" />
 													</c:if>
 												</c:forEach>
                                             </td>
@@ -157,7 +157,7 @@ function fn_egov_delete_QustnrQestnManage(){
                                                 <span class="min">질문 내용</span>
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(resultList[0].qestnCn , crlf , '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(resultList[0].qestnCn , crlf , '<br/>')}" escapeXml="true" />
                                             </td>
                                         </tr>
                                         <tr>

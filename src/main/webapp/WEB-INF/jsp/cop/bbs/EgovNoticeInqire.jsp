@@ -16,6 +16,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="egovc" uri="/WEB-INF/tlds/egovc.tld" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -170,7 +171,7 @@
                                     </div>
 
                                     <div class="board_article">
-                                    	<textarea id="nttCn" name="nttCn" class="textarea" cols="30" rows="10" readonly="readonly" title="글내용"><c:out value="${result.nttCn}" escapeXml="false" /></textarea>
+                                    	<textarea id="nttCn" name="nttCn" class="textarea" cols="30" rows="10" readonly="readonly" title="글내용"><c:out value="${result.nttCn}" escapeXml="true" /></textarea>
                                     </div>
 
 
@@ -184,7 +185,7 @@
 	                                            <dt style="display: inline;">첨부<br>이미지</dt>
 	                                            <dd>
 	                                                <c:import url="/cmm/fms/selectImageFileInfs.do" charEncoding="utf-8">
-								                        <c:param name="atchFileId" value="${result.atchFileId}" />
+								                        <c:param name="atchFileId" value="${egovc:encryptSession(result.atchFileId, pageContext.session.id)}" />
 								                    </c:import>
 	                                            </dd>
 	                                        </dl>
@@ -194,7 +195,7 @@
 	                                            <dt>첨부파일</dt>
 	                                            <dd>
 	                                                <c:import url="/cmm/fms/selectFileInfs.do" charEncoding="utf-8">
-									                    <c:param name="param_atchFileId" value="${result.atchFileId}" />
+									                    <c:param name="param_atchFileId" value="${egovc:encrypt(result.atchFileId)}" />
 									                </c:import>
 	                                            </dd>
 	                                        </dl>

@@ -147,7 +147,7 @@ function fn_egov_delete_QustnrTmplatManage(){
                                                 <span class="min">템플릿 설명</span>
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(resultList[0].qestnrTmplatCn , crlf , '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(resultList[0].qestnrTmplatCn , crlf , '<br/>')}" escapeXml="true" />
                                             </td>
                                         </tr>
                                         <tr>

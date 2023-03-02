@@ -128,7 +128,7 @@ function fn_egov_delete_QustnrRespondInfo(){
                                                 <span class="min">설문관리정보</span>
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(resultList[0].qestnrSj, crlf, '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(resultList[0].qestnrSj, crlf, '<br/>')}" escapeXml="true" />
                                             	<input name="qestnrId" type="hidden" value="${resultList[0].qestnrId}">
 												<input name="qestnrTmplatId" type="hidden" value="${resultList[0].qestnrTmplatId}">
                                             </td>
@@ -138,7 +138,7 @@ function fn_egov_delete_QustnrRespondInfo(){
                                                 <span class="min">설문문항정보</span>
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(resultList[0].qestnCn, crlf, '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(resultList[0].qestnCn, crlf, '<br/>')}" escapeXml="true" />
                                             	<input name="qestnrQesitmId" type="hidden" value="${resultList[0].qestnrQesitmId}">
                                             </td>
                                         </tr>
@@ -156,7 +156,7 @@ function fn_egov_delete_QustnrRespondInfo(){
                                                 <span class="min">설문항목정보</span>
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(resultList[0].iemCn, crlf, '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(resultList[0].iemCn, crlf, '<br/>')}" escapeXml="true" />
                                             	<input name="qustnrIemId" type="hidden" value="${resultList[0].qustnrIemId}">
                                             </td>
                                         </tr>
@@ -165,7 +165,7 @@ function fn_egov_delete_QustnrRespondInfo(){
                                                 <span class="min">응답자답변내용<br>(주관식)</span>
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(resultList[0].respondAnswerCn, crlf, '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(resultList[0].respondAnswerCn, crlf, '<br/>')}" escapeXml="true" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -173,7 +173,7 @@ function fn_egov_delete_QustnrRespondInfo(){
                                                 <span class="min">기타답변내용</span>
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(resultList[0].etcAnswerCn, crlf, '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(resultList[0].etcAnswerCn, crlf, '<br/>')}" escapeXml="true" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -181,7 +181,7 @@ function fn_egov_delete_QustnrRespondInfo(){
                                                 <span class="min">응답자명</span>
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(resultList[0].respondNm, crlf, '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(resultList[0].respondNm, crlf, '<br/>')}" escapeXml="true" />
                                             </td>
                                         </tr>
                                     </table>

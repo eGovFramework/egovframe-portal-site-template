@@ -19,6 +19,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="validator" uri="http://www.springmodules.org/tags/commons-validator" %>
+<%@ taglib prefix="egovc" uri="/WEB-INF/tlds/egovc.tld" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -217,7 +218,7 @@
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <textarea id="nttCn" class="f_txtar w_full h_200" name="nttCn" title="<spring:message code="cop.nttCn" />" class="textarea" cols="30" rows="10" ><c:out value="${result.nttCn}" escapeXml="false" /></textarea> 
+                                                <textarea id="nttCn" class="f_txtar w_full h_200" name="nttCn" title="<spring:message code="cop.nttCn" />" class="textarea" cols="30" rows="10" ><c:out value="${result.nttCn}" escapeXml="true" /></textarea> 
 												<form:errors path="nttCn" />
                                             </td>
                                         </tr>
@@ -252,7 +253,7 @@
 	                                            	<div class="board_attach2">
                                                     	<span>
 			                                                <c:import url="/cmm/fms/selectFileInfsForUpdate.do" charEncoding="utf-8">
-			                                                	<c:param name="param_atchFileId" value="${result.atchFileId}" />
+			                                                	<c:param name="param_atchFileId" value="${egovc:encrypt(result.atchFileId)}" />
 			                                                </c:import>
 		                                                </span>
 	                                                </div>

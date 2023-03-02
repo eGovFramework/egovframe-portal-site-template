@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:egov-security="http://maven.egovframe.go.kr/schema/egov-security"
 	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:egov-security="http://maven.egovframe.go.kr/schema/egov-security"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
-		http://maven.egovframe.go.kr/schema/egov-security http://maven.egovframe.go.kr/schema/egov-security/egov-security-4.0.0.xsd">
+		http://maven.egovframe.go.kr/schema/egov-security http://maven.egovframe.go.kr/schema/egov-security/egov-security-4.1.0.xsd">
 
     <security:http pattern="/css/**" security="none"/>
 	<security:http pattern="/html/**" security="none"/>
@@ -54,7 +54,7 @@
        		ORDER BY a.ROLE_SORT"
 
        sqlRolesAndMethod="
-       		SELECT a.ROLE_PTTRN method, b.AUTHOR_CODE authority
+       		SELECT a.ROLE_PTTRN as &quot;method&quot;, b.AUTHOR_CODE authority
        		FROM LETTNROLEINFO a, LETTNAUTHORROLERELATE b
        		WHERE a.ROLE_CODE = b.ROLE_CODE AND a.ROLE_TY = 'method'
        		ORDER BY a.ROLE_SORT"

@@ -26,7 +26,7 @@
     <select id="selectOgrnztIdDetail" parameterType="ComDefaultCodeVO" resultMap="CmmCodeDetail">
              
             SELECT 
-                #{tableNm}     CODE_ID, 
+                CAST(#{tableNm} AS CHAR(20))     CODE_ID, 
                 ORGNZT_ID     CODE, 
                 ORGNZT_NM     CODE_NM, 
                 ORGNZT_DC     CODE_DC
@@ -42,7 +42,7 @@
     <select id="selectGroupIdDetail" parameterType="ComDefaultCodeVO" resultMap="CmmCodeDetail">
              
             SELECT 
-                #{tableNm}     CODE_ID, 
+                CAST(#{tableNm} AS CHAR(20))     CODE_ID, 
                 GROUP_ID     CODE, 
                 GROUP_NM     CODE_NM, 
                 GROUP_DC     CODE_DC

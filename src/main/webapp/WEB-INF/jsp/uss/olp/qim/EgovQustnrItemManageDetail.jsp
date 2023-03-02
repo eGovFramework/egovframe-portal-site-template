@@ -126,7 +126,7 @@ function fn_egov_delete_QustnrItemManage(){
                                                 <span class="min">설문정보</span>
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(resultList[0].qestnrCn , crlf , '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(resultList[0].qestnrCn , crlf , '<br/>')}" escapeXml="true" />
                                             	<input name="qestnrId" type="hidden" value="<c:out value="${resultList[0].qestnrId}" />">
                                             	<input name="qestnrTmplatId" type="hidden" value="<c:out value="${resultList[0].qestnrTmplatId}" />">
                                             </td>
@@ -136,7 +136,7 @@ function fn_egov_delete_QustnrItemManage(){
                                                 <span class="min">설문문항정보</span>
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(resultList[0].qestnrQesitmCn , crlf , '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(resultList[0].qestnrQesitmCn , crlf , '<br/>')}" escapeXml="true" />
                                             	<input name="qestnrQesitmId" type="hidden" value="<c:out value="${resultList[0].qestnrQesitmId}" />">
                                             </td>
                                         </tr>
@@ -153,7 +153,7 @@ function fn_egov_delete_QustnrItemManage(){
                                                 <span class="min">질문 내용</span>
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(resultList[0].iemCn , crlf , '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(resultList[0].iemCn , crlf , '<br/>')}" escapeXml="true" />
                                             </td>
                                         </tr>
                                         <tr>

@@ -382,7 +382,7 @@ function fn_egov_RadioBoxValue(sbName)
                                                 설문제목
                                             </td>
                                             <td>
-                                                <c:out value="${fn:replace(Comtnqestnrinfo[0].qestnrSj , crlf , '<br/>')}" escapeXml="false" />
+                                                <c:out value="${fn:replace(Comtnqestnrinfo[0].qestnrSj , crlf , '<br/>')}" escapeXml="true" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -390,7 +390,7 @@ function fn_egov_RadioBoxValue(sbName)
                                                 설문목적
                                             </td>
                                             <td>
-                                                <c:out value="${fn:replace(Comtnqestnrinfo[0].qestnrPurps , crlf , '<br/>')}" escapeXml="false" />
+                                                <c:out value="${fn:replace(Comtnqestnrinfo[0].qestnrPurps , crlf , '<br/>')}" escapeXml="true" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -398,7 +398,7 @@ function fn_egov_RadioBoxValue(sbName)
                                                 설문작성<br>안내내용
                                             </td>
                                             <td>
-                                                <c:out value="${fn:replace(Comtnqestnrinfo[0].qestnrWritngGuidanceCn , crlf , '<br/>')}" escapeXml="false" />
+                                                <c:out value="${fn:replace(Comtnqestnrinfo[0].qestnrWritngGuidanceCn , crlf , '<br/>')}" escapeXml="true" />
                                             </td>
                                         </tr>
                                         <tr>

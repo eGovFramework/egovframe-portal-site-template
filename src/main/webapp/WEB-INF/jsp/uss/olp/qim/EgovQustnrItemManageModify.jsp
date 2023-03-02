@@ -124,7 +124,7 @@ function fn_egov_save_QustnrItemManage(){
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(resultList[0].qestnrCn , crlf , '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(resultList[0].qestnrCn , crlf , '<br/>')}" escapeXml="true" />
                                             	<input name="qestnrId" type="hidden" value="<c:out value="${resultList[0].qestnrId}" />">
                                             	<input name="qestnrTmplatId" type="hidden" value="<c:out value="${resultList[0].qestnrTmplatId}" />">
                                             </td>
@@ -135,7 +135,7 @@ function fn_egov_save_QustnrItemManage(){
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(resultList[0].qestnrQesitmCn , crlf , '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(resultList[0].qestnrQesitmCn , crlf , '<br/>')}" escapeXml="true" />
                                             	<input name="qestnrQesitmId" type="hidden" title="설문문항정보" value="<c:out value="${resultList[0].qestnrQesitmId}" />">
                                             </td>
                                         </tr>

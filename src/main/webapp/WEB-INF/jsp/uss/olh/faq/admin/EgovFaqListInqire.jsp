@@ -192,7 +192,7 @@ function fn_egov_inquire_faqlistdetail(faqId) {
                                                 	</a>
                                                 </td>
                                                 <td><c:out value="${resultInfo.inqireCo}"/></td>
-                                                <td><fmt:formatDate value="${resultInfo.lastUpdtPnttm}" pattern="yyyy-MM-dd"/></td>
+                                                <td><c:out value="${resultInfo.lastUpdtPnttm}"/></td>
                                             </tr>
                                             </c:forEach>
                                             

@@ -25,7 +25,7 @@
                    A.ROLE_TY,
                    A.ROLE_SORT,
                    B.AUTHOR_CODE,
-                   B.CREAT_DT,
+                   DATE_FORMAT(B.CREAT_DT,'%Y-%m-%d') as CREAT_DT,
                    (CASE WHEN B.ROLE_CODE IS NULL THEN 'N'
                          ELSE 'Y' 
                      END) AS REG_YN

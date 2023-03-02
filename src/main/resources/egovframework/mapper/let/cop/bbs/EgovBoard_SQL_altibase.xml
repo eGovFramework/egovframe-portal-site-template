@@ -28,7 +28,7 @@
 		<result property="ntcrId" column="NTCR_ID"/>
 		<result property="ntcrNm" column="NTCR_NM"/>
 		<result property="nttNo" column="NTT_NO"/>
-		<result property="nttCn" column="NTT_CN" jdbcType="CLOB" typeHandler="egovframework.com.cmm.AltibaseClobStringTypeHandler"/>
+		<result property="nttCn" column="NTT_CN" jdbcType="CLOB" typeHandler="org.apache.ibatis.type.BlobTypeHandler"/>
 		<result property="password" column="PASSWORD"/>
 		<result property="frstRegisterId" column="FRST_REGISTER_ID"/>
 		<result property="frstRegisterNm" column="FRST_REGISTER_NM"/>
@@ -66,7 +66,7 @@
 		<result property="ntcrNm" column="NTCR_NM"/>
 		<result property="password" column="PASSWORD"/>
 		<result property="frstRegisterPnttm" column="FRST_REGIST_PNTTM"/>
-		<result property="nttCn" column="NTT_CN" jdbcType="CLOB" typeHandler="egovframework.com.cmm.AltibaseClobStringTypeHandler"/>
+		<result property="nttCn" column="NTT_CN" jdbcType="CLOB" typeHandler="org.apache.ibatis.type.BlobTypeHandler"/>
 		<result property="useAt" column="USE_AT"/>
 		<result property="frstRegisterNm" column="FRST_REGISTER_NM"/>
 		<result property="frstRegisterId" column="FRST_REGISTER_ID"/>

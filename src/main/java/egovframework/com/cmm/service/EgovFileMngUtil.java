@@ -15,23 +15,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import egovframework.let.utl.fcc.service.EgovStringUtil;
-
-import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
-import org.egovframe.rte.fdl.property.EgovPropertyService;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
+import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import egovframework.com.cmm.EgovWebUtil;
+import egovframework.let.utl.fcc.service.EgovStringUtil;
 //import java.util.HashMap;
 
 /**
+ * @author 공통 서비스 개발팀 이삼섭
+ * @version 1.0
  * @Class Name  : EgovFileMngUtil.java
  * @Description : 메시지 처리 관련 유틸리티
  * @Modification Information
@@ -41,11 +43,8 @@ import org.springframework.web.multipart.MultipartFile;
  *   2009.02.13       이삼섭                  최초 생성
  *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
  *
- * @author 공통 서비스 개발팀 이삼섭
- * @since 2009. 02. 13
- * @version 1.0
  * @see
- *
+ * @since 2009. 02. 13
  */
 @Component("EgovFileMngUtil")
 public class EgovFileMngUtil {
@@ -73,19 +72,19 @@ public class EgovFileMngUtil {
 	String storePathString = "";
 	String atchFileIdString = "";
 
-	if ("".equals(storePath) || storePath == null) {
+	if (storePath == null || "".equals(storePath)) {
 	    storePathString = propertyService.getString("Globals.fileStorePath");
 	} else {
 	    storePathString = propertyService.getString(storePath);
 	}
 
-	if ("".equals(atchFileId) || atchFileId == null) {
+	if (atchFileId == null || "".equals(atchFileId)) {
 	    atchFileIdString = idgenService.getNextStringId();
 	} else {
 	    atchFileIdString = atchFileId;
 	}
 
-	File saveFolder = new File(storePathString);
+	File saveFolder = new File(EgovWebUtil.filePathBlackList(storePathString));
 
 	if (!saveFolder.exists() || saveFolder.isFile()) {
 	    saveFolder.mkdirs();
@@ -120,7 +119,7 @@ public class EgovFileMngUtil {
 
 	    if (!"".equals(orginFileName)) {
 		filePath = storePathString + File.separator + newName;
-		file.transferTo(new File(filePath));
+		file.transferTo(new File(EgovWebUtil.filePathBlackList(filePath)));
 	    }
 	    fvo = new FileVO();
 	    fvo.setFileExtsn(fileExt);
@@ -204,8 +203,8 @@ public class EgovFileMngUtil {
      */
     public static void downFile(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-    String downFileName = EgovStringUtil.isNullToString(request.getAttribute("downFile")).replaceAll("..","");
-    String orgFileName = EgovStringUtil.isNullToString(request.getAttribute("orgFileName")).replaceAll("..","");
+    String downFileName = EgovStringUtil.isNullToString(request.getAttribute("downFile")).replaceAll("..", "");
+    String orgFileName = EgovStringUtil.isNullToString(request.getAttribute("orgFileName")).replaceAll("..", "");
 
 	/*if ((String)request.getAttribute("downFile") == null) {
 	    downFileName = "";

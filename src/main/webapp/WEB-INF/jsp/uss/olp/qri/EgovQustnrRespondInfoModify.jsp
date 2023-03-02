@@ -186,7 +186,7 @@ function fn_egov_modal_remove() {
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(resultList[0].qestnrSj, crlf, '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(resultList[0].qestnrSj, crlf, '<br/>')}" escapeXml="true" />
                                             	<input name="qestnrId" id="qestnrId" type="hidden" value="${resultList[0].qestnrId}">
                                             	<input name="qestnrTmplatId" id="qestnrTmplatId" type="hidden" value="${resultList[0].qestnrTmplatId}">
                                             </td>
@@ -197,7 +197,7 @@ function fn_egov_modal_remove() {
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(resultList[0].qestnCn, crlf, '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(resultList[0].qestnCn, crlf, '<br/>')}" escapeXml="true" />
                                             	<input name="qestnrQesitmId" id="qestnrQesitmId" type="hidden" value="${resultList[0].qestnrQesitmId}">
                                             </td>
                                         </tr>
@@ -249,7 +249,7 @@ function fn_egov_modal_remove() {
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <input id="resnm" class="f_txt" name="respondNm" type="text" title="응답자명" value="<c:out value="${fn:replace(resultList[0].respondNm, crlf, '<br/>')}" escapeXml="false" />" maxlength="50">
+                                                <input id="resnm" class="f_txt" name="respondNm" type="text" title="응답자명" value="<c:out value="${fn:replace(resultList[0].respondNm, crlf, '<br/>')}" escapeXml="true" />" maxlength="50">
                                                 <div><form:errors path="respondNm" cssClass="error" /></div>
                                             </td>
                                         </tr>

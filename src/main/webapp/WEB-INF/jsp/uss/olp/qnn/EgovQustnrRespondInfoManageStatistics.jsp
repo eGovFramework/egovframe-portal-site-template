@@ -143,7 +143,7 @@ return  FValue;
                                             	설문제목
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(Comtnqestnrinfo[0].qestnrSj, crlf, '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(Comtnqestnrinfo[0].qestnrSj, crlf, '<br/>')}" escapeXml="true" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -151,7 +151,7 @@ return  FValue;
                                             	설문목적
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(Comtnqestnrinfo[0].qestnrPurps, crlf, '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(Comtnqestnrinfo[0].qestnrPurps, crlf, '<br/>')}" escapeXml="true" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -159,7 +159,7 @@ return  FValue;
                                             	설문작성<br>안내내용
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(Comtnqestnrinfo[0].qestnrWritngGuidanceCn, crlf, '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(Comtnqestnrinfo[0].qestnrWritngGuidanceCn, crlf, '<br/>')}" escapeXml="true" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -197,7 +197,7 @@ return  FValue;
 	                                        <tr>
 	                                            <td class="lb" colspan="2">
 	                                            	<label for="">
-	                                            		${status1.count}. <c:out value="${fn:replace(QestmInfo.qestnCn, crlf, '<br/>')}" escapeXml="false" />
+	                                            		${status1.count}. <c:out value="${fn:replace(QestmInfo.qestnCn, crlf, '<br/>')}" escapeXml="true" />
 	                                            	</label>
 	                                            	<span class="req">필수</span>
 	                                            </td>
@@ -213,7 +213,7 @@ return  FValue;
 									                	<!-- 해당 설문문항 AND 설문문항 체크 -->
 									                	<c:if test="${QestmInfo.qestnrTmplatId eq QestmItem.qestnrTmplatId && QestmInfo.qestnrId eq QestmItem.qestnrId && QestmInfo.qestnrQesitmId eq QestmItem.qestnrQesitmId}">
 				                                            <td class="writer">
-				                                            	<c:out value="${fn:replace(QestmItem.iemCn, crlf, '<br/>')}" escapeXml="false" />
+				                                            	<c:out value="${fn:replace(QestmItem.iemCn, crlf, '<br/>')}" escapeXml="true" />
 				                                            </td>
 				                                            <td>
 				                                            	<!-- 설문통계(객관식) LOOP -->
@@ -241,10 +241,10 @@ return  FValue;
                                             		<tr>
 	                                            		<c:if test="${QestmInfo.qestnrTmplatId eq QestmStatistic2.qestnrTmplatId && QestmInfo.qestnrId eq QestmStatistic2.qestnrId && QestmInfo.qestnrQesitmId eq QestmStatistic2.qestnrQesitmId}">
 				                                            <td class="writer">
-				                                            	<c:out value="${fn:replace(QestmStatistic2.respondNm, crlf, '<br/>')}" escapeXml="false" />
+				                                            	<c:out value="${fn:replace(QestmStatistic2.respondNm, crlf, '<br/>')}" escapeXml="true" />
 				                                            </td>
 				                                            <td>
-				                                            	<c:out value="${fn:replace(QestmStatistic2.respondAnswerCn, crlf, '<br/>')}" escapeXml="false" />
+				                                            	<c:out value="${fn:replace(QestmStatistic2.respondAnswerCn, crlf, '<br/>')}" escapeXml="true" />
 				                                            </td>
 	                                            		</c:if>
                                             		</tr>

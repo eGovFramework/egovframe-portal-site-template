@@ -22,6 +22,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="validator" uri="http://www.springmodules.org/tags/commons-validator" %>
+<%@ taglib prefix="egovc" uri="/WEB-INF/tlds/egovc.tld" %>
 <html>
 <head>
 <title>샘플 포털 > 정보마당 > FAQ</title>
@@ -187,7 +188,7 @@ function fn_egov_check_file(flag) {
                                     			<div class="board_attach2">
                                     				<span>
 	                                    				<c:import url="/cmm/fms/selectFileInfsForUpdate.do" charEncoding="utf-8">
-		                                                	<c:param name="param_atchFileId" value="${result.atchFileId}" />
+		                                                	<c:param name="param_atchFileId" value="${egovc:encrypt(result.atchFileId)}" />
 		                                                </c:import>
 	                                                </span>
                                     			</div>

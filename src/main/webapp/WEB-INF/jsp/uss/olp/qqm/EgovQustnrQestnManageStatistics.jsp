@@ -155,7 +155,7 @@ function fn_egov_delete_QustnrQestnManage(){
                                                 <span class="min">질문 내용</span>
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(resultList[0].qestnCn , crlf , '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(resultList[0].qestnCn , crlf , '<br/>')}" escapeXml="true" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -186,7 +186,7 @@ function fn_egov_delete_QustnrQestnManage(){
                                             <td>
                                             	<c:forEach items="${statisticsList2}" var="statisticsList2" varStatus="status">
                                             		<c:if test="${statisticsList2.respondAnswerCn ne ''}">
-                                            			<c:out value="${fn:replace(statisticsList2.respondAnswerCn , crlf , '<br/>')}" escapeXml="false" />
+                                            			<c:out value="${fn:replace(statisticsList2.respondAnswerCn , crlf , '<br/>')}" escapeXml="true" />
                                             		</c:if>
                                             	</c:forEach>
                                             </td>
@@ -198,7 +198,7 @@ function fn_egov_delete_QustnrQestnManage(){
                                             <td>
                                             	<c:forEach items="${statisticsList2}" var="statisticsList2" varStatus="status">
                                             		<c:if test="!${statisticsList2.etcAnswerCn ne ''}">
-                                            			<c:out value="${fn:replace(statisticsList2.etcAnswerCn , crlf , '<br/>')}" escapeXml="false" />
+                                            			<c:out value="${fn:replace(statisticsList2.etcAnswerCn , crlf , '<br/>')}" escapeXml="true" />
                                             		</c:if>
                                             	</c:forEach>
                                             </td>

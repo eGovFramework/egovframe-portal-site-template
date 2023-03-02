@@ -145,7 +145,7 @@ function fn_egov_delete_IndvdlInfoPolicy(){
                                                 <label for="indvdlInfoDc">개인정보보호정책 내용</label>
                                             </td>
                                             <td>
-												<textarea id="indvdlInfoDc" class="f_txtar w_full h_400" name="indvdlInfoDc" title="개인정보보호정책 내용" rows="10" cols="30" readonly="readonly" ><c:out value="${indvdlInfoPolicy.indvdlInfoDc}" escapeXml="false" /></textarea>
+												<textarea id="indvdlInfoDc" class="f_txtar w_full h_400" name="indvdlInfoDc" title="개인정보보호정책 내용" rows="10" cols="30" readonly="readonly" ><c:out value="${indvdlInfoPolicy.indvdlInfoDc}" escapeXml="true" /></textarea>
                                             </td>
                                         </tr>
                                     </table>

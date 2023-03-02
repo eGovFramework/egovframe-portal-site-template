@@ -126,7 +126,7 @@ function fn_egov_delete_QustnrRespondManage(){
                                                 <span class="min">설문관리정보</span>
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(resultList[0].qestnrSj , crlf , '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(resultList[0].qestnrSj , crlf , '<br/>')}" escapeXml="true" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -136,7 +136,7 @@ function fn_egov_delete_QustnrRespondManage(){
                                             <td>
                                             	<c:forEach items="${comCode014}" var="comCodeList" varStatus="status">
 													<c:if test="${comCodeList.code eq resultList[0].sexdstnCode}">
-														<c:out value="${fn:replace(comCodeList.codeNm , crlf , '<br/>')}" escapeXml="false" />
+														<c:out value="${fn:replace(comCodeList.codeNm , crlf , '<br/>')}" escapeXml="true" />
 													</c:if>
 												</c:forEach>
                                             </td>
@@ -148,7 +148,7 @@ function fn_egov_delete_QustnrRespondManage(){
                                             <td>
                                             	<c:forEach items="${comCode034}" var="comCodeList" varStatus="status">
 													<c:if test="${comCodeList.code eq resultList[0].occpTyCode}">
-														<c:out value="${fn:replace(comCodeList.codeNm , crlf , '<br/>')}" escapeXml="false" />
+														<c:out value="${fn:replace(comCodeList.codeNm , crlf , '<br/>')}" escapeXml="true" />
 													</c:if>
 												</c:forEach>
                                             </td>
@@ -168,7 +168,7 @@ function fn_egov_delete_QustnrRespondManage(){
                                                 <span class="min">응답자명</span>
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(resultList[0].respondNm , crlf , '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(resultList[0].respondNm , crlf , '<br/>')}" escapeXml="true" />
                                             </td>
                                         </tr> 
                                         
@@ -177,9 +177,9 @@ function fn_egov_delete_QustnrRespondManage(){
                                                 <span class="min">전화번호</span>
                                             </td>
                                             <td>
-                                            	<c:out value="${fn:replace(resultList[0].areaNo , crlf , '<br/>')}" escapeXml="false" />-
-                                            	<c:out value="${fn:replace(resultList[0].middleTelno , crlf , '<br/>')}" escapeXml="false" />-
-                                            	<c:out value="${fn:replace(resultList[0].endTelno , crlf , '<br/>')}" escapeXml="false" />
+                                            	<c:out value="${fn:replace(resultList[0].areaNo , crlf , '<br/>')}" escapeXml="true" />-
+                                            	<c:out value="${fn:replace(resultList[0].middleTelno , crlf , '<br/>')}" escapeXml="true" />-
+                                            	<c:out value="${fn:replace(resultList[0].endTelno , crlf , '<br/>')}" escapeXml="true" />
                                             </td>
                                         </tr> 
                                         

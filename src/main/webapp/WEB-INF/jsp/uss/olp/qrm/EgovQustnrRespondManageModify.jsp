@@ -173,7 +173,7 @@ return  FValue;
                                                     <span class="min">설문지정보</span>
                                                 </td>
                                                 <td>
-                                                	<c:out value="${fn:replace(resultList[0].qestnrSj , crlf , '<br/>')}" escapeXml="false" />
+                                                	<c:out value="${fn:replace(resultList[0].qestnrSj , crlf , '<br/>')}" escapeXml="true" />
                                                 </td>
                                             </tr>
                                         </tr>

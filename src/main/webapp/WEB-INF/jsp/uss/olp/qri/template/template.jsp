@@ -25,7 +25,7 @@
 		<tr>
 			<td class="lb">
 				<label for="">
-					${status1.count}. <c:out value="${fn:replace(QestmInfo.qestnCn , crlf , '<br/>')}" escapeXml="false" />
+					${status1.count}. <c:out value="${fn:replace(QestmInfo.qestnCn , crlf , '<br/>')}" escapeXml="true" />
 					<c:if test="${QestmInfo.mxmmChoiseCo > 1}">
 						<font color="red"><b>(최대선택건수 ${QestmInfo.mxmmChoiseCo})</b></font>
 					</c:if>
@@ -45,11 +45,11 @@
 								<!-- 다중체크구현 로직 -->
 								<c:if test="${QestmInfo.mxmmChoiseCo == '1'}">
 									<input id="rdo1" type="radio" name="${QestmItem.qestnrQesitmId}" value="${QestmItem.qustnrIemId}">
-									<c:out value="${fn:replace(QestmItem.iemCn , crlf , '<br/>')}" escapeXml="false" />
+									<c:out value="${fn:replace(QestmItem.iemCn , crlf , '<br/>')}" escapeXml="true" />
 								</c:if>								
 								<c:if test="${QestmInfo.mxmmChoiseCo > 1}">
 									<input id="rdo1" type="checkbox" name="${QestmItem.qestnrQesitmId}" title="객관식 답변선택 여부" value="${QestmItem.qustnrIemId}" onClick="fn_egov_checkbox_amout('${QestmItem.qestnrQesitmId}', ${QestmInfo.mxmmChoiseCo}, this)">
-									<c:out value="${fn:replace(QestmItem.iemCn , crlf , '<br/>')}" escapeXml="false" />
+									<c:out value="${fn:replace(QestmItem.iemCn , crlf , '<br/>')}" escapeXml="true" />
 								</c:if>
 								<!-- // 다중체크구현 로직 끝 -->
 								
