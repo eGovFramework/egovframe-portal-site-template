@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.com.cmm.EgovWebUtil;
-import org.egovframe.rte.fdl.property.EgovPropertyService;
 
 /**
  * 공통유틸리티성 작업을 위한 Controller 클래스
@@ -28,13 +28,13 @@ import org.egovframe.rte.fdl.property.EgovPropertyService;
  *  ----------   --------   ---------------------------
  *  2009.03.02   JJY        최초 생성
  *  2011.08.31   JJY        경량환경 템플릿 커스터마이징버전 생성
- *  2021.02.23   신용호            moveToPage() 화이트리스트 처리
- *
+ *  2021.02.23   신용호       moveToPage() 화이트리스트 처리
+ *  2023.05.30   박형준       moveToPage() 추가 보완 조치
  *  </pre>
  */
 @Controller
 public class EgovComUtlController {
-
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovComUtlController.class);
 	
 	/** EgovPropertyService */
@@ -47,20 +47,30 @@ public class EgovComUtlController {
 	/**
 	 * JSP 호출작업만 처리하는 공통 함수
 	 */
-	@RequestMapping(value = "/EgovPageLink.do")
-	public String moveToPage(@RequestParam("link") String linkPage, HttpSession session, @RequestParam(value = "menuNo", required = false) String menuNo) {
+	@RequestMapping(value="/EgovPageLink.do")
+	public String moveToPage(@RequestParam(value="linkIndex",required=true,defaultValue="0") Integer linkIndex, 
+			HttpSession session, @RequestParam(value = "menuNo", required = false) String menuNo){
 		
-		String link = linkPage;
+		String link = "";
+		
+		// 화이트 리스트가 비었는지 확인
+		if (egovWhitelist == null || egovWhitelist.isEmpty() || egovWhitelist.size() <= linkIndex) {
+			
+			LOGGER.debug("Page Link WhiteList Error! Please check whitelist!");
+			
+			link="cmm/error/egovError";
+			
+			return link;
+		}
+		
+		link = egovWhitelist.get(linkIndex);
+		
 		link = link.replace(";", "");
+		link = link.replace("%", "");
 		link = link.replace(".", "");
-
-		// service 사용하여 리턴할 결과값 처리하는 부분은 생략하고 단순 페이지 링크만 처리함
-		if (linkPage == null || linkPage.equals("")) {
-			link = "cmm/error/egovError";
-		} else {
-			if(link.indexOf(",")>-1){
-			    link=link.substring(0,link.indexOf(","));
-			}
+		
+		if(link.indexOf(",")>-1){
+		    link=link.substring(0,link.indexOf(","));
 		}
 		
 		// 선택된 메뉴정보를 세션으로 등록한다.
@@ -68,12 +78,6 @@ public class EgovComUtlController {
 			session.setAttribute("menuNo", menuNo);
 		}
 		
-		// 화이트 리스트 처리
-		// whitelist목록에 있는 경우 결과가 true, 결과가 false인경우 FAIL처리
-		if (egovWhitelist.contains(link) == false) {
-			LOGGER.debug("Page Link WhiteList Error! Please check whitelist!"+link);
-			link="cmm/error/egovError";
-		}
 		// 안전한 경로 문자열로 조치
 		link = EgovWebUtil.filePathBlackList(link);
 		
