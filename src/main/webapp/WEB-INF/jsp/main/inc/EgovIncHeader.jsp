@@ -24,7 +24,7 @@
 function fn_egov_modal_create(){
 	
     var $dialog = $('<div id="modalPan"></div>')
-	.html('<iframe style="border: 0px;" src="' + "<c:url value='/EgovPageLink.do'/>?" + "link=main/sample_menu/Intro" +'" width="100%" height="100%"></iframe>')
+	.html('<iframe style="border: 0px;" src="' + "<c:url value='/EgovPageLink.do'/>?" + "linkIndex=" + 7 +'" width="100%" height="100%"></iframe>')
 	.dialog({
     	autoOpen: false,
         modal: true,
@@ -137,18 +137,18 @@ $(document).ready(function(){
                     <div>
                         <h2>사이트소개</h2>
                         <ul>
-                            <li><a href="/pst_webapp/EgovPageLink.do?link=main/sample_menu/EgovAboutSite">사이트소개</a></li>
-                            <li><a href="/pst_webapp/EgovPageLink.do?link=main/sample_menu/EgovHistory">연혁</a></li>
-                            <li><a href="/pst_webapp/EgovPageLink.do?link=main/sample_menu/EgovOrganization">조직소개</a></li>
-                            <li><a href="/pst_webapp/EgovPageLink.do?link=main/sample_menu/EgovLocation">찾아오시는 길</a></li>
+                            <li><a href="/pst_webapp/EgovPageLink.do?linkIndex=3">사이트소개</a></li>
+                            <li><a href="/pst_webapp/EgovPageLink.do?linkIndex=4">연혁</a></li>
+                            <li><a href="/pst_webapp/EgovPageLink.do?linkIndex=5">조직소개</a></li>
+                            <li><a href="/pst_webapp/EgovPageLink.do?linkIndex=6">찾아오시는 길</a></li>
                         </ul>
                     </div>
 
                     <div>
                         <h2>민원광장</h2>
                         <ul>
-                            <li><a href="/pst_webapp/EgovPageLink.do?link=main/sample_menu/EgovServiceManage">민원신청</a></li>
-                            <li><a href="/pst_webapp/EgovPageLink.do?link=main/sample_menu/EgovServiceResult">민원결과확인</a></li>
+                            <li><a href="/pst_webapp/EgovPageLink.do?linkIndex=1">민원신청</a></li>
+                            <li><a href="/pst_webapp/EgovPageLink.do?linkIndex=2">민원결과확인</a></li>
                         </ul>
                     </div>
 

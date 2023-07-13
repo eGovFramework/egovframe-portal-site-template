@@ -133,7 +133,7 @@
                                         <tbody>
                                             <tr>
                                                 <td>2021-06-13</td>
-                                                <td><a href="/pst_webapp/EgovPageLink.do?link=main/sample_menu/EgovServiceIssuance" class="lnk">표준프레임워크 인증서 발급</a></td>
+                                                <td><a href="/pst_webapp/EgovPageLink.do?linkIndex=0" class="lnk">표준프레임워크 인증서 발급</a></td>
                                                 <td>300</td>
                                                 <td>발급대기</td>
                                                 <td>행정안전부</td>
@@ -142,7 +142,7 @@
                                             </tr>
                                             <tr>
                                                 <td>2021-06-13</td>
-                                                <td><a href="/pst_webapp/EgovPageLink.do?link=main/sample_menu/EgovServiceIssuance" class="lnk">표준프레임워크 인증서 발급</a></td>
+                                                <td><a href="/pst_webapp/EgovPageLink.do?linkIndex=0" class="lnk">표준프레임워크 인증서 발급</a></td>
                                                 <td>300</td>
                                                 <td>발급대기</td>
                                                 <td>행정안전부</td>
@@ -151,7 +151,7 @@
                                             </tr>
                                             <tr>
                                                 <td>2021-06-13</td>
-                                                <td><a href="/pst_webapp/EgovPageLink.do?link=main/sample_menu/EgovServiceIssuance" class="lnk">표준프레임워크 인증서 발급</a></td>
+                                                <td><a href="/pst_webapp/EgovPageLink.do?linkIndex=0" class="lnk">표준프레임워크 인증서 발급</a></td>
                                                 <td>300</td>
                                                 <td>발급대기</td>
                                                 <td>행정안전부</td>
