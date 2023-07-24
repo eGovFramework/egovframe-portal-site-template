@@ -229,10 +229,10 @@
                                             </td>
                                             <td>
                                                 <input name="ntceBgnde" type="hidden" value='<c:out value="${result.ntceBgnde}" />'>
-                                                <input type="text" name="searchBgnDe" id="searchBgnDe" class="f_date" maxlength="10" value="${searchVO.searchBgnDe}" title="시작일자입력" />
+                                                <input type="text" name="searchBgnDe" id="searchBgnDe" class="f_date" maxlength="10" value="<c:out value='${searchVO.searchBgnDe}'/>" title="시작일자입력" />
                                                 ~
                                                 <input name="ntceEndde" type="hidden"  value='<c:out value="${result.ntceEndde}" />'>
-                                                <input type="text" name="searchEndDe" id="searchEndDe" class="f_date" maxlength="10" value="${searchVO.searchEndDe}" title="종료일자입력" >
+                                                <input type="text" name="searchEndDe" id="searchEndDe" class="f_date" maxlength="10" value="<c:out value='${searchVO.searchEndDe}'/>" title="종료일자입력" >
                                                 <br/><form:errors path="ntceBgndeView" />
                                                 <br/><form:errors path="ntceEnddeView" />
                                             </td>

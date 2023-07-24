@@ -188,7 +188,7 @@ function fn_egov_save_QustnrItemManage(){
                                 </div>
                                 <!-- 목록/저장버튼  끝-->
 
-								<input name="qustnrIemId" type="hidden" value="${resultList[0].qustnrIemId}">
+								<input name="qustnrIemId" type="hidden" value="<c:out value='${resultList[0].qustnrIemId}'/>">
 								<input name="cmd" type="hidden" value="<c:out value='save'/>">
 								</form:form>
 

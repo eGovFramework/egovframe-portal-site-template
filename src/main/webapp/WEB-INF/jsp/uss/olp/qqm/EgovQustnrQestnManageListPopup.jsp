@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2008.03.09    장동한          최초 생성
-     2011.08.31  JJY       경량환경 버전 생성
+     2008.03.09  장동한           최초 생성
+     2011.08.31  JJY       		경량환경 버전 생성
+     2023.06.09  김신해 			NSR 보안조치 (설문문항 조회 크로스사이트 스크립트 방지)
  
     author   : 공통서비스 개발팀 장동한
     since    : 2009.03.19
@@ -147,7 +148,7 @@ function fn_egov_cancel_popup() {
                     </label>
 
                     <span class="item f_search">
-                        <input class="f_input w_500" type="text" name="searchKeyword" value="${searchVO.searchKeyword}" maxlength="35" title="검색어 입력">
+                        <input class="f_input w_500" type="text" name="searchKeyword" value="<c:out value='${searchVO.searchKeyword}'/>" maxlength="35" title="검색어 입력">
                         <button class="btn" type="submit" onclick="fn_egov_search_QustnrQestnManage(); return false;"><spring:message code="button.inquire" /></button><!-- 조회 -->
                     </span>
 

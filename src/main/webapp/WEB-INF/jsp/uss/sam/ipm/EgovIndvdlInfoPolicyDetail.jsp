@@ -150,7 +150,7 @@ function fn_egov_delete_IndvdlInfoPolicy(){
                                         </tr>
                                     </table>
                                     
-                                    <input name="indvdlInfoId" type="hidden" value="${indvdlInfoPolicy.indvdlInfoId}">
+                                    <input name="indvdlInfoId" type="hidden" value="<c:out value='${indvdlInfoPolicy.indvdlInfoId}'/>">
 									<input name="cmd" type="hidden" value="<c:out value=''/>"/>
 									</form>
                                     
@@ -161,7 +161,7 @@ function fn_egov_delete_IndvdlInfoPolicy(){
                                     <div class="left_col btn3">
                                     	<form name="formDelete" action="<c:url value='/uss/sam/ipm/detailIndvdlInfoPolicy.do'/>" method="post">
                                     		<a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_IndvdlInfoPolicy(); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
-                                    		<input name="indvdlInfoId" type="hidden" value="${indvdlInfoPolicy.indvdlInfoId}">
+                                    		<input name="indvdlInfoId" type="hidden" value="<c:out value='${indvdlInfoPolicy.indvdlInfoId}'/>">
 											<input name="cmd" type="hidden" value="<c:out value='del'/>">
                                     	</form>
                                     </div>
@@ -169,7 +169,7 @@ function fn_egov_delete_IndvdlInfoPolicy(){
                                     <div class="right_col btn1">
                                     	<form name="formUpdt" action="<c:url value='/uss/sam/ipm/updtIndvdlInfoPolicy.do'/>" method="post" style="display: inline;">
                                     		<a href="#LINK" class="btn btn_blue_46 w_100" onclick="fn_egov_modify_IndvdlInfoPolicy(); return false;"><spring:message code="button.update" /></a><!-- 수정 -->
-                                    		<input name="indvdlInfoId" type="hidden" value="${indvdlInfoPolicy.indvdlInfoId}">
+                                    		<input name="indvdlInfoId" type="hidden" value="<c:out value='${indvdlInfoPolicy.indvdlInfoId}'/>">
                                     	</form>
                                     	<form name="formList" action="<c:url value='/uss/sam/ipm/listIndvdlInfoPolicy.do'/>" method="post" style="display: inline; margin-left: 10px;">
                                         	<a href="#LINK" class="btn btn_blue_46 w_100" onclick="fn_egov_list_IndvdlInfoPolicy(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->

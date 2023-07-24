@@ -358,7 +358,7 @@ function press() {
                                                 <td><c:out value="${authorGroup.userNm}"/></td>
                                                 <td>
                                                 	<c:out value="${authorGroup.mberTyNm}"/>
-                                                	<input type="hidden" name="mberTyCode" value="${authorGroup.mberTyCode}"/>
+                                                	<input type="hidden" name="mberTyCode" value="<c:out value="${authorGroup.mberTyCode}"/>"/>
                                                 </td>
                                                 <td>
                                                     <label class="f_select w_130" for="">

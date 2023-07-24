@@ -130,7 +130,7 @@ function fn_egov_delete_QustnrManage(){
                                                 <span class="min">설문제목</span>
                                             </td>
                                             <td>
-                                            	${resultList[0].qestnrSj}
+                                            	<c:out value='${resultList[0].qestnrSj}'/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -166,7 +166,7 @@ function fn_egov_delete_QustnrManage(){
                                                 <span class="min">설문기간</span>
                                             </td>
                                             <td>
-                                                ${resultList[0].qestnrBeginDe}~${resultList[0].qestnrEndDe}
+                                                <c:out value='${resultList[0].qestnrBeginDe}'/>~<c:out value='${resultList[0].qestnrEndDe}'/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -174,13 +174,13 @@ function fn_egov_delete_QustnrManage(){
                                                 <span class="min">템플릿 유형</span>
                                             </td>
                                             <td>
-												${resultList[0].qestnrTmplatTy}
+												<c:out value='${resultList[0].qestnrTmplatTy}'/>
                                                 <img class="vam ml5" src="${pageContext.request.contextPath}/uss/olp/qtm/EgovQustnrTmplatManageImg.do?qestnrTmplatId=${resultList[0].qestnrTmplatId}" align="middle" alt="템플릿유형 이미지" title="템플릿유형 이미지">
                                             </td>
                                         </tr>
                                     </table>
                                     
-                                    <input name="qestnrId" type="hidden" value="${resultList[0].qestnrId}">
+                                    <input name="qestnrId" type="hidden" value="<c:out value='${resultList[0].qestnrId}'/>">
 									<input name="cmd" type="hidden" value="<c:out value=''/>">
 									
 									</form>
@@ -192,11 +192,11 @@ function fn_egov_delete_QustnrManage(){
                                     <div class="left_col btn3">
                                     	<form name="formUpdt" action="<c:url value='/uss/olp/qmc/EgovQustnrManageModify.do'/>" method="post" style="display: inline; margin-right: 10px;">
 	                                        <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_modify_QustnrManage(); return false;"><spring:message code="button.update" /></a><!-- 수정 -->
-	                                        <input name="qestnrId" type="hidden" value="${resultList[0].qestnrId}"/>
+	                                        <input name="qestnrId" type="hidden" value="<c:out value='${resultList[0].qestnrId}'/>"/>
                                         </form>
                                         <form name="formDelete" action="<c:url value='/uss/olp/qmc/EgovQustnrManageDetail.do'/>" method="post" style="display: inline; margin-right: 10px;">
 	                                        <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_QustnrManage(); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
-	                                        <input name="qestnrId" type="hidden" value="${resultList[0].qestnrId}"/>
+	                                        <input name="qestnrId" type="hidden" value="<c:out value='${resultList[0].qestnrId}'/>"/>
 											<input name="cmd" type="hidden" value="del"/>
 										</form>
                                     </div>

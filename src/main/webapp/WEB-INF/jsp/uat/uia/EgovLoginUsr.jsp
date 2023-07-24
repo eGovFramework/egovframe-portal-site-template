@@ -126,7 +126,7 @@ function fnInit() {
                     <div style="visibility:hidden;display:none;">
 		                <input name="iptSubmit1" type="submit" value="전송" title="전송" />
 		            </div> 
-		            <input type="hidden" name="message" value="${message}" />
+		            <input type="hidden" name="message" value="<c:out value='${message}'/>" />
 		            
                         <fieldset>
                             <legend>로그인</legend>

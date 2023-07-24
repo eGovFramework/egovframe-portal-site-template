@@ -6,7 +6,8 @@
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
      2008.03.09    장동한          최초 생성
-     2011.08.31  JJY       경량환경 버전 생성
+     2011.08.31    JJY       	 경량환경 버전 생성
+     2023.06.09    김신해 		 NSR 보안조치 (설문항목 조회 크로스사이트 스크립트 방지)
  
     author   : 공통서비스 개발팀 장동한
     since    : 2009.03.09
@@ -116,7 +117,7 @@ function fn_egov_cancel_popup() {
                     </label>
 
                     <span class="item f_search">
-                        <input class="f_input w_500" name="searchKeyword" type="text" value="${searchKeyword}" title="검색어 입력" maxlength="35" />
+                        <input class="f_input w_500" name="searchKeyword" type="text" value="<c:out value='${searchKeyword}'/>" title="검색어 입력" maxlength="35" />
                         <button class="btn" type="submit" onclick="fn_egov_search_QustnrItemManage(); return false;"><spring:message code="button.inquire" /></button><!-- 조회 -->
                     </span>
                 </div>
@@ -155,14 +156,14 @@ function fn_egov_cancel_popup() {
                                 </td>
                                 <td>${resultInfo.etcAnswerAt}</td>
                                 <td>${resultInfo.frstRegisterNm}</td>
-                                <td>${fn:substring(resultInfo.frstRegisterPnttm, 0, 10)}</td>
+                                <td>${fn:substring(resultInfo.frstRegistPnttm, 0, 10)}</td>
                                 <td>
 	                                <a href="#LINK" class="btn btn_blue_30 w_80" onClick="fn_egov_open_QustnrItemManage('${resultInfo.qestnrId}', '${resultInfo.qestnrTmplatId}', '${resultInfo.qustnrIemId}', '${status.count}')">
 	                                	선택
 	                                </a>
                                 </td>
                                 
-                                <input name="iptText_${status.count}" id="iptText_${status.count}" type="hidden" value="${resultInfo.iemCn}">
+                                <input name="iptText_${status.count}" id="iptText_${status.count}" type="hidden" value="<c:out value='${resultInfo.iemCn}'/>">
                             </tr>
                             </c:forEach>
                             

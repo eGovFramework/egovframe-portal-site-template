@@ -179,11 +179,11 @@ function fn_egov_delete_QustnrItemManage(){
                                     <div class="left_col btn3">
                                         <form name="formUpdt" action="<c:url value='/uss/olp/qim/EgovQustnrItemManageModify.do'/>" method="post" style="display: inline;">
                                         	<a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_modify_QustnrItemManage(); return false;"><spring:message code="button.update" /></a><!-- 수정 -->
-                                        	<input name="qestnrTmplatId" type="hidden" value="${resultList[0].qustnrIemId}"/>
+                                        	<input name="qestnrTmplatId" type="hidden" value="<c:out value="${resultList[0].qustnrIemId}" />"/>
                                         </form>
                                         <form name="formDelete" action="<c:url value='/uss/olp/qim/EgovQustnrItemManageDetail.do'/>" method="post" style="display: inline; margin-left: 10px;">
                                         	<a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_QustnrItemManage(); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
-                                        	<input name="qestnrTmplatId" type="hidden" value="${resultList[0].qustnrIemId}"/>
+                                        	<input name="qestnrTmplatId" type="hidden" value="<c:out value="${resultList[0].qustnrIemId}" />"/>
                                         	<input name="cmd" type="hidden" value="del"/>
                                         </form>
                                     </div>

@@ -363,7 +363,7 @@ function fn_egov_RadioBoxValue(sbName)
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <input name="respondNm" title="응답자명 입력" value="${Emplyrinfo.emplyrNm}" maxlength="50" class="f_txt" type="text" id="">
+                                                <input name="respondNm" title="응답자명 입력" value="<c:out value='${Emplyrinfo.emplyrNm}'/>" maxlength="50" class="f_txt" type="text" id="">
                                             </td>
                                         </tr>
                                     </table>
@@ -444,8 +444,8 @@ function fn_egov_RadioBoxValue(sbName)
                                 <!-- 목록/저장버튼  끝-->
                                 
                                 
-                                <input name="qestnrTmplatId" id="qestnrTmplatId" type="hidden" value="${qestnrTmplatId}">
-								<input name="qestnrId" id="qestnrId" type="hidden" value="${qestnrId}">
+								<input name="qestnrTmplatId" id="qestnrTmplatId" type="hidden" value="<c:out value='${qestnrTmplatId}'/>">
+								<input name="qestnrId" id="qestnrId" type="hidden" value="<c:out value='${qestnrId}'/>">
 								<input name="cmd" type="hidden" value="<c:out value='save'/>">
                                 
                                 <!--// 게시판 -->

@@ -264,7 +264,7 @@ return  FValue;
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <input id="inp11" class="f_txt w_300" name="respondNm" type="text" title="응답자명 입력" size="73" value="${resultList[0].respondNm}" maxlength="50">
+                                                <input id="inp11" class="f_txt w_300" name="respondNm" type="text" title="응답자명 입력" size="73" value="<c:out value='${resultList[0].respondNm}'/>" maxlength="50">
                                                 <form:errors path="respondNm" cssClass="error" />
                                             </td>
                                         </tr>
@@ -274,11 +274,11 @@ return  FValue;
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <input id="phone" name="areaNo" class="f_txt w_80" type="text" title="지역번호 입력" size="4" value="${resultList[0].areaNo}" maxlength="4">
+                                                <input id="phone" name="areaNo" class="f_txt w_80" type="text" title="지역번호 입력" size="4" value="<c:out value='${resultList[0].areaNo}'/>" maxlength="4">
                                                 <span class="f_txt_inner mr5 ml5">-</span>
-                                                <input name="middleTelno" class="f_txt w_80" type="text" title="국번 입력" size="4" value="${resultList[0].middleTelno}" maxlength="4">
+                                                <input name="middleTelno" class="f_txt w_80" type="text" title="국번 입력" size="4" value="<c:out value='${resultList[0].middleTelno}'/>" maxlength="4">
                                                 <span class="f_txt_inner mr5 ml5">-</span>
-                                                <input name="endTelno" class="f_txt w_80" type="text" size="4" title="번호 입력" value="${resultList[0].endTelno}" maxlength="4">
+                                                <input name="endTelno" class="f_txt w_80" type="text" size="4" title="번호 입력" value="<c:out value='${resultList[0].endTelno}'/>" maxlength="4">
                                                 <form:errors path="areaNo" cssClass="error" />
                                                 <form:errors path="middleTelno" cssClass="error" />
                                                 <form:errors path="endTelno" cssClass="error" />
@@ -299,7 +299,7 @@ return  FValue;
                                 </div>
                                 <!-- 목록/저장버튼  끝-->
                                 
-                                <input name="qestnrRespondId" type="hidden" value="${resultList[0].qestnrRespondId}">
+                                <input name="qestnrRespondId" type="hidden" value="<c:out value='${resultList[0].qestnrRespondId}'/>">
                                 <input name="cmd" type="hidden" value="<c:out value='save'/>">
                                 </form:form>
                                 

@@ -140,7 +140,7 @@ function fn_egov_inquire_qnadetail(qaId) {
 										<input type="hidden" name ="nextUrlName" value="QA등록">
 										<input type="hidden" name ="nextUrl" value="/uss/olh/qna/admin/QnaCnRegistView.do">
 										
-										<input type="hidden" name="certificationAt" value="${certificationAt}">
+										<input type="hidden" name="certificationAt" value="<c:out value='${certificationAt}'/>">
 										<input type="hidden" name="loginRealnmAt" value="">
 										
 										<input type="hidden" name="wrterNm" value="">

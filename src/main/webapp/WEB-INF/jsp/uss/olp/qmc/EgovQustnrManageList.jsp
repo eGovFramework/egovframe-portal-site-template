@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2008.03.09    장동한          최초 생성
-     2011.08.31  JJY       경량환경 버전 생성
+     2008.03.09  장동한          최초 생성
+     2011.08.31  JJY       	   경경경량환경 버전 생성
+     2023.06.09  김신해 		   NSR 보안조치 (설문지 검색 크로스사이트 스크립트 방지)
  
     author   : 공통서비스 개발팀 장동한
     since    : 2009.03.09
@@ -179,7 +180,7 @@ function fn_egov_statistics_QustnrQestnManag(qestnrId, qestnrTmplatId){
                                     </label>
 
                                     <span class="item f_search">
-                                        <input class="f_input w_500" name="searchKeyword" type="text" size="30" value="${searchKeyword}" title="검색어 입력" maxlength="35">
+                                        <input class="f_input w_500" name="searchKeyword" type="text" size="30" value="<c:out value='${searchKeyword}'/>" title="검색어 입력" maxlength="35">
                                         <button class="btn" type="submit" onclick="fn_egov_search_QustnrManage(); return false;"><spring:message code="button.inquire" /></button><!-- 검색 -->
                                     </span>
 
@@ -235,56 +236,56 @@ function fn_egov_statistics_QustnrQestnManag(qestnrId, qestnrTmplatId){
                                         	
                                         	<c:forEach items="${resultList}" var="resultInfo" varStatus="status">
                                             <tr>
-                                                <td>${(searchVO.pageIndex-1) * searchVO.pageSize + status.count}</td>
+                                                <td><c:out value='${(searchVO.pageIndex-1) * searchVO.pageSize + status.count}'/></td>
                                                 <td class="al">
                                                 	<form name="subForm" method="post" action="<c:url value='/uss/olp/qmc/EgovQustnrManageDetail.do'/>">
-                                                		<input name="qestnrId" type="hidden" value="${resultInfo.qestnrId}">
+                                                		<input name="qestnrId" type="hidden" value="<c:out value='${resultInfo.qestnrId}'/>">
                                                 		<input name="qestnrTmplatId" type="hidden" value="">
                                                 		<input name="searchMode" type="hidden" value="">
                                                 		<input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>">
                                                 		
-                                                		<a href="#LINK" class="lnk" onclick="fn_egov_detail_QustnrManage('${resultInfo.qestnrId}'); return false;"><c:out value="${resultInfo.qestnrSj}"/></a>
+                                                		<a href="#LINK" class="lnk" onclick="fn_egov_detail_QustnrManage('<c:out value='${resultInfo.qestnrId}'/>'); return false;"><c:out value="${resultInfo.qestnrSj}"/></a>
                                                		</form>  
                                                 </td>
-                                                <td>${resultInfo.qestnrBeginDe} ~ ${resultInfo.qestnrEndDe}</td>
+                                                <td><c:out value='${resultInfo.qestnrBeginDe}'/> ~ <c:out value='${resultInfo.qestnrEndDe}'/></td>
                                                 <td>
                                                 	<form name="subForm" method="post" action="<c:url value='/uss/olp/qrm/EgovQustnrRespondManageList.do'/>">
-                                                		<input name="qestnrId" type="hidden" value="${resultInfo.qestnrId}">
-                                                		<input name="qestnrTmplatId" type="hidden" value="${resultInfo.qestnrTmplatId}">
+                                                		<input name="qestnrId" type="hidden" value="<c:out value='${resultInfo.qestnrId}'/>">
+                                                		<input name="qestnrTmplatId" type="hidden" value="<c:out value='${resultInfo.qestnrTmplatId}'/>">
                                                 		<input name="searchMode" type="hidden" value="Y">
                                                 		
-                                                		<a href="#LINK" class="btn btn_blue_30 w_50" onclick="fn_egov_list_QustnrQestnManag('${resultInfo.qestnrId}','${resultInfo.qestnrTmplatId}','QRM'); return false;">보기</a>
+                                               			<a href="#LINK" class="btn btn_blue_30 w_50" onclick="fn_egov_list_QustnrQestnManag('<c:out value='${resultInfo.qestnrId}'/>','<c:out value='${resultInfo.qestnrTmplatId}'/>','QRM'); return false;">보기</a>
                                                		</form>
                                                 </td>
                                                 <td>
                                                 	<form name="subForm" method="post" action="<c:url value='/uss/olp/qqm/EgovQustnrQestnManageList.do'/>">
-                                                		<input name="qestnrId" type="hidden" value="${resultInfo.qestnrId}">
-                                                		<input name="qestnrTmplatId" type="hidden" value="${resultInfo.qestnrTmplatId}">
+                                                		<input name="qestnrId" type="hidden" value="<c:out value='${resultInfo.qestnrId}'/>">
+                                                		<input name="qestnrTmplatId" type="hidden" value="<c:out value='${resultInfo.qestnrTmplatId}'/>">
                                                 		<input name="searchMode" type="hidden" value="Y">
                                                 		
-                                                		<a href="#LINK" class="btn btn_blue_30 w_50" onclick="fn_egov_list_QustnrQestnManag('${resultInfo.qestnrId}','${resultInfo.qestnrTmplatId}','QQM'); return false;">보기</a>
+                                                		<a href="#LINK" class="btn btn_blue_30 w_50" onclick="fn_egov_list_QustnrQestnManag('<c:out value='${resultInfo.qestnrId}'/>','<c:out value='${resultInfo.qestnrTmplatId}'/>','QQM'); return false;">보기</a>
                                                		</form>
                                                 </td>
                                                 <td>
                                                 	<form name="subForm" method="post" action="<c:url value='/uss/olp/qri/EgovQustnrRespondInfoList.do'/>">
-                                                		<input name="qestnrId" type="hidden" value="${resultInfo.qestnrId}">
-                                                		<input name="qestnrTmplatId" type="hidden" value="${resultInfo.qestnrTmplatId}">
+                                                		<input name="qestnrId" type="hidden" value="<c:out value='${resultInfo.qestnrId}'/>">
+                                                		<input name="qestnrTmplatId" type="hidden" value="<c:out value='${resultInfo.qestnrTmplatId}'/>">
                                                 		<input name="searchMode" type="hidden" value="Y">
                                                 		
-                                                		<a href="#LINK" class="btn btn_blue_30 w_50" onclick="fn_egov_list_QustnrQestnManag('${resultInfo.qestnrId}','${resultInfo.qestnrTmplatId}','QRI'); return false;">보기</a>
+                                                		<a href="#LINK" class="btn btn_blue_30 w_50" onclick="fn_egov_list_QustnrQestnManag('<c:out value='${resultInfo.qestnrId}'/>','<c:out value='${resultInfo.qestnrTmplatId}'/>','QRI'); return false;">보기</a>
                                                		</form>
                                                 </td>
                                                 <td>
                                                 	<form name="subForm" method="post" action="<c:url value='/uss/olp/qnn/EgovQustnrRespondInfoManageStatistics.do'/>">
-                                                		<input name="qestnrId" type="hidden" value="${resultInfo.qestnrId}">
-                                                		<input name="qestnrTmplatId" type="hidden" value="${resultInfo.qestnrTmplatId}">
+                                                		<input name="qestnrId" type="hidden" value="<c:out value='${resultInfo.qestnrId}'/>">
+                                                		<input name="qestnrTmplatId" type="hidden" value="<c:out value='${resultInfo.qestnrTmplatId}'/>">
                                                 		<input name="searchMode" type="hidden" value="">
                                                 		
-                                                		<a href="#LINK" class="btn btn_blue_30 w_50" onclick="fn_egov_statistics_QustnrQestnManag('${resultInfo.qestnrId}','${resultInfo.qestnrTmplatId}'); return false;">보기</a>
+                                                		<a href="#LINK" class="btn btn_blue_30 w_50" onclick="fn_egov_statistics_QustnrQestnManag('<c:out value='${resultInfo.qestnrId}'/>','<c:out value='${resultInfo.qestnrTmplatId}'/>'); return false;">보기</a>
                                                		</form>
                                                 </td>
-                                                <td>${resultInfo.frstRegisterNm}</td>
-                                                <td>${fn:substring(resultInfo.frstRegisterPnttm, 0, 10)}</td>
+                                                <td><c:out value='${resultInfo.frstRegisterNm}'/></td>
+                                                <td>${fn:substring(resultInfo.frstRegistPnttm, 0, 10)}</td>
                                             </tr>
                                             </c:forEach>
                                         </tbody>

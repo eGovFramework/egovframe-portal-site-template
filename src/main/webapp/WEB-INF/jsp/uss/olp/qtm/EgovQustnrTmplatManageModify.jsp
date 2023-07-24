@@ -198,7 +198,7 @@ function fnImgChange(obj){
                                 </div>
                                 <!-- 목록/저장버튼  끝-->
                                 
-                                <input name="qestnrTmplatId" type="hidden" value="${resultList[0].qestnrTmplatId} ">
+                                <input name="qestnrTmplatId" type="hidden" value="<c:out value='${resultList[0].qestnrTmplatId}'/>">
 								<input name="cmd" type="hidden" value="<c:out value='save'/>">
 								</form:form>
                                 

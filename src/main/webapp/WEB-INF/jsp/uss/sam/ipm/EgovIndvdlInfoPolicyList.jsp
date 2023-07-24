@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2008.03.09    장동한          최초 생성
-     2011.08.31  JJY       경량환경 버전 생성
+     2008.03.09  장동한          최초 생성
+     2011.08.31  JJY       	   경량환경 버전 생성
+     2023.06.09  김신해 		   NSR 보안조치 (개인정보보호관리 검색 크로스사이트 스크립트 방지)
  
     author   : 공통서비스 개발팀 장동한
     since    : 2009.03.09
@@ -119,7 +120,7 @@ function fn_egov_search_IndvdlInfoPolicy(){
                                     </label>
 
                                     <span class="item f_search">
-                                        <input id="searchKeyword" class="f_input w_500" name="searchKeyword" title="검색어" type="text" maxlength="35" value="${searchVO.searchKeyword}">
+                                        <input id="searchKeyword" class="f_input w_500" name="searchKeyword" title="검색어" type="text" maxlength="35" value="<c:out value='${searchVO.searchKeyword}'/>">
                                         <button class="btn" type="submit" onclick="fn_egov_search_IndvdlInfoPolicy(); return false;"><spring:message code="button.inquire" /></button><!-- 조회 -->
                                     </span>
 
@@ -172,7 +173,7 @@ function fn_egov_search_IndvdlInfoPolicy(){
                                                 	<form name="subForm" method="post" action="<c:url value='/uss/sam/ipm/detailIndvdlInfoPolicy.do'/>">
                                                 		<c:out value="${resultInfo.indvdlInfoNm}"/>
                                                 		<a href="#LINK" class="btn btn_blue_30 w_80" onclick="fn_egov_detail_IndvdlInfoPolicy('<c:out value="${resultInfo.indvdlInfoId}"/>');">상세보기</a>
-                                                		<input name="indvdlInfoId" type="hidden" value="${resultInfo.indvdlInfoId}">
+                                                		<input name="indvdlInfoId" type="hidden" value="<c:out value='${resultInfo.indvdlInfoId}'/>">
                                                 		<input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>">
                                                 	</form>
                                                 </td>
