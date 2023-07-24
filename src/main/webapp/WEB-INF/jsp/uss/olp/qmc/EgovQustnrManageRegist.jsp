@@ -260,8 +260,8 @@ function fn_egov_init_date(){
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <input type="text" name="qestnrBeginDe" id="qestnrBeginDe" class="f_date" maxlength="10" value="${resultInfo.qestnrBeginDe}" title="시작일자입력" />&nbsp ~ &nbsp
-                                                <input type="text" name="qestnrEndDe" id="qestnrEndDe" class="f_date" maxlength="10" value="${resultInfo.qestnrEndDe}" title="종료일자입력" >
+                                                <input type="text" name="qestnrBeginDe" id="qestnrBeginDe" class="f_date" maxlength="10" value="<c:out value='${resultInfo.qestnrBeginDe}'/>" title="시작일자입력" />&nbsp ~ &nbsp
+                                                <input type="text" name="qestnrEndDe" id="qestnrEndDe" class="f_date" maxlength="10" value="<c:out value='${resultInfo.qestnrEndDe}'/>" title="시작일자입력" title="종료일자입력" >
                                                 <form:errors path="qestnrBeginDe"/>
                                                 <form:errors path="qestnrEndDe"/>
                                             </td>
@@ -275,8 +275,8 @@ function fn_egov_init_date(){
                                             	<c:forEach items="${listQustnrTmplat}" var="resultQustnrTmplat" varStatus="status">
                                                 	<img class="vam mr5" src="<c:url value='/'/>uss/olp/qtm/EgovQustnrTmplatManageImg.do?qestnrTmplatId=${resultQustnrTmplat.qestnrTmplatId}" alt="템플릿유형 이미지" title="템플릿유형 이미지" style="width: 65px; height: 50px;">
 	                                                
-	                                                    <input type="radio" name="qestnrTmplatId" value="${resultQustnrTmplat.qestnrTmplatId}" checked>
-	                                                    ${resultQustnrTmplat.qestnrTmplatTy}
+	                                                    <input type="radio" name="qestnrTmplatId" value="<c:out value='${resultQustnrTmplat.qestnrTmplatId}'/>" checked>
+	                                                    <c:out value='${resultQustnrTmplat.qestnrTmplatTy}'/>
 	                                                
                                                 </c:forEach>
                                             </td>

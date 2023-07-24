@@ -5,8 +5,9 @@
 
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2008.03.09    장동한          최초 생성
-     2011.08.31  JJY       경량환경 버전 생성
+     2008.03.09  장동한           최초 생성
+     2011.08.31  JJY       		경량환경 버전 생성
+     2023.06.09  김신해 			NSR 보안조치 (설문템플릿 검색 크로스사이트 스크립트 방지)
 
     author   : 공통서비스 개발팀 장동한
     since    : 2009.03.09
@@ -142,7 +143,7 @@ function fn_egov_search_QustnrTmplatManage(){
                                     </label>
 
                                     <span class="item f_search">
-                                        <input class="f_input w_500" name="searchKeyword" type="text" size="30" value="${searchKeyword}" maxlength="35" title="검색어 입력" >
+                                        <input class="f_input w_500" name="searchKeyword" type="text" size="30" value="<c:out value='${searchKeyword}'/>" maxlength="35" title="검색어 입력" >
                                         <button class="btn" type="submit" value="<spring:message code="button.inquire" />" onclick="fn_egov_search_QustnrTmplatManage(); return false;">조회</button><!-- 조회 -->
                                     </span>
 
@@ -194,12 +195,12 @@ function fn_egov_search_QustnrTmplatManage(){
                                                 <!-- onLoad="if(this.width>65){this.width=65}" -->
                                                 <td class="al">
                                                 	<form name="subForm" method="post" action="<c:url value='/uss/olp/qtm/EgovQustnrTmplatManageDetail.do'/>">
-	                                                	<input name="qestnrTmplatId" type="hidden" value="${resultInfo.qestnrTmplatId}">
+	                                                	<input name="qestnrTmplatId" type="hidden" value="<c:out value='${resultInfo.qestnrTmplatId}'/>">
 	                                                	<input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>">
 	                                                	<a href="" class="lnk" onclick="fn_egov_detail_QustnrTmplatManage('${resultInfo.qestnrTmplatId}'); return false;"><c:out value="${resultInfo.qestnrTmplatCn}"/></a>
                                                		</form>
                                                 </td>
-                                                <td>${resultInfo.frstRegisterNm}</td>
+                                                <td><c:out value='${resultInfo.frstRegisterNm}'/></td>
                                                 <td>${fn:substring(resultInfo.frstRegisterPnttm, 0, 10)}</td>
                                             </tr>
                                             </c:forEach>

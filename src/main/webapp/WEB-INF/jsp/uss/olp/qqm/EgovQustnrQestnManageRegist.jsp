@@ -150,7 +150,7 @@ function fn_egov_save_QustnrQestnManage(form){
                                             </td>
                                             <td>
                                                 <span class="f_search2 w_350">
-                                                    <input name="qestnrCn" id="qestnrCn" title="설문지정보(제목) 입력" type="text" size="73" value="${qestnrInfo.qestnrSj}" maxlength="2000">
+                                                    <input name="qestnrCn" id="qestnrCn" title="설문지정보(제목) 입력" type="text" size="73" value="<c:out value='${qestnrInfo.qestnrSj}'/>" maxlength="2000">
                                                     <button type="button" class="btn" onClick="javascript:fn_egov_QustnrManageListPopup_QustnrQestnManage(); return false;">조회</button>
                                                     <input name="qestnrTmplatId" id="qestnrTmplatId" type="hidden" value="${qustnrQestnManageVO.qestnrTmplatId}">
                                                     <input name="qestnrId" id="qestnrId" type="hidden" value="${qustnrQestnManageVO.qestnrId}">

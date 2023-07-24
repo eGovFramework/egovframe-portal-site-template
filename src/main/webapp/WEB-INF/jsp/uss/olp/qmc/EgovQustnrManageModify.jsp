@@ -245,8 +245,8 @@ function fn_egov_init_date(){
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <input type="text" name="qestnrBeginDe" id="qestnrBeginDe" class="f_date" maxlength="10" value="${resultInfo.qestnrBeginDe}" title="시작일자입력" />&nbsp ~ &nbsp
-                                                <input type="text" name="qestnrEndDe" id="qestnrEndDe" class="f_date" maxlength="10" value="${resultInfo.qestnrEndDe}" title="종료일자입력" >
+                                                <input type="text" name="qestnrBeginDe" id="qestnrBeginDe" class="f_date" maxlength="10" value="<c:out value='${resultInfo.qestnrBeginDe}'/>" title="시작일자입력" />&nbsp ~ &nbsp
+                                                <input type="text" name="qestnrEndDe" id="qestnrEndDe" class="f_date" maxlength="10" value="<c:out value='${resultInfo.qestnrEndDe}'/>" title="종료일자입력" >
                                                 <form:errors path="qestnrBeginDe"/>
                                                 <form:errors path="qestnrEndDe"/>
                                             </td>
@@ -260,8 +260,8 @@ function fn_egov_init_date(){
                                             	<c:forEach items="${listQustnrTmplat}" var="resultQustnrTmplat" varStatus="status">
                                                 	<img class="vam mr5" src="${pageContext.request.contextPath}/uss/olp/qtm/EgovQustnrTmplatManageImg.do?qestnrTmplatId=${resultQustnrTmplat.qestnrTmplatId}" align="middle" alt="템플릿유형 이미지" title="템플릿유형 이미지" style="width: 65px; height: 50px;">
 	                                                <label for="rdo1" class="mr30 <c:if test="${resultList[0].qestnrTmplatId == resultQustnrTmplat.qestnrTmplatId}"> on</c:if>">
-	                                                    <input id="rdo1" type="radio" name="qestnrTmplatIds" value="${resultQustnrTmplat.qestnrTmplatId}" <c:if test="${resultList[0].qestnrTmplatId == resultQustnrTmplat.qestnrTmplatId}">checked</c:if> disabled />
-	                                                    ${resultQustnrTmplat.qestnrTmplatTy}
+	                                                    <input id="rdo1" type="radio" name="qestnrTmplatIds" value="<c:out value='${resultQustnrTmplat.qestnrTmplatId}'/>" <c:if test="${resultList[0].qestnrTmplatId == resultQustnrTmplat.qestnrTmplatId}">checked</c:if> disabled />
+	                                                    <c:out value='${resultQustnrTmplat.qestnrTmplatTy}'/>
 	                                                </label>
                                                 </c:forEach>
                                             </td>
@@ -281,8 +281,8 @@ function fn_egov_init_date(){
                                 </div>
                                 <!-- 목록/저장버튼  끝-->
                                 
-                                <input name="qestnrTmplatId" type="hidden" value="${resultList[0].qestnrTmplatId}">
-								<input name="qestnrId" type="hidden" value="${resultList[0].qestnrId}">
+								<input name="qestnrTmplatId" type="hidden" value="<c:out value='${resultList[0].qestnrTmplatId}'/>">
+								<input name="qestnrId" type="hidden" value="<c:out value='${resultList[0].qestnrId}'/>">
 								<input name="cmd" type="hidden" value="<c:out value='save'/>">
 								<input type="hidden" name="cal_url" value="<c:url value='/sym/cal/EgovNormalCalPopup.do'/>">
 								

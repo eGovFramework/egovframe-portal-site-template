@@ -175,7 +175,7 @@ function fn_egov_save_IndvdlInfoPolicy(){
                                 </div>
                                 <!-- 목록/저장버튼  끝-->
                                 
-                                <input name="indvdlInfoId" type="hidden" value="${indvdlInfoPolicy.indvdlInfoId}">
+                                <input name="indvdlInfoId" type="hidden" value="<c:out value='${indvdlInfoPolicy.indvdlInfoId}'/>">
 								<input name="cmd" type="hidden" value="<c:out value='save'/>">
 								</form:form>
                                 

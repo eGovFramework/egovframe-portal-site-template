@@ -3,10 +3,11 @@
   Description : 화면상단 Header(include)
   Modification Information
 
-       수정일              수정자         수정내용
+       수정일      수정자         수정내용
     ----------  --------  ---------------------------
     2011.08.31  JJY       경량환경 버전 생성
-    2021.08.12  신용호          신규 디자인 적용
+    2021.08.12  신용호      신규 디자인 적용
+    2023.06.09  이택진      NSR 보안조치 (크로스사이트 스크립트 방지를 위한 출력 코드 수정)
 
     author   : 실행환경개발팀 JJY
     since    : 2011.08.31
@@ -98,7 +99,7 @@ $(document).ready(function(){
 <% }else{ %>
 		<c:set var="loginName" value="<%= loginVO.getName()%>"/>
 	    <div class="top_menu">
-            <span class="t"><span onclick="alert('개인정보 확인 등의 링크 제공'); return false;" style="cursor: pointer;">${loginName}님</span>, 로그인하셨습니다.</span>
+            <span class="t"><span onclick="alert('개인정보 확인 등의 링크 제공'); return false;" style="cursor: pointer;"><c:out value="${loginName}" />님</span>, 로그인하셨습니다.</span>
             <span id="currentDate" class="d"></span>
         </div>
 <% } %>
@@ -255,7 +256,7 @@ $(document).ready(function(){
     <input type="hidden" id="link" name="link" value="" />
     <div style="width:0px; height:0px;">
     <c:forEach var="result" items="${list_menulist}" varStatus="status" >
-        <input type="hidden" name="tmp_menuNm" value="${result.menuNo}|${result.upperMenuId}|${result.menuNm}|${result.relateImagePath}|${result.relateImageNm}|${result.chkURL}|" />
+    	<input type="hidden" name="tmp_menuNm" value="<c:out value='${result.menuNo}'/>|<c:out value='${result.upperMenuId}'/>|<c:out value='${result.menuNm}'/>|<c:out value='${result.relateImagePath}'/>|<c:out value='${result.relateImageNm}'/>|<c:out value='${result.chkURL}'/>|" />
     </c:forEach>
     </div>
 </form>

@@ -218,7 +218,7 @@ function fn_egov_modal_remove() {
                                             </td>
                                             <td>
                                                 <span class="f_search2 w_500">
-                                                    <input name="qustnrIemCn" id="qustnrIemCn" type="text" title="설문문항정보" value="${resultList[0].iemCn}" maxlength="4000">
+                                                    <input name="qustnrIemCn" id="qustnrIemCn" type="text" title="설문문항정보" value="<c:out value='${resultList[0].iemCn}'/>" maxlength="4000">
                                                     <button type="button" class="btn" onClick="fn_egov_QustnrItemManageListPopup_QustnrItemManage()"></button>
                                                     <input name="qustnrIemId" id="qustnrIemId" type="hidden" value="${resultList[0].qustnrIemId}">
                                                 </span>

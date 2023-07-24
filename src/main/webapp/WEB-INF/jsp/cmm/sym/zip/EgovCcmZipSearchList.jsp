@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.04.01   이중호              최초 생성
-     2011.08.31   JJY       경량환경 버전 생성
+     2009.04.01   이중호          최초 생성
+     2011.08.31   JJY       	경량환경 버전 생성
+     2023.06.09   김신해 			NSR 보안조치 (우편번호 조회 크로스사이트 스크립트 방지)
  
     author   : 공통서비스 개발팀 이중호
     since    : 2009.04.01
@@ -93,7 +94,7 @@ function fn_egov_cancel_popup() {
                 <div class="condition2">
                     <label for="" class="lb mr10">동 명 : </label>
                     <span class="item f_search">
-                        <input class="f_input w_500" name="searchKeyword" type="text" value="${searchVO.searchKeyword}" maxlength="20" title="동명"/>
+                        <input class="f_input w_500" name="searchKeyword" type="text" value="<c:out value='${searchVO.searchKeyword}'/>" maxlength="20" title="동명"/>
                         <button class="btn" type="submit" onclick="javascript:fn_egov_search_Zip();"><spring:message code='button.inquire' /></button><!-- 조회 -->
                     </span>
                 </div>

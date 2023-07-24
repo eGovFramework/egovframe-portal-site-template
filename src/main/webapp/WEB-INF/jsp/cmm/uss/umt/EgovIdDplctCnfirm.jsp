@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.03  JJY          최초 생성
+     2009.03.03  JJY       최초 생성
      2011.08.31  JJY       경량환경 버전 생성
+     2023.06.09  이택진 	   NSR 보안조치 (크로스사이트 스크립트 방지를 위한 출력 코드 수정)
  
     author   : 공통서비스 개발팀 JJY
     since    : 2009.03.03
@@ -101,7 +102,7 @@ function fnCheckNotKorean(koreanStr){
             <div class="pop_container">
                 <div class="box_1">
                     <label for="mid">사용할 아이디</label>
-                    <input id="mid" class="f_txt2 ml15" type="text" name="checkId" title="선택여부" value="<c:out value="${checkId}"/>" maxlength="20" />
+                    <input id="mid" class="f_txt2 ml15" type="text" name="checkId" title="선택여부" value="<c:out value='${checkId}'/>" maxlength="20" />
                     <input type="hidden" name="resultId" value="<c:out value="${checkId}"/>" />
                     <input type="hidden" name="usedCnt" value="<c:out value="${usedCnt}"/>" />
                 </div>
@@ -112,10 +113,10 @@ function fnCheckNotKorean(koreanStr){
 	                     	중복확인을 실행하십시오.
 	                </c:when>
 	                <c:when test="${usedCnt eq 0}">
-	                	<span>${checkId}</span> 는 사용가능한 아이디입니다.
+	                	<span><c:out value="${checkId}"/></span> 는 사용가능한 아이디입니다.
 	                </c:when>
 	                <c:otherwise>
-	                	<span>${checkId}</span> 는 사용할수 없는 아이디입니다.
+	                	<span><c:out value="${checkId}"/></span> 는 사용할수 없는 아이디입니다.
 	                </c:otherwise>
 	                </c:choose>
                 </p>

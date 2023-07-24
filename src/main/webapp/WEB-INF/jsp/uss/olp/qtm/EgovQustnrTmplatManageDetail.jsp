@@ -127,7 +127,7 @@ function fn_egov_delete_QustnrTmplatManage(){
                                                 <span class="min">템플릿유형</span>
                                             </td>
                                             <td>
-                                            	${resultList[0].qestnrTmplatTy}
+                                            	<c:out value='${resultList[0].qestnrTmplatTy}'/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -155,12 +155,12 @@ function fn_egov_delete_QustnrTmplatManage(){
                                                 <span class="min">템플릿파일(경로)</span>
                                             </td>
                                             <td>
-                                                ${resultList[0].qestnrTmplatCours}
+                                                <c:out value='${resultList[0].qestnrTmplatCours}'/>
                                             </td>
                                         </tr>
                                     </table>
                                     
-                                    <input name="qestnrTmplatId" type="hidden" value="${resultList[0].qestnrTmplatId}">
+                                    <input name="qestnrTmplatId" type="hidden" value="<c:out value='${resultList[0].qestnrTmplatId}'/>">
 									<input name="cmd" type="hidden" value="">
 									<div style="visibility:hidden;display:none;"><input name="iptSubmit" type="submit" value="전송" title="전송"></div>
 									</form>
@@ -172,11 +172,11 @@ function fn_egov_delete_QustnrTmplatManage(){
                                     <div class="left_col btn3">
                                         <form name="formUpdt" action="<c:url value='/uss/olp/qtm/EgovQustnrTmplatManageModify.do'/>" method="post" style="display: inline;">
                                         	<a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_modify_QustnrTmplatManage(); return false;"><spring:message code="button.update" /></a><!-- 수정 -->
-                                        	<input name="qestnrTmplatId" type="hidden" value="${resultList[0].qestnrTmplatId}" />
+                                        	<input name="qestnrTmplatId" type="hidden" value="<c:out value='${resultList[0].qestnrTmplatId}'/>" />
                                        	</form>
                                         <form name="formDelete" action="<c:url value='/uss/olp/qtm/EgovQustnrTmplatManageDetail.do'/>" method="post" style="display: inline; margin-left: 10px;">
                                         	<a href="" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_QustnrTmplatManage(); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
-                                        	<input name="qestnrTmplatId" type="hidden" value="${resultList[0].qestnrTmplatId}" />
+                                        	<input name="qestnrTmplatId" type="hidden" value="<c:out value='${resultList[0].qestnrTmplatId}'/>" />
                                         	<input name="cmd" type="hidden" value="del">
                                         </form>
                                     </div>

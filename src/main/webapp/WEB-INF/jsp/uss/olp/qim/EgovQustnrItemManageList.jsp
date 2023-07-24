@@ -6,7 +6,8 @@
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
      2008.03.09    장동한          최초 생성
-     2011.08.31  JJY       경량환경 버전 생성
+     2011.08.31    JJY       	 경량환경 버전 생성
+     2023.06.09    김신해 		 NSR 보안조치 (설문항목 검색 크로스사이트 스크립트 방지)
  
     author   : 공통서비스 개발팀 장동한
     since    : 2009.03.09
@@ -156,7 +157,7 @@ function fn_egov_list_QustnrQestnManag(qestnrId, qestnrTmplatId){
                                     </label>
 
                                     <span class="item f_search">
-                                        <input class="f_input w_500" name="searchKeyword" type="text" size="30" value="${searchKeyword}" maxlength="35" title="검색어 입력" />
+                                        <input class="f_input w_500" name="searchKeyword" type="text" size="30" value="<c:out value='${searchKeyword}'/>" maxlength="35" title="검색어 입력" />
                                         <button class="btn" type="submit" onclick="fn_egov_search_QustnrItemManage(); return false;"><spring:message code="button.inquire" /></button><!-- 조회 -->
                                     </span>
 
@@ -194,10 +195,10 @@ function fn_egov_list_QustnrQestnManag(qestnrId, qestnrTmplatId){
                                             <c:forEach items="${resultList}" var="resultInfo" varStatus="status">
                                             <tr>
                                                 <td>${(searchVO.pageIndex-1) * searchVO.pageSize + status.count}</td>
-                                                <td class="al"><a href="#LINK" class="lnk" onclick="fn_egov_detail_QustnrItemManage('${resultInfo.qustnrIemId}'); return false;"><c:out value="${resultInfo.iemCn}"/></a></td>
+                                                <td class="al"><a href="#LINK" class="lnk" onclick="fn_egov_detail_QustnrItemManage('<c:out value="${resultInfo.qustnrIemId}"/>'); return false;"><c:out value="${resultInfo.iemCn}"/></a></td>
                                                 <td>${resultInfo.etcAnswerAt}</td>
                                                 <td>${resultInfo.frstRegisterNm}</td>
-                                                <td>${fn:substring(resultInfo.frstRegisterPnttm, 0, 10)}</td>
+                                                <td>${fn:substring(resultInfo.frstRegistPnttm, 0, 10)}</td>
                                             </tr>
                                             </c:forEach>
                                         </tbody>
