@@ -140,7 +140,7 @@ function fn_egov_check_file(flag) {
                                 <!--// Location -->
 
 								<!-- 상단타이틀 파일첨부를 위한 폼명 및 Enctype 설정-->
-								<form:form modelAttribute="faqManageVO" name="faqManageVO" action="${pageContext.request.contextPath}/uss/olh/faq/FaqCnUpdt.do" method="post" enctype="multipart/form-data">
+								<form:form modelAttribute="faqManageVO" name="faqManageVO" action="${pageContext.request.contextPath}/uss/olh/faq/FaqCnUpdt.do" method="post" enctype="multipart/form-data" onsubmit="return false">
 								<!-- FaqCnUpdtView.do Call을 위한 처리-->
 								<input name="faqId" type="hidden" value="<c:out value='${result.faqId}'/>">
 								<!-- 첨부파일을 위한 Hidden -->

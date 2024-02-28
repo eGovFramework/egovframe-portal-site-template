@@ -114,8 +114,6 @@ public class EgovLoginController {
 			} else {
 				throw new IllegalStateException("No AuthenticationProcessingFilter");
 			}
-
-        	springSecurity.setContinueChainBeforeSuccessfulAuthentication(false);	// false 이면 chain 처리 되지 않음.. (filter가 아닌 경우 false로...)
         	
         	springSecurity.doFilter(new RequestWrapperForSecurity(request, resultVO.getUserSe() + resultVO.getId() , resultVO.getUniqId()), response, null);
         	
