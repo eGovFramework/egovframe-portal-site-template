@@ -148,7 +148,7 @@
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="board" name="board" method="post" enctype="multipart/form-data" >
+								<form:form modelAttribute="board" name="board" method="post" enctype="multipart/form-data" onsubmit="return false" >
             
 								<input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>"/>
 								<input type="hidden" name="bbsId" value="<c:out value='${bdMstr.bbsId}'/>" />

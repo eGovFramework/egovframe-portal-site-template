@@ -66,7 +66,7 @@
        		ORDER BY a.ROLE_SORT"
 
        sqlRegexMatchedRequestMapping="
-       		SELECT a.resource_pattern uri, b.authority authority
+       		SELECT a.ROLE_PTTRN uri, b.AUTHOR_CODE authority
        		FROM LETTNROLEINFO a, LETTNAUTHORROLERELATE b
        		WHERE a.ROLE_CODE = b.ROLE_CODE AND a.ROLE_TY = 'regex'
        		ORDER BY a.ROLE_SORT"

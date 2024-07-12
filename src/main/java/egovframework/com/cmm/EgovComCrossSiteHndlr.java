@@ -24,7 +24,7 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
  * </pre>
  */
 public class EgovComCrossSiteHndlr extends BodyTagSupport {
-
+	
 	public static final int HIGHEST_SPECIAL = '>';
 	public static char[][] specialCharactersRepresentation = new char[HIGHEST_SPECIAL + 1][];
 	static {
@@ -34,7 +34,7 @@ public class EgovComCrossSiteHndlr extends BodyTagSupport {
 	    specialCharactersRepresentation['"'] = "&#034;".toCharArray();
 	    specialCharactersRepresentation['\''] = "&#039;".toCharArray();
 	}
-	
+
 	/*
 	 * (One almost wishes XML and JSP could support "anonymous tags," given the
 	 * amount of trouble we had naming this one!) :-) - sb

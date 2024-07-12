@@ -160,7 +160,7 @@
                                 <!--// Location -->
 
 								
-								<form:form modelAttribute="board" name="board" method="post" enctype="multipart/form-data" >
+								<form:form modelAttribute="board" name="board" method="post" enctype="multipart/form-data" onsubmit="return false" >
 								<input type="hidden" name="pageIndex" value="<c:out value='${searchVO.pageIndex}'/>"/>
 								<input type="hidden" name="returnUrl" value="<c:url value='/cop/bbs/admin/forUpdateBoardArticle.do'/>"/>
 								
