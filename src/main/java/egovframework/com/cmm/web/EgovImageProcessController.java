@@ -31,12 +31,15 @@ import egovframework.com.cmm.service.FileVO;
  * @Class Name : EgovImageProcessController.java
  * @Description :
  * @Modification Information
- *
+ * 
+ *               <pre>
  *    수정일       수정자         수정내용
  *    -------        -------     -------------------
  *    2009. 4. 2.     이삼섭
  *    2011.08.31.     JJY        경량환경 템플릿 커스터마이징버전 생성
- *
+ *   2024.08.10  이백행          이클립스 문제(Problems) 제거
+ *               </pre>
+ * 
  * @author 공통 서비스 개발팀 이삼섭
  * @since 2009. 4. 2.
  * @version
@@ -47,19 +50,19 @@ import egovframework.com.cmm.service.FileVO;
 public class EgovImageProcessController extends HttpServlet {
 
 	/**
-	 *  serialVersion UID
+	 * serialVersion UID
 	 */
 	private static final long serialVersionUID = -6339945210971171173L;
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovImageProcessController.class);
 
 	@Resource(name = "EgovFileMngService")
 	private EgovFileMngService fileService;
-	
+
 	/** 암호화서비스 */
 	@Resource(name = "egovARIACryptoService")
 	EgovCryptoService cryptoService;
-	
+
 	// 주의 : 반드시 기본값 "egovframe"을 다른것으로 변경하여 사용하시기 바랍니다.
 	public static final String ALGORITHM_KEY = EgovProperties.getProperty("Globals.File.algorithmKey");
 
@@ -73,9 +76,9 @@ public class EgovImageProcessController extends HttpServlet {
 	 * @param response
 	 * @throws Exception
 	 */
-	@SuppressWarnings("resource")
 	@RequestMapping("/cmm/fms/getImage.do")
-	public void getImageInf(SessionVO sessionVO, ModelMap model, @RequestParam Map<String, Object> commandMap, HttpServletResponse response) throws Exception {
+	public void getImageInf(SessionVO sessionVO, ModelMap model, @RequestParam Map<String, Object> commandMap,
+			HttpServletResponse response) throws Exception {
 
 		String param_atchFileId = (String) commandMap.get("atchFileId");
 		param_atchFileId = param_atchFileId.replaceAll(" ", "+");
@@ -91,10 +94,10 @@ public class EgovImageProcessController extends HttpServlet {
 		vo.setFileSn(fileSn);
 
 		FileVO fvo = fileService.selectFileInf(vo);
-		
+
 		String fileStreCours = EgovWebUtil.filePathBlackList(fvo.getFileStreCours());
 		String streFileNm = EgovWebUtil.filePathBlackList(fvo.getStreFileNm());
-		
+
 		File file = new File(fileStreCours, streFileNm);
 		FileInputStream fis = null;
 //		new FileInputStream(file);
