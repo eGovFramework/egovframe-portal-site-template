@@ -2,12 +2,11 @@ package egovframework.let.cop.bbs.service.impl;
 
 import java.util.List;
 
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
+import org.springframework.stereotype.Repository;
+
 import egovframework.let.cop.bbs.service.BoardMaster;
 import egovframework.let.cop.bbs.service.BoardMasterVO;
-
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
-
-import org.springframework.stereotype.Repository;
 
 /**
  * 게시판 속성정보 관리를 위한 데이터 접근 클래스
@@ -24,6 +23,7 @@ import org.springframework.stereotype.Repository;
  *  -------    --------    ---------------------------
  *  2009.03.12  이삼섭          최초 생성
  *  2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2024.08.10  이백행          이클립스 문제(Problems) 제거
  *
  *      </pre>
  */
@@ -62,9 +62,8 @@ public class BBSAttributeManageDAO extends EgovAbstractMapper {
 	 *
 	 * @param BoardMasterVO
 	 */
-	@SuppressWarnings("unchecked")
 	public List<BoardMasterVO> selectBBSMasterInfs(BoardMasterVO vo) throws Exception {
-		return (List<BoardMasterVO>) list("BBSAttributeManageDAO.selectBBSMasterInfs", vo);
+		return selectList("BBSAttributeManageDAO.selectBBSMasterInfs", vo);
 	}
 
 	/**
@@ -103,10 +102,9 @@ public class BBSAttributeManageDAO extends EgovAbstractMapper {
 	 * @return
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
 	public List<BoardMasterVO> selectAllBBSMasteInf(BoardMasterVO vo) throws Exception {
 		// 커뮤니티, 동호회의 게시판이 나오지 않도록 LETTNBBSUSE 테이블과 Join 필요
-		return (List<BoardMasterVO>) list("BBSAttributeManageDAO.selectAllBBSMaster", vo);
+		return selectList("BBSAttributeManageDAO.selectAllBBSMaster", vo);
 	}
 
 	/**
@@ -114,9 +112,8 @@ public class BBSAttributeManageDAO extends EgovAbstractMapper {
 	 *
 	 * @param BoardMasterVO
 	 */
-	@SuppressWarnings("unchecked")
 	public List<BoardMasterVO> selectBdMstrListByTrget(BoardMasterVO vo) throws Exception {
-		return (List<BoardMasterVO>) list("BBSAttributeManageDAO.selectBdMstrListByTrget", vo);
+		return selectList("BBSAttributeManageDAO.selectBdMstrListByTrget", vo);
 	}
 
 	/**
@@ -137,9 +134,8 @@ public class BBSAttributeManageDAO extends EgovAbstractMapper {
 	 * @return
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
 	public List<BoardMasterVO> selectAllBdMstrByTrget(BoardMasterVO vo) throws Exception {
-		return (List<BoardMasterVO>) list("BBSAttributeManageDAO.selectAllBdMstrByTrget", vo);
+		return selectList("BBSAttributeManageDAO.selectAllBdMstrByTrget", vo);
 	}
 
 	/**
@@ -147,9 +143,8 @@ public class BBSAttributeManageDAO extends EgovAbstractMapper {
 	 *
 	 * @param BoardMasterVO
 	 */
-	@SuppressWarnings("unchecked")
 	public List<BoardMasterVO> selectNotUsedBdMstrList(BoardMasterVO vo) throws Exception {
-		return (List<BoardMasterVO>) list("BBSAttributeManageDAO.selectNotUsedBdMstrList", vo);
+		return selectList("BBSAttributeManageDAO.selectNotUsedBdMstrList", vo);
 	}
 
 	/**
