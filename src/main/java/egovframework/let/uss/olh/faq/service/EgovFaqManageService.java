@@ -29,8 +29,11 @@ public interface EgovFaqManageService {
 	 * 
 	 * @param vo
 	 * @return 조회한 글
+	 * @throws Exception
 	 */
-	FaqManageVO selectFaqListDetail(FaqManageVO vo);
+	FaqManageVO selectFaqListDetail(FaqManageVO vo) throws Exception;
+// TODO: 실행환경EgovAbstractServiceImpl에 모든 Exception을 EgovBizException으로 수정하면 좋을 것 같음. BaseRuntimeException으로 수정하면 어떨까요?
+//	FaqManageVO selectFaqListDetail(FaqManageVO vo) throws EgovBizException;
 
 	/**
 	 * 조회수를 수정한다.

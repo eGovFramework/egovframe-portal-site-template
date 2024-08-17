@@ -49,10 +49,16 @@ public class EgovFaqManageServiceImpl extends EgovAbstractServiceImpl implements
 	 * 
 	 * @param vo - 조회할 정보가 담긴 FaqManageVO
 	 * @return 조회한 글
+	 * @throws Exception
 	 */
 	@Override
-	public FaqManageVO selectFaqListDetail(FaqManageVO vo) {
-		return faqManageDAO.selectFaqListDetail(vo);
+	public FaqManageVO selectFaqListDetail(FaqManageVO vo) throws Exception {
+// TODO: 실행환경EgovAbstractServiceImpl에 모든 Exception을 EgovBizException으로 수정하면 좋을 것 같음. BaseRuntimeException으로 수정하면 어떨까요?
+//	public FaqManageVO selectFaqListDetail(FaqManageVO vo) throws EgovBizException {
+		FaqManageVO resultVO = faqManageDAO.selectFaqListDetail(vo);
+		if (resultVO == null)
+			throw processException("info.nodata.msg");
+		return resultVO;
 	}
 
 	/**
