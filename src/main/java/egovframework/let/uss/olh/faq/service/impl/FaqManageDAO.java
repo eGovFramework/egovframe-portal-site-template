@@ -23,8 +23,9 @@ import egovframework.let.uss.olh.faq.service.FaqManageVO;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.04.01  박정규          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
  *   2024.08.10  이백행          이클립스 문제(Problems) 제거
+ *   2024.08.20  이백행          시큐어코딩 Exception 제거
  *
  *      </pre>
  */
@@ -36,9 +37,8 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * 
 	 * @param vo
 	 * @return 조회한 글
-	 * @exception Exception
 	 */
-	public FaqManageVO selectFaqListDetail(FaqManageVO vo) throws Exception {
+	public FaqManageVO selectFaqListDetail(FaqManageVO vo) {
 
 		return (FaqManageVO) selectOne("FaqManageDAO.selectFaqListDetail", vo);
 
@@ -48,9 +48,8 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * FAQ 조회수를 수정한다.
 	 * 
 	 * @param vo
-	 * @exception Exception
 	 */
-	public void updateFaqInqireCo(FaqManageVO vo) throws Exception {
+	public void updateFaqInqireCo(FaqManageVO vo) {
 
 		update("FaqManageDAO.updateFaqInqireCo", vo);
 
@@ -61,9 +60,8 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * 
 	 * @param searchVO
 	 * @return 글 목록
-	 * @exception Exception
 	 */
-	public List<?> selectFaqList(FaqManageDefaultVO searchVO) throws Exception {
+	public List<?> selectFaqList(FaqManageDefaultVO searchVO) {
 
 		return selectList("FaqManageDAO.selectFaqList", searchVO);
 
@@ -85,9 +83,8 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * FAQ 글을 등록한다.
 	 * 
 	 * @param vo
-	 * @exception Exception
 	 */
-	public void insertFaqCn(FaqManageVO vo) throws Exception {
+	public void insertFaqCn(FaqManageVO vo) {
 
 		insert("FaqManageDAO.insertFaqCn", vo);
 
@@ -97,9 +94,8 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * FAQ 글을 수정한다.
 	 * 
 	 * @param vo
-	 * @exception Exception
 	 */
-	public void updateFaqCn(FaqManageVO vo) throws Exception {
+	public void updateFaqCn(FaqManageVO vo) {
 
 		update("FaqManageDAO.updateFaqCn", vo);
 
@@ -109,9 +105,8 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * FAQ 글을 삭제한다.
 	 * 
 	 * @param vo
-	 * @exception Exception
 	 */
-	public void deleteFaqCn(FaqManageVO vo) throws Exception {
+	public void deleteFaqCn(FaqManageVO vo) {
 
 		delete("FaqManageDAO.deleteFaqCn", vo);
 
