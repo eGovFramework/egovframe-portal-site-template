@@ -110,7 +110,7 @@ $(document).ready(function(){
 		<div class="gnb">
 			<ul>
 		    	<c:forEach var="result" items="${list_headmenu}" varStatus="status">
-		    	<li><a href="#LINK" onclick="javascript:goMenuPage('<c:out value="${result.menuNo}"/>')" class='<c:if test="${result.menuOrdr >= 5}">manager</c:if>'><c:out value="${result.menuNm}"/></a></li>
+		    	<li><a href="" onclick="goMenuPage('<c:out value="${result.menuNo}" />');" class='<c:if test="${result.menuOrdr >= 5}">manager</c:if>'><c:out value="${result.menuNm}"/></a></li>
 		        </c:forEach>
 		    </ul>
 		</div>
@@ -243,10 +243,19 @@ $(document).ready(function(){
         }
     }
     function goMenuPage(menuNo){
+        event.preventDefault();
         document.getElementById("menuNo").value=menuNo;
         //document.getElementById("link").value=getLastLink(menuNo);
-        document.menuListForm.action = "<c:url value='/'/>"+getLastLink(menuNo).substring(1);
-        document.menuListForm.submit();
+//         document.menuListForm.action = "<c:url value='/'/>"+getLastLink(menuNo).substring(1);
+//         document.menuListForm.submit();
+        var link = '<c:url value="/" />' + getLastLink(menuNo).substring(1);
+        if (link.indexOf('?') === -1) {
+            link = link + '?';
+        } else {
+            link = link + '&';
+        }
+        link = link + 'menuNo=' + menuNo;
+        location.href = link;
     }
   //-->
 </script>
