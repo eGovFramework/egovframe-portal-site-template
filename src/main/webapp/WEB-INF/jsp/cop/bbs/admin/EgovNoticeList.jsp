@@ -5,9 +5,10 @@
 
        수정일              수정자             수정내용
     ----------  ---------   ---------------------------
-    2009.03.19  이삼섭             최초 생성
-    2011.08.31  JJY         경량환경 버전 생성
-    2021.08.12  신용호              신규 디자인 적용
+    2009.03.19  이삼섭          최초 생성
+    2011.08.31  JJY           경량환경 버전 생성
+    2021.08.12  신용호          신규 디자인 적용
+    2024.08.24  이백행          요청 메서드 정리
 
     author   : 공통서비스 개발팀 이삼섭
     since    : 2009.03.19
@@ -101,7 +102,7 @@
 								<!-- 검색조건 -->
 								<div class="condition">
 								
-									<form name="frm" action="<c:url value='/cop/bbs${prefix}/admin/selectBoardList.do'/>" method="post">
+									<form name="frm" action="<c:url value='/cop/bbs${prefix}/admin/selectBoardList.do'/>" method="get">
 										<input type="hidden" name="bbsId" value="<c:out value='${boardVO.bbsId}'/>" />
 										<input type="hidden" name="nttId" value="0" />
 										<input type="hidden" name="bbsTyCode" value="<c:out value='${brdMstrVO.bbsTyCode}'/>" />
@@ -121,7 +122,7 @@
 											<button class="btn" type="submit" onclick="fn_egov_select_noticeList('1'); return false;"><spring:message code='button.inquire' /></button><!-- 조회 -->
 										</span>
 										<c:if test="${brdMstrVO.authFlag == 'Y'}">
-											<a href="<c:url value='/cop/bbs${prefix}/admin/addBoardArticle.do?bbsId=${boardVO.bbsId}'/>" class="item btn btn_blue_46 w_100"><spring:message code="button.create" /></a><!-- 등록 -->
+											<a href="<c:url value="/cop/bbs${prefix}/admin/addBoardArticle.do" />?bbsId=<c:out value="${boardVO.bbsId}" />&searchCnd=<c:out value="${boardVO.searchCnd}" />&searchWrd=<c:out value="${boardVO.searchWrd}" />&pageIndex=<c:out value="${boardVO.pageIndex}" />" class="item btn btn_blue_46 w_100"><spring:message code="button.create" /></a><!-- 등록 -->
 										</c:if>
 									
 									</form>
@@ -172,7 +173,7 @@
 												<tr>
 													<td><c:out value="${paginationInfo.totalRecordCount+1 - ((searchVO.pageIndex-1) * searchVO.pageSize + status.count)}" /></td>
 													<td class="al">
-														<form name="subForm" method="post" action="<c:url value='/cop/bbs${prefix}/admin/selectBoardArticle.do'/>">
+														<form name="subForm" method="get" action="<c:url value='/cop/bbs${prefix}/admin/selectBoardArticle.do'/>">
 															<c:if test="${result.replyLc!=0}">
 																<c:forEach begin="0" end="${result.replyLc}" step="1">
 																	&nbsp;
@@ -189,6 +190,8 @@
 																	<input type="hidden" name="bbsTyCode" value="<c:out value='${brdMstrVO.bbsTyCode}'/>" />
 																	<input type="hidden" name="bbsAttrbCode" value="<c:out value='${brdMstrVO.bbsAttrbCode}'/>" />
 																	<input type="hidden" name="authFlag" value="<c:out value='${brdMstrVO.authFlag}'/>" />
+																	<input type="hidden" name="searchCnd" value="<c:out value="${searchVO.searchCnd}" />">
+																	<input type="hidden" name="searchWrd" value="<c:out value="${searchVO.searchWrd}" />">
 																	<input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>" />
 																	<a href="javascript:;" onclick="parentNode.submit();" class="lnk">
 																		<c:out value="${result.nttSj}" />

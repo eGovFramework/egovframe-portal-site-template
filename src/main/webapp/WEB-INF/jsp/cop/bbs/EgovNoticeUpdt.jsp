@@ -50,6 +50,7 @@
 	}
 
 	function fn_egov_regist_notice(){
+		event.preventDefault();
 		//document.board.onsubmit();
 
 		if (!validateBoard(document.board)){
@@ -63,7 +64,9 @@
 	}	
 	
 	function fn_egov_select_noticeList() {
+		event.preventDefault();
 		document.board.action = "<c:url value='/cop/bbs${prefix}/selectBoardList.do'/>";
+		document.board.method = 'get';
 		document.board.submit();	
 	}
 	
@@ -160,6 +163,8 @@
 
 								
 								<form:form modelAttribute="board" name="board" method="post" enctype="multipart/form-data" onsubmit="return false" >
+								<input type="hidden" name="searchCnd" value="<c:out value="${searchVO.searchCnd}" />">
+								<input type="hidden" name="searchWrd" value="<c:out value="${searchVO.searchWrd}" />">
 								<input type="hidden" name="pageIndex" value="<c:out value='${searchVO.pageIndex}'/>"/>
 								<input type="hidden" name="returnUrl" value="<c:url value='/cop/bbs/forUpdateBoardArticle.do'/>"/>
 								
@@ -320,10 +325,10 @@
                                     <div class="right_col btn1">
                                    	<c:if test="${bdMstr.authFlag == 'Y'}">
                    						<c:if test="${result.frstRegisterId == searchVO.frstRegisterId}">
-                                       	<a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fn_egov_regist_notice(); return false;"><spring:message code='button.save' /></a><!-- 저장 -->
+                                       	<a href="" class="btn btn_blue_46 w_100" onclick="fn_egov_regist_notice();"><spring:message code='button.save' /></a><!-- 저장 -->
                                        	</c:if>
                						</c:if>
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fn_egov_select_noticeList(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fn_egov_select_noticeList();"><spring:message code="button.list" /></a><!-- 목록 -->
                                     </div>
                                 </div>
                                 <!-- 목록/저장버튼  끝-->
