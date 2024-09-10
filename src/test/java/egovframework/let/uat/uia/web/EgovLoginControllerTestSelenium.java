@@ -45,7 +45,9 @@ class EgovLoginControllerTestSelenium {
 		}
 
 		// given
-		// 로그인 화면 이동
+		if (log.isDebugEnabled()) {
+			log.debug("로그인 화면 이동");
+		}
 		driver.get("http://localhost:8080/pst_webapp/uat/uia/egovLoginUsr.do");
 
 		final JavascriptExecutor executor = (JavascriptExecutor) driver;
