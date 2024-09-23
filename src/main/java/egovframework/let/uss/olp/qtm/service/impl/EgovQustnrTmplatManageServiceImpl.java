@@ -3,8 +3,6 @@ package egovframework.let.uss.olp.qtm.service.impl;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Service;
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.uss.olp.qtm.service.EgovQustnrTmplatManageService;
 import egovframework.let.uss.olp.qtm.service.QustnrTmplatManageVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 설문템플릿 ServiceImpl Class 구현
@@ -27,19 +26,24 @@ import egovframework.let.uss.olp.qtm.service.QustnrTmplatManageVO;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.03.20  장동한          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.24  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
-@Service("egovQustnrTmplatManageService")
+//@Service("egovQustnrTmplatManageService")
+@Service
+@RequiredArgsConstructor
 public class EgovQustnrTmplatManageServiceImpl extends EgovAbstractServiceImpl
 		implements EgovQustnrTmplatManageService {
 
-	@Resource(name = "qustnrTmplatManageDao")
-	private QustnrTmplatManageDao dao;
+//	@Resource(name = "qustnrTmplatManageDao")
+//	private QustnrTmplatManageDao dao;
+	private final QustnrTmplatManageDao dao;
 
-	@Resource(name = "egovQustnrTmplatManageIdGnrService")
-	private EgovIdGnrService idgenService;
+//	@Resource(name = "egovQustnrTmplatManageIdGnrService")
+//	private EgovIdGnrService idgenService;
+	private final EgovIdGnrService egovQustnrTmplatManageIdGnrService;
 
 	/**
 	 * 템플릿파일명을 조회한다.
@@ -98,7 +102,7 @@ public class EgovQustnrTmplatManageServiceImpl extends EgovAbstractServiceImpl
 	 */
 	@Override
 	public void insertQustnrTmplatManage(QustnrTmplatManageVO qustnrTmplatManageVO) throws Exception {
-		String sMakeId = idgenService.getNextStringId();
+		String sMakeId = egovQustnrTmplatManageIdGnrService.getNextStringId();
 
 		qustnrTmplatManageVO.setQestnrTmplatId(sMakeId);
 
