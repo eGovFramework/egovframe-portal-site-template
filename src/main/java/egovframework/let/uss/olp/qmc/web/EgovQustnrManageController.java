@@ -2,7 +2,6 @@ package egovframework.let.uss.olp.qmc.web;
 
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
@@ -10,7 +9,6 @@ import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -26,6 +24,7 @@ import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.service.EgovCmmUseService;
 import egovframework.let.uss.olp.qmc.service.EgovQustnrManageService;
 import egovframework.let.uss.olp.qmc.service.QustnrManageVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 설문관리를 처리하는 Controller Class 구현
@@ -46,26 +45,22 @@ import egovframework.let.uss.olp.qmc.service.QustnrManageVO;
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovQustnrManageController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovQustnrManageController.class);
 
-	@Autowired
-	private DefaultBeanValidator beanValidator;
+	private final DefaultBeanValidator beanValidator;
 
 	/** EgovMessageSource */
-	@Resource(name = "egovMessageSource")
-	EgovMessageSource egovMessageSource;
+	private final EgovMessageSource egovMessageSource;
 
-	@Resource(name = "egovQustnrManageService")
-	private EgovQustnrManageService egovQustnrManageService;
+	private final EgovQustnrManageService egovQustnrManageService;
 
 	/** EgovPropertyService */
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertiesService;
+	private final EgovPropertyService propertiesService;
 
-	@Resource(name = "EgovCmmUseService")
-	private EgovCmmUseService cmmUseService;
+	private final EgovCmmUseService cmmUseService;
 
 	/**
 	 * 설문관리 팝업 목록을 조회한다.

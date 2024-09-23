@@ -2,8 +2,6 @@ package egovframework.let.uss.olp.qmc.service.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
@@ -11,6 +9,7 @@ import org.springframework.stereotype.Service;
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.uss.olp.qmc.service.EgovQustnrManageService;
 import egovframework.let.uss.olp.qmc.service.QustnrManageVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 설문관리를 처리하는 ServiceImpl Class 구현
@@ -29,14 +28,13 @@ import egovframework.let.uss.olp.qmc.service.QustnrManageVO;
  *
  *      </pre>
  */
-@Service("egovQustnrManageService")
+@Service
+@RequiredArgsConstructor
 public class EgovQustnrManageServiceImpl extends EgovAbstractServiceImpl implements EgovQustnrManageService {
 
-	@Resource(name = "qustnrManageDao")
-	private QustnrManageDao dao;
+	private final QustnrManageDao qustnrManageDao;
 
-	@Resource(name = "egovQustnrManageIdGnrService")
-	private EgovIdGnrService idgenService;
+	private final EgovIdGnrService egovQustnrManageIdGnrService;
 
 	/**
 	 * 설문템플릿 목록을 조회한다.
@@ -47,7 +45,7 @@ public class EgovQustnrManageServiceImpl extends EgovAbstractServiceImpl impleme
 	 */
 	@Override
 	public List<?> selectQustnrTmplatManageList(QustnrManageVO qustnrManageVO) throws Exception {
-		return dao.selectQustnrTmplatManageList(qustnrManageVO);
+		return qustnrManageDao.selectQustnrTmplatManageList(qustnrManageVO);
 	}
 
 	/**
@@ -59,7 +57,7 @@ public class EgovQustnrManageServiceImpl extends EgovAbstractServiceImpl impleme
 	 */
 	@Override
 	public List<?> selectQustnrManageList(ComDefaultVO searchVO) throws Exception {
-		return dao.selectQustnrManageList(searchVO);
+		return qustnrManageDao.selectQustnrManageList(searchVO);
 	}
 
 	/**
@@ -71,7 +69,7 @@ public class EgovQustnrManageServiceImpl extends EgovAbstractServiceImpl impleme
 	 */
 	@Override
 	public QustnrManageVO selectQustnrManageDetailModel(QustnrManageVO qustnrManageVO) throws Exception {
-		return dao.selectQustnrManageDetailModel(qustnrManageVO);
+		return qustnrManageDao.selectQustnrManageDetailModel(qustnrManageVO);
 	}
 
 	/**
@@ -83,7 +81,7 @@ public class EgovQustnrManageServiceImpl extends EgovAbstractServiceImpl impleme
 	 */
 	@Override
 	public List<?> selectQustnrManageDetail(QustnrManageVO qustnrManageVO) throws Exception {
-		return dao.selectQustnrManageDetail(qustnrManageVO);
+		return qustnrManageDao.selectQustnrManageDetail(qustnrManageVO);
 	}
 
 	/**
@@ -95,7 +93,7 @@ public class EgovQustnrManageServiceImpl extends EgovAbstractServiceImpl impleme
 	 */
 	@Override
 	public int selectQustnrManageListCnt(ComDefaultVO searchVO) throws Exception {
-		return dao.selectQustnrManageListCnt(searchVO);
+		return qustnrManageDao.selectQustnrManageListCnt(searchVO);
 	}
 
 	/**
@@ -106,11 +104,11 @@ public class EgovQustnrManageServiceImpl extends EgovAbstractServiceImpl impleme
 	 */
 	@Override
 	public void insertQustnrManage(QustnrManageVO qustnrManageVO) throws Exception {
-		String sMakeId = idgenService.getNextStringId();
+		String sMakeId = egovQustnrManageIdGnrService.getNextStringId();
 
 		qustnrManageVO.setQestnrId(sMakeId);
 
-		dao.insertQustnrManage(qustnrManageVO);
+		qustnrManageDao.insertQustnrManage(qustnrManageVO);
 	}
 
 	/**
@@ -121,7 +119,7 @@ public class EgovQustnrManageServiceImpl extends EgovAbstractServiceImpl impleme
 	 */
 	@Override
 	public void updateQustnrManage(QustnrManageVO qustnrManageVO) throws Exception {
-		dao.updateQustnrManage(qustnrManageVO);
+		qustnrManageDao.updateQustnrManage(qustnrManageVO);
 	}
 
 	/**
@@ -132,6 +130,6 @@ public class EgovQustnrManageServiceImpl extends EgovAbstractServiceImpl impleme
 	 */
 	@Override
 	public void deleteQustnrManage(QustnrManageVO qustnrManageVO) throws Exception {
-		dao.deleteQustnrManage(qustnrManageVO);
+		qustnrManageDao.deleteQustnrManage(qustnrManageVO);
 	}
 }
