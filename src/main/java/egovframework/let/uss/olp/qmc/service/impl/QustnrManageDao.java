@@ -26,7 +26,7 @@ import egovframework.let.uss.olp.qmc.service.QustnrManageVO;
  *
  *      </pre>
  */
-@Repository("qustnrManageDao")
+@Repository
 public class QustnrManageDao extends EgovAbstractMapper {
 
 	/**
