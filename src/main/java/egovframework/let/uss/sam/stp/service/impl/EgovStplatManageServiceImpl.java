@@ -2,8 +2,6 @@ package egovframework.let.uss.sam.stp.service.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
@@ -11,6 +9,7 @@ import org.springframework.stereotype.Service;
 import egovframework.let.uss.sam.stp.service.EgovStplatManageService;
 import egovframework.let.uss.sam.stp.service.StplatManageDefaultVO;
 import egovframework.let.uss.sam.stp.service.StplatManageVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  *
@@ -27,19 +26,19 @@ import egovframework.let.uss.sam.stp.service.StplatManageVO;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.04.01  박정규          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY          경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.24  강동휘          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
-@Service("StplatManageService")
+@Service
+@RequiredArgsConstructor
 public class EgovStplatManageServiceImpl extends EgovAbstractServiceImpl implements EgovStplatManageService {
 
-	@Resource(name = "StplatManageDAO")
-	private StplatManageDAO stplatManageDAO;
+	private final StplatManageDAO stplatManageDAO;
 
 	/** ID Generation */
-	@Resource(name = "egovStplatManageIdGnrService")
-	private EgovIdGnrService idgenService;
+	private final EgovIdGnrService egovStplatManageIdGnrServiceidgenService;
 
 	/**
 	 * 글을 조회한다.
@@ -88,7 +87,7 @@ public class EgovStplatManageServiceImpl extends EgovAbstractServiceImpl impleme
 	@Override
 	public void insertStplatCn(StplatManageVO vo) throws Exception {
 
-		String useStplatId = idgenService.getNextStringId();
+		String useStplatId = egovStplatManageIdGnrServiceidgenService.getNextStringId();
 
 		vo.setUseStplatId(useStplatId);
 

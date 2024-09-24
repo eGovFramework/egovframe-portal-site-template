@@ -1,11 +1,8 @@
 package egovframework.let.uss.sam.stp.web;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -15,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
-import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
 import egovframework.let.uss.sam.stp.service.EgovStplatManageService;
 import egovframework.let.uss.sam.stp.service.StplatManageDefaultVO;
 import egovframework.let.uss.sam.stp.service.StplatManageVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  *
@@ -36,26 +33,21 @@ import egovframework.let.uss.sam.stp.service.StplatManageVO;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.04.01  박정규          최초 생성
+ *   2024.09.24  강동휘          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovStplatManageController {
 
-	@Resource(name = "StplatManageService")
-	private EgovStplatManageService stplatManageService;
+	private final EgovStplatManageService stplatManageService;
 
 	/** EgovPropertyService */
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertiesService;
-
-	/** EgovMessageSource */
-	@Resource(name = "egovMessageSource")
-	EgovMessageSource egovMessageSource;
+	private final EgovPropertyService propertiesService;
 
 	// Validation 관련
-	@Autowired
-	private DefaultBeanValidator beanValidator;
+	private final DefaultBeanValidator beanValidator;
 
 	/**
 	 * 개별 배포시 메인메뉴를 조회한다.
