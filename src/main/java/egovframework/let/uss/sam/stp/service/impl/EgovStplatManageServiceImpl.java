@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.04.01  박정규          최초 생성
- *   2011.08.31  JJY          경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
  *   2024.09.24  강동휘          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
@@ -38,7 +38,7 @@ public class EgovStplatManageServiceImpl extends EgovAbstractServiceImpl impleme
 	private final StplatManageDAO stplatManageDAO;
 
 	/** ID Generation */
-	private final EgovIdGnrService egovStplatManageIdGnrServiceidgenService;
+	private final EgovIdGnrService egovStplatManageIdGnrService;
 
 	/**
 	 * 글을 조회한다.
@@ -87,7 +87,7 @@ public class EgovStplatManageServiceImpl extends EgovAbstractServiceImpl impleme
 	@Override
 	public void insertStplatCn(StplatManageVO vo) throws Exception {
 
-		String useStplatId = egovStplatManageIdGnrServiceidgenService.getNextStringId();
+		String useStplatId = egovStplatManageIdGnrService.getNextStringId();
 
 		vo.setUseStplatId(useStplatId);
 
