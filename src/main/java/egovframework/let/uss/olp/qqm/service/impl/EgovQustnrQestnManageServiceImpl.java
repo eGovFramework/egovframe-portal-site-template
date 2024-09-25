@@ -3,8 +3,6 @@ package egovframework.let.uss.olp.qqm.service.impl;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Service;
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.uss.olp.qqm.service.EgovQustnrQestnManageService;
 import egovframework.let.uss.olp.qqm.service.QustnrQestnManageVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 설문문항을 처리하는 ServiceImpl Class 구현
@@ -27,18 +26,18 @@ import egovframework.let.uss.olp.qqm.service.QustnrQestnManageVO;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.03.20  장동한          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.25  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
-@Service("egovQustnrQestnManageService")
+@Service
+@RequiredArgsConstructor
 public class EgovQustnrQestnManageServiceImpl extends EgovAbstractServiceImpl implements EgovQustnrQestnManageService {
 
-	@Resource(name = "qustnrQestnManageDao")
-	private QustnrQestnManageDao dao;
+	private final QustnrQestnManageDao dao;
 
-	@Resource(name = "egovQustnrQestnManageIdGnrService")
-	private EgovIdGnrService idgenService;
+	private final EgovIdGnrService egovQustnrQestnManageIdGnrService;
 
 	/**
 	 * 설문조사 응답자답변내용결과/기타답변내용결과 통계를 조회한다.
@@ -120,7 +119,7 @@ public class EgovQustnrQestnManageServiceImpl extends EgovAbstractServiceImpl im
 	 */
 	@Override
 	public void insertQustnrQestnManage(QustnrQestnManageVO qustnrQestnManageVO) throws Exception {
-		String sMakeId = idgenService.getNextStringId();
+		String sMakeId = egovQustnrQestnManageIdGnrService.getNextStringId();
 
 		qustnrQestnManageVO.setQestnrQesitmId(sMakeId);
 
