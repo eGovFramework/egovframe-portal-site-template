@@ -2,12 +2,9 @@ package egovframework.let.uss.sam.ipm.web;
 
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -21,6 +18,7 @@ import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
 import egovframework.let.uss.sam.ipm.service.EgovIndvdlInfoPolicyService;
 import egovframework.let.uss.sam.ipm.service.IndvdlInfoPolicy;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 개인정보보호정책를 처리하는 Controller Class 구현
@@ -36,27 +34,25 @@ import egovframework.let.uss.sam.ipm.service.IndvdlInfoPolicy;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.07.03  장동한          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.25  강동휘          컨트리뷰션 롬복 생성자 기반 종속성 주입 개정이력 수정
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovIndvdlInfoPolicyController {
 
-	@Autowired
-	private DefaultBeanValidator beanValidator;
+	private final DefaultBeanValidator beanValidator;
 
 	/** EgovMessageSource */
-	@Resource(name = "egovMessageSource")
-	EgovMessageSource egovMessageSource;
+	private final EgovMessageSource egovMessageSource;
 
 	/** egovOnlinePollService */
-	@Resource(name = "egovIndvdlInfoPolicyService")
-	private EgovIndvdlInfoPolicyService egovIndvdlInfoPolicyService;
+	private final EgovIndvdlInfoPolicyService egovIndvdlInfoPolicyService;
 
 	/** EgovPropertyService */
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertiesService;
+	private final EgovPropertyService propertiesService;
 
 	/**
 	 * 개인정보보호정책 목록을 조회한다.

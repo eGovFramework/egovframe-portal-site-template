@@ -2,8 +2,6 @@ package egovframework.let.uss.sam.ipm.service.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
@@ -11,6 +9,7 @@ import org.springframework.stereotype.Service;
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.uss.sam.ipm.service.EgovIndvdlInfoPolicyService;
 import egovframework.let.uss.sam.ipm.service.IndvdlInfoPolicy;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 개인정보보호정책를 처리하는 ServiceImpl Class 구현
@@ -26,18 +25,18 @@ import egovframework.let.uss.sam.ipm.service.IndvdlInfoPolicy;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.07.03  장동한          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.25  강동휘          컨트리뷰션 롬복 생성자 기반 종속성 주입 개정이력 수정
  *
  *      </pre>
  */
-@Service("egovIndvdlInfoPolicyService")
+@Service
+@RequiredArgsConstructor
 public class EgovIndvdlInfoPolicyServiceImpl extends EgovAbstractServiceImpl implements EgovIndvdlInfoPolicyService {
 
-	@Resource(name = "onlineIndvdlInfoPolicyDao")
-	private IndvdlInfoPolicyDao dao;
+	private final IndvdlInfoPolicyDao dao;
 
-	@Resource(name = "egovIndvdlInfoPolicyIdGnrService")
-	private EgovIdGnrService idgenService;
+	private final EgovIdGnrService egovIndvdlInfoPolicyIdGnrService;
 
 	/**
 	 * 개인정보보호정책를(을) 목록을 조회 한다.
@@ -83,7 +82,7 @@ public class EgovIndvdlInfoPolicyServiceImpl extends EgovAbstractServiceImpl imp
 	 */
 	@Override
 	public void insertIndvdlInfoPolicy(IndvdlInfoPolicy indvdlInfoPolicy) throws Exception {
-		String sMakeId = idgenService.getNextStringId();
+		String sMakeId = egovIndvdlInfoPolicyIdGnrService.getNextStringId();
 		indvdlInfoPolicy.setIndvdlInfoId(sMakeId);
 		dao.insertIndvdlInfoPolicy(indvdlInfoPolicy);
 	}
