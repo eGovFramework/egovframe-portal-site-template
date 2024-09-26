@@ -2,14 +2,11 @@ package egovframework.let.uss.olp.qim.web;
 
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -23,6 +20,7 @@ import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
 import egovframework.let.uss.olp.qim.service.EgovQustnrItemManageService;
 import egovframework.let.uss.olp.qim.service.QustnrItemManageVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 설문항목관리를 처리하는 Controller Class 구현
@@ -38,28 +36,26 @@ import egovframework.let.uss.olp.qim.service.QustnrItemManageVO;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.03.20  장동한          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.26  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovQustnrItemManageController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovQustnrItemManageController.class);
 
-	@Autowired
-	private DefaultBeanValidator beanValidator;
+	private final DefaultBeanValidator beanValidator;
 
 	/** EgovMessageSource */
-	@Resource(name = "egovMessageSource")
-	EgovMessageSource egovMessageSource;
+	private final EgovMessageSource egovMessageSource;
 
-	@Resource(name = "egovQustnrItemManageService")
-	private EgovQustnrItemManageService egovQustnrItemManageService;
+	private final EgovQustnrItemManageService egovQustnrItemManageService;
 
 	/** EgovPropertyService */
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertiesService;
+	private final EgovPropertyService propertiesService;
 
 	/**
 	 * 설문항목 팝업 목록을 조회한다.

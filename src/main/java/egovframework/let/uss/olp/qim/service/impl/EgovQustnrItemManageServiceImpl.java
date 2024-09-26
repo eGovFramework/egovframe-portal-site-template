@@ -2,8 +2,6 @@ package egovframework.let.uss.olp.qim.service.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
@@ -11,6 +9,7 @@ import org.springframework.stereotype.Service;
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.uss.olp.qim.service.EgovQustnrItemManageService;
 import egovframework.let.uss.olp.qim.service.QustnrItemManageVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 설문항목관리를 처리하는 ServiceImpl Class 구현
@@ -26,18 +25,18 @@ import egovframework.let.uss.olp.qim.service.QustnrItemManageVO;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.03.20  장동한          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.26  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
-@Service("egovQustnrItemManageService")
+@Service
+@RequiredArgsConstructor
 public class EgovQustnrItemManageServiceImpl extends EgovAbstractServiceImpl implements EgovQustnrItemManageService {
 
-	@Resource(name = "qustnrItemManageDao")
-	private QustnrItemManageDao dao;
+	private final QustnrItemManageDao dao;
 
-	@Resource(name = "egovQustnrItemManageIdGnrService")
-	private EgovIdGnrService idgenService;
+	private final EgovIdGnrService egovQustnrItemManageIdGnrService;
 
 	/**
 	 * 설문템플릿(을)를 목록을 조회한다.
@@ -95,7 +94,7 @@ public class EgovQustnrItemManageServiceImpl extends EgovAbstractServiceImpl imp
 	 */
 	@Override
 	public void insertQustnrItemManage(QustnrItemManageVO qustnrItemManageVO) throws Exception {
-		String sMakeId = idgenService.getNextStringId();
+		String sMakeId = egovQustnrItemManageIdGnrService.getNextStringId();
 
 		qustnrItemManageVO.setQustnrIemId(sMakeId);
 
