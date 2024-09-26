@@ -30,6 +30,7 @@ import egovframework.let.uss.olp.qri.service.EgovQustnrRespondInfoService;
 import egovframework.let.uss.olp.qri.service.QustnrRespondInfoVO;
 import egovframework.let.uss.olp.qrm.service.EgovQustnrRespondManageService;
 import egovframework.let.uss.olp.qrm.service.QustnrRespondManageVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 설문조사 Controller Class 구현
@@ -45,11 +46,13 @@ import egovframework.let.uss.olp.qrm.service.QustnrRespondManageVO;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.03.20  장동한          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.26  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovQustnrRespondInfoController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovQustnrRespondInfoController.class);
@@ -64,8 +67,7 @@ public class EgovQustnrRespondInfoController {
 	@Resource(name = "egovQustnrRespondInfoService")
 	private EgovQustnrRespondInfoService egovQustnrRespondInfoService;
 
-	@Resource(name = "egovQustnrRespondManageService")
-	private EgovQustnrRespondManageService egovQustnrRespondManageService;
+	private final EgovQustnrRespondManageService egovQustnrRespondManageService;
 
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
