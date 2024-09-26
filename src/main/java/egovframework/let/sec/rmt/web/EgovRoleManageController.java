@@ -26,6 +26,7 @@ import egovframework.let.sec.ram.service.EgovAuthorManageService;
 import egovframework.let.sec.rmt.service.EgovRoleManageService;
 import egovframework.let.sec.rmt.service.RoleManage;
 import egovframework.let.sec.rmt.service.RoleManageVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 롤관리에 관한 controller 클래스를 정의한다.
@@ -41,12 +42,14 @@ import egovframework.let.sec.rmt.service.RoleManageVO;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.03.11  이문준          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.26  강동휘          컨트리뷰션 롬복 생성자 기반 종속성 주입 개정이력 수정
  *
  *      </pre>
  */
 
 @Controller
+@RequiredArgsConstructor
 public class EgovRoleManageController {
 
 	@Resource(name = "egovMessageSource")
@@ -58,8 +61,7 @@ public class EgovRoleManageController {
 	@Resource(name = "EgovCmmUseService")
 	EgovCmmUseService egovCmmUseService;
 
-	@Resource(name = "egovAuthorManageService")
-	private EgovAuthorManageService egovAuthorManageService;
+	private final EgovAuthorManageService egovAuthorManageService;
 
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
