@@ -3,6 +3,24 @@ package egovframework.let.uss.olp.qri.web;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.egovframe.rte.fdl.property.EgovPropertyService;
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springmodules.validation.commons.DefaultBeanValidator;
+
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.com.cmm.EgovMessageSource;
@@ -12,25 +30,7 @@ import egovframework.let.uss.olp.qri.service.EgovQustnrRespondInfoService;
 import egovframework.let.uss.olp.qri.service.QustnrRespondInfoVO;
 import egovframework.let.uss.olp.qrm.service.EgovQustnrRespondManageService;
 import egovframework.let.uss.olp.qrm.service.QustnrRespondManageVO;
-
-import org.egovframe.rte.fdl.property.EgovPropertyService;
-import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
-import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springmodules.validation.commons.DefaultBeanValidator;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 설문조사 Controller Class 구현
@@ -46,11 +46,13 @@ import org.springmodules.validation.commons.DefaultBeanValidator;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.03.20  장동한          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.26  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovQustnrRespondInfoController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovQustnrRespondInfoController.class);
@@ -65,8 +67,7 @@ public class EgovQustnrRespondInfoController {
 	@Resource(name = "egovQustnrRespondInfoService")
 	private EgovQustnrRespondInfoService egovQustnrRespondInfoService;
 
-	@Resource(name = "egovQustnrRespondManageService")
-	private EgovQustnrRespondManageService egovQustnrRespondManageService;
+	private final EgovQustnrRespondManageService egovQustnrRespondManageService;
 
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
@@ -210,7 +211,7 @@ public class EgovQustnrRespondInfoController {
 		model.addAttribute("searchCondition",
 				commandMap.get("searchCondition") == null ? "" : (String) commandMap.get("searchCondition"));
 
-		int totCnt = (Integer) egovQustnrRespondInfoService.selectQustnrRespondInfoManageListCnt(searchVO);
+		int totCnt = egovQustnrRespondInfoService.selectQustnrRespondInfoManageListCnt(searchVO);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 
@@ -286,11 +287,11 @@ public class EgovQustnrRespondInfoController {
 
 							qustnrRespondInfoVO.setRespondAnswerCn("");
 
-							qustnrRespondInfoVO.setRespondNm((String) loginVO.getName());
+							qustnrRespondInfoVO.setRespondNm(loginVO.getName());
 							qustnrRespondInfoVO.setEtcAnswerCn((String) commandMap.get("ETC_" + sVal));
 
-							qustnrRespondInfoVO.setFrstRegisterId((String) loginVO.getUniqId());
-							qustnrRespondInfoVO.setLastUpdusrId((String) loginVO.getUniqId());
+							qustnrRespondInfoVO.setFrstRegisterId(loginVO.getUniqId());
+							qustnrRespondInfoVO.setLastUpdusrId(loginVO.getUniqId());
 
 							egovQustnrRespondInfoService.insertQustnrRespondInfo(qustnrRespondInfoVO);
 						} else {
@@ -306,11 +307,11 @@ public class EgovQustnrRespondInfoController {
 
 								qustnrRespondInfoVO.setRespondAnswerCn("");
 
-								qustnrRespondInfoVO.setRespondNm((String) loginVO.getName());
+								qustnrRespondInfoVO.setRespondNm(loginVO.getName());
 								qustnrRespondInfoVO.setEtcAnswerCn((String) commandMap.get("ETC_" + arrVal[g]));
 
-								qustnrRespondInfoVO.setFrstRegisterId((String) loginVO.getUniqId());
-								qustnrRespondInfoVO.setLastUpdusrId((String) loginVO.getUniqId());
+								qustnrRespondInfoVO.setFrstRegisterId(loginVO.getUniqId());
+								qustnrRespondInfoVO.setLastUpdusrId(loginVO.getUniqId());
 
 								egovQustnrRespondInfoService.insertQustnrRespondInfo(qustnrRespondInfoVO);
 							}
@@ -327,11 +328,11 @@ public class EgovQustnrRespondInfoController {
 
 						qustnrRespondInfoVO.setRespondAnswerCn((String) commandMap.get(sKey));
 
-						qustnrRespondInfoVO.setRespondNm((String) loginVO.getName());
+						qustnrRespondInfoVO.setRespondNm(loginVO.getName());
 						qustnrRespondInfoVO.setEtcAnswerCn(null);
 
-						qustnrRespondInfoVO.setFrstRegisterId((String) loginVO.getUniqId());
-						qustnrRespondInfoVO.setLastUpdusrId((String) loginVO.getUniqId());
+						qustnrRespondInfoVO.setFrstRegisterId(loginVO.getUniqId());
+						qustnrRespondInfoVO.setLastUpdusrId(loginVO.getUniqId());
 
 						egovQustnrRespondInfoService.insertQustnrRespondInfo(qustnrRespondInfoVO);
 					}
@@ -350,8 +351,8 @@ public class EgovQustnrRespondInfoController {
 			qustnrRespondManageVO.setBrth((String) commandMap.get("brth"));
 			qustnrRespondManageVO.setRespondNm((String) commandMap.get("respondNm"));
 
-			qustnrRespondManageVO.setFrstRegisterId((String) loginVO.getUniqId());
-			qustnrRespondManageVO.setLastUpdusrId((String) loginVO.getUniqId());
+			qustnrRespondManageVO.setFrstRegisterId(loginVO.getUniqId());
+			qustnrRespondManageVO.setLastUpdusrId(loginVO.getUniqId());
 			egovQustnrRespondManageService.insertQustnrRespondManage(qustnrRespondManageVO);
 
 			String ReusltScript = "";
@@ -365,7 +366,7 @@ public class EgovQustnrRespondInfoController {
 		} else {
 
 			if (loginVO.getUniqId() != null) {
-				commandMap.put("uniqId", (String) loginVO.getUniqId());
+				commandMap.put("uniqId", loginVO.getUniqId());
 				// 사용자정보
 				model.addAttribute("Emplyrinfo",
 						egovQustnrRespondInfoService.selectQustnrRespondInfoManageEmplyrinfo(commandMap));
@@ -454,7 +455,7 @@ public class EgovQustnrRespondInfoController {
 		model.addAttribute("searchCondition",
 				commandMap.get("searchCondition") == null ? "" : (String) commandMap.get("searchCondition"));
 
-		int totCnt = (Integer) egovQustnrRespondInfoService.selectQustnrRespondInfoListCnt(searchVO);
+		int totCnt = egovQustnrRespondInfoService.selectQustnrRespondInfoListCnt(searchVO);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 
@@ -534,8 +535,8 @@ public class EgovQustnrRespondInfoController {
 			}
 
 			// 아이디 설정
-			qustnrRespondInfoVO.setFrstRegisterId((String) loginVO.getUniqId());
-			qustnrRespondInfoVO.setLastUpdusrId((String) loginVO.getUniqId());
+			qustnrRespondInfoVO.setFrstRegisterId(loginVO.getUniqId());
+			qustnrRespondInfoVO.setLastUpdusrId(loginVO.getUniqId());
 
 			egovQustnrRespondInfoService.updateQustnrRespondInfo(qustnrRespondInfoVO);
 			sLocationUrl = "redirect:/uss/olp/qri/EgovQustnrRespondInfoList.do";
@@ -590,8 +591,8 @@ public class EgovQustnrRespondInfoController {
 			}
 
 			// 아이디 설정
-			qustnrRespondInfoVO.setFrstRegisterId((String) loginVO.getUniqId());
-			qustnrRespondInfoVO.setLastUpdusrId((String) loginVO.getUniqId());
+			qustnrRespondInfoVO.setFrstRegisterId(loginVO.getUniqId());
+			qustnrRespondInfoVO.setLastUpdusrId(loginVO.getUniqId());
 
 			egovQustnrRespondInfoService.insertQustnrRespondInfo(qustnrRespondInfoVO);
 			sLocationUrl = "redirect:/uss/olp/qri/EgovQustnrRespondInfoList.do";
