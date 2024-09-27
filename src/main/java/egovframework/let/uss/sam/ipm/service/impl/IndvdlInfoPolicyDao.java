@@ -22,12 +22,13 @@ import egovframework.let.uss.sam.ipm.service.IndvdlInfoPolicy;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.07.03  장동한          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY          경량환경 템플릿 커스터마이징버전 생성
  *   2024.08.10  이백행          이클립스 문제(Problems) 제거
+ *   2024.09.25  강동휘          컨트리뷰션 롬복 생성자 기반 종속성 주입 개정이력 수정
  *
  *      </pre>
  */
-@Repository("onlineIndvdlInfoPolicyDao")
+@Repository
 public class IndvdlInfoPolicyDao extends EgovAbstractMapper {
 
 	/**
