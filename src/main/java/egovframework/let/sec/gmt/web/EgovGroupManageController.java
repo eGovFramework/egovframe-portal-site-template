@@ -1,11 +1,7 @@
 package egovframework.let.sec.gmt.web;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
-import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -20,6 +16,7 @@ import egovframework.com.cmm.EgovMessageSource;
 import egovframework.let.sec.gmt.service.EgovGroupManageService;
 import egovframework.let.sec.gmt.service.GroupManage;
 import egovframework.let.sec.gmt.service.GroupManageVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 그룹관리에 관한 controller 클래스를 정의한다.
@@ -35,30 +32,25 @@ import egovframework.let.sec.gmt.service.GroupManageVO;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.03.11  이문준          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.28  강동휘          컨트리뷰션 롬복 생성자 기반 종속성 주입
+ * 
  *
  *      </pre>
  */
 
 @Controller
+@RequiredArgsConstructor
 public class EgovGroupManageController {
 
-	@Resource(name = "egovMessageSource")
-	EgovMessageSource egovMessageSource;
+	private final EgovMessageSource egovMessageSource;
 
-	@Resource(name = "egovGroupManageService")
-	private EgovGroupManageService egovGroupManageService;
-
-	/** EgovPropertyService */
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertiesService;
+	private final EgovGroupManageService egovGroupManageService;
 
 	/** Message ID Generation */
-	@Resource(name = "egovGroupIdGnrService")
-	private EgovIdGnrService egovGroupIdGnrService;
+	private final EgovIdGnrService egovGroupIdGnrService;
 
-	@Autowired
-	private DefaultBeanValidator beanValidator;
+	private final DefaultBeanValidator beanValidator;
 
 	/**
 	 * 그룹 목록화면 이동
