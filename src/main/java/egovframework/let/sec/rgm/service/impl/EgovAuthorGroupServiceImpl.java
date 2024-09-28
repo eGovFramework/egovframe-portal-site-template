@@ -2,14 +2,13 @@ package egovframework.let.sec.rgm.service.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.springframework.stereotype.Service;
 
 import egovframework.let.sec.rgm.service.AuthorGroup;
 import egovframework.let.sec.rgm.service.AuthorGroupVO;
 import egovframework.let.sec.rgm.service.EgovAuthorGroupService;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 권한그룹에 관한 ServiceImpl 클래스를 정의한다.
@@ -25,16 +24,17 @@ import egovframework.let.sec.rgm.service.EgovAuthorGroupService;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.03.11  이문준          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.28  강동휘          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 
-@Service("egovAuthorGroupService")
+@Service
+@RequiredArgsConstructor
 public class EgovAuthorGroupServiceImpl extends EgovAbstractServiceImpl implements EgovAuthorGroupService {
 
-	@Resource(name = "authorGroupDAO")
-	private AuthorGroupDAO authorGroupDAO;
+	private final AuthorGroupDAO authorGroupDAO;
 
 	/**
 	 * 그룹별 할당된 권한 목록 조회

@@ -1,8 +1,5 @@
 package egovframework.let.sec.rgm.web;
 
-import javax.annotation.Resource;
-
-import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -43,17 +40,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EgovAuthorGroupController {
 
-	@Resource(name = "egovMessageSource")
-	EgovMessageSource egovMessageSource;
+	private final EgovMessageSource egovMessageSource;
 
-	@Resource(name = "egovAuthorGroupService")
-	private EgovAuthorGroupService egovAuthorGroupService;
+	private final EgovAuthorGroupService egovAuthorGroupService;
 
 	private final EgovAuthorManageService egovAuthorManageService;
-
-	/** EgovPropertyService */
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertiesService;
 
 	/**
 	 * 권한 목록화면 이동
