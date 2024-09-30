@@ -2,14 +2,13 @@ package egovframework.let.sec.rmt.service.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.springframework.stereotype.Service;
 
 import egovframework.let.sec.rmt.service.EgovRoleManageService;
 import egovframework.let.sec.rmt.service.RoleManage;
 import egovframework.let.sec.rmt.service.RoleManageVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 롤관리에 관한 ServiceImpl 클래스를 정의한다.
@@ -25,16 +24,17 @@ import egovframework.let.sec.rmt.service.RoleManageVO;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.03.11  이문준          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.30  강동휘          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 
-@Service("egovRoleManageService")
+@Service
+@RequiredArgsConstructor
 public class EgovRoleManageServiceImpl extends EgovAbstractServiceImpl implements EgovRoleManageService {
 
-	@Resource(name = "roleManageDAO")
-	public RoleManageDAO roleManageDAO;
+	private final RoleManageDAO roleManageDAO;
 
 	/**
 	 * 등록된 롤 정보 조회
