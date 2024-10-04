@@ -29,6 +29,7 @@ import egovframework.com.cmm.service.FileVO;
 import egovframework.let.uss.olh.faq.service.EgovFaqManageService;
 import egovframework.let.uss.olh.faq.service.FaqManageDefaultVO;
 import egovframework.let.uss.olh.faq.service.FaqManageVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  *
@@ -44,16 +45,17 @@ import egovframework.let.uss.olh.faq.service.FaqManageVO;
  *
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
- *   2009.04.01  박정규          최초 생성
- *   2011.08.31  JJY          경량환경 템플릿 커스터마이징버전 생성
+ *  2009.04.01  박정규           최초 생성
+ *  2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *  2024.10.04  안단희           롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovFaqManageController {
 
-	@Resource(name = "FaqManageService")
-	private EgovFaqManageService faqManageService;
+	private final EgovFaqManageService egovFaqManageService;
 
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
@@ -128,9 +130,9 @@ public class EgovFaqManageController {
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-		model.addAttribute("resultList", faqManageService.selectFaqList(searchVO));
+		model.addAttribute("resultList", egovFaqManageService.selectFaqList(searchVO));
 
-		int totCnt = faqManageService.selectFaqListTotCnt(searchVO);
+		int totCnt = egovFaqManageService.selectFaqListTotCnt(searchVO);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 
@@ -150,7 +152,7 @@ public class EgovFaqManageController {
 	public String selectFaqListDetail(FaqManageVO faqManageVO, @ModelAttribute("searchVO") FaqManageDefaultVO searchVO,
 			ModelMap model) throws Exception {
 
-		FaqManageVO vo = faqManageService.selectFaqListDetail(faqManageVO);
+		FaqManageVO vo = egovFaqManageService.selectFaqListDetail(faqManageVO);
 
 		model.addAttribute("result", vo);
 
@@ -182,7 +184,7 @@ public class EgovFaqManageController {
 
 		faqManageVO.setLastUpdusrId(lastUpdusrId); // 최종수정자ID
 
-		faqManageService.updateFaqInqireCo(faqManageVO);
+		egovFaqManageService.updateFaqInqireCo(faqManageVO);
 
 		return "forward:/uss/olh/faq/FaqListDetailInqire.do";
 
@@ -255,7 +257,7 @@ public class EgovFaqManageController {
 		faqManageVO.setFrstRegisterId(frstRegisterId); // 최초등록자ID
 		faqManageVO.setLastUpdusrId(frstRegisterId); // 최종수정자ID
 
-		faqManageService.insertFaqCn(faqManageVO);
+		egovFaqManageService.insertFaqCn(faqManageVO);
 
 		return "forward:/uss/olh/faq/FaqListInqire.do";
 	}
@@ -288,7 +290,7 @@ public class EgovFaqManageController {
 		model.addAttribute(selectFaqListDetail(faqManageVO, searchVO, model));
 
 		// 변수명은 CoC 에 따라 JSTL사용을 위해
-		model.addAttribute("faqManageVO", faqManageService.selectFaqListDetail(faqManageVO));
+		model.addAttribute("faqManageVO", egovFaqManageService.selectFaqListDetail(faqManageVO));
 
 		return "/uss/olh/faq/EgovFaqCnUpdt";
 	}
@@ -351,7 +353,7 @@ public class EgovFaqManageController {
 
 		faqManageVO.setLastUpdusrId(lastUpdusrId); // 최종수정자ID
 
-		faqManageService.updateFaqCn(faqManageVO);
+		egovFaqManageService.updateFaqCn(faqManageVO);
 
 		return "forward:/uss/olh/faq/FaqListInqire.do";
 
@@ -372,7 +374,7 @@ public class EgovFaqManageController {
 		// 첨부파일 삭제를 위한 ID 생성 start....
 		String _atchFileId = faqManageVO.getAtchFileId();
 
-		faqManageService.deleteFaqCn(faqManageVO);
+		egovFaqManageService.deleteFaqCn(faqManageVO);
 
 		// 첨부파일을 삭제하기 위한 Vo
 		FileVO fvo = new FileVO();

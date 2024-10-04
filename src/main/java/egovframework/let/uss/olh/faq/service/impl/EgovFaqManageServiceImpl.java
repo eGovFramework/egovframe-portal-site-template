@@ -2,8 +2,6 @@ package egovframework.let.uss.olh.faq.service.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
@@ -11,6 +9,7 @@ import org.springframework.stereotype.Service;
 import egovframework.let.uss.olh.faq.service.EgovFaqManageService;
 import egovframework.let.uss.olh.faq.service.FaqManageDefaultVO;
 import egovframework.let.uss.olh.faq.service.FaqManageVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  *
@@ -26,20 +25,20 @@ import egovframework.let.uss.olh.faq.service.FaqManageVO;
  *
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
- *   2009.04.01  박정규          최초 생성
- *   2011.08.31  JJY          경량환경 템플릿 커스터마이징버전 생성
+ *  2009.04.01  박정규           최초 생성
+ *  2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *  2024.10.04  안단희           롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
-@Service("FaqManageService")
+@Service
+@RequiredArgsConstructor
 public class EgovFaqManageServiceImpl extends EgovAbstractServiceImpl implements EgovFaqManageService {
 
-	@Resource(name = "FaqManageDAO")
-	private FaqManageDAO faqManageDAO;
+	private final FaqManageDAO faqManageDAO;
 
 	/** ID Generation */
-	@Resource(name = "egovFaqManageIdGnrService")
-	private EgovIdGnrService idgenService;
+	private final EgovIdGnrService egovFaqManageIdGnrService;
 
 	/**
 	 * FAQ 글을 조회한다.
@@ -101,7 +100,7 @@ public class EgovFaqManageServiceImpl extends EgovAbstractServiceImpl implements
 	@Override
 	public void insertFaqCn(FaqManageVO vo) throws Exception {
 
-		String newsId = idgenService.getNextStringId();
+		String newsId = egovFaqManageIdGnrService.getNextStringId();
 
 		vo.setFaqId(newsId);
 

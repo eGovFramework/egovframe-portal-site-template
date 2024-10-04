@@ -22,13 +22,14 @@ import egovframework.let.uss.olh.faq.service.FaqManageVO;
  *
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
- *   2009.04.01  박정규          최초 생성
- *   2011.08.31  JJY          경량환경 템플릿 커스터마이징버전 생성
- *   2024.08.10  이백행          이클립스 문제(Problems) 제거
+ *  2009.04.01  박정규           최초 생성
+ *  2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *  2024.08.10  이백행           이클립스 문제(Problems) 제거
+ *  2024.10.04  안단희           롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
-@Repository("FaqManageDAO")
+@Repository
 public class FaqManageDAO extends EgovAbstractMapper {
 
 	/**

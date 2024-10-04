@@ -23,6 +23,7 @@ import egovframework.let.sym.mnu.mpm.service.MenuManageVO;
 import egovframework.let.uss.olh.faq.service.EgovFaqManageService;
 import egovframework.let.uss.olh.faq.service.FaqManageDefaultVO;
 import egovframework.let.uss.olp.qri.service.EgovQustnrRespondInfoService;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 템플릿 메인 페이지 컨트롤러 클래스(Sample 소스)
@@ -39,10 +40,12 @@ import egovframework.let.uss.olp.qri.service.EgovQustnrRespondInfoService;
  *  ----------  --------   ---------------------------
  *  2011.08.31  JJY           최초 생성
  *  2021.08.12  신용호           추가 URL 생성
+ *  2024.10.04  안단희           롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 @SessionAttributes(types = ComDefaultVO.class)
 public class EgovMainController {
 
@@ -57,8 +60,7 @@ public class EgovMainController {
 	private EgovMenuManageService menuManageService;
 
 	/** FaqManageService */
-	@Resource(name = "FaqManageService")
-	private EgovFaqManageService faqManageService;
+	private final EgovFaqManageService egovFaqManageService;
 
 	/** egovQustnrRespondInfoService */
 	@Resource(name = "egovQustnrRespondInfoService")
@@ -143,7 +145,7 @@ public class EgovMainController {
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-		model.addAttribute("faqList", faqManageService.selectFaqList(searchVO));
+		model.addAttribute("faqList", egovFaqManageService.selectFaqList(searchVO));
 
 		// FAQ 메인 컨텐츠 조회 끝 -----------------------------------
 
