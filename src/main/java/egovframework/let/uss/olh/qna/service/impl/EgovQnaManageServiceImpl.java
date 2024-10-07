@@ -2,8 +2,6 @@ package egovframework.let.uss.olh.qna.service.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
@@ -11,6 +9,7 @@ import org.springframework.stereotype.Service;
 import egovframework.let.uss.olh.qna.service.EgovQnaManageService;
 import egovframework.let.uss.olh.qna.service.QnaManageDefaultVO;
 import egovframework.let.uss.olh.qna.service.QnaManageVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  *
@@ -28,18 +27,18 @@ import egovframework.let.uss.olh.qna.service.QnaManageVO;
  *  -------    --------    ---------------------------
  *  2009.04.01  박정규           최초 생성
  *  2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
- *
+ *  2024.10.07  안단희           롬복 생성자 기반 종속성 주입
+ * 
  *      </pre>
  */
-@Service("QnaManageService")
+@Service
+@RequiredArgsConstructor
 public class EgovQnaManageServiceImpl extends EgovAbstractServiceImpl implements EgovQnaManageService {
 
-	@Resource(name = "QnaManageDAO")
-	private QnaManageDAO qnaManageDAO;
+	private final QnaManageDAO qnaManageDAO;
 
 	/** ID Generation */
-	@Resource(name = "egovQnaManageIdGnrService")
-	private EgovIdGnrService idgenService;
+	private final EgovIdGnrService egovQnaManageIdGnrService;
 
 	/**
 	 * Q&A 글을 조회한다.
@@ -100,7 +99,7 @@ public class EgovQnaManageServiceImpl extends EgovAbstractServiceImpl implements
 	@Override
 	public void insertQnaCn(QnaManageVO vo) throws Exception {
 
-		String qaId = idgenService.getNextStringId();
+		String qaId = egovQnaManageIdGnrService.getNextStringId();
 
 		vo.setQaId(qaId);
 

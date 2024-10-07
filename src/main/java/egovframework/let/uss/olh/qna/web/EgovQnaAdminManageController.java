@@ -23,6 +23,7 @@ import egovframework.let.uss.olh.qna.service.EgovQnaManageService;
 import egovframework.let.uss.olh.qna.service.QnaManageDefaultVO;
 import egovframework.let.uss.olh.qna.service.QnaManageVO;
 import egovframework.let.utl.sim.service.EgovFileScrty;
+import lombok.RequiredArgsConstructor;
 
 /**
  *
@@ -40,13 +41,14 @@ import egovframework.let.utl.sim.service.EgovFileScrty;
  *  -------    --------    ---------------------------
  *  2009.04.01  박정규           최초 생성
  *  2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
- *
+ *  2024.10.07  안단희           롬복 생성자 기반 종속성 주입
+ * 
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovQnaAdminManageController {
 
-	@Resource(name = "QnaManageService")
 	private EgovQnaManageService qnaManageService;
 
 	/** EgovPropertyService */
