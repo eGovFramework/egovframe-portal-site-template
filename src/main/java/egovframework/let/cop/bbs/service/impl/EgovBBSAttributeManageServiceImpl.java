@@ -5,6 +5,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
+import org.egovframe.rte.fdl.property.EgovPropertyService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
 import egovframework.let.cop.bbs.service.BoardMaster;
 import egovframework.let.cop.bbs.service.BoardMasterVO;
 import egovframework.let.cop.bbs.service.EgovBBSAttributeManageService;
@@ -12,20 +21,11 @@ import egovframework.let.cop.com.service.BoardUseInf;
 import egovframework.let.cop.com.service.EgovUserInfManageService;
 import egovframework.let.cop.com.service.UserInfVO;
 import egovframework.let.cop.com.service.impl.BBSUseInfoManageDAO;
-
-import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
-import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
-import org.egovframe.rte.fdl.property.EgovPropertyService;
-
-import javax.annotation.Resource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 게시판 속성관리를 위한 서비스 구현 클래스
- * 
+ *
  * @author 공통 서비스 개발팀 이삼섭
  * @since 2009.03.24
  * @version 1.0
@@ -36,20 +36,20 @@ import org.springframework.stereotype.Service;
  *
  *   수정일      수정자          수정내용
  *  -------    --------    ---------------------------
- *  2009.03.24  이삼섭          최초 생성
- *  2009.06.26	한성곤		   2단계 기능 추가 (댓글관리, 만족도조사)
- *  2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *  2009.03.24  이삼섭           최초 생성
+ *  2009.06.26  한성곤           2단계 기능 추가 (댓글관리, 만족도조사)
+ *  2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *  2024.10.08  안단희           롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
-@Service("EgovBBSAttributeManageService")
-public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl
-		implements EgovBBSAttributeManageService {
+@Service
+@RequiredArgsConstructor
+public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl implements EgovBBSAttributeManageService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovBBSAttributeManageServiceImpl.class);
 
-	@Resource(name = "BBSAttributeManageDAO")
-	private BBSAttributeManageDAO attrbMngDAO;
+	private final BBSAttributeManageDAO bBSAttributeManageDAO;
 
 	@Resource(name = "BBSUseInfoManageDAO")
 	private BBSUseInfoManageDAO bbsUseDAO;
@@ -57,8 +57,7 @@ public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl
 	@Resource(name = "EgovUserInfManageService")
 	private EgovUserInfManageService userService;
 
-	@Resource(name = "egovBBSMstrIdGnrService")
-	private EgovIdGnrService idgenService;
+	private final EgovIdGnrService egovBBSMstrIdGnrService;
 
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertyService;
@@ -66,8 +65,7 @@ public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl
 	// ---------------------------------
 	// 2009.06.26 : 2단계 기능 추가
 	// ---------------------------------
-	@Resource(name = "BBSAddedOptionsDAO")
-	private BBSAddedOptionsDAO addedOptionsDAO;
+	private final BBSAddedOptionsDAO bBSAddedOptionsDAO;
 	//// -------------------------------
 
 	/**
@@ -75,8 +73,9 @@ public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl
 	 *
 	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSAttributeManageService#deleteBBSMasterInf(egovframework.let.cop.bbs.brd.service.BoardMaster)
 	 */
+	@Override
 	public void deleteBBSMasterInf(BoardMaster boardMaster) throws Exception {
-		attrbMngDAO.deleteBBSMasterInf(boardMaster);
+		bBSAttributeManageDAO.deleteBBSMasterInf(boardMaster);
 
 		BoardUseInf bdUseInf = new BoardUseInf();
 
@@ -91,18 +90,19 @@ public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl
 	 *
 	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSAttributeManageService#insertBBSMastetInf(egovframework.let.cop.bbs.brd.service.BoardMaster)
 	 */
+	@Override
 	public String insertBBSMastetInf(BoardMaster boardMaster) throws Exception {
-		String bbsId = idgenService.getNextStringId();
+		String bbsId = egovBBSMstrIdGnrService.getNextStringId();
 
 		boardMaster.setBbsId(bbsId);
 
-		attrbMngDAO.insertBBSMasterInf(boardMaster);
+		bBSAttributeManageDAO.insertBBSMasterInf(boardMaster);
 
 		// ---------------------------------
 		// 2009.06.26 : 2단계 기능 추가
 		// ---------------------------------
 		if (boardMaster.getOption().equals("comment") || boardMaster.getOption().equals("stsfdg")) {
-			addedOptionsDAO.insertAddedOptionsInf(boardMaster);
+			bBSAddedOptionsDAO.insertAddedOptionsInf(boardMaster);
 		}
 		//// -------------------------------
 
@@ -130,7 +130,7 @@ public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl
 					bdUseInf = new BoardUseInf();
 
 					bdUseInf.setBbsId(bbsId);
-					bdUseInf.setTrgetId(((UserInfVO) iter.next()).getUniqId());
+					bdUseInf.setTrgetId(iter.next().getUniqId());
 					bdUseInf.setRegistSeCode("REGC07");
 					bdUseInf.setUseAt("Y");
 					bdUseInf.setFrstRegisterId(boardMaster.getFrstRegisterId());
@@ -144,7 +144,7 @@ public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl
 					bdUseInf = new BoardUseInf();
 
 					bdUseInf.setBbsId(bbsId);
-					bdUseInf.setTrgetId(((UserInfVO) iter.next()).getUniqId());
+					bdUseInf.setTrgetId(iter.next().getUniqId());
 					bdUseInf.setRegistSeCode("REGC07");
 					bdUseInf.setUseAt("Y");
 					bdUseInf.setFrstRegisterId(boardMaster.getFrstRegisterId());
@@ -161,8 +161,9 @@ public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl
 	 *
 	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSAttributeManageService#selectAllBBSMasteInf(egovframework.let.cop.bbs.brd.service.BoardMasterVO)
 	 */
+	@Override
 	public List<BoardMasterVO> selectAllBBSMasteInf(BoardMasterVO vo) throws Exception {
-		return attrbMngDAO.selectAllBBSMasteInf(vo);
+		return bBSAttributeManageDAO.selectAllBBSMasteInf(vo);
 	}
 
 	/**
@@ -170,17 +171,18 @@ public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl
 	 *
 	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSAttributeManageService#selectBBSMasterInf(egovframework.let.cop.bbs.brd.service.BoardMasterVO)
 	 */
+	@Override
 	public BoardMasterVO selectBBSMasterInf(BoardMaster searchVO) throws Exception {
 		// ---------------------------------
 		// 2009.06.26 : 2단계 기능 추가
 		// ---------------------------------
 		// return attrbMngDAO.selectBBSMasterInf(searchVO);
 
-		BoardMasterVO result = attrbMngDAO.selectBBSMasterInf(searchVO);
+		BoardMasterVO result = bBSAttributeManageDAO.selectBBSMasterInf(searchVO);
 
 		String flag = propertyService.getString("Globals.addedOptions");
 		if (flag != null && flag.trim().equalsIgnoreCase("true")) {
-			BoardMasterVO options = addedOptionsDAO.selectAddedOptionsInf(searchVO);
+			BoardMasterVO options = bBSAddedOptionsDAO.selectAddedOptionsInf(searchVO);
 
 			if (options != null) {
 				if (options.getCommentAt().equals("Y")) {
@@ -205,9 +207,10 @@ public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl
 	 *
 	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSAttributeManageService#selectBBSMasterInfs(egovframework.let.cop.bbs.brd.service.BoardMasterVO)
 	 */
+	@Override
 	public Map<String, Object> selectBBSMasterInfs(BoardMasterVO searchVO) throws Exception {
-		List<BoardMasterVO> result = attrbMngDAO.selectBBSMasterInfs(searchVO);
-		int cnt = attrbMngDAO.selectBBSMasterInfsCnt(searchVO);
+		List<BoardMasterVO> result = bBSAttributeManageDAO.selectBBSMasterInfs(searchVO);
+		int cnt = bBSAttributeManageDAO.selectBBSMasterInfsCnt(searchVO);
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
@@ -222,8 +225,9 @@ public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl
 	 *
 	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSAttributeManageService#updateBBSMasterInf(egovframework.let.cop.bbs.brd.service.BoardMaster)
 	 */
+	@Override
 	public void updateBBSMasterInf(BoardMaster boardMaster) throws Exception {
-		attrbMngDAO.updateBBSMasterInf(boardMaster);
+		bBSAttributeManageDAO.updateBBSMasterInf(boardMaster);
 
 		// ---------------------------------
 		// 2009.06.26 : 2단계 기능 추가
@@ -233,11 +237,11 @@ public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl
 			if (boardMaster.getOption().equals("na")) {
 				return;
 			}
-			BoardMasterVO options = addedOptionsDAO.selectAddedOptionsInf(boardMaster);
+			BoardMasterVO options = bBSAddedOptionsDAO.selectAddedOptionsInf(boardMaster);
 
 			if (options == null) {
 				boardMaster.setFrstRegisterId(boardMaster.getLastUpdusrId());
-				addedOptionsDAO.insertAddedOptionsInf(boardMaster);
+				bBSAddedOptionsDAO.insertAddedOptionsInf(boardMaster);
 			} else {
 				// 수정 기능 제외 (새롭게 선택사항을 지정한 insert만 처리함)
 				// addedOptionsDAO.updateAddedOptionsInf(boardMaster);
@@ -252,6 +256,7 @@ public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl
 	 *
 	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSAttributeManageService#validateTemplate(egovframework.let.cop.bbs.brd.service.BoardMasterVO)
 	 */
+	@Override
 	public void validateTemplate(BoardMasterVO searchVO) throws Exception {
 		LOGGER.debug("validateTemplate method ignored...");
 	}
@@ -259,9 +264,10 @@ public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl
 	/**
 	 * 사용중인 게시판 속성 정보의 목록을 조회 한다.
 	 */
+	@Override
 	public Map<String, Object> selectBdMstrListByTrget(BoardMasterVO vo) throws Exception {
-		List<BoardMasterVO> result = attrbMngDAO.selectBdMstrListByTrget(vo);
-		int cnt = attrbMngDAO.selectBdMstrListCntByTrget(vo);
+		List<BoardMasterVO> result = bBSAttributeManageDAO.selectBdMstrListByTrget(vo);
+		int cnt = bBSAttributeManageDAO.selectBdMstrListCntByTrget(vo);
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
@@ -274,16 +280,18 @@ public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl
 	/**
 	 * 커뮤니티, 동호회에서 사용중인 게시판 속성 정보의 목록을 전체조회 한다.
 	 */
+	@Override
 	public List<BoardMasterVO> selectAllBdMstrByTrget(BoardMasterVO vo) throws Exception {
-		return attrbMngDAO.selectAllBdMstrByTrget(vo);
+		return bBSAttributeManageDAO.selectAllBdMstrByTrget(vo);
 	}
 
 	/**
 	 * 사용중이지 않은 게시판 속성 정보의 목록을 조회 한다.
 	 */
+	@Override
 	public Map<String, Object> selectNotUsedBdMstrList(BoardMasterVO searchVO) throws Exception {
-		List<BoardMasterVO> result = attrbMngDAO.selectNotUsedBdMstrList(searchVO);
-		int cnt = attrbMngDAO.selectNotUsedBdMstrListCnt(searchVO);
+		List<BoardMasterVO> result = bBSAttributeManageDAO.selectNotUsedBdMstrList(searchVO);
+		int cnt = bBSAttributeManageDAO.selectNotUsedBdMstrListCnt(searchVO);
 
 		Map<String, Object> map = new HashMap<String, Object>();
 

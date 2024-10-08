@@ -32,10 +32,11 @@ import egovframework.let.cop.bbs.service.BoardMasterVO;
 import egovframework.let.cop.bbs.service.BoardVO;
 import egovframework.let.cop.bbs.service.EgovBBSAttributeManageService;
 import egovframework.let.cop.bbs.service.EgovBBSManageService;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 게시물 관리를 위한 컨트롤러 클래스
- * 
+ *
  * @author 공통 서비스 개발팀 이삼섭
  * @since 2009.03.19
  * @version 1.0
@@ -46,22 +47,22 @@ import egovframework.let.cop.bbs.service.EgovBBSManageService;
  *
  *   수정일      수정자          수정내용
  *  -------    --------    ---------------------------
- *   2009.03.19  이삼섭          최초 생성
- *   2009.06.29  한성곤          2단계 기능 추가 (댓글관리, 만족도조사)
- *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
- *   2024.08.10  이백행          이클립스 문제(Problems) 제거
- *   2024.09.02  이백행          요청 메서드 정리
+ *  2009.03.19  이삼섭           최초 생성
+ *  2009.06.29  한성곤           2단계 기능 추가 (댓글관리, 만족도조사)
+ *  2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *  2024.08.10  이백행           이클립스 문제(Problems) 제거
+ *  2024.09.02  이백행           요청 메서드 정리
+ *  2024.10.08  안단희           롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovBBSAdminManageController {
 
-	@Resource(name = "EgovBBSManageService")
-	private EgovBBSManageService bbsMngService;
+	private final EgovBBSManageService egovBBSManageService;
 
-	@Resource(name = "EgovBBSAttributeManageService")
-	private EgovBBSAttributeManageService bbsAttrbService;
+	private final EgovBBSAttributeManageService egovBBSAttributeManageService;
 
 	@Resource(name = "EgovFileMngService")
 	private EgovFileMngService fileMngService;
@@ -119,8 +120,7 @@ public class EgovBBSAdminManageController {
 	 * @throws Exception
 	 */
 	@GetMapping("/cop/bbs/admin/selectBoardList.do")
-	public String selectBoardArticles(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model,
-			HttpServletRequest request) throws Exception {
+	public String selectBoardArticles(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model, HttpServletRequest request) throws Exception {
 		System.out.println(boardVO.getBbsId());
 		// 메인화면에서 넘어온 경우 메뉴 갱신을 위해 추가
 		request.getSession().setAttribute("menuNo", "5000000");
@@ -141,7 +141,7 @@ public class EgovBBSAdminManageController {
 		vo.setBbsId(boardVO.getBbsId());
 		vo.setUniqId(user.getUniqId());
 
-		BoardMasterVO master = bbsAttrbService.selectBBSMasterInf(vo);
+		BoardMasterVO master = egovBBSAttributeManageService.selectBBSMasterInf(vo);
 
 		// -------------------------------
 		// 방명록이면 방명록 URL로 forward
@@ -164,7 +164,7 @@ public class EgovBBSAdminManageController {
 		boardVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		boardVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-		Map<String, Object> map = bbsMngService.selectBoardArticles(boardVO, vo.getBbsAttrbCode());
+		Map<String, Object> map = egovBBSManageService.selectBoardArticles(boardVO, vo.getBbsAttrbCode());
 		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
 
 		paginationInfo.setTotalRecordCount(totCnt);
@@ -209,7 +209,7 @@ public class EgovBBSAdminManageController {
 		}
 
 		boardVO.setLastUpdusrId(user.getUniqId());
-		BoardVO vo = bbsMngService.selectBoardArticle(boardVO);
+		BoardVO vo = egovBBSManageService.selectBoardArticle(boardVO);
 
 		model.addAttribute("result", vo);
 
@@ -222,7 +222,7 @@ public class EgovBBSAdminManageController {
 		master.setBbsId(boardVO.getBbsId());
 		master.setUniqId(user.getUniqId());
 
-		BoardMasterVO masterVo = bbsAttrbService.selectBBSMasterInf(master);
+		BoardMasterVO masterVo = egovBBSAttributeManageService.selectBBSMasterInf(master);
 
 		if (masterVo.getTmplatCours() == null || masterVo.getTmplatCours().equals("")) {
 			masterVo.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
@@ -257,7 +257,7 @@ public class EgovBBSAdminManageController {
 			BoardMasterVO vo = new BoardMasterVO();
 			vo.setBbsId(boardVO.getBbsId());
 			vo.setUniqId(user.getUniqId());
-			bdMstr = bbsAttrbService.selectBBSMasterInf(vo);
+			bdMstr = egovBBSAttributeManageService.selectBBSMasterInf(vo);
 			model.addAttribute("bdMstr", bdMstr);
 		}
 
@@ -285,10 +285,9 @@ public class EgovBBSAdminManageController {
 	 * @throws Exception
 	 */
 	@PostMapping("/cop/bbs/admin/insertBoardArticle.do")
-	public String insertBoardArticle(final MultipartHttpServletRequest multiRequest,
-			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
-			@ModelAttribute("board") Board board, BindingResult bindingResult, SessionStatus status, ModelMap model)
-			throws Exception {
+	public String insertBoardArticle(final MultipartHttpServletRequest multiRequest, @ModelAttribute("searchVO") BoardVO boardVO,
+			@ModelAttribute("bdMstr") BoardMaster bdMstr, @ModelAttribute("board") Board board, BindingResult bindingResult, SessionStatus status,
+			ModelMap model) throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -302,7 +301,7 @@ public class EgovBBSAdminManageController {
 			vo.setBbsId(boardVO.getBbsId());
 			vo.setUniqId(user.getUniqId());
 
-			master = bbsAttrbService.selectBBSMasterInf(vo);
+			master = egovBBSAttributeManageService.selectBBSMasterInf(vo);
 
 			model.addAttribute("bdMstr", master);
 
@@ -337,7 +336,7 @@ public class EgovBBSAdminManageController {
 
 			board.setNttCn(unscript(board.getNttCn())); // XSS 방지
 
-			bbsMngService.insertBoardArticle(board);
+			egovBBSManageService.insertBoardArticle(board);
 		}
 
 		model.addAttribute("bbsId", boardVO.getBbsId());
@@ -372,7 +371,7 @@ public class EgovBBSAdminManageController {
 		vo.setBbsId(boardVO.getBbsId());
 		vo.setUniqId(user.getUniqId());
 
-		master = bbsAttrbService.selectBBSMasterInf(vo);
+		master = egovBBSAttributeManageService.selectBBSMasterInf(vo);
 
 		model.addAttribute("bdMstr", master);
 		model.addAttribute("result", boardVO);
@@ -401,10 +400,9 @@ public class EgovBBSAdminManageController {
 	 * @throws Exception
 	 */
 	@PostMapping("/cop/bbs/admin/replyBoardArticle.do")
-	public String replyBoardArticle(final MultipartHttpServletRequest multiRequest,
-			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
-			@ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model, SessionStatus status)
-			throws Exception {
+	public String replyBoardArticle(final MultipartHttpServletRequest multiRequest, @ModelAttribute("searchVO") BoardVO boardVO,
+			@ModelAttribute("bdMstr") BoardMaster bdMstr, @ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model,
+			SessionStatus status) throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -417,7 +415,7 @@ public class EgovBBSAdminManageController {
 			vo.setBbsId(boardVO.getBbsId());
 			vo.setUniqId(user.getUniqId());
 
-			master = bbsAttrbService.selectBBSMasterInf(vo);
+			master = egovBBSAttributeManageService.selectBBSMasterInf(vo);
 
 			model.addAttribute("bdMstr", master);
 			model.addAttribute("result", boardVO);
@@ -457,7 +455,7 @@ public class EgovBBSAdminManageController {
 
 			board.setNttCn(unscript(board.getNttCn())); // XSS 방지
 
-			bbsMngService.insertBoardArticle(board);
+			egovBBSManageService.insertBoardArticle(board);
 		}
 
 		model.addAttribute("bbsId", boardVO.getBbsId());
@@ -479,8 +477,7 @@ public class EgovBBSAdminManageController {
 	 * @throws Exception
 	 */
 	@GetMapping("/cop/bbs/admin/forUpdateBoardArticle.do")
-	public String selectBoardArticleForUpdt(@ModelAttribute("searchVO") BoardVO boardVO,
-			@ModelAttribute("board") BoardVO vo, ModelMap model) throws Exception {
+	public String selectBoardArticleForUpdt(@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("board") BoardVO vo, ModelMap model) throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -497,8 +494,8 @@ public class EgovBBSAdminManageController {
 		master.setUniqId(user.getUniqId());
 
 		if (isAuthenticated) {
-			bmvo = bbsAttrbService.selectBBSMasterInf(master);
-			bdvo = bbsMngService.selectBoardArticle(boardVO);
+			bmvo = egovBBSAttributeManageService.selectBBSMasterInf(master);
+			bdvo = egovBBSManageService.selectBoardArticle(boardVO);
 		}
 
 		model.addAttribute("result", bdvo);
@@ -528,10 +525,9 @@ public class EgovBBSAdminManageController {
 	 * @throws Exception
 	 */
 	@PostMapping("/cop/bbs/admin/updateBoardArticle.do")
-	public String updateBoardArticle(final MultipartHttpServletRequest multiRequest,
-			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
-			@ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model, SessionStatus status)
-			throws Exception {
+	public String updateBoardArticle(final MultipartHttpServletRequest multiRequest, @ModelAttribute("searchVO") BoardVO boardVO,
+			@ModelAttribute("bdMstr") BoardMaster bdMstr, @ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model,
+			SessionStatus status) throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -550,8 +546,8 @@ public class EgovBBSAdminManageController {
 			master.setBbsId(boardVO.getBbsId());
 			master.setUniqId(user.getUniqId());
 
-			bmvo = bbsAttrbService.selectBBSMasterInf(master);
-			bdvo = bbsMngService.selectBoardArticle(boardVO);
+			bmvo = egovBBSAttributeManageService.selectBBSMasterInf(master);
+			bdvo = egovBBSManageService.selectBoardArticle(boardVO);
 
 			model.addAttribute("result", bdvo);
 			model.addAttribute("bdMstr", bmvo);
@@ -582,7 +578,7 @@ public class EgovBBSAdminManageController {
 
 			board.setNttCn(unscript(board.getNttCn())); // XSS 방지
 
-			bbsMngService.updateBoardArticle(board);
+			egovBBSManageService.updateBoardArticle(board);
 		}
 
 		model.addAttribute("bbsId", boardVO.getBbsId());
@@ -613,7 +609,7 @@ public class EgovBBSAdminManageController {
 		if (isAuthenticated) {
 			board.setLastUpdusrId(user.getUniqId());
 
-			bbsMngService.deleteBoardArticle(board);
+			egovBBSManageService.deleteBoardArticle(board);
 		}
 
 		model.addAttribute("bbsId", boardVO.getBbsId());

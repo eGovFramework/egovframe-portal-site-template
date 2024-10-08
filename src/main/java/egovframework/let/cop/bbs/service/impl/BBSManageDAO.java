@@ -11,7 +11,7 @@ import egovframework.let.cop.bbs.service.BoardVO;
 
 /**
  * 게시물 관리를 위한 데이터 접근 클래스
- * 
+ *
  * @author 공통 서비스 개발팀 이삼섭
  * @since 2009.03.19
  * @version 1.0
@@ -22,13 +22,14 @@ import egovframework.let.cop.bbs.service.BoardVO;
  *
  *   수정일      수정자          수정내용
  *  -------    --------    ---------------------------
- *  2009.03.19  이삼섭          최초 생성
- *  2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
- *   2024.08.10  이백행          이클립스 문제(Problems) 제거
+ *  2009.03.19  이삼섭           최초 생성
+ *  2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *  2024.08.10  이백행           이클립스 문제(Problems) 제거
+ *  2024.10.08  안단희           롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
-@Repository("BBSManageDAO")
+@Repository
 public class BBSManageDAO extends EgovAbstractMapper {
 
 	/**
