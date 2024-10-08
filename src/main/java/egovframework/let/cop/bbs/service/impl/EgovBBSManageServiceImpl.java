@@ -18,6 +18,7 @@ import egovframework.let.cop.bbs.service.Board;
 import egovframework.let.cop.bbs.service.BoardVO;
 import egovframework.let.cop.bbs.service.EgovBBSManageService;
 import egovframework.let.utl.fcc.service.EgovDateUtil;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 게시물 관리를 위한 서비스 구현 클래스
@@ -26,7 +27,7 @@ import egovframework.let.utl.fcc.service.EgovDateUtil;
  * @since 2009.03.19
  * @version 1.0
  * @see
- * 
+ *
  *      <pre>
  * << 개정이력(Modification Information) >>
  *
@@ -34,14 +35,15 @@ import egovframework.let.utl.fcc.service.EgovDateUtil;
  *  -------    --------    ---------------------------
  *  2009.03.19  이삼섭           최초 생성
  *  2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
- * 
+ *  2024.10.08  안단희           롬복 생성자 기반 종속성 주입
+ *
  *      </pre>
  */
-@Service("EgovBBSManageService")
+@Service
+@RequiredArgsConstructor
 public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements EgovBBSManageService {
 
-	@Resource(name = "BBSManageDAO")
-	private BBSManageDAO bbsMngDAO;
+	private final BBSManageDAO bBSManageDAO;
 
 	@Resource(name = "EgovFileMngService")
 	private EgovFileMngService fileService;
@@ -51,7 +53,7 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
 
 	/**
 	 * 게시물 한 건을 삭제 한다.
-	 * 
+	 *
 	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#deleteBoardArticle(egovframework.let.cop.bbs.brd.service.Board)
 	 */
 	@Override
@@ -62,7 +64,7 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
 
 		board.setNttSj("이 글은 작성자에 의해서 삭제되었습니다.");
 
-		bbsMngDAO.deleteBoardArticle(board);
+		bBSManageDAO.deleteBoardArticle(board);
 
 		if (!"".equals(fvo.getAtchFileId()) || fvo.getAtchFileId() != null) {
 			fileService.deleteAllFileInf(fvo);
@@ -71,7 +73,7 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
 
 	/**
 	 * 게시판에 게시물 또는 답변 게시물을 등록 한다.
-	 * 
+	 *
 	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#insertBoardArticle(egovframework.let.cop.bbs.brd.service.Board)
 	 */
 	@Override
@@ -86,7 +88,7 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
 			@SuppressWarnings("unused")
 			long tmpNttId = 0L; // 답글 게시물 ID
 
-			tmpNttId = bbsMngDAO.replyBoardArticle(board);
+			tmpNttId = bBSManageDAO.replyBoardArticle(board);
 
 		} else {
 			// 답글이 아닌경우 Parnts = 0, replyLc는 = 0, sortOrdr = nttNo(Query에서 처리)
@@ -94,35 +96,35 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
 			board.setReplyLc("0");
 			board.setReplyAt("N");
 
-			bbsMngDAO.insertBoardArticle(board);
+			bBSManageDAO.insertBoardArticle(board);
 		}
 	}
 
 	/**
 	 * 게시물 대하여 상세 내용을 조회 한다.
-	 * 
+	 *
 	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#selectBoardArticle(egovframework.let.cop.bbs.brd.service.BoardVO)
 	 */
 	@Override
 	public BoardVO selectBoardArticle(BoardVO boardVO) throws Exception {
 		if (boardVO.isPlusCount()) {
-			int iniqireCo = bbsMngDAO.selectMaxInqireCo(boardVO);
+			int iniqireCo = bBSManageDAO.selectMaxInqireCo(boardVO);
 
 			boardVO.setInqireCo(iniqireCo);
-			bbsMngDAO.updateInqireCo(boardVO);
+			bBSManageDAO.updateInqireCo(boardVO);
 		}
 
-		return bbsMngDAO.selectBoardArticle(boardVO);
+		return bBSManageDAO.selectBoardArticle(boardVO);
 	}
 
 	/**
 	 * 조건에 맞는 게시물 목록을 조회 한다.
-	 * 
+	 *
 	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#selectBoardArticles(egovframework.let.cop.bbs.brd.service.BoardVO)
 	 */
 	@Override
 	public Map<String, Object> selectBoardArticles(BoardVO boardVO, String attrbFlag) throws Exception {
-		List<BoardVO> list = bbsMngDAO.selectBoardArticleList(boardVO);
+		List<BoardVO> list = bBSManageDAO.selectBoardArticleList(boardVO);
 		List<BoardVO> result = new ArrayList<BoardVO>();
 
 		if ("BBSA01".equals(attrbFlag)) {
@@ -146,7 +148,7 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
 			result = list;
 		}
 
-		int cnt = bbsMngDAO.selectBoardArticleListCnt(boardVO);
+		int cnt = bBSManageDAO.selectBoardArticleListCnt(boardVO);
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
@@ -158,33 +160,33 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
 
 	/**
 	 * 게시물 한 건의 내용을 수정 한다.
-	 * 
+	 *
 	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#updateBoardArticle(egovframework.let.cop.bbs.brd.service.Board)
 	 */
 	@Override
 	public void updateBoardArticle(Board board) throws Exception {
-		bbsMngDAO.updateBoardArticle(board);
+		bBSManageDAO.updateBoardArticle(board);
 	}
 
 	/**
 	 * 방명록 내용을 삭제 한다.
-	 * 
+	 *
 	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#deleteGuestList(egovframework.let.cop.bbs.brd.service.BoardVO)
 	 */
 	@Override
 	public void deleteGuestList(BoardVO boardVO) throws Exception {
-		bbsMngDAO.deleteGuestList(boardVO);
+		bBSManageDAO.deleteGuestList(boardVO);
 	}
 
 	/**
 	 * 방명록에 대한 목록을 조회 한다.
-	 * 
+	 *
 	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#selectGuestList(egovframework.let.cop.bbs.brd.service.BoardVO)
 	 */
 	@Override
 	public Map<String, Object> selectGuestList(BoardVO boardVO) throws Exception {
-		List<BoardVO> result = bbsMngDAO.selectGuestList(boardVO);
-		int cnt = bbsMngDAO.selectGuestListCnt(boardVO);
+		List<BoardVO> result = bBSManageDAO.selectGuestList(boardVO);
+		int cnt = bBSManageDAO.selectGuestListCnt(boardVO);
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
@@ -196,13 +198,13 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
 
 	/**
 	 * 방명록에 대한 패스워드를 조회 한다.
-	 * 
+	 *
 	 * @param board
 	 * @return
 	 * @throws Exception
 	 */
 	@Override
 	public String getPasswordInf(Board board) throws Exception {
-		return bbsMngDAO.getPasswordInf(board);
+		return bBSManageDAO.getPasswordInf(board);
 	}
 }

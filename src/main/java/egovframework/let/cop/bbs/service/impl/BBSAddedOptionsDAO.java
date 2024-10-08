@@ -13,7 +13,7 @@ import egovframework.let.cop.bbs.service.BoardMasterVO;
  * @since 2009.06.26
  * @version 1.0
  * @see
- * 
+ *
  *      <pre>
  * << 개정이력(Modification Information) >>
  *
@@ -21,15 +21,16 @@ import egovframework.let.cop.bbs.service.BoardMasterVO;
  *  -------    --------    ---------------------------
  *  2009.06.26  한성곤           최초 생성
  *  2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
- * 
+ *  2024.10.08  안단희           롬복 생성자 기반 종속성 주입
+ *  
  *      </pre>
  */
-@Repository("BBSAddedOptionsDAO")
+@Repository
 public class BBSAddedOptionsDAO extends EgovAbstractMapper {
 
 	/**
 	 * 신규 게시판 추가기능 정보를 등록한다.
-	 * 
+	 *
 	 * @param BoardMaster
 	 */
 	public int insertAddedOptionsInf(BoardMaster boardMaster) throws Exception {
@@ -38,7 +39,7 @@ public class BBSAddedOptionsDAO extends EgovAbstractMapper {
 
 	/**
 	 * 게시판 추가기능 정보 한 건을 상세조회 한다.
-	 * 
+	 *
 	 * @param BoardMasterVO
 	 */
 	public BoardMasterVO selectAddedOptionsInf(BoardMaster vo) throws Exception {
@@ -47,7 +48,7 @@ public class BBSAddedOptionsDAO extends EgovAbstractMapper {
 
 	/**
 	 * 게시판 추가기능 정보를 수정한다.
-	 * 
+	 *
 	 * @param BoardMaster
 	 */
 	public void updateAddedOptionsInf(BoardMaster boardMaster) throws Exception {

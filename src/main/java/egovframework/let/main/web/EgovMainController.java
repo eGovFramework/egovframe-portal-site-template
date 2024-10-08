@@ -23,6 +23,7 @@ import egovframework.let.sym.mnu.mpm.service.MenuManageVO;
 import egovframework.let.uss.olh.faq.service.EgovFaqManageService;
 import egovframework.let.uss.olh.faq.service.FaqManageDefaultVO;
 import egovframework.let.uss.olp.qri.service.EgovQustnrRespondInfoService;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 템플릿 메인 페이지 컨트롤러 클래스(Sample 소스)
@@ -39,18 +40,19 @@ import egovframework.let.uss.olp.qri.service.EgovQustnrRespondInfoService;
  *  ----------  --------   ---------------------------
  *  2011.08.31  JJY           최초 생성
  *  2021.08.12  신용호           추가 URL 생성
+ *  2024.10.08  안단희           롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
 @SessionAttributes(types = ComDefaultVO.class)
+@RequiredArgsConstructor
 public class EgovMainController {
 
 	/**
 	 * EgovBBSManageService
 	 */
-	@Resource(name = "EgovBBSManageService")
-	private EgovBBSManageService bbsMngService;
+	private final EgovBBSManageService egovBBSManageService;
 
 	/** EgovMenuManageService */
 	@Resource(name = "meunManageService")
@@ -105,7 +107,7 @@ public class EgovMainController {
 		boardVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		boardVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-		Map<String, Object> map = bbsMngService.selectBoardArticles(boardVO, "BBSA02");
+		Map<String, Object> map = egovBBSManageService.selectBoardArticles(boardVO, "BBSA02");
 		model.addAttribute("notiList", map.get("resultList"));
 
 		// 공지사항 메인컨텐츠 조회 끝 -----------------------------------
@@ -123,7 +125,7 @@ public class EgovMainController {
 		boardVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		boardVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-		model.addAttribute("bbsList", bbsMngService.selectBoardArticles(boardVO, "BBSA02").get("resultList"));
+		model.addAttribute("bbsList", egovBBSManageService.selectBoardArticles(boardVO, "BBSA02").get("resultList"));
 
 		// 자유게시판 메인컨텐츠 조회 끝 -----------------------------------
 

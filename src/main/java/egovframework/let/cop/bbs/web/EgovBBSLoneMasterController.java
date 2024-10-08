@@ -23,6 +23,7 @@ import egovframework.com.cmm.service.EgovCmmUseService;
 import egovframework.let.cop.bbs.service.BoardMaster;
 import egovframework.let.cop.bbs.service.BoardMasterVO;
 import egovframework.let.cop.bbs.service.EgovBBSLoneMasterService;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 게시판 속성관리를 위한 컨트롤러 클래스
@@ -39,14 +40,15 @@ import egovframework.let.cop.bbs.service.EgovBBSLoneMasterService;
  *  -------    --------    ---------------------------
  *  2009.08.25  한성곤           최초 생성
  *  2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *  2024.10.08  안단희           롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovBBSLoneMasterController {
 
-	@Resource(name = "EgovBBSLoneMasterService")
-	private EgovBBSLoneMasterService bbsLoneService;
+	private final EgovBBSLoneMasterService egovBBSLoneMasterService;
 
 	@Resource(name = "EgovCmmUseService")
 	private EgovCmmUseService cmmUseService;
@@ -128,7 +130,7 @@ public class EgovBBSLoneMasterController {
 			boardMaster.setUseAt("Y");
 			boardMaster.setTrgetId("SYSTEMDEFAULT_REGIST");
 
-			bbsLoneService.insertMaster(boardMaster);
+			egovBBSLoneMasterService.insertMaster(boardMaster);
 		}
 
 		return "forward:/cop/bbs/selectBoardMasterList.do";
@@ -157,7 +159,7 @@ public class EgovBBSLoneMasterController {
 		boardMasterVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		boardMasterVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-		Map<String, Object> map = bbsLoneService.selectMasterList(boardMasterVO);
+		Map<String, Object> map = egovBBSLoneMasterService.selectMasterList(boardMasterVO);
 		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
 
 		paginationInfo.setTotalRecordCount(totCnt);
@@ -179,7 +181,7 @@ public class EgovBBSLoneMasterController {
 	 */
 	@RequestMapping("/cop/bbs/selectBoardMaster.do")
 	public String selectBoardMaster(@ModelAttribute("searchVO") BoardMasterVO searchVO, ModelMap model) throws Exception {
-		BoardMasterVO vo = bbsLoneService.selectMaster(searchVO);
+		BoardMasterVO vo = egovBBSLoneMasterService.selectMaster(searchVO);
 
 		model.addAttribute("result", vo);
 
@@ -206,7 +208,7 @@ public class EgovBBSLoneMasterController {
 
 		beanValidator.validate(boardMaster, bindingResult);
 		if (bindingResult.hasErrors()) {
-			BoardMasterVO vo = bbsLoneService.selectMaster(boardMasterVO);
+			BoardMasterVO vo = egovBBSLoneMasterService.selectMaster(boardMasterVO);
 
 			model.addAttribute("result", vo);
 
@@ -215,7 +217,7 @@ public class EgovBBSLoneMasterController {
 
 		if (isAuthenticated) {
 			boardMaster.setLastUpdusrId(user.getUniqId());
-			bbsLoneService.updateMaster(boardMaster);
+			egovBBSLoneMasterService.updateMaster(boardMaster);
 		}
 
 		return "forward:/cop/bbs/selectBoardMasterList.do";
@@ -239,7 +241,7 @@ public class EgovBBSLoneMasterController {
 
 		if (isAuthenticated) {
 			boardMaster.setLastUpdusrId(user.getUniqId());
-			bbsLoneService.deleteMaster(boardMaster);
+			egovBBSLoneMasterService.deleteMaster(boardMaster);
 		}
 		return "forward:/cop/bbs/selectBoardMasterList.do";
 	}
