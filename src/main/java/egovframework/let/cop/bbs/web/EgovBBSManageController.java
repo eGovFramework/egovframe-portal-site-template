@@ -38,7 +38,7 @@ import egovframework.let.utl.sim.service.EgovFileScrty;
 
 /**
  * 게시물 관리를 위한 컨트롤러 클래스
- * 
+ *
  * @author 공통 서비스 개발팀 이삼섭
  * @since 2009.03.19
  * @version 1.0
@@ -51,7 +51,7 @@ import egovframework.let.utl.sim.service.EgovFileScrty;
  *  -------    --------    ---------------------------
  *   2009.03.19  이삼섭          최초 생성
  *   2009.06.29  한성곤          2단계 기능 추가 (댓글관리, 만족도조사)
- *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY          경량환경 템플릿 커스터마이징버전 생성
  *   2024.08.24  이백행          요청 메서드 정리
  *
  *      </pre>
@@ -121,8 +121,7 @@ public class EgovBBSManageController {
 	 * @throws Exception
 	 */
 	@GetMapping("/cop/bbs/selectBoardList.do")
-	public String selectBoardArticles(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model,
-			HttpServletRequest request) throws Exception {
+	public String selectBoardArticles(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model, HttpServletRequest request) throws Exception {
 		System.out.println(boardVO.getBbsId());
 		// 메인화면에서 넘어온 경우 메뉴 갱신을 위해 추가
 		request.getSession().setAttribute("menuNo", "3000000");
@@ -287,10 +286,9 @@ public class EgovBBSManageController {
 	 * @throws Exception
 	 */
 	@PostMapping("/cop/bbs/insertBoardArticle.do")
-	public String insertBoardArticle(final MultipartHttpServletRequest multiRequest,
-			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
-			@ModelAttribute("board") Board board, BindingResult bindingResult, SessionStatus status, ModelMap model)
-			throws Exception {
+	public String insertBoardArticle(final MultipartHttpServletRequest multiRequest, @ModelAttribute("searchVO") BoardVO boardVO,
+			@ModelAttribute("bdMstr") BoardMaster bdMstr, @ModelAttribute("board") Board board, BindingResult bindingResult, SessionStatus status,
+			ModelMap model) throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -403,10 +401,9 @@ public class EgovBBSManageController {
 	 * @throws Exception
 	 */
 	@PostMapping("/cop/bbs/replyBoardArticle.do")
-	public String replyBoardArticle(final MultipartHttpServletRequest multiRequest,
-			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
-			@ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model, SessionStatus status)
-			throws Exception {
+	public String replyBoardArticle(final MultipartHttpServletRequest multiRequest, @ModelAttribute("searchVO") BoardVO boardVO,
+			@ModelAttribute("bdMstr") BoardMaster bdMstr, @ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model,
+			SessionStatus status) throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -481,8 +478,7 @@ public class EgovBBSManageController {
 	 * @throws Exception
 	 */
 	@GetMapping("/cop/bbs/forUpdateBoardArticle.do")
-	public String selectBoardArticleForUpdt(@ModelAttribute("searchVO") BoardVO boardVO,
-			@ModelAttribute("board") BoardVO vo, ModelMap model) throws Exception {
+	public String selectBoardArticleForUpdt(@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("board") BoardVO vo, ModelMap model) throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -530,10 +526,9 @@ public class EgovBBSManageController {
 	 * @throws Exception
 	 */
 	@PostMapping("/cop/bbs/updateBoardArticle.do")
-	public String updateBoardArticle(final MultipartHttpServletRequest multiRequest,
-			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
-			@ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model, SessionStatus status)
-			throws Exception {
+	public String updateBoardArticle(final MultipartHttpServletRequest multiRequest, @ModelAttribute("searchVO") BoardVO boardVO,
+			@ModelAttribute("bdMstr") BoardMaster bdMstr, @ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model,
+			SessionStatus status) throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -695,8 +690,8 @@ public class EgovBBSManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/selectSingleGuestList.do")
-	public String selectSingleGuestList(@ModelAttribute("searchVO") BoardVO boardVO,
-			@ModelAttribute("brdMstrVO") BoardMasterVO brdMstrVO, ModelMap model) throws Exception {
+	public String selectSingleGuestList(@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("brdMstrVO") BoardMasterVO brdMstrVO, ModelMap model)
+			throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		@SuppressWarnings("unused")
@@ -744,8 +739,7 @@ public class EgovBBSManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/deleteGuestList.do")
-	public String deleteGuestList(@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("board") Board board,
-			ModelMap model) throws Exception {
+	public String deleteGuestList(@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("board") Board board, ModelMap model) throws Exception {
 		@SuppressWarnings("unused")
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -767,8 +761,8 @@ public class EgovBBSManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/updateGuestList.do")
-	public String updateGuestList(@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("board") Board board,
-			BindingResult bindingResult, ModelMap model) throws Exception {
+	public String updateGuestList(@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("board") Board board, BindingResult bindingResult,
+			ModelMap model) throws Exception {
 
 		// BBST02, BBST04
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
@@ -839,8 +833,8 @@ public class EgovBBSManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/insertGuestList.do")
-	public String insertGuestList(@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("board") Board board,
-			BindingResult bindingResult, ModelMap model) throws Exception {
+	public String insertGuestList(@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("board") Board board, BindingResult bindingResult,
+			ModelMap model) throws Exception {
 
 		// 익명으로 등록이 가능한 부분임
 		// 무인증이 되려면 별도의 컨트롤러를 하나 더 등록해야함
@@ -916,8 +910,7 @@ public class EgovBBSManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/anonymous/selectBoardList.do")
-	public String selectAnonymousBoardArticles(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model)
-			throws Exception {
+	public String selectAnonymousBoardArticles(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model) throws Exception {
 
 		boardVO.setBbsId(boardVO.getBbsId());
 		boardVO.setBbsNm(boardVO.getBbsNm());
@@ -984,8 +977,7 @@ public class EgovBBSManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/anonymous/addBoardArticle.do")
-	public String addAnonymousBoardArticle(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model)
-			throws Exception {
+	public String addAnonymousBoardArticle(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model) throws Exception {
 
 		Boolean isAuthenticated = true;
 
@@ -1034,10 +1026,9 @@ public class EgovBBSManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/anonymous/insertBoardArticle.do")
-	public String insertAnonymousBoardArticle(final MultipartHttpServletRequest multiRequest,
-			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
-			@ModelAttribute("board") Board board, BindingResult bindingResult, SessionStatus status, ModelMap model)
-			throws Exception {
+	public String insertAnonymousBoardArticle(final MultipartHttpServletRequest multiRequest, @ModelAttribute("searchVO") BoardVO boardVO,
+			@ModelAttribute("bdMstr") BoardMaster bdMstr, @ModelAttribute("board") Board board, BindingResult bindingResult, SessionStatus status,
+			ModelMap model) throws Exception {
 
 		Boolean isAuthenticated = true;
 
@@ -1112,8 +1103,7 @@ public class EgovBBSManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/anonymous/selectBoardArticle.do")
-	public String selectAnonymousBoardArticle(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model)
-			throws Exception {
+	public String selectAnonymousBoardArticle(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model) throws Exception {
 
 		// 조회수 증가 여부 지정
 		boardVO.setPlusCount(true);
@@ -1169,9 +1159,8 @@ public class EgovBBSManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/anonymous/deleteBoardArticle.do")
-	public String deleteAnonymousBoardArticle(@ModelAttribute("searchVO") BoardVO boardVO,
-			@ModelAttribute("board") Board board, @ModelAttribute("bdMstr") BoardMaster bdMstr, ModelMap model)
-			throws Exception {
+	public String deleteAnonymousBoardArticle(@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("board") Board board,
+			@ModelAttribute("bdMstr") BoardMaster bdMstr, ModelMap model) throws Exception {
 
 		Boolean isAuthenticated = true;
 
@@ -1227,8 +1216,8 @@ public class EgovBBSManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/anonymous/forUpdateBoardArticle.do")
-	public String selectAnonymousBoardArticleForUpdt(@ModelAttribute("searchVO") BoardVO boardVO,
-			@ModelAttribute("board") BoardVO vo, ModelMap model) throws Exception {
+	public String selectAnonymousBoardArticleForUpdt(@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("board") BoardVO vo, ModelMap model)
+			throws Exception {
 
 		Boolean isAuthenticated = true;
 
@@ -1300,10 +1289,9 @@ public class EgovBBSManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/anonymous/updateBoardArticle.do")
-	public String updateAnonymousBoardArticle(final MultipartHttpServletRequest multiRequest,
-			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
-			@ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model, SessionStatus status)
-			throws Exception {
+	public String updateAnonymousBoardArticle(final MultipartHttpServletRequest multiRequest, @ModelAttribute("searchVO") BoardVO boardVO,
+			@ModelAttribute("bdMstr") BoardMaster bdMstr, @ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model,
+			SessionStatus status) throws Exception {
 
 		Boolean isAuthenticated = true;
 
@@ -1381,8 +1369,7 @@ public class EgovBBSManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/anonymous/addReplyBoardArticle.do")
-	public String addAnonymousReplyBoardArticle(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model)
-			throws Exception {
+	public String addAnonymousReplyBoardArticle(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model) throws Exception {
 
 		BoardMasterVO master = new BoardMasterVO();
 		BoardMasterVO vo = new BoardMasterVO();
@@ -1429,10 +1416,9 @@ public class EgovBBSManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/anonymous/replyBoardArticle.do")
-	public String replyAnonymousBoardArticle(final MultipartHttpServletRequest multiRequest,
-			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
-			@ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model, SessionStatus status)
-			throws Exception {
+	public String replyAnonymousBoardArticle(final MultipartHttpServletRequest multiRequest, @ModelAttribute("searchVO") BoardVO boardVO,
+			@ModelAttribute("bdMstr") BoardMaster bdMstr, @ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model,
+			SessionStatus status) throws Exception {
 
 		Boolean isAuthenticated = true;
 

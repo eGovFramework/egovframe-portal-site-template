@@ -3,19 +3,11 @@ package egovframework.let.cop.bbs.web;
 import java.util.List;
 import java.util.Map;
 
-import egovframework.com.cmm.ComDefaultCodeVO;
-import egovframework.com.cmm.LoginVO;
-import egovframework.com.cmm.service.EgovCmmUseService;
-import egovframework.let.cop.bbs.service.BoardMaster;
-import egovframework.let.cop.bbs.service.BoardMasterVO;
-import egovframework.let.cop.bbs.service.EgovBBSLoneMasterService;
+import javax.annotation.Resource;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,22 +17,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
+import egovframework.com.cmm.ComDefaultCodeVO;
+import egovframework.com.cmm.LoginVO;
+import egovframework.com.cmm.service.EgovCmmUseService;
+import egovframework.let.cop.bbs.service.BoardMaster;
+import egovframework.let.cop.bbs.service.BoardMasterVO;
+import egovframework.let.cop.bbs.service.EgovBBSLoneMasterService;
+
 /**
- * 게시판 속성관리를 위한 컨트롤러  클래스
+ * 게시판 속성관리를 위한 컨트롤러 클래스
+ *
  * @author 공통 서비스 개발팀 한성곤
  * @since 2009.08.25
  * @version 1.0
  * @see
  *
- * <pre>
+ *      <pre>
  * << 개정이력(Modification Information) >>
  *
  *   수정일      수정자          수정내용
  *  -------    --------    ---------------------------
- *  2009.08.25  한성곤          최초 생성
- *  2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *  2009.08.25  한성곤           최초 생성
+ *  2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
  *
- *  </pre>
+ *      </pre>
  */
 @Controller
 public class EgovBBSLoneMasterController {
@@ -97,8 +97,8 @@ public class EgovBBSLoneMasterController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/insertBoardMaster.do")
-	public String insertBoardMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @ModelAttribute("boardMaster") BoardMaster boardMaster, BindingResult bindingResult,
-			SessionStatus status, ModelMap model) throws Exception {
+	public String insertBoardMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @ModelAttribute("boardMaster") BoardMaster boardMaster,
+			BindingResult bindingResult, SessionStatus status, ModelMap model) throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -198,8 +198,8 @@ public class EgovBBSLoneMasterController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/updateBoardMaster.do")
-	public String updateBoardMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @ModelAttribute("boardMaster") BoardMaster boardMaster, BindingResult bindingResult,
-			ModelMap model) throws Exception {
+	public String updateBoardMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @ModelAttribute("boardMaster") BoardMaster boardMaster,
+			BindingResult bindingResult, ModelMap model) throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -231,8 +231,8 @@ public class EgovBBSLoneMasterController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/deleteBoardMaster.do")
-	public String deleteBoardMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @ModelAttribute("boardMaster") BoardMaster boardMaster, SessionStatus status)
-			throws Exception {
+	public String deleteBoardMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @ModelAttribute("boardMaster") BoardMaster boardMaster,
+			SessionStatus status) throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();

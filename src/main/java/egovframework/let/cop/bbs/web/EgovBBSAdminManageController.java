@@ -35,7 +35,7 @@ import egovframework.let.cop.bbs.service.EgovBBSManageService;
 
 /**
  * 게시물 관리를 위한 컨트롤러 클래스
- * 
+ *
  * @author 공통 서비스 개발팀 이삼섭
  * @since 2009.03.19
  * @version 1.0
@@ -48,7 +48,7 @@ import egovframework.let.cop.bbs.service.EgovBBSManageService;
  *  -------    --------    ---------------------------
  *   2009.03.19  이삼섭          최초 생성
  *   2009.06.29  한성곤          2단계 기능 추가 (댓글관리, 만족도조사)
- *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY          경량환경 템플릿 커스터마이징버전 생성
  *   2024.08.10  이백행          이클립스 문제(Problems) 제거
  *   2024.09.02  이백행          요청 메서드 정리
  *
@@ -119,8 +119,7 @@ public class EgovBBSAdminManageController {
 	 * @throws Exception
 	 */
 	@GetMapping("/cop/bbs/admin/selectBoardList.do")
-	public String selectBoardArticles(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model,
-			HttpServletRequest request) throws Exception {
+	public String selectBoardArticles(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model, HttpServletRequest request) throws Exception {
 		System.out.println(boardVO.getBbsId());
 		// 메인화면에서 넘어온 경우 메뉴 갱신을 위해 추가
 		request.getSession().setAttribute("menuNo", "5000000");
@@ -285,10 +284,9 @@ public class EgovBBSAdminManageController {
 	 * @throws Exception
 	 */
 	@PostMapping("/cop/bbs/admin/insertBoardArticle.do")
-	public String insertBoardArticle(final MultipartHttpServletRequest multiRequest,
-			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
-			@ModelAttribute("board") Board board, BindingResult bindingResult, SessionStatus status, ModelMap model)
-			throws Exception {
+	public String insertBoardArticle(final MultipartHttpServletRequest multiRequest, @ModelAttribute("searchVO") BoardVO boardVO,
+			@ModelAttribute("bdMstr") BoardMaster bdMstr, @ModelAttribute("board") Board board, BindingResult bindingResult, SessionStatus status,
+			ModelMap model) throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -401,10 +399,9 @@ public class EgovBBSAdminManageController {
 	 * @throws Exception
 	 */
 	@PostMapping("/cop/bbs/admin/replyBoardArticle.do")
-	public String replyBoardArticle(final MultipartHttpServletRequest multiRequest,
-			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
-			@ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model, SessionStatus status)
-			throws Exception {
+	public String replyBoardArticle(final MultipartHttpServletRequest multiRequest, @ModelAttribute("searchVO") BoardVO boardVO,
+			@ModelAttribute("bdMstr") BoardMaster bdMstr, @ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model,
+			SessionStatus status) throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -479,8 +476,7 @@ public class EgovBBSAdminManageController {
 	 * @throws Exception
 	 */
 	@GetMapping("/cop/bbs/admin/forUpdateBoardArticle.do")
-	public String selectBoardArticleForUpdt(@ModelAttribute("searchVO") BoardVO boardVO,
-			@ModelAttribute("board") BoardVO vo, ModelMap model) throws Exception {
+	public String selectBoardArticleForUpdt(@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("board") BoardVO vo, ModelMap model) throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -528,10 +524,9 @@ public class EgovBBSAdminManageController {
 	 * @throws Exception
 	 */
 	@PostMapping("/cop/bbs/admin/updateBoardArticle.do")
-	public String updateBoardArticle(final MultipartHttpServletRequest multiRequest,
-			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
-			@ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model, SessionStatus status)
-			throws Exception {
+	public String updateBoardArticle(final MultipartHttpServletRequest multiRequest, @ModelAttribute("searchVO") BoardVO boardVO,
+			@ModelAttribute("bdMstr") BoardMaster bdMstr, @ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model,
+			SessionStatus status) throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
