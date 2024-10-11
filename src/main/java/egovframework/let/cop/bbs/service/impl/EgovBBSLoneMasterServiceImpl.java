@@ -15,6 +15,7 @@ import egovframework.let.cop.bbs.service.BoardMasterVO;
 import egovframework.let.cop.bbs.service.EgovBBSLoneMasterService;
 import egovframework.let.cop.com.service.BoardUseInf;
 import egovframework.let.cop.com.service.impl.BBSUseInfoManageDAO;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 게시판 속성관리를 위한 서비스 구현 클래스
@@ -23,7 +24,7 @@ import egovframework.let.cop.com.service.impl.BBSUseInfoManageDAO;
  * @since 2009.08.25
  * @version 1.0
  * @see
- * 
+ *
  *      <pre>
  * << 개정이력(Modification Information) >>
  *
@@ -31,17 +32,17 @@ import egovframework.let.cop.com.service.impl.BBSUseInfoManageDAO;
  *  -------    --------    ---------------------------
  *  2009.08.25  한성곤           최초 생성
  *  2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
- * 
+ *
  *      </pre>
  */
 @Service("EgovBBSLoneMasterService")
+@RequiredArgsConstructor
 public class EgovBBSLoneMasterServiceImpl extends EgovAbstractServiceImpl implements EgovBBSLoneMasterService {
 
 	@Resource(name = "BBSLoneMasterDAO")
 	private BBSLoneMasterDAO masterDAO;
 
-	@Resource(name = "BBSUseInfoManageDAO")
-	private BBSUseInfoManageDAO bbsUseDAO;
+	private final BBSUseInfoManageDAO bBSUseInfoManageDAO;
 
 	@Resource(name = "egovBBSMstrIdGnrService")
 	private EgovIdGnrService idgenService;
@@ -58,7 +59,7 @@ public class EgovBBSLoneMasterServiceImpl extends EgovAbstractServiceImpl implem
 		bdUseInf.setBbsId(boardMaster.getBbsId());
 		bdUseInf.setLastUpdusrId(boardMaster.getLastUpdusrId());
 
-		bbsUseDAO.deleteBBSUseInfByBoardId(bdUseInf);
+		bBSUseInfoManageDAO.deleteBBSUseInfByBoardId(bdUseInf);
 	}
 
 	/**
@@ -83,7 +84,7 @@ public class EgovBBSLoneMasterServiceImpl extends EgovAbstractServiceImpl implem
 		bdUseInf.setFrstRegisterId(boardMaster.getFrstRegisterId());
 		bdUseInf.setUseAt("Y");
 
-		bbsUseDAO.insertBBSUseInf(bdUseInf);
+		bBSUseInfoManageDAO.insertBBSUseInf(bdUseInf);
 
 		return bbsId;
 	}
@@ -101,6 +102,7 @@ public class EgovBBSLoneMasterServiceImpl extends EgovAbstractServiceImpl implem
 	 */
 	@Override
 	public Map<String, Object> selectMasterList(BoardMasterVO searchVO) throws Exception {
+
 		List<BoardMasterVO> result = masterDAO.selectMasterList(searchVO);
 		int cnt = masterDAO.selectMasterListCnt(searchVO);
 

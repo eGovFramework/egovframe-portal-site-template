@@ -22,6 +22,7 @@ import egovframework.com.cmm.LoginVO;
 import egovframework.let.cop.com.service.BoardUseInf;
 import egovframework.let.cop.com.service.BoardUseInfVO;
 import egovframework.let.cop.com.service.EgovBBSUseInfoManageService;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 게시판의 이용정보를 관리하기 위한 컨트롤러 클래스
@@ -38,14 +39,15 @@ import egovframework.let.cop.com.service.EgovBBSUseInfoManageService;
  *  -------    --------    ---------------------------
  *  2009.04.02  이삼섭           최초 생성
  *  2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *  2024.10.11  안단희           롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovBBSUseInfoManageController {
 
-	@Resource(name = "EgovBBSUseInfoManageService")
-	private EgovBBSUseInfoManageService bbsUseService;
+	private final EgovBBSUseInfoManageService egovBBSUseInfoManageService;
 
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertyService;
@@ -71,7 +73,7 @@ public class EgovBBSUseInfoManageController {
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
 		if (isAuthenticated) {
-			bbsUseService.deleteBBSUseInf(bdUseInf);
+			egovBBSUseInfoManageService.deleteBBSUseInf(bdUseInf);
 		}
 
 		return "forward:/cop/com/selectBBSUseInfs.do";
@@ -132,7 +134,7 @@ public class EgovBBSUseInfoManageController {
 		boardUseInf.setRegistSeCode(registSeCode);
 
 		if (isAuthenticated) {
-			bbsUseService.insertBBSUseInf(boardUseInf);
+			egovBBSUseInfoManageService.insertBBSUseInf(boardUseInf);
 		}
 
 		return "forward:/cop/com/selectBBSUseInfs.do";
@@ -163,7 +165,7 @@ public class EgovBBSUseInfoManageController {
 		bdUseVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		bdUseVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-		Map<String, Object> map = bbsUseService.selectBBSUseInfs(bdUseVO);
+		Map<String, Object> map = egovBBSUseInfoManageService.selectBBSUseInfs(bdUseVO);
 		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
 
 		paginationInfo.setTotalRecordCount(totCnt);
@@ -191,7 +193,7 @@ public class EgovBBSUseInfoManageController {
 			HttpServletRequest request, ModelMap model) throws Exception {
 
 		if (EgovUserDetailsHelper.isAuthenticated()) {
-			bbsUseService.updateBBSUseInf(boardUseInf);
+			egovBBSUseInfoManageService.updateBBSUseInf(boardUseInf);
 		}
 
 		return "forward:/cop/com/selectBBSUseInfs.do";
@@ -208,7 +210,7 @@ public class EgovBBSUseInfoManageController {
 	 */
 	@RequestMapping("/cop/com/selectBBSUseInf.do")
 	public String selectBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) throws Exception {
-		BoardUseInfVO vo = bbsUseService.selectBBSUseInf(bdUseVO);
+		BoardUseInfVO vo = egovBBSUseInfoManageService.selectBBSUseInf(bdUseVO);
 
 		// 시스템 사용 게시판의 경우 URL 표시
 		if ("SYSTEM_DEFAULT_BOARD".equals(vo.getTrgetId())) {
@@ -247,7 +249,7 @@ public class EgovBBSUseInfoManageController {
 		bdUseVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		bdUseVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-		Map<String, Object> map = bbsUseService.selectBBSUseInfsByTrget(bdUseVO);
+		Map<String, Object> map = egovBBSUseInfoManageService.selectBBSUseInfsByTrget(bdUseVO);
 		int totCnt = Integer.parseInt((String) map.get("resultCnt"));
 
 		paginationInfo.setTotalRecordCount(totCnt);
@@ -281,7 +283,7 @@ public class EgovBBSUseInfoManageController {
 
 		if (isAuthenticated) {
 			boardUseInf.setTrgetId(param_trgetId);
-			bbsUseService.updateBBSUseInfByTrget(boardUseInf);
+			egovBBSUseInfoManageService.updateBBSUseInfByTrget(boardUseInf);
 		}
 
 		return "forward:/cop/com/selectBBSUseInfsByTrget.do";
@@ -314,7 +316,7 @@ public class EgovBBSUseInfoManageController {
 			boardUseInf.setBbsId(bbsId);
 			boardUseInf.setTrgetId(paramTrgetId);
 
-			bbsUseService.insertBBSUseInf(boardUseInf);
+			egovBBSUseInfoManageService.insertBBSUseInf(boardUseInf);
 		}
 
 		return "forward:/cop/com/selectBBSUseInfsByTrget.do";
