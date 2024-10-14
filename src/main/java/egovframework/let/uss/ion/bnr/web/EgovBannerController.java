@@ -4,21 +4,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import egovframework.com.cmm.EgovMessageSource;
-import egovframework.com.cmm.LoginVO;
-import egovframework.com.cmm.service.EgovFileMngService;
-import egovframework.com.cmm.service.EgovFileMngUtil;
-import egovframework.com.cmm.service.FileVO;
-import egovframework.let.uss.ion.bnr.service.Banner;
-import egovframework.let.uss.ion.bnr.service.BannerVO;
-import egovframework.let.uss.ion.bnr.service.EgovBannerService;
+import javax.annotation.Resource;
 
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,24 +21,33 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
+import egovframework.com.cmm.EgovMessageSource;
+import egovframework.com.cmm.LoginVO;
+import egovframework.com.cmm.service.EgovFileMngService;
+import egovframework.com.cmm.service.EgovFileMngUtil;
+import egovframework.com.cmm.service.FileVO;
+import egovframework.let.uss.ion.bnr.service.Banner;
+import egovframework.let.uss.ion.bnr.service.BannerVO;
+import egovframework.let.uss.ion.bnr.service.EgovBannerService;
+
 /**
- * 배너에 대한 controller 클래스를 정의한다.
- * 배너에 대한 등록, 수정, 삭제, 조회, 반영확인 기능을 제공한다.
- * 배너의 조회기능은 목록조회, 상세조회로 구분된다.
+ * 배너에 대한 controller 클래스를 정의한다. 배너에 대한 등록, 수정, 삭제, 조회, 반영확인 기능을 제공한다. 배너의 조회기능은
+ * 목록조회, 상세조회로 구분된다.
+ *
  * @author 공통서비스개발팀 lee.m.j
  * @since 2009.08.03
  * @version 1.0
  * @see
  *
- * <pre>
+ *      <pre>
  * << 개정이력(Modification Information) >>
  *
- *   수정일      수정자           수정내용
+ *  수정일      수정자           수정내용
  *  -------    --------    ---------------------------
- *   2009.08.03  lee.m.j        최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *  2009.08.03  lee.m.j       최초 생성
+ *  2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
  *
- * </pre>
+ *      </pre>
  */
 @Controller
 public class EgovBannerController {
@@ -74,6 +73,7 @@ public class EgovBannerController {
 
 	/**
 	 * 배너 목록화면 이동
+	 *
 	 * @return String
 	 * @exception Exception
 	 */
@@ -85,6 +85,7 @@ public class EgovBannerController {
 
 	/**
 	 * 배너를 관리하기 위해 등록된 배너목록을 조회한다.
+	 *
 	 * @param bannerVO - 배너 VO
 	 * @return String - 리턴 URL
 	 * @throws Exception
@@ -117,6 +118,7 @@ public class EgovBannerController {
 
 	/**
 	 * 등록된 배너의 상세정보를 조회한다.
+	 *
 	 * @param bannerVO - 배너 Vo
 	 * @return String - 리턴 Url
 	 */
@@ -133,6 +135,7 @@ public class EgovBannerController {
 
 	/**
 	 * 배너등록 화면으로 이동한다.
+	 *
 	 * @param banner - 배너 model
 	 * @return String - 리턴 Url
 	 */
@@ -145,14 +148,15 @@ public class EgovBannerController {
 
 	/**
 	 * 배너정보를 신규로 등록한다.
+	 *
 	 * @param banner - 배너 model
 	 * @return String - 리턴 Url
 	 */
 	@RequestMapping(value = "/uss/ion/bnr/addBanner.do")
-	public String insertBanner(final MultipartHttpServletRequest multiRequest, @ModelAttribute("banner") Banner banner, @ModelAttribute("bannerVO") BannerVO bannerVO,
-			BindingResult bindingResult, SessionStatus status, ModelMap model) throws Exception {
+	public String insertBanner(final MultipartHttpServletRequest multiRequest, @ModelAttribute("banner") Banner banner,
+			@ModelAttribute("bannerVO") BannerVO bannerVO, BindingResult bindingResult, SessionStatus status, ModelMap model) throws Exception {
 
-		beanValidator.validate(banner, bindingResult); //validation 수행
+		beanValidator.validate(banner, bindingResult); // validation 수행
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("bannerVO", bannerVO);
@@ -197,13 +201,14 @@ public class EgovBannerController {
 
 	/**
 	 * 기 등록된 배너정보를 수정한다.
+	 *
 	 * @param banner - 배너 model
 	 * @return String - 리턴 Url
 	 */
 	@RequestMapping(value = "/uss/ion/bnr/updtBanner.do")
-	public String updateBanner(final MultipartHttpServletRequest multiRequest, @ModelAttribute("banner") Banner banner, BindingResult bindingResult, SessionStatus status,
-			ModelMap model) throws Exception {
-		beanValidator.validate(banner, bindingResult); //validation 수행
+	public String updateBanner(final MultipartHttpServletRequest multiRequest, @ModelAttribute("banner") Banner banner, BindingResult bindingResult,
+			SessionStatus status, ModelMap model) throws Exception {
+		beanValidator.validate(banner, bindingResult); // validation 수행
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("bannerVO", banner);
@@ -253,12 +258,14 @@ public class EgovBannerController {
 
 	/**
 	 * 기 등록된 배너정보를 삭제한다.
+	 *
 	 * @param banner Banner
 	 * @return String
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/uss/ion/bnr/removeBanner.do")
-	public String deleteBanner(@RequestParam("bannerId") String bannerId, @ModelAttribute("banner") Banner banner, SessionStatus status, ModelMap model) throws Exception {
+	public String deleteBanner(@RequestParam("bannerId") String bannerId, @ModelAttribute("banner") Banner banner, SessionStatus status, ModelMap model)
+			throws Exception {
 
 		banner.setBannerId(bannerId);
 		egovBannerService.deleteBanner(banner);
@@ -270,13 +277,15 @@ public class EgovBannerController {
 
 	/**
 	 * 기 등록된 배너정보목록을 일괄 삭제한다.
+	 *
 	 * @param banners String
-	 * @param banner Banner
+	 * @param banner  Banner
 	 * @return String
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/uss/ion/bnr/removeBannerList.do")
-	public String deleteBannerList(@RequestParam("bannerIds") String bannerIds, @ModelAttribute("banner") Banner banner, SessionStatus status, ModelMap model) throws Exception {
+	public String deleteBannerList(@RequestParam("bannerIds") String bannerIds, @ModelAttribute("banner") Banner banner, SessionStatus status, ModelMap model)
+			throws Exception {
 
 		String[] strBannerIds = bannerIds.split(";");
 
@@ -293,6 +302,7 @@ public class EgovBannerController {
 
 	/**
 	 * 배너가 특정화면에 반영된 결과를 조회한다.
+	 *
 	 * @param bannerVO - 배너 VO
 	 * @return String - 리턴 Url
 	 */
@@ -308,6 +318,7 @@ public class EgovBannerController {
 
 	/**
 	 * MyPage에 배너정보를 제공하기 위해 목록을 조회한다.
+	 *
 	 * @param bannerVO - 배너 VO
 	 * @return String - 리턴 URL
 	 * @throws Exception
