@@ -29,6 +29,7 @@ import egovframework.com.cmm.service.FileVO;
 import egovframework.let.uss.ion.bnr.service.Banner;
 import egovframework.let.uss.ion.bnr.service.BannerVO;
 import egovframework.let.uss.ion.bnr.service.EgovBannerService;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 배너에 대한 controller 클래스를 정의한다. 배너에 대한 등록, 수정, 삭제, 조회, 반영확인 기능을 제공한다. 배너의 조회기능은
@@ -46,10 +47,12 @@ import egovframework.let.uss.ion.bnr.service.EgovBannerService;
  *  -------    --------    ---------------------------
  *  2009.08.03  lee.m.j       최초 생성
  *  2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *  2024.10.14  안단희           롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovBannerController {
 
 	@Resource(name = "egovMessageSource")
@@ -61,12 +64,10 @@ public class EgovBannerController {
 	@Resource(name = "EgovFileMngUtil")
 	private EgovFileMngUtil fileUtil;
 
-	@Resource(name = "egovBannerService")
-	private EgovBannerService egovBannerService;
+	private final EgovBannerService egovBannerService;
 
 	/** Message ID Generation */
-	@Resource(name = "egovBannerIdGnrService")
-	private EgovIdGnrService egovBannerIdGnrService;
+	private final EgovIdGnrService egovBannerIdGnrService;
 
 	@Autowired
 	private DefaultBeanValidator beanValidator;

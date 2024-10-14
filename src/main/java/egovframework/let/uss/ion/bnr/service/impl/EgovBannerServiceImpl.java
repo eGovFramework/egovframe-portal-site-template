@@ -3,8 +3,6 @@ package egovframework.let.uss.ion.bnr.service.impl;
 import java.io.File;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +10,7 @@ import egovframework.com.cmm.service.FileVO;
 import egovframework.let.uss.ion.bnr.service.Banner;
 import egovframework.let.uss.ion.bnr.service.BannerVO;
 import egovframework.let.uss.ion.bnr.service.EgovBannerService;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 배너에 대한 ServiceImpl 클래스를 정의한다. 배너에 대한 등록, 수정, 삭제, 조회, 반영확인 기능을 제공한다. 배너의 조회기능은
@@ -29,14 +28,15 @@ import egovframework.let.uss.ion.bnr.service.EgovBannerService;
  *  -------    --------    ---------------------------
  *  2009.08.03  lee.m.j       최초 생성
  *  2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *  2024.10.14  안단희           롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
-@Service("egovBannerService")
+@Service
+@RequiredArgsConstructor
 public class EgovBannerServiceImpl extends EgovAbstractServiceImpl implements EgovBannerService {
 
-	@Resource(name = "bannerDAO")
-	private BannerDAO bannerDAO;
+	private final BannerDAO bannerDAO;
 
 	/**
 	 * 배너를 관리하기 위해 등록된 배너목록을 조회한다.
