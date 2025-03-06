@@ -73,7 +73,6 @@ public class EgovImageProcessController extends HttpServlet {
 	 * @param response
 	 * @throws Exception
 	 */
-	@SuppressWarnings("resource")
 	@RequestMapping("/cmm/fms/getImage.do")
 	public void getImageInf(SessionVO sessionVO, ModelMap model, @RequestParam Map<String, Object> commandMap, HttpServletResponse response) throws Exception {
 

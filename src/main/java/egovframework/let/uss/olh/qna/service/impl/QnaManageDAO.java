@@ -61,7 +61,7 @@ public class QnaManageDAO extends EgovAbstractMapper {
 	 */
 	public List<?> selectQnaList(QnaManageDefaultVO searchVO) throws Exception {
 
-        return list("QnaManageDAO.selectQnaList", searchVO);
+        return selectList("QnaManageDAO.selectQnaList", searchVO);
 
     }
 
@@ -142,7 +142,7 @@ public class QnaManageDAO extends EgovAbstractMapper {
 	 */
 	public List<?> selectQnaAnswerList(QnaManageDefaultVO searchVO) throws Exception {
 
-        return list("QnaManageDAO.selectQnaAnswerList", searchVO);
+        return selectList("QnaManageDAO.selectQnaAnswerList", searchVO);
 
     }
 

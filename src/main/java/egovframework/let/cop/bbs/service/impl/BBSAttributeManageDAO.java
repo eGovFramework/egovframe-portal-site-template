@@ -62,9 +62,8 @@ public class BBSAttributeManageDAO extends EgovAbstractMapper {
 	 *
 	 * @param BoardMasterVO
 	 */
-	@SuppressWarnings("unchecked")
 	public List<BoardMasterVO> selectBBSMasterInfs(BoardMasterVO vo) throws Exception {
-		return (List<BoardMasterVO>) list("BBSAttributeManageDAO.selectBBSMasterInfs", vo);
+		return selectList("BBSAttributeManageDAO.selectBBSMasterInfs", vo);
 	}
 
 	/**
@@ -103,10 +102,9 @@ public class BBSAttributeManageDAO extends EgovAbstractMapper {
 	 * @return
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
 	public List<BoardMasterVO> selectAllBBSMasteInf(BoardMasterVO vo) throws Exception {
 		// 커뮤니티, 동호회의 게시판이 나오지 않도록 LETTNBBSUSE 테이블과 Join 필요
-		return (List<BoardMasterVO>) list("BBSAttributeManageDAO.selectAllBBSMaster", vo);
+		return selectList("BBSAttributeManageDAO.selectAllBBSMaster", vo);
 	}
 
 	/**
@@ -114,9 +112,8 @@ public class BBSAttributeManageDAO extends EgovAbstractMapper {
 	 *
 	 * @param BoardMasterVO
 	 */
-	@SuppressWarnings("unchecked")
 	public List<BoardMasterVO> selectBdMstrListByTrget(BoardMasterVO vo) throws Exception {
-		return (List<BoardMasterVO>) list("BBSAttributeManageDAO.selectBdMstrListByTrget", vo);
+		return selectList("BBSAttributeManageDAO.selectBdMstrListByTrget", vo);
 	}
 
 	/**
@@ -137,9 +134,8 @@ public class BBSAttributeManageDAO extends EgovAbstractMapper {
 	 * @return
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
 	public List<BoardMasterVO> selectAllBdMstrByTrget(BoardMasterVO vo) throws Exception {
-		return (List<BoardMasterVO>) list("BBSAttributeManageDAO.selectAllBdMstrByTrget", vo);
+		return selectList("BBSAttributeManageDAO.selectAllBdMstrByTrget", vo);
 	}
 
 	/**
@@ -147,9 +143,8 @@ public class BBSAttributeManageDAO extends EgovAbstractMapper {
 	 *
 	 * @param BoardMasterVO
 	 */
-	@SuppressWarnings("unchecked")
 	public List<BoardMasterVO> selectNotUsedBdMstrList(BoardMasterVO vo) throws Exception {
-		return (List<BoardMasterVO>) list("BBSAttributeManageDAO.selectNotUsedBdMstrList", vo);
+		return selectList("BBSAttributeManageDAO.selectNotUsedBdMstrList", vo);
 	}
 
 	/**

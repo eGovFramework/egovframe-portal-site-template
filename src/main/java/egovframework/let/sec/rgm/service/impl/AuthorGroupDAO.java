@@ -36,9 +36,8 @@ public class AuthorGroupDAO extends EgovAbstractMapper {
 	 * @return List<AuthorGroupVO>
 	 * @exception Exception
 	 */
-	@SuppressWarnings("unchecked")
 	public List<AuthorGroupVO> selectAuthorGroupList(AuthorGroupVO authorGroupVO) throws Exception {
-		return (List<AuthorGroupVO>) list("authorGroupDAO.selectAuthorGroupList", authorGroupVO);
+		return selectList("authorGroupDAO.selectAuthorGroupList", authorGroupVO);
 	}
 
 	/**

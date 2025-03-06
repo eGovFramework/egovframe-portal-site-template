@@ -36,9 +36,8 @@ public class AuthorManageDAO extends EgovAbstractMapper {
 	 * @return List<AuthorManageVO>
 	 * @exception Exception
 	 */
-    @SuppressWarnings("unchecked")
 	public List<AuthorManageVO> selectAuthorList(AuthorManageVO authorManageVO) throws Exception {
-        return (List<AuthorManageVO>) list("authorManageDAO.selectAuthorList", authorManageVO);
+        return selectList("authorManageDAO.selectAuthorList", authorManageVO);
     }
 
 	/**
@@ -94,8 +93,7 @@ public class AuthorManageDAO extends EgovAbstractMapper {
 	 * @return List<AuthorManageVO>
 	 * @exception Exception
 	 */
-    @SuppressWarnings("unchecked")
 	public List<AuthorManageVO> selectAuthorAllList(AuthorManageVO authorManageVO) throws Exception {
-        return (List<AuthorManageVO>) list("authorManageDAO.selectAuthorAllList", authorManageVO);
+        return selectList("authorManageDAO.selectAuthorAllList", authorManageVO);
     }
 }

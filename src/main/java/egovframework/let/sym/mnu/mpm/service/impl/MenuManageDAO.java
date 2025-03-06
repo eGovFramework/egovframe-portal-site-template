@@ -38,7 +38,7 @@ public class MenuManageDAO extends EgovAbstractMapper{
 	 * @exception Exception
 	 */
 	public List<?> selectMainMenuHead(MenuManageVO vo) throws Exception{
-		return list("menuManageDAO.selectMainMenuHead", vo);
+		return selectList("menuManageDAO.selectMainMenuHead", vo);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class MenuManageDAO extends EgovAbstractMapper{
 	 * @exception Exception
 	 */
 	public List<?> selectMainMenuLeft(MenuManageVO vo) throws Exception{
-		return list("menuManageDAO.selectMainMenuLeft", vo);
+		return selectList("menuManageDAO.selectMainMenuLeft", vo);
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class MenuManageDAO extends EgovAbstractMapper{
 	 * @exception Exception
 	 */
 	public List<?> selectMainMenuHeadByAuthor(MenuManageVO vo) throws Exception{
-		return list("menuManageDAO.selectMainMenuHeadByAuthor", vo);
+		return selectList("menuManageDAO.selectMainMenuHeadByAuthor", vo);
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class MenuManageDAO extends EgovAbstractMapper{
 	 * @exception Exception
 	 */
 	public List<?> selectMainMenuLeftByAuthor(MenuManageVO vo) throws Exception{
-		return list("menuManageDAO.selectMainMenuLeftByAuthor", vo);
+		return selectList("menuManageDAO.selectMainMenuLeftByAuthor", vo);
 	}
 
 }

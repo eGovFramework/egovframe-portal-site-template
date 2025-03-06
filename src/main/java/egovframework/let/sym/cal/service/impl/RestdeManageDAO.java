@@ -37,7 +37,7 @@ public class RestdeManageDAO extends EgovAbstractMapper {
 	 * @throws Exception
 	 */
     public List<?> selectNormalRestdePopup(Restde restde) throws Exception {
-        return list("RestdeManageDAO.selectNormalRestdePopup", restde);
+        return selectList("RestdeManageDAO.selectNormalRestdePopup", restde);
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class RestdeManageDAO extends EgovAbstractMapper {
 	 * @throws Exception
 	 */
     public List<?> selectAdministRestdePopup(Restde restde) throws Exception {
-        return list("RestdeManageDAO.selectAdministRestdePopup", restde);
+        return selectList("RestdeManageDAO.selectAdministRestdePopup", restde);
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class RestdeManageDAO extends EgovAbstractMapper {
 	 * @throws Exception
 	 */
     public List<?> selectNormalDayCal(Restde restde) throws Exception {
-        return list("RestdeManageDAO.selectNormalDayCal", restde);
+        return selectList("RestdeManageDAO.selectNormalDayCal", restde);
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class RestdeManageDAO extends EgovAbstractMapper {
 	 * @throws Exception
 	 */
     public List<?> selectNormalDayRestde(Restde restde) throws Exception {
-        return list("RestdeManageDAO.selectNormalDayRestde", restde);
+        return selectList("RestdeManageDAO.selectNormalDayRestde", restde);
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class RestdeManageDAO extends EgovAbstractMapper {
 	 * @throws Exception
 	 */
     public List<?> selectNormalMonthRestde(Restde restde) throws Exception {
-        return list("RestdeManageDAO.selectNormalMonthRestde", restde);
+        return selectList("RestdeManageDAO.selectNormalMonthRestde", restde);
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class RestdeManageDAO extends EgovAbstractMapper {
 	 * @throws Exception
 	 */
     public List<?> selectAdministDayCal(Restde restde) throws Exception {
-        return list("RestdeManageDAO.selectAdministDayCal", restde);
+        return selectList("RestdeManageDAO.selectAdministDayCal", restde);
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class RestdeManageDAO extends EgovAbstractMapper {
 	 * @throws Exception
 	 */
     public List<?> selectAdministDayRestde(Restde restde) throws Exception {
-        return list("RestdeManageDAO.selectAdministDayRestde", restde);
+        return selectList("RestdeManageDAO.selectAdministDayRestde", restde);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class RestdeManageDAO extends EgovAbstractMapper {
 	 * @throws Exception
 	 */
     public List<?> selectAdministMonthRestde(Restde restde) throws Exception {
-        return list("RestdeManageDAO.selectAdministMonthRestde", restde);
+        return selectList("RestdeManageDAO.selectAdministMonthRestde", restde);
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class RestdeManageDAO extends EgovAbstractMapper {
      * @throws Exception
      */
     public List<?> selectRestdeList(RestdeVO searchVO) throws Exception {
-        return list("RestdeManageDAO.selectRestdeList", searchVO);
+        return selectList("RestdeManageDAO.selectRestdeList", searchVO);
     }
 
     /**

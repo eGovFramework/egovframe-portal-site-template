@@ -52,7 +52,7 @@ public class EgovFileMngController {
 
     @Resource(name = "egovARIACryptoService")
 	public void setEgovCryptoService(EgovCryptoService cryptoService) {
-		this.cryptoService = cryptoService;
+		EgovFileMngController.cryptoService = cryptoService;
 	}
     
     @Resource(name = "EgovFileMngService")

@@ -52,7 +52,7 @@ public class StplatManageDAO extends EgovAbstractMapper {
 	 */
     public List<?> selectStplatList(StplatManageDefaultVO searchVO) throws Exception {
 
-        return list("StplatManageDAO.selectStplatList", searchVO);
+        return selectList("StplatManageDAO.selectStplatList", searchVO);
 
     }
 

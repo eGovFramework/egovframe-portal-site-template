@@ -34,7 +34,7 @@ public class IndvdlInfoPolicyDao extends EgovAbstractMapper {
      * @throws Exception
      */
 	public List<?> selectIndvdlInfoPolicyList(ComDefaultVO searchVO) throws Exception {
-        return list("IndvdlInfoPolicy.selectIndvdlInfoPolicy", searchVO);
+        return selectList("IndvdlInfoPolicy.selectIndvdlInfoPolicy", searchVO);
     }
 
     /**

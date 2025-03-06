@@ -1,6 +1,8 @@
 package egovframework.com.cmm;
 
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.AbstractPaginationRenderer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContext;
 
@@ -22,6 +24,8 @@ import org.springframework.web.context.ServletContextAware;
  * </pre>
  */
 public class ImagePaginationRenderer extends AbstractPaginationRenderer implements ServletContextAware{
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ImagePaginationRenderer.class);
 
 	private ServletContext servletContext;
 
@@ -30,6 +34,10 @@ public class ImagePaginationRenderer extends AbstractPaginationRenderer implemen
 	}
 
 	public void initVariables(){
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("getContextPath={}", servletContext.getContextPath());
+		}
+		
         firstPageLabel    = "<li class=\"btn\"><a href=\"?pageIndex={1}\" onclick=\"{0}({1});return false; \" class=\"first\">처음</a></li>";
         previousPageLabel = "<li class=\"btn\"><a href=\"?pageIndex={1}\" onclick=\"{0}({1});return false; \" class=\"btn prev\">이전</a></li>";
         currentPageLabel  = "<li><strong>{0}</strong></li>";

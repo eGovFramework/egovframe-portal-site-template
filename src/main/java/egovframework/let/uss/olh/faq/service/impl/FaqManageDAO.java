@@ -61,7 +61,7 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 */
 	public List<?> selectFaqList(FaqManageDefaultVO searchVO) throws Exception {
 
-        return list("FaqManageDAO.selectFaqList", searchVO);
+        return selectList("FaqManageDAO.selectFaqList", searchVO);
 
     }
 

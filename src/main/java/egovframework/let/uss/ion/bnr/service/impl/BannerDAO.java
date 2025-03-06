@@ -37,9 +37,8 @@ public class BannerDAO extends EgovAbstractMapper {
 	 * @return List - 배너 목록
 	 * @exception Exception
 	 */
-	@SuppressWarnings("unchecked")
 	public List<BannerVO> selectBannerList(BannerVO bannerVO) throws Exception {
-		return (List<BannerVO>) list("bannerDAO.selectBannerList", bannerVO);
+		return selectList("bannerDAO.selectBannerList", bannerVO);
 	}
 
     /**
@@ -104,9 +103,8 @@ public class BannerDAO extends EgovAbstractMapper {
 	 * @return BannerVO - 배너 VO
 	 * @exception Exception
 	 */
-	@SuppressWarnings("unchecked")
 	public List<BannerVO> selectBannerResult(BannerVO bannerVO) throws Exception {
-		return (List<BannerVO>) list("bannerDAO.selectBannerResult", bannerVO);
+		return selectList("bannerDAO.selectBannerResult", bannerVO);
 	}
 
 }

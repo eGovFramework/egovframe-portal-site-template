@@ -47,7 +47,7 @@ public class QustnrTmplatManageDao extends EgovAbstractMapper {
 	 * @throws Exception
 	 */
 	public List<?> selectQustnrTmplatManageList(ComDefaultVO searchVO){
-		return list("QustnrTmplatManage.selectQustnrTmplatManage", searchVO);
+		return selectList("QustnrTmplatManage.selectQustnrTmplatManage", searchVO);
 	}
 
     /**
@@ -57,7 +57,7 @@ public class QustnrTmplatManageDao extends EgovAbstractMapper {
 	 * @throws Exception
 	 */
 	public List<?> selectQustnrTmplatManageDetail(QustnrTmplatManageVO qustnrTmplatManageVO){
-		return list("QustnrTmplatManage.selectQustnrTmplatManageDetail", qustnrTmplatManageVO);
+		return selectList("QustnrTmplatManage.selectQustnrTmplatManageDetail", qustnrTmplatManageVO);
 	}
 
     /**
