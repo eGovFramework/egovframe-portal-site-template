@@ -13,19 +13,18 @@ import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
  * @version 1.0
  * @see
  *
- *      <pre>
+ * <pre>
  * << 개정이력(Modification Information) >>
  *
  *   수정일      수정자           수정내용
  *  -------    -------------    ----------------------
  *   2011. 9. 23.   서준식        최초 생성
- *   2024.08.10  이백행          이클립스 문제(Problems) 제거
- *      </pre>
+ * </pre>
  */
 public abstract class EgovComAbstractDAO extends EgovAbstractMapper {
 
 	@Override
-	@Resource(name = "egov.sqlSession")
+	@Resource(name="egov.sqlSession")
 	public void setSqlSessionFactory(SqlSessionFactory sqlSession) {
 		super.setSqlSessionFactory(sqlSession);
 	}

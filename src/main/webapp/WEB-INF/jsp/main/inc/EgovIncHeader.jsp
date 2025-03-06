@@ -242,22 +242,22 @@ $(document).ready(function(){
             }
         }
     }
-    function goMenuPage(menuNo){
-        event.preventDefault();
-        document.getElementById("menuNo").value=menuNo;
-        //document.getElementById("link").value=getLastLink(menuNo);
-//         document.menuListForm.action = "<c:url value='/'/>"+getLastLink(menuNo).substring(1);
-//         document.menuListForm.submit();
-        var link = '<c:url value="/" />' + getLastLink(menuNo).substring(1);
-        if (link.indexOf('?') === -1) {
-            link = link + '?';
-        } else {
-            link = link + '&';
-        }
-        link = link + 'menuNo=' + menuNo;
-        location.href = link;
-    }
-  //-->
+	function goMenuPage(menuNo){
+	    event.preventDefault();
+	    document.getElementById("menuNo").value=menuNo;
+	    //document.getElementById("link").value=getLastLink(menuNo);
+	//     document.menuListForm.action = "<c:url value='/'/>"+getLastLink(menuNo).substring(1);
+	//     document.menuListForm.submit();
+	    var link = '<c:url value="/" />' + getLastLink(menuNo).substring(1);
+	    if (link.indexOf('?') === -1) {
+	        link = link + '?';
+	    } else {
+	        link = link + '&';
+	    }
+	    link = link + 'menuNo=' + menuNo;
+	    location.href = link;
+	}
+	//-->
 </script>
 
 <form name="menuListForm" action ="" method="post">

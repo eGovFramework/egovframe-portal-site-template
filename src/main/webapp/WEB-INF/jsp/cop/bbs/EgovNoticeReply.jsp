@@ -65,7 +65,7 @@
     }
 
     function fn_egov_regist_notice() {
-        event.preventDefault();
+    	event.preventDefault();
         //document.board.onsubmit();
 
         if (!validateBoard(document.board)){
@@ -79,10 +79,10 @@
     }
     
     function fn_egov_select_noticeList() {
-        event.preventDefault();
+    	event.preventDefault();
         document.board.action = "<c:url value='/cop/bbs${prefix}/selectBoardList.do'/>";
         document.board.method = 'get';
-        document.board.submit();    
+        document.board.submit();   
     }
     
     /* ********************************************************
@@ -168,7 +168,7 @@
 
 								<form:form modelAttribute="board" name="board" method="post" enctype="multipart/form-data" >
 					            <input type="hidden" name="replyAt" value="Y" />
-								<input type="hidden" name="searchCnd" value="<c:out value="${searchVO.searchCnd}" />">
+					            <input type="hidden" name="searchCnd" value="<c:out value="${searchVO.searchCnd}" />">
 								<input type="hidden" name="searchWrd" value="<c:out value="${searchVO.searchWrd}" />">
 					            <input type="hidden" name="pageIndex"  value="<c:out value='${searchVO.pageIndex}'/>"/>
 					            <input type="hidden" name="nttId" value="<c:out value='${searchVO.nttId}'/>" />
