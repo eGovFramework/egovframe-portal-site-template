@@ -1,0 +1,118 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.opentelemetry",
+    "module": "opentelemetry-sdk-extension-autoconfigure-spi",
+    "version": "1.28.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "io.opentelemetry",
+          "module": "opentelemetry-sdk",
+          "version": {
+            "requires": "1.28.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "opentelemetry-sdk-extension-autoconfigure-spi-1.28.0.jar",
+          "url": "opentelemetry-sdk-extension-autoconfigure-spi-1.28.0.jar",
+          "size": 16323,
+          "sha512": "1ac8062166e73fa967a271c49d01db5bba9acbf7c45f842929f463a435ba5c7d059e7b430e49fe461c8d426317894154dd0c1a7539c4fd2dc65f5694ea846911",
+          "sha256": "1df92bf83aee67c3686f1808ec5d5399926042867a069ce0262091dab8960e6e",
+          "sha1": "582ce034be1262aac6d77b92ec2d6cf4884cee4d",
+          "md5": "efdce19fb9855a5395fc10b3d5488e46"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "io.opentelemetry",
+          "module": "opentelemetry-sdk",
+          "version": {
+            "requires": "1.28.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "opentelemetry-sdk-extension-autoconfigure-spi-1.28.0.jar",
+          "url": "opentelemetry-sdk-extension-autoconfigure-spi-1.28.0.jar",
+          "size": 16323,
+          "sha512": "1ac8062166e73fa967a271c49d01db5bba9acbf7c45f842929f463a435ba5c7d059e7b430e49fe461c8d426317894154dd0c1a7539c4fd2dc65f5694ea846911",
+          "sha256": "1df92bf83aee67c3686f1808ec5d5399926042867a069ce0262091dab8960e6e",
+          "sha1": "582ce034be1262aac6d77b92ec2d6cf4884cee4d",
+          "md5": "efdce19fb9855a5395fc10b3d5488e46"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "opentelemetry-sdk-extension-autoconfigure-spi-1.28.0-javadoc.jar",
+          "url": "opentelemetry-sdk-extension-autoconfigure-spi-1.28.0-javadoc.jar",
+          "size": 130947,
+          "sha512": "412b916d21fa3a27357b2f40189e32229e1c38ce0185dfa95c5f73fadeb40e5ec6e91447d3402e2f239872b503d53e93302dbd831cf9a369ea868fd0c53e397f",
+          "sha256": "10b1d3460eec2b49f049e85bc22b980fc6d4a2408f100c1846bf47d59750b220",
+          "sha1": "9a7d7a8e0622b31b49a63ff1711ba21fe5ea1532",
+          "md5": "e2e1c913b590f7ac7fbedd0aec1c3391"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "opentelemetry-sdk-extension-autoconfigure-spi-1.28.0-sources.jar",
+          "url": "opentelemetry-sdk-extension-autoconfigure-spi-1.28.0-sources.jar",
+          "size": 16724,
+          "sha512": "97abf4223ab29eb3434f3f32d1504b301efbe2142a3f75a6bd431a6accf2f9d3a44d8074eb167d6e56a84a73f4ed0a39660efc49b8fa928d7fe8ffb65c5b7042",
+          "sha256": "82cd1b19e0f3753e7779001e772da0a2d2df448bff8fd16b161aaa68495cddd7",
+          "sha1": "536102e3375e249f6455fa9d00e81124af47c6db",
+          "md5": "0cff3617b2a53d8de8830118ab47c21d"
+        }
+      ]
+    }
+  ]
+}

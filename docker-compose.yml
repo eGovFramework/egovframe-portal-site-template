@@ -1,0 +1,61 @@
+services:
+  tomcat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        RUN_TESTS: "false"
+        GRADLE_BASE_IMAGE: ${GRADLE_BASE_IMAGE:-gradle:8.5-jdk11}
+    image: pst-webapp:latest
+    container_name: pst-tomcat
+    depends_on:
+      - mysql
+    environment:
+      # Expose DB connection info to the container (adjust globals.properties to read these if needed).
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: pst
+      DB_USER: egov
+      DB_PASSWORD: egov
+      SELENIUM_REMOTE_URL: http://selenium:4444/wd/hub
+    ports:
+      - "8080:8080"
+    networks:
+      - pst-net
+
+  mysql:
+    image: mysql:8.0
+    container_name: pst-mysql
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pst
+      MYSQL_USER: egov
+      MYSQL_PASSWORD: egov
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./src/main/resources/db/mysql:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "3306:3306"
+    networks:
+      - pst-net
+
+  selenium:
+    image: selenium/standalone-chrome:4.23.0
+    container_name: pst-selenium
+    shm_size: 2gb
+    environment:
+      SE_NODE_MAX_SESSIONS: 1
+      SE_VNC_NO_PASSWORD: 1
+    ports:
+      - "4444:4444"
+      - "7900:7900" # VNC
+    networks:
+      - pst-net
+
+volumes:
+  mysql-data:
+
+networks:
+  pst-net:
+    driver: bridge

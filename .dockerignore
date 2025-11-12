@@ -1,0 +1,8 @@
+.git
+.gitignore
+.idea
+.gradle
+.gradle-home
+.DS_Store
+build
+tools/jdks

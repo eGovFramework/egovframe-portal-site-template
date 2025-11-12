@@ -1,0 +1,16 @@
+# syntax=docker/dockerfile:1.6
+
+FROM gradle:8.5-jdk11
+
+WORKDIR /workspace
+
+COPY gradlew gradlew
+COPY gradlew.bat gradlew.bat
+COPY gradle gradle
+COPY build.gradle.kts build.gradle.kts
+COPY gradle.properties gradle.properties
+
+RUN chmod +x gradlew \
+    && ./gradlew --no-daemon --stacktrace dependencies > /tmp/gradle-deps.log \
+    && rm -rf /workspace/*
+

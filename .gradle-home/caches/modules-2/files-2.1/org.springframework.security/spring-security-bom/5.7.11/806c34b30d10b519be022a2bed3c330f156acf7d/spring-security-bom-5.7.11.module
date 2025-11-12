@@ -1,0 +1,316 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "org.springframework.security",
+    "module": "spring-security-bom",
+    "version": "5.7.11",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.5.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "platform",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencyConstraints": [
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-acl",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-aspects",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-cas",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-config",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-core",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-crypto",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-data",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-ldap",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-messaging",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-oauth2-client",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-oauth2-core",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-oauth2-jose",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-oauth2-resource-server",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-openid",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-remoting",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-rsocket",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-saml2-service-provider",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-taglibs",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-test",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-web",
+          "version": {
+            "requires": "5.7.11"
+          }
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "platform",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencyConstraints": [
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-acl",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-aspects",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-cas",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-config",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-core",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-crypto",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-data",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-ldap",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-messaging",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-oauth2-client",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-oauth2-core",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-oauth2-jose",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-oauth2-resource-server",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-openid",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-remoting",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-rsocket",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-saml2-service-provider",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-taglibs",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-test",
+          "version": {
+            "requires": "5.7.11"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-web",
+          "version": {
+            "requires": "5.7.11"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,392 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "org.jetbrains.kotlin",
+    "module": "kotlin-test",
+    "version": "1.9.24",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.2.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "jvmApi",
+      "attributes": {
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.9.24"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-test-1.9.24.jar",
+          "url": "kotlin-test-1.9.24.jar",
+          "size": 133539,
+          "sha512": "0ff8cb862f0199a3f98ffabdbbf0c5b37d907711e0230f936a2e9e1130f7239b66677c2a701bc7807fa9bc4a0ea254c478e9e2dd37b62fe1b02a6e308a534a31",
+          "sha256": "eb08065a423f478291e9859319bdbb02846134acf2c2558cb5d203c573cdd0cb",
+          "sha1": "e361ebc4889f48517d9de6453435e452d90e2415",
+          "md5": "601a3e0de2e125e23dd911ef9f44a6e2"
+        }
+      ]
+    },
+    {
+      "name": "jvmRuntime",
+      "attributes": {
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.9.24"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlin-test-1.9.24.jar",
+          "url": "kotlin-test-1.9.24.jar",
+          "size": 133539,
+          "sha512": "0ff8cb862f0199a3f98ffabdbbf0c5b37d907711e0230f936a2e9e1130f7239b66677c2a701bc7807fa9bc4a0ea254c478e9e2dd37b62fe1b02a6e308a534a31",
+          "sha256": "eb08065a423f478291e9859319bdbb02846134acf2c2558cb5d203c573cdd0cb",
+          "sha1": "e361ebc4889f48517d9de6453435e452d90e2415",
+          "md5": "601a3e0de2e125e23dd911ef9f44a6e2"
+        }
+      ]
+    },
+    {
+      "name": "jsApiVariant",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-test-js",
+          "version": {
+            "requires": "1.9.24"
+          }
+        }
+      ]
+    },
+    {
+      "name": "jsRuntimeVariant",
+      "attributes": {
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-test-js",
+          "version": {
+            "requires": "1.9.24"
+          }
+        }
+      ]
+    },
+    {
+      "name": "wasmApiVariant",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-test-wasm-js",
+          "version": {
+            "requires": "1.9.24"
+          }
+        }
+      ]
+    },
+    {
+      "name": "wasmRuntimeVariant",
+      "attributes": {
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-test-wasm-js",
+          "version": {
+            "requires": "1.9.24"
+          }
+        }
+      ]
+    },
+    {
+      "name": "wasmWasiApiVariant",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "wasi"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-test-wasm-wasi",
+          "version": {
+            "requires": "1.9.24"
+          }
+        }
+      ]
+    },
+    {
+      "name": "wasmWasiRuntimeVariant",
+      "attributes": {
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "wasi"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-test-wasm-wasi",
+          "version": {
+            "requires": "1.9.24"
+          }
+        }
+      ]
+    },
+    {
+      "name": "nativeApiVariant",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "native"
+      }
+    },
+    {
+      "name": "commonVariant",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-test-common",
+          "version": {
+            "requires": "1.9.24"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-test-annotations-common",
+          "version": {
+            "requires": "1.9.24"
+          }
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-test",
+          "version": "1.9.24"
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-test-framework-testng",
+          "version": "1.9.24"
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-test-framework-junit",
+          "version": "1.9.24"
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-test-framework-junit5",
+          "version": "1.9.24"
+        }
+      ]
+    },
+    {
+      "name": "junitApiVariant",
+      "attributes": {
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-test-junit",
+          "version": {
+            "requires": "1.9.24"
+          }
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-test-framework-junit",
+          "version": "1.9.24"
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-test-framework",
+          "version": "1.9.24"
+        }
+      ]
+    },
+    {
+      "name": "junitRuntimeVariant",
+      "attributes": {
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-test-junit",
+          "version": {
+            "requires": "1.9.24"
+          }
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-test-framework-junit",
+          "version": "1.9.24"
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-test-framework",
+          "version": "1.9.24"
+        }
+      ]
+    },
+    {
+      "name": "junit5ApiVariant",
+      "attributes": {
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-test-junit5",
+          "version": {
+            "requires": "1.9.24"
+          }
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-test-framework-junit5",
+          "version": "1.9.24"
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-test-framework",
+          "version": "1.9.24"
+        }
+      ]
+    },
+    {
+      "name": "junit5RuntimeVariant",
+      "attributes": {
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-test-junit5",
+          "version": {
+            "requires": "1.9.24"
+          }
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-test-framework-junit5",
+          "version": "1.9.24"
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-test-framework",
+          "version": "1.9.24"
+        }
+      ]
+    },
+    {
+      "name": "testngApiVariant",
+      "attributes": {
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-test-testng",
+          "version": {
+            "requires": "1.9.24"
+          }
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-test-framework-testng",
+          "version": "1.9.24"
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-test-framework",
+          "version": "1.9.24"
+        }
+      ]
+    },
+    {
+      "name": "testngRuntimeVariant",
+      "attributes": {
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-test-testng",
+          "version": {
+            "requires": "1.9.24"
+          }
+        }
+      ],
+      "capabilities": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-test-framework-testng",
+          "version": "1.9.24"
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "name": "kotlin-test-framework",
+          "version": "1.9.24"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "org.springframework.security",
+    "module": "spring-security-taglibs",
+    "version": "5.8.13",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.5.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-acl",
+          "version": {
+            "requires": "5.8.13"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-core",
+          "version": {
+            "requires": "5.8.13"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-web",
+          "version": {
+            "requires": "5.8.13"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-aop",
+          "version": {
+            "requires": "5.3.37"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-beans",
+          "version": {
+            "requires": "5.3.37"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-context",
+          "version": {
+            "requires": "5.3.37"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-core",
+          "version": {
+            "requires": "5.3.37"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-expression",
+          "version": {
+            "requires": "5.3.37"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-web",
+          "version": {
+            "requires": "5.3.37"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "spring-security-taglibs-5.8.13.jar",
+          "url": "spring-security-taglibs-5.8.13.jar",
+          "size": 19979,
+          "sha512": "48fd14c128bbe858bb121f3f55e18b8c486306858c9cd5802cac9ffd72b47efb80108d4c0b966eded5ab3456cbcf7a475584c0f5108758fc556cdc9f62e1ea2a",
+          "sha256": "bcbe2a16b7f530d2ab56c569b3595e43f385551d2d8cb14cce21c35452fc7158",
+          "sha1": "708a66fa1c44912f88c16a208efb7882c529dbcd",
+          "md5": "15414b8e64ca5cc8eea4ed54f7a31e90"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-acl",
+          "version": {
+            "requires": "5.8.13"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-core",
+          "version": {
+            "requires": "5.8.13"
+          }
+        },
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-web",
+          "version": {
+            "requires": "5.8.13"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-aop",
+          "version": {
+            "requires": "5.3.37"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-beans",
+          "version": {
+            "requires": "5.3.37"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-context",
+          "version": {
+            "requires": "5.3.37"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-core",
+          "version": {
+            "requires": "5.3.37"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-expression",
+          "version": {
+            "requires": "5.3.37"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-web",
+          "version": {
+            "requires": "5.3.37"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "spring-security-taglibs-5.8.13.jar",
+          "url": "spring-security-taglibs-5.8.13.jar",
+          "size": 19979,
+          "sha512": "48fd14c128bbe858bb121f3f55e18b8c486306858c9cd5802cac9ffd72b47efb80108d4c0b966eded5ab3456cbcf7a475584c0f5108758fc556cdc9f62e1ea2a",
+          "sha256": "bcbe2a16b7f530d2ab56c569b3595e43f385551d2d8cb14cce21c35452fc7158",
+          "sha1": "708a66fa1c44912f88c16a208efb7882c529dbcd",
+          "md5": "15414b8e64ca5cc8eea4ed54f7a31e90"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "spring-security-taglibs-5.8.13-javadoc.jar",
+          "url": "spring-security-taglibs-5.8.13-javadoc.jar",
+          "size": 343600,
+          "sha512": "3f2550f92f976de6011d13f4e594787a0f5e9482cf4a6ee539cb94a7b4e39850a5a183257be8ae0fcb610c9e7d31f20345133e5597a817167a3cdb0211a53cd2",
+          "sha256": "115790263744c5ecbe0beb474c082b0a22597f71567879302a0bb852dcd7faf3",
+          "sha1": "d09d82591f2b710c2a63464fad4dc5e7db7862a4",
+          "md5": "1c06120860741b0db47f07fcce13e341"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "spring-security-taglibs-5.8.13-sources.jar",
+          "url": "spring-security-taglibs-5.8.13-sources.jar",
+          "size": 17596,
+          "sha512": "67a3830bbaecbfd8513af14ecbf1be302d449e41cbe7914d3f5207113e387893e52f3a49e3325970195b52ac8c083d6a35af6193286ab6451b8fbcf20e5a28d3",
+          "sha256": "4c682c4780cdd705400a9c9ef246687ef7b56e66358d5fd098382133bd09dd91",
+          "sha1": "76e8d3bfdc203f1470b3649f1813cde56e178f28",
+          "md5": "387ace272fa5bcb67ebf6e3a8c30eb2a"
+        }
+      ]
+    }
+  ]
+}

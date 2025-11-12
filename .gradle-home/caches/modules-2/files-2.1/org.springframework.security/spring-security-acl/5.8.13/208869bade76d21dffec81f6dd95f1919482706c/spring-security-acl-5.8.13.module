@@ -1,0 +1,188 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "org.springframework.security",
+    "module": "spring-security-acl",
+    "version": "5.8.13",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.5.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-core",
+          "version": {
+            "requires": "5.8.13"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-aop",
+          "version": {
+            "requires": "5.3.37"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-context",
+          "version": {
+            "requires": "5.3.37"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-core",
+          "version": {
+            "requires": "5.3.37"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-jdbc",
+          "version": {
+            "requires": "5.3.37"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-tx",
+          "version": {
+            "requires": "5.3.37"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "spring-security-acl-5.8.13.jar",
+          "url": "spring-security-acl-5.8.13.jar",
+          "size": 95557,
+          "sha512": "e06e26fe69441f16623f550086fdfa7221202ae9751e16c5f2a83e8b018938385d57d93668edbf4dc0dcc28b2002566150e53b6a48f1ec7747b1a32b06aeb7f7",
+          "sha256": "0a21b33482a8e5f8c1ffb5a6e46a6230e2079c33cc4e7846e26e4f776ab2b54a",
+          "sha1": "95b6439d95767e1beaae7aee9337e3d915a08592",
+          "md5": "f0ad97b4ac79946d13ea49b765b7cbbb"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.springframework.security",
+          "module": "spring-security-core",
+          "version": {
+            "requires": "5.8.13"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-aop",
+          "version": {
+            "requires": "5.3.37"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-context",
+          "version": {
+            "requires": "5.3.37"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-core",
+          "version": {
+            "requires": "5.3.37"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-jdbc",
+          "version": {
+            "requires": "5.3.37"
+          }
+        },
+        {
+          "group": "org.springframework",
+          "module": "spring-tx",
+          "version": {
+            "requires": "5.3.37"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "spring-security-acl-5.8.13.jar",
+          "url": "spring-security-acl-5.8.13.jar",
+          "size": 95557,
+          "sha512": "e06e26fe69441f16623f550086fdfa7221202ae9751e16c5f2a83e8b018938385d57d93668edbf4dc0dcc28b2002566150e53b6a48f1ec7747b1a32b06aeb7f7",
+          "sha256": "0a21b33482a8e5f8c1ffb5a6e46a6230e2079c33cc4e7846e26e4f776ab2b54a",
+          "sha1": "95b6439d95767e1beaae7aee9337e3d915a08592",
+          "md5": "f0ad97b4ac79946d13ea49b765b7cbbb"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "spring-security-acl-5.8.13-javadoc.jar",
+          "url": "spring-security-acl-5.8.13-javadoc.jar",
+          "size": 524987,
+          "sha512": "b9aeb2febd5f4a80bec3a559882147dbf3ee2ceb758ef292d5f64e82866b4687306ec9be8ed32bddbd509a2b1a39a2ae9648d5d7bb05641b9d637806a60699c3",
+          "sha256": "e4d1e9d42ad7637eb807a7b3fc75bc694db85baa97076b9f8aa71cbe15088cc0",
+          "sha1": "a6209883810c527c88b57eb69f5e2997abaff5c9",
+          "md5": "e4aa57247ce6c090bb42afb28ca04263"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "spring-security-acl-5.8.13-sources.jar",
+          "url": "spring-security-acl-5.8.13-sources.jar",
+          "size": 96081,
+          "sha512": "c700b46305196cea0da9adfeaf6a24356b80723a78d370ba883344ced4006cc561a9d5ed30831092ae8e49049e4d730ebc199053765edf29d15fd504c9dbe710",
+          "sha256": "f4044d7eecbc9a9c35d0cdef8b4694c383f5453646a1baf8766bb282cdbbafe1",
+          "sha1": "9cae2c079d349e5089a846e7d98e96f1a04c9bf8",
+          "md5": "4bcaf1ba315597951aafc35e59b9c9e0"
+        }
+      ]
+    }
+  ]
+}

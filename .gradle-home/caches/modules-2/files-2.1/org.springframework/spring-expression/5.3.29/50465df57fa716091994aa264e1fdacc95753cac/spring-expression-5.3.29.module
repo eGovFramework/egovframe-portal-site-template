@@ -1,0 +1,82 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "org.springframework",
+    "module": "spring-expression",
+    "version": "5.3.29",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.5.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.localToProject": "public",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.springframework",
+          "module": "spring-core",
+          "version": {
+            "requires": "5.3.29"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "spring-expression-5.3.29.jar",
+          "url": "spring-expression-5.3.29.jar",
+          "size": 293371,
+          "sha512": "f6c12a81bb0ce60807070901b621a7e782ffa53e9edc76e1e6f2b722f6b1708c6c2139f0a8c5e3bd43e94ba501b34da63fc6c6666caeb00a0881fb5fc44a476c",
+          "sha256": "b241129c512a7edd664c03cb6bcc01ad9bc4b9c0905206dfe0cee3cc8413bcf2",
+          "sha1": "44ac795a057c4a6360063801c54a2d148e5a2808",
+          "md5": "a4e3ec1a67ade41308b53d3e42dcf3e2"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.localToProject": "public",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.springframework",
+          "module": "spring-core",
+          "version": {
+            "requires": "5.3.29"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "spring-expression-5.3.29.jar",
+          "url": "spring-expression-5.3.29.jar",
+          "size": 293371,
+          "sha512": "f6c12a81bb0ce60807070901b621a7e782ffa53e9edc76e1e6f2b722f6b1708c6c2139f0a8c5e3bd43e94ba501b34da63fc6c6666caeb00a0881fb5fc44a476c",
+          "sha256": "b241129c512a7edd664c03cb6bcc01ad9bc4b9c0905206dfe0cee3cc8413bcf2",
+          "sha1": "44ac795a057c4a6360063801c54a2d148e5a2808",
+          "md5": "a4e3ec1a67ade41308b53d3e42dcf3e2"
+        }
+      ]
+    }
+  ]
+}
