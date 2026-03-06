@@ -3,6 +3,8 @@ package egovframework.let.uss.olp.qtm.service;
 import java.io.Serializable;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+import jakarta.validation.constraints.Size;
 /**
  * 설문템플릿 VO Class 구현 
  * @author 공통서비스 장동한
@@ -31,15 +33,21 @@ public class QustnrTmplatManageVO implements Serializable {
 	private String qestnrTmplatId = "";
 	
 	/** 설문템플릿 유형 */
+	@EgovNullCheck
+	@Size(max=100)
 	private String qestnrTmplatTy = "";
 	
 	/** 설문템플 이미지경로 */
 	public byte[] qestnrTmplatImagepathnm;
 	
 	/** 설문템플릿  설명 */
+	@EgovNullCheck
+	@Size(max=1000)
 	private String qestnrTmplatCn = "";
 	
 	/** 서물템플릿경로명 */
+	@EgovNullCheck
+	@Size(max=100)
 	private String qestnrTmplatCours;
 	
 	/** 최초등록시점 */

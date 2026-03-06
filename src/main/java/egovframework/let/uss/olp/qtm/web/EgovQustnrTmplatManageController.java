@@ -2,21 +2,9 @@ package egovframework.let.uss.olp.qtm.web;
 
 import java.util.Map;
 
-import egovframework.com.cmm.ComDefaultVO;
-import egovframework.com.cmm.EgovMessageSource;
-import egovframework.com.cmm.LoginVO;
-import egovframework.let.uss.olp.qtm.service.EgovQustnrTmplatManageService;
-import egovframework.let.uss.olp.qtm.service.QustnrTmplatManageVO;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -25,7 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springmodules.validation.commons.DefaultBeanValidator;
+
+import egovframework.com.cmm.ComDefaultVO;
+import egovframework.com.cmm.EgovMessageSource;
+import egovframework.com.cmm.LoginVO;
+import egovframework.let.uss.olp.qtm.service.EgovQustnrTmplatManageService;
+import egovframework.let.uss.olp.qtm.service.QustnrTmplatManageVO;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 
 /**
  * 설문템플릿 Controller Class 구현
@@ -46,9 +43,6 @@ import org.springmodules.validation.commons.DefaultBeanValidator;
  */
 @Controller
 public class EgovQustnrTmplatManageController {
-
-	@Autowired
-	private DefaultBeanValidator beanValidator;
 
 	/** EgovMessageSource */
 	@Resource(name = "egovMessageSource")
@@ -230,24 +224,26 @@ public class EgovQustnrTmplatManageController {
 	 */
 	@RequestMapping(value = "/uss/olp/qtm/EgovQustnrTmplatManageModifyActor.do")
 	public String QustnrTmplatManageModifyActor(final MultipartHttpServletRequest multiRequest, @ModelAttribute("searchVO") ComDefaultVO searchVO,
-			@RequestParam Map<String, Object> commandMap, @ModelAttribute("qustnrTmplatManageVO") QustnrTmplatManageVO qustnrTmplatManageVO, BindingResult bindingResult,
+			@RequestParam Map<String, Object> commandMap, @Valid @ModelAttribute("qustnrTmplatManageVO") QustnrTmplatManageVO qustnrTmplatManageVO, BindingResult bindingResult,
 			ModelMap model) throws Exception {
 
-		// 0. Spring Security 사용자권한 처리
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-		if (!isAuthenticated) {
-			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "uat/uia/EgovLoginUsr";
-		}
-
-		//로그인 객체 선언
-		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
-
-		//서버  validate 체크
-		beanValidator.validate(qustnrTmplatManageVO, bindingResult);
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("resultList", egovQustnrTmplatManageService.selectQustnrTmplatManageDetail(qustnrTmplatManageVO));
 			return "/uss/olp/qtm/EgovQustnrTmplatManageModify";
+		}
+
+		// 0. Spring Security 사용자권한 처리
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		LoginVO loginVO = null;
+
+		// 26.03.06 KISA 보안취약점 조치 : 불필요한 try-catch 제거
+		if (isAuthenticated) {
+			loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		}
+
+		if (!isAuthenticated || loginVO == null) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+			return "uat/uia/EgovLoginUsr";
 		}
 
 		//아이디 설정
@@ -260,7 +256,9 @@ public class EgovQustnrTmplatManageController {
 			for (MultipartFile file : files.values()) {
 				System.out.println("getName =>" + file.getName());
 				System.out.println("getOriginalFilename =>" + file.getOriginalFilename());
-				if (file.getName().equals("qestnrTmplatImage") && !file.getOriginalFilename().equals("")) {
+				// 26.03.06 KISA 보안취약점 조치 : null check 추가
+				String originalFilename = file.getOriginalFilename();
+				if (file.getName().equals("qestnrTmplatImage") && originalFilename != null && !originalFilename.isEmpty()) { // 26.03.06 KISA 보안취약점 조치 : null check 추가
 					qustnrTmplatManageVO.setQestnrTmplatImagepathnm(file.getBytes());
 				}
 			}
@@ -313,7 +311,7 @@ public class EgovQustnrTmplatManageController {
 	 */
 	@RequestMapping(value = "/uss/olp/qtm/EgovQustnrTmplatManageRegistActor.do")
 	public String QustnrTmplatManageRegistActor(final MultipartHttpServletRequest multiRequest, @ModelAttribute("searchVO") ComDefaultVO searchVO,
-			QustnrTmplatManageVO qustnrTmplatManageVO, ModelMap model) throws Exception {
+			@Valid @ModelAttribute("qustnrTmplatManageVO") QustnrTmplatManageVO qustnrTmplatManageVO, BindingResult bindingResult, ModelMap model) throws Exception {
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
@@ -323,6 +321,11 @@ public class EgovQustnrTmplatManageController {
 
 		//로그인 객체 선언
 		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("resultList", egovQustnrTmplatManageService.selectQustnrTmplatManageDetail(qustnrTmplatManageVO));
+			return "/uss/olp/qtm/EgovQustnrTmplatManageRegist";
+		}
 
 		//아이디 설정
 		qustnrTmplatManageVO.setFrstRegisterId(loginVO.getUniqId());

@@ -21,24 +21,23 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="validator" uri="http://www.springmodules.org/tags/commons-validator" %>
 <%@ taglib prefix="egovc" uri="/WEB-INF/tlds/egovc.tld" %>
+
 <html>
 <head>
 <title>샘플 포털 > 포털서비스관리 > 서비스관리 > FAQ관리</title>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
 
 <script type="text/javascript" src="<c:url value='/js/EgovMultiFile.js'/>" ></script>
-<script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
-<validator:javascript formName="faqManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
+<script type="text/javascript" src="<c:url value="/js/EgovValidation.js"/>"></script>
 
 <script type="text/javaScript" language="javascript">
 
@@ -144,6 +143,7 @@ function fn_egov_check_file(flag) {
 								<form:form modelAttribute="faqManageVO" name="faqManageVO" action="${pageContext.request.contextPath}/uss/olh/faq/admin/FaqCnUpdt.do" method="post" enctype="multipart/form-data" onsubmit="return false">
 								<!-- FaqCnUpdtView.do Call을 위한 처리-->
 								<input name="faqId" type="hidden" value="<c:out value='${result.faqId}'/>">
+								<input type="hidden" name="atchFileId" value="<c:out value='${empty result.atchFileId ? "" : egovc:encrypt(result.atchFileId)}'/>" />
 								<!-- 첨부파일을 위한 Hidden -->	
 								<input type="hidden" name="posblAtchFileNumber" id="posblAtchFileNumber" value="3">
 								<!-- 첨부파일 삭제 후 리턴 URL -->
@@ -190,15 +190,51 @@ function fn_egov_check_file(flag) {
                                     		<dd>
                                     			<div class="board_attach2">
                                     				<span>
-	                                    				<c:import url="/cmm/fms/selectFileInfsForUpdate.do" charEncoding="utf-8">
-		                                                	<c:param name="param_atchFileId" value="${egovc:encrypt(result.atchFileId)}" />
-		                                                </c:import>
+	                                    				<c:forEach var="fileVO" items="${fileList}" varStatus="status">
+	                                    					<c:out value='${fileVO.orignlFileNm}'/>&nbsp;<span>[<c:out value='${fileVO.fileMg}'/>&nbsp;byte]</span>
+	                                    					<input type="button" value="삭제"
+	                                    						data-atch-file-id="<c:out value='${atchFileId}'/>"
+	                                    						data-file-sn="<c:out value='${fileVO.fileSn}'/>"
+	                                    						onclick="fn_egov_deleteFile(this.dataset.atchFileId, this.dataset.fileSn);">
+	                                    					<c:if test="${!status.last}"><br/></c:if>
+	                                    				</c:forEach>
 	                                                </span>
                                     			</div>
                                     		</dd>
                                     	</dl>
                                     	</c:if>
                                     	<!-- /첨부파일목록 끝 -->
+                                    	
+                                    	<script type="text/javascript">
+                                    	function fn_egov_deleteFile(atchFileId, fileSn) {
+                                    	    // 동적으로 form 생성
+                                    	    var form = document.createElement("form");
+                                    	    form.method = "POST";
+                                    	    form.action = "<c:url value='/cmm/fms/deleteFileInfs.do'/>";
+                                    
+                                    	    // faqId 가져오기
+                                    	    var faqId = document.faqManageVO.faqId.value;
+                                    	    var returnUrl = "<c:url value='/uss/olh/faq/admin/FaqCnUpdtView.do'/>?faqId=" + encodeURIComponent(faqId);
+                                    
+                                    	    // hidden 필드 추가
+                                    	    var fields = {
+                                    	        "atchFileId": atchFileId,
+                                    	        "fileSn": fileSn,
+                                    	        "returnUrl": returnUrl
+                                    	    };
+                                    
+                                    	    for (var key in fields) {
+                                    	        var input = document.createElement("input");
+                                    	        input.type = "hidden";
+                                    	        input.name = key;
+                                    	        input.value = fields[key];
+                                    	        form.appendChild(input);
+                                    	    }
+                                    
+                                    	    document.body.appendChild(form);
+                                    	    form.submit();
+                                    	}
+                                    	</script>
                                     	
                                     	<!-- 파일첨부 시작 -->
                                         <dl>
@@ -267,7 +303,7 @@ function fn_egov_check_file(flag) {
                                         </div>
 
                                         <div class="right_col btn1">
-                                        	<a href="" class="btn btn_blue_46 w_100" onclick="fn_egov_updt_faqcn(document.faqManageVO,'<c:out value="${result.faqId}"/>'); return false;"><spring:message code="button.save" /></a><!-- 저장 -->
+                                        	<a href="" class="btn btn_blue_46 w_100" onclick="fn_egov_updt_faqcn(document.faqManageVO, document.faqManageVO.faqId.value); return false;"><spring:message code="button.save" /></a><!-- 저장 -->
                                             <a href="<c:url value='/uss/olh/faq/admin/FaqListInqire.do'/>" class="btn btn_blue_46 w_100" onclick="fn_egov_inqire_faqcnlist(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
                                         </div>
                                     </div>

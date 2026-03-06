@@ -2,16 +2,14 @@ package egovframework.let.uss.olp.qim.service.impl;
 
 import java.util.List;
 
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
+import org.springframework.stereotype.Service;
+
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.uss.olp.qim.service.EgovQustnrItemManageService;
 import egovframework.let.uss.olp.qim.service.QustnrItemManageVO;
-
-import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
-import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
+import jakarta.annotation.Resource;
 /**
  * 설문항목관리를 처리하는 ServiceImpl Class 구현
  * @author 공통서비스 장동한

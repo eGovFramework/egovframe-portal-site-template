@@ -2,6 +2,19 @@ package egovframework.let.uss.olp.qrm.web;
 
 import java.util.Map;
 
+import org.egovframe.rte.fdl.property.EgovPropertyService;
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.com.cmm.EgovMessageSource;
@@ -9,23 +22,9 @@ import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.service.EgovCmmUseService;
 import egovframework.let.uss.olp.qrm.service.EgovQustnrRespondManageService;
 import egovframework.let.uss.olp.qrm.service.QustnrRespondManageVO;
+import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 
-import org.egovframe.rte.fdl.property.EgovPropertyService;
-import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
-import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springmodules.validation.commons.DefaultBeanValidator;
 /**
  * 설문응답자관리 Controller Class 구현
  * @author 공통서비스 장동한
@@ -47,9 +46,6 @@ import org.springmodules.validation.commons.DefaultBeanValidator;
 public class EgovQustnrRespondManageController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovQustnrRespondManageController.class);
-
-	@Autowired
-	private DefaultBeanValidator beanValidator;
 
 	/** EgovMessageSource */
     @Resource(name="egovMessageSource")
@@ -170,7 +166,7 @@ public class EgovQustnrRespondManageController {
 	public String QustnrRespondManageModify(
 			@ModelAttribute("searchVO") ComDefaultVO searchVO,
 			@RequestParam Map <String, Object> commandMap,
-			@ModelAttribute("qustnrRespondManageVO") QustnrRespondManageVO qustnrRespondManageVO,
+			@Valid @ModelAttribute("qustnrRespondManageVO") QustnrRespondManageVO qustnrRespondManageVO,
 			BindingResult bindingResult,
     		ModelMap model)
     throws Exception {
@@ -189,6 +185,12 @@ public class EgovQustnrRespondManageController {
 
 		String sCmd = commandMap.get("cmd") == null ? "" : (String)commandMap.get("cmd");
 
+		// 초기 페이지 로드 시에는 검증 에러 무시
+		if (!"save".equals(sCmd)) {
+			bindingResult = new BeanPropertyBindingResult(qustnrRespondManageVO, "qustnrRespondManageVO");
+			model.addAttribute(BindingResult.MODEL_KEY_PREFIX + "qustnrRespondManageVO", bindingResult);
+		}
+
      	//성별코드조회
     	ComDefaultCodeVO voComCode = new ComDefaultCodeVO();
     	voComCode.setCodeId("COM014");
@@ -199,8 +201,7 @@ public class EgovQustnrRespondManageController {
     	model.addAttribute("comCode034", cmmUseService.selectCmmCodeDetail(voComCode));
 
         if(sCmd.equals("save")){
-    		//서버  validate 체크
-            beanValidator.validate(qustnrRespondManageVO, bindingResult);
+
     		if(bindingResult.hasErrors()){
 
     			return sLocationUrl;
@@ -232,7 +233,7 @@ public class EgovQustnrRespondManageController {
 	public String QustnrRespondManageRegist(
 			@ModelAttribute("searchVO") ComDefaultVO searchVO,
 			@RequestParam Map <String, Object> commandMap,
-			@ModelAttribute("qustnrRespondManageVO") QustnrRespondManageVO qustnrRespondManageVO,
+			@Valid @ModelAttribute("qustnrRespondManageVO") QustnrRespondManageVO qustnrRespondManageVO,
 			BindingResult bindingResult,
     		ModelMap model)
     throws Exception {
@@ -252,6 +253,12 @@ public class EgovQustnrRespondManageController {
 		String sCmd = commandMap.get("cmd") == null ? "" : (String)commandMap.get("cmd");
 		LOGGER.info("cmd => {}", sCmd);
 
+		// 초기 페이지 로드 시에는 검증 에러 무시
+		if (!"save".equals(sCmd)) {
+			bindingResult = new BeanPropertyBindingResult(qustnrRespondManageVO, "qustnrRespondManageVO");
+			model.addAttribute(BindingResult.MODEL_KEY_PREFIX + "qustnrRespondManageVO", bindingResult);
+		}
+
      	//성별코드조회
     	ComDefaultCodeVO voComCode = new ComDefaultCodeVO();
     	voComCode.setCodeId("COM014");
@@ -262,8 +269,7 @@ public class EgovQustnrRespondManageController {
     	model.addAttribute("comCode034", cmmUseService.selectCmmCodeDetail(voComCode));
 
         if(sCmd.equals("save")){
-    		//서버  validate 체크
-            beanValidator.validate(qustnrRespondManageVO, bindingResult);
+
     		if(bindingResult.hasErrors()){
 
     			return sLocationUrl;

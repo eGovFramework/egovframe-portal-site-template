@@ -26,12 +26,12 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
 
 <script type="text/javaScript" language="javascript">
 
@@ -137,7 +137,7 @@ function fn_egov_delete_QustnrTmplatManage(){
                                             <td>
                                                 <c:if test="${resultList[0].qestnrTmplatImagepathnm ne null}">
                                                 	<c:if test="${resultList[0].qestnrTmplatImagepathnm ne ''}">
-                                                		<img src="<c:url value='/'/>uss/olp/qtm/EgovQustnrTmplatManageImg.do?qestnrTmplatId=${resultList[0].qestnrTmplatId}" class="vam ml5" alt="${resultList[0].qestnrTmplatTy}템플릿이미지" title="${resultList[0].qestnrTmplatTy}템플릿이미지">
+                                                		<img src="<c:out value="${pageContext.request.contextPath}"/>uss/olp/qtm/EgovQustnrTmplatManageImg.do?qestnrTmplatId=${resultList[0].qestnrTmplatId}" class="vam ml5" alt="${resultList[0].qestnrTmplatTy}템플릿이미지" title="${resultList[0].qestnrTmplatTy}템플릿이미지">
                                                		</c:if>
                                                	</c:if>
                                             </td>

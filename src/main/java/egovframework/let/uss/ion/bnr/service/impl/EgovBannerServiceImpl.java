@@ -3,16 +3,14 @@ package egovframework.let.uss.ion.bnr.service.impl;
 import java.io.File;
 import java.util.List;
 
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.springframework.stereotype.Service;
+
 import egovframework.com.cmm.service.FileVO;
 import egovframework.let.uss.ion.bnr.service.Banner;
 import egovframework.let.uss.ion.bnr.service.BannerVO;
 import egovframework.let.uss.ion.bnr.service.EgovBannerService;
-
-import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
+import jakarta.annotation.Resource;
 /**
  * 배너에 대한 ServiceImpl 클래스를 정의한다.
  * 배너에 대한 등록, 수정, 삭제, 조회, 반영확인 기능을 제공한다.

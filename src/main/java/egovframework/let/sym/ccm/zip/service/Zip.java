@@ -3,6 +3,8 @@ package egovframework.let.sym.ccm.zip.service;
 import java.io.Serializable;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+import jakarta.validation.constraints.Size;
 
 /**
  * 우편번호 모델 클래스
@@ -31,6 +33,8 @@ public class Zip implements Serializable {
 	/*
 	 * 우편번호
 	 */
+	@EgovNullCheck
+	@Size(max=6)
     private String zip            = "";
     
     /*
@@ -41,26 +45,34 @@ public class Zip implements Serializable {
     /*
      * 시도명
      */
+	@EgovNullCheck
+	@Size(max=20)
 	private String ctprvnNm       = "";
 	
 	/*
 	 * 시군구명
 	 */
+	@EgovNullCheck
+	@Size(max=20)
     private String signguNm       = "";
     
     /*
      * 읍면동명
      */
+	@EgovNullCheck
+	@Size(max=30)
     private String emdNm          = "";
     
     /*
      * 리건물명
      */
+	@Size(max=60)
     private String liBuldNm      = "";
     
     /*
      * 번지동호
      */
+	@Size(max=20)
     private String lnbrDongHo     = "";
 
     /*

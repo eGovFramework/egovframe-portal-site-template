@@ -1,6 +1,9 @@
 package egovframework.let.uss.ion.bnr.service;
 
 import egovframework.com.cmm.ComDefaultVO;
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
 /**
  * 배너에 대한 model 클래스를 정의한다.
  * 배너의 일련번호, 배너명, 링크URL, 배너설명, 반영여부 항목을 관리한다.
@@ -32,10 +35,13 @@ public class Banner extends ComDefaultVO {
 	/**
 	 * 배너 명
 	 */
+	@EgovNullCheck
+	@Size(max=30)
 	private String bannerNm;
 	/**
 	 * 링크 URL
 	 */
+	@EgovNullCheck
 	private String linkUrl;
 	/**
 	 * 배너 이미지
@@ -52,6 +58,9 @@ public class Banner extends ComDefaultVO {
 	/**
 	 * 정렬 순서
 	 */
+	@EgovNullCheck
+	@Size(max=100)
+	@Pattern(regexp = "^[0-9]*$", message = "{validation.integer.check}")
 	private String sortOrdr;
 	/**
 	 * 반영여부

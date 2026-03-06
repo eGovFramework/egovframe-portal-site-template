@@ -2,11 +2,10 @@ package egovframework.let.cop.com.service.impl;
 
 import java.util.List;
 
-import egovframework.let.cop.com.service.UserInfVO;
-
 import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
-
 import org.springframework.stereotype.Repository;
+
+import egovframework.let.cop.com.service.UserInfVO;
 
 /**
  * 협업 활용 사용자 정보 조회를 위한 데이터 접근 클래스

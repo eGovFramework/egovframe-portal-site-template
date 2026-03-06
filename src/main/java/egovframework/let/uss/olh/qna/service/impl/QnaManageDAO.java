@@ -2,12 +2,11 @@ package egovframework.let.uss.olh.qna.service.impl;
 
 import java.util.List;
 
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
+import org.springframework.stereotype.Repository;
+
 import egovframework.let.uss.olh.qna.service.QnaManageDefaultVO;
 import egovframework.let.uss.olh.qna.service.QnaManageVO;
-
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
-
-import org.springframework.stereotype.Repository;
 /**
  *
  * Q&A정보를 처리하는 DAO 클래스

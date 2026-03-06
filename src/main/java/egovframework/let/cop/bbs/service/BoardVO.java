@@ -10,33 +10,37 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * @since 2009.03.19
  * @version 1.0
  * @see
- *  
+ *
  * <pre>
  * << 개정이력(Modification Information) >>
- * 
+ *
  *   수정일      수정자          수정내용
  *  -------    --------    ---------------------------
  *  2009.03.19  이삼섭          최초 생성
  *  2009.06.29  한성곤		   2단계 기능 추가 (댓글관리, 만족도조사)
- *  2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성 
- *  
+ *  2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *
  *  </pre>
  */
-@SuppressWarnings("serial")
 public class BoardVO extends Board implements Serializable {
 
-    /** 검색시작일 */
+    /**
+	 *  serialVersion UID
+	 */
+	private static final long serialVersionUID = -3779821913760046011L;
+
+	/** 검색시작일 */
     private String searchBgnDe = "";
-    
+
     /** 검색조건 */
     private String searchCnd = "";
-    
+
     /** 검색종료일 */
     private String searchEndDe = "";
-    
+
     /** 검색단어 */
     private String searchWrd = "";
-    
+
     /** 정렬순서(DESC,ASC) */
     private long sortOrdr = 0L;
 
@@ -81,7 +85,7 @@ public class BoardVO extends Board implements Serializable {
 
     /** 게시판 유형코드 */
     private String bbsTyCode = "";
-    
+
     /** 게시판 속성코드 */
     private String bbsAttrbCode = "";
 
@@ -90,16 +94,16 @@ public class BoardVO extends Board implements Serializable {
 
     /** 파일첨부가능여부 */
     private String fileAtchPosblAt = "";
-    
+
     /** 첨부가능파일숫자 */
     private int posblAtchFileNumber = 0;
-    
+
     /** 답장가능여부 */
     private String replyPosblAt = "";
-    
+
     /** 조회 수 증가 여부 */
     private boolean plusCount = false;
-    
+
     //---------------------------------
     // 2009.06.29 : 2단계 기능 추가
     //---------------------------------
@@ -109,7 +113,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * searchBgnDe attribute를 리턴한다.
-     * 
+     *
      * @return the searchBgnDe
      */
     public String getSearchBgnDe() {
@@ -118,7 +122,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * searchBgnDe attribute 값을 설정한다.
-     * 
+     *
      * @param searchBgnDe
      *            the searchBgnDe to set
      */
@@ -128,7 +132,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * searchCnd attribute를 리턴한다.
-     * 
+     *
      * @return the searchCnd
      */
     public String getSearchCnd() {
@@ -137,7 +141,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * searchCnd attribute 값을 설정한다.
-     * 
+     *
      * @param searchCnd
      *            the searchCnd to set
      */
@@ -147,7 +151,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * searchEndDe attribute를 리턴한다.
-     * 
+     *
      * @return the searchEndDe
      */
     public String getSearchEndDe() {
@@ -156,7 +160,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * searchEndDe attribute 값을 설정한다.
-     * 
+     *
      * @param searchEndDe
      *            the searchEndDe to set
      */
@@ -166,7 +170,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * searchWrd attribute를 리턴한다.
-     * 
+     *
      * @return the searchWrd
      */
     public String getSearchWrd() {
@@ -175,7 +179,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * searchWrd attribute 값을 설정한다.
-     * 
+     *
      * @param searchWrd
      *            the searchWrd to set
      */
@@ -185,7 +189,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * sortOrdr attribute를 리턴한다.
-     * 
+     *
      * @return the sortOrdr
      */
     public long getSortOrdr() {
@@ -194,7 +198,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * sortOrdr attribute 값을 설정한다.
-     * 
+     *
      * @param sortOrdr
      *            the sortOrdr to set
      */
@@ -204,7 +208,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * searchUseYn attribute를 리턴한다.
-     * 
+     *
      * @return the searchUseYn
      */
     public String getSearchUseYn() {
@@ -213,7 +217,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * searchUseYn attribute 값을 설정한다.
-     * 
+     *
      * @param searchUseYn
      *            the searchUseYn to set
      */
@@ -223,7 +227,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * pageIndex attribute를 리턴한다.
-     * 
+     *
      * @return the pageIndex
      */
     public int getPageIndex() {
@@ -232,7 +236,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * pageIndex attribute 값을 설정한다.
-     * 
+     *
      * @param pageIndex
      *            the pageIndex to set
      */
@@ -242,7 +246,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * pageUnit attribute를 리턴한다.
-     * 
+     *
      * @return the pageUnit
      */
     public int getPageUnit() {
@@ -251,7 +255,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * pageUnit attribute 값을 설정한다.
-     * 
+     *
      * @param pageUnit
      *            the pageUnit to set
      */
@@ -261,7 +265,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * pageSize attribute를 리턴한다.
-     * 
+     *
      * @return the pageSize
      */
     public int getPageSize() {
@@ -270,7 +274,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * pageSize attribute 값을 설정한다.
-     * 
+     *
      * @param pageSize
      *            the pageSize to set
      */
@@ -280,7 +284,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * firstIndex attribute를 리턴한다.
-     * 
+     *
      * @return the firstIndex
      */
     public int getFirstIndex() {
@@ -289,7 +293,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * firstIndex attribute 값을 설정한다.
-     * 
+     *
      * @param firstIndex
      *            the firstIndex to set
      */
@@ -299,7 +303,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * lastIndex attribute를 리턴한다.
-     * 
+     *
      * @return the lastIndex
      */
     public int getLastIndex() {
@@ -308,7 +312,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * lastIndex attribute 값을 설정한다.
-     * 
+     *
      * @param lastIndex
      *            the lastIndex to set
      */
@@ -318,7 +322,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * recordCountPerPage attribute를 리턴한다.
-     * 
+     *
      * @return the recordCountPerPage
      */
     public int getRecordCountPerPage() {
@@ -327,7 +331,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * recordCountPerPage attribute 값을 설정한다.
-     * 
+     *
      * @param recordCountPerPage
      *            the recordCountPerPage to set
      */
@@ -337,7 +341,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * rowNo attribute를 리턴한다.
-     * 
+     *
      * @return the rowNo
      */
     public int getRowNo() {
@@ -346,7 +350,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * rowNo attribute 값을 설정한다.
-     * 
+     *
      * @param rowNo
      *            the rowNo to set
      */
@@ -356,7 +360,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * frstRegisterNm attribute를 리턴한다.
-     * 
+     *
      * @return the frstRegisterNm
      */
     public String getFrstRegisterNm() {
@@ -365,7 +369,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * frstRegisterNm attribute 값을 설정한다.
-     * 
+     *
      * @param frstRegisterNm
      *            the frstRegisterNm to set
      */
@@ -375,7 +379,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * lastUpdusrNm attribute를 리턴한다.
-     * 
+     *
      * @return the lastUpdusrNm
      */
     public String getLastUpdusrNm() {
@@ -384,7 +388,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * lastUpdusrNm attribute 값을 설정한다.
-     * 
+     *
      * @param lastUpdusrNm
      *            the lastUpdusrNm to set
      */
@@ -394,7 +398,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * isExpired attribute를 리턴한다.
-     * 
+     *
      * @return the isExpired
      */
     public String getIsExpired() {
@@ -403,7 +407,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * isExpired attribute 값을 설정한다.
-     * 
+     *
      * @param isExpired
      *            the isExpired to set
      */
@@ -413,7 +417,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * parntsSortOrdr attribute를 리턴한다.
-     * 
+     *
      * @return the parntsSortOrdr
      */
     public String getParntsSortOrdr() {
@@ -422,7 +426,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * parntsSortOrdr attribute 값을 설정한다.
-     * 
+     *
      * @param parntsSortOrdr
      *            the parntsSortOrdr to set
      */
@@ -432,7 +436,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * parntsReplyLc attribute를 리턴한다.
-     * 
+     *
      * @return the parntsReplyLc
      */
     public String getParntsReplyLc() {
@@ -441,7 +445,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * parntsReplyLc attribute 값을 설정한다.
-     * 
+     *
      * @param parntsReplyLc
      *            the parntsReplyLc to set
      */
@@ -451,7 +455,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * bbsTyCode attribute를 리턴한다.
-     * 
+     *
      * @return the bbsTyCode
      */
     public String getBbsTyCode() {
@@ -460,7 +464,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * bbsTyCode attribute 값을 설정한다.
-     * 
+     *
      * @param bbsTyCode
      *            the bbsTyCode to set
      */
@@ -470,7 +474,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * bbsAttrbCode attribute를 리턴한다.
-     * 
+     *
      * @return the bbsAttrbCode
      */
     public String getBbsAttrbCode() {
@@ -479,7 +483,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * bbsAttrbCode attribute 값을 설정한다.
-     * 
+     *
      * @param bbsAttrbCode
      *            the bbsAttrbCode to set
      */
@@ -489,7 +493,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * bbsNm attribute를 리턴한다.
-     * 
+     *
      * @return the bbsNm
      */
     public String getBbsNm() {
@@ -498,7 +502,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * bbsNm attribute 값을 설정한다.
-     * 
+     *
      * @param bbsNm
      *            the bbsNm to set
      */
@@ -508,7 +512,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * fileAtchPosblAt attribute를 리턴한다.
-     * 
+     *
      * @return the fileAtchPosblAt
      */
     public String getFileAtchPosblAt() {
@@ -517,7 +521,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * fileAtchPosblAt attribute 값을 설정한다.
-     * 
+     *
      * @param fileAtchPosblAt
      *            the fileAtchPosblAt to set
      */
@@ -527,7 +531,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * posblAtchFileNumber attribute를 리턴한다.
-     * 
+     *
      * @return the posblAtchFileNumber
      */
     public int getPosblAtchFileNumber() {
@@ -536,7 +540,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * posblAtchFileNumber attribute 값을 설정한다.
-     * 
+     *
      * @param posblAtchFileNumber
      *            the posblAtchFileNumber to set
      */
@@ -546,7 +550,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * replyPosblAt attribute를 리턴한다.
-     * 
+     *
      * @return the replyPosblAt
      */
     public String getReplyPosblAt() {
@@ -555,7 +559,7 @@ public class BoardVO extends Board implements Serializable {
 
     /**
      * replyPosblAt attribute 값을 설정한다.
-     * 
+     *
      * @param replyPosblAt
      *            the replyPosblAt to set
      */

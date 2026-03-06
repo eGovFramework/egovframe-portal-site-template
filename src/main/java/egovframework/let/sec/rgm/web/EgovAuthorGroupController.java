@@ -1,23 +1,21 @@
 package egovframework.let.sec.rgm.web;
 
-import egovframework.com.cmm.EgovMessageSource;
-import egovframework.let.sec.ram.service.AuthorManageVO;
-import egovframework.let.sec.ram.service.EgovAuthorManageService;
-import egovframework.let.sec.rgm.service.AuthorGroup;
-import egovframework.let.sec.rgm.service.AuthorGroupVO;
-import egovframework.let.sec.rgm.service.EgovAuthorGroupService;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
+
+import egovframework.com.cmm.EgovMessageSource;
+import egovframework.let.sec.ram.service.AuthorManageVO;
+import egovframework.let.sec.ram.service.EgovAuthorManageService;
+import egovframework.let.sec.rgm.service.AuthorGroup;
+import egovframework.let.sec.rgm.service.AuthorGroupVO;
+import egovframework.let.sec.rgm.service.EgovAuthorGroupService;
+import jakarta.annotation.Resource;
 
 /**
  * 권한그룹에 관한 controller 클래스를 정의한다.

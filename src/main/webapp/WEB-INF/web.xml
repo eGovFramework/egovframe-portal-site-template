@@ -1,34 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app id="WebApp_ID" version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    <display-name>egovframework.pst</display-name>
-    <filter>
-        <filter-name>encodingFilter</filter-name>
-        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-        <init-param>
-            <param-name>encoding</param-name>
-            <param-value>utf-8</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>encodingFilter</filter-name>
-        <url-pattern>*.do</url-pattern>
-    </filter-mapping>
+<web-app id="WebApp_ID" version="5.0" xmlns="https://jakarta.ee/xml/ns/jakartaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd">
 
+	<display-name>egovframework.pst</display-name>
 
-    
-    <!--
-		HTMLTagFilter의 경우는 파라미터에 대하여 XSS 오류 방지를 위한 변환을 처리합니다.
-		XSS 보안 위험 방지를 위하여 반드시 설정 하셔야 합니다.
-		(<c:out />의 경우 해당 뷰단의 사용한 곳에 한정하여 데이터 출력시 XSS 방지 처리가 됨)
-		
-		HTMLTagFilter 사용 시 multipart/form-data Request의 필터링을 위해 springMultipartFilter를 모든페이지에서 사용해야 합니다. 
-	-->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
 
 	<!--
-		Tomcat의 경우 allowCasualMultipartParsing="true" 추가
-		<Context docBase="" path="/" reloadable="true" allowCasualMultipartParsing="true">
+		Tomcat 10 이상의 경우 multipart 사용 시 허용되는 최대 부분 수를 제한하는 구성을 위해 maxPartCount 추가
+		- 10.1 이상 버전부터 도입,  잠재적인 서비스 거부(DoS) 취약점을 해결
+		<Context docBase="" path="/" reloadable="true" maxPartCount="1000">
 	-->
 	<filter>
 		<display-name>springMultipartFilter</display-name>
@@ -39,8 +32,11 @@
 		<filter-name>springMultipartFilter</filter-name>
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
-   <!--
-		HTMLTagFilter 설정 부분
+
+	<!--
+		HTMLTagFilter의 경우는 파라미터에 대하여 XSS 오류 방지를 위한 변환을 처리합니다.
+		XSS 보안 위험 방지를 위하여 반드시 설정 하셔야 합니다.
+		(<c:out />의 경우 해당 뷰단의 사용한 곳에 한정하여 데이터 출력시 XSS 방지 처리가 됨)
 	-->
 	<filter>
 		<filter-name>HTMLTagFilter</filter-name>
@@ -51,65 +47,78 @@
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
 
-    <!-- security start -->
-    <filter>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+	<!-- security start -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<param-name>contextAttribute</param-name>
+			<param-value>org.springframework.web.servlet.FrameworkServlet.CONTEXT.action</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
-    <listener>
-        <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
-    </listener>
-    <!-- security end -->
+	<listener>
+		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+	</listener>
+	<!-- security end -->
 
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath*:egovframework/spring/com/context-*.xml</param-value>
-    </context-param>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:egovframework/spring/com/context-*.xml</param-value>
+	</context-param>
 
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 
-    <servlet>
-        <servlet-name>action</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>/WEB-INF/config/egovframework/springmvc/*.xml</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>action</servlet-name>
-        <url-pattern>*.do</url-pattern>
-    </servlet-mapping>
+	<servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/config/egovframework/springmvc/*.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+		<!-- Spring Framework 6.2.8 multipart 설정 -->
+		<multipart-config>
+			<max-file-size>10485760</max-file-size> <!-- 10MB (globals.properties와 일치) -->
+			<max-request-size>104857600</max-request-size> <!-- 100MB (여러 파일 업로드 고려) -->
+			<file-size-threshold>1048576</file-size-threshold> <!-- 1MB -->
+		</multipart-config>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
 
-    <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
-    <login-config>
-        <auth-method>BASIC</auth-method>
-    </login-config>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
 
-    <session-config>
-        <session-timeout>600</session-timeout>
-    </session-config>
+	<login-config>
+		<auth-method>BASIC</auth-method>
+	</login-config>
 
-    <error-page>
-        <exception-type>java.lang.Throwable</exception-type>
-        <location>/common/error.jsp</location>
-    </error-page>
-    <error-page>
-        <error-code>404</error-code>
-        <location>/common/error.jsp</location>
-    </error-page>
-    <error-page>
-        <error-code>500</error-code>
-        <location>/common/error.jsp</location>
-    </error-page>
+	<session-config>
+		<session-timeout>600</session-timeout>
+		<tracking-mode>COOKIE</tracking-mode>
+	</session-config>
+
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/common/error.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/common/error.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/common/error.jsp</location>
+	</error-page>
+
 </web-app>

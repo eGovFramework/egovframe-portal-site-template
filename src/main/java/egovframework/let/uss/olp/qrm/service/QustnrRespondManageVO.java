@@ -3,6 +3,9 @@ package egovframework.let.uss.olp.qrm.service;
 import java.io.Serializable;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
 /**
  * 설문응답자관리 VO Class 구현 
  * @author 공통서비스 장동한
@@ -34,24 +37,37 @@ public class QustnrRespondManageVO implements Serializable {
 	private String qestnrRespondId = "";
 	
 	/** 설별코드 */
+	@EgovNullCheck
 	private String sexdstnCode = "";
 	
 	/** 직업유형코드 */
+	@EgovNullCheck
 	private String occpTyCode = "";
 	
 	/** 응답자명 */
+	@EgovNullCheck
+	@Size(max=50)
 	private String respondNm = "";
 	
 	/** 생년월일 */
 	private String brth = "";
 	
 	/** 첫번째전화번호 */
+	@EgovNullCheck
+	@Size(max=4)
+	@Pattern(regexp = "^[0-9]*$", message = "{validation.integer.check}")
 	private String areaNo = "";
 	
 	/** 두번째전화번호 */
+	@EgovNullCheck
+	@Size(max=4)
+	@Pattern(regexp = "^[0-9]*$", message = "{validation.integer.check}")
 	private String middleTelno = "";
 	
 	/** 마지막전화번호 */
+	@EgovNullCheck
+	@Size(max=4)
+	@Pattern(regexp = "^[0-9]*$", message = "{validation.integer.check}")
 	private String endTelno = "";
 	
 	/** 최초등록시점 */

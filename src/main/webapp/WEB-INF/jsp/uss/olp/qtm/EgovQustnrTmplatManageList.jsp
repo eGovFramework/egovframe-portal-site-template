@@ -26,12 +26,12 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
 
 <script type="text/javaScript" language="javascript">
 /* ********************************************************
@@ -191,7 +191,7 @@ function fn_egov_search_QustnrTmplatManage(){
                                                 <td>
                                                 	<div class="divDotText" style="width:100px;">${resultInfo.qestnrTmplatTy}</div>
                                                 </td>
-                                                <td><img src="<c:url value='/'/>uss/olp/qtm/EgovQustnrTmplatManageImg.do?qestnrTmplatId=${resultInfo.qestnrTmplatId}" alt="${resultInfo.qestnrTmplatTy}템플릿이미지" title="${resultInfo.qestnrTmplatTy}템플릿이미지" width="70px" height="50px"></td>
+                                                <td><img src="<c:out value="${pageContext.request.contextPath}"/>uss/olp/qtm/EgovQustnrTmplatManageImg.do?qestnrTmplatId=${resultInfo.qestnrTmplatId}" alt="${resultInfo.qestnrTmplatTy}템플릿이미지" title="${resultInfo.qestnrTmplatTy}템플릿이미지" width="70px" height="50px"></td>
                                                 <!-- onLoad="if(this.width>65){this.width=65}" -->
                                                 <td class="al">
                                                 	<form name="subForm" method="post" action="<c:url value='/uss/olp/qtm/EgovQustnrTmplatManageDetail.do'/>">

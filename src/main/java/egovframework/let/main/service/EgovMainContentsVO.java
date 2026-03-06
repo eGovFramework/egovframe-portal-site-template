@@ -33,19 +33,6 @@ public class EgovMainContentsVO implements Serializable {
 	 */
 	private String workItemURL;
 
-	public EgovMainContentsVO(){
-
-	}
-
-	/**
-	 * 
-	 * @exception Throwable
-	 */
-	public void finalize()
-	  throws Throwable{
-
-	}
-
 	/**
 	 * getItemCount 항목 개수 getter
 	 * @return

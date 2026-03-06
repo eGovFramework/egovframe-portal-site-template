@@ -8,12 +8,8 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.Map;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang3.StringUtils;
-import org.egovframe.rte.fdl.cryptography.EgovCryptoService;
+import org.egovframe.rte.fdl.crypto.EgovCryptoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -26,6 +22,9 @@ import egovframework.com.cmm.SessionVO;
 import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.EgovProperties;
 import egovframework.com.cmm.service.FileVO;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * @Class Name : EgovImageProcessController.java
@@ -96,7 +95,6 @@ public class EgovImageProcessController extends HttpServlet {
 		
 		File file = new File(fileStreCours, streFileNm);
 		FileInputStream fis = null;
-//		new FileInputStream(file);
 
 		BufferedInputStream in = null;
 		ByteArrayOutputStream bStream = null;

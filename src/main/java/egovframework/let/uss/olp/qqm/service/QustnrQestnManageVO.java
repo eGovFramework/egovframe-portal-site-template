@@ -3,6 +3,9 @@ package egovframework.let.uss.olp.qqm.service;
 import java.io.Serializable;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
 /**
  * 설문문항 VO Class 구현 
  * @author 공통서비스 장동한
@@ -36,12 +39,18 @@ public class QustnrQestnManageVO implements Serializable {
 	private String qestnrId = "";
 	
 	/** 질문순번 */
+	@EgovNullCheck
+	@Size(max=10)
+	@Pattern(regexp = "^[0-9]*$", message = "{validation.integer.check}")
 	private String qestnSn = "";
 	
 	/** 질문유형코드 */
+	@EgovNullCheck
 	private String qestnTyCode = "";
 	
 	/** 질문내용 */
+	@EgovNullCheck
+	@Size(max=2500)
 	private String qestnCn = "";
 	
 	/** 초대선택건수 */

@@ -1,6 +1,7 @@
 package egovframework.let.sec.ram.service;
 
 import egovframework.com.cmm.ComDefaultVO;
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
 
 /**
  * 권한관리에 대한 model 클래스를 정의한다.
@@ -33,6 +34,7 @@ public class AuthorManage extends ComDefaultVO {
 	/**
 	 * 권한코드
 	 */
+	@EgovNullCheck
 	private String authorCode;
 	/**
 	 * 권한등록일자
@@ -45,6 +47,7 @@ public class AuthorManage extends ComDefaultVO {
 	/**
 	 * 권한 명
 	 */
+	@EgovNullCheck
 	private String authorNm;
 	
 	/**

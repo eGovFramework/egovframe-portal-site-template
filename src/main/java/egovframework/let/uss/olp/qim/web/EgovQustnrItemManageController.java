@@ -2,28 +2,27 @@ package egovframework.let.uss.olp.qim.web;
 
 import java.util.Map;
 
+import org.egovframe.rte.fdl.property.EgovPropertyService;
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
 import egovframework.let.uss.olp.qim.service.EgovQustnrItemManageService;
 import egovframework.let.uss.olp.qim.service.QustnrItemManageVO;
+import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 
-import org.egovframe.rte.fdl.property.EgovPropertyService;
-import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
-import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springmodules.validation.commons.DefaultBeanValidator;
 /**
  * 설문항목관리를 처리하는 Controller Class 구현
  * @author 공통서비스 장동한
@@ -45,9 +44,6 @@ import org.springmodules.validation.commons.DefaultBeanValidator;
 public class EgovQustnrItemManageController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovQustnrItemManageController.class);
-
-	@Autowired
-	private DefaultBeanValidator beanValidator;
 
 	/** EgovMessageSource */
     @Resource(name="egovMessageSource")
@@ -204,7 +200,7 @@ public class EgovQustnrItemManageController {
 	public String QustnrItemManageModify(
 			@ModelAttribute("searchVO") ComDefaultVO searchVO,
 			@RequestParam Map <String, Object> commandMap,
-			@ModelAttribute("qustnrItemManageVO") QustnrItemManageVO qustnrItemManageVO,
+			@Valid @ModelAttribute("qustnrItemManageVO") QustnrItemManageVO qustnrItemManageVO,
 			BindingResult bindingResult,
     		ModelMap model)
     throws Exception {
@@ -222,10 +218,14 @@ public class EgovQustnrItemManageController {
 
 		String sCmd = commandMap.get("cmd") == null ? "" : (String)commandMap.get("cmd");
 
+		// 초기 페이지 로드 시에는 검증 에러 무시
+		if (!"save".equals(sCmd)) {
+			bindingResult = new BeanPropertyBindingResult(qustnrItemManageVO, "qustnrItemManageVO");
+			model.addAttribute(BindingResult.MODEL_KEY_PREFIX + "qustnrItemManageVO", bindingResult);
+		}
+
         if(sCmd.equals("save")){
 
-    		//서버  validate 체크
-            beanValidator.validate(qustnrItemManageVO, bindingResult);
     		if(bindingResult.hasErrors()){
             	//설문항목(을)를  정보 불러오기
                 model.addAttribute("listQustnrTmplat", egovQustnrItemManageService.selectQustnrTmplatManageList(qustnrItemManageVO));
@@ -265,7 +265,7 @@ public class EgovQustnrItemManageController {
 	public String QustnrItemManageRegist(
 			@ModelAttribute("searchVO") ComDefaultVO searchVO,
 			@RequestParam Map <String, Object> commandMap,
-			@ModelAttribute("qustnrItemManageVO") QustnrItemManageVO qustnrItemManageVO,
+			@Valid @ModelAttribute("qustnrItemManageVO") QustnrItemManageVO qustnrItemManageVO,
 			BindingResult bindingResult,
     		ModelMap model)
     throws Exception {
@@ -284,10 +284,14 @@ public class EgovQustnrItemManageController {
 		String sCmd = commandMap.get("cmd") == null ? "" : (String)commandMap.get("cmd");
 		LOGGER.info("cmd => {}", sCmd);
 
+		// 초기 페이지 로드 시에는 검증 에러 무시
+		if (!"save".equals(sCmd)) {
+			bindingResult = new BeanPropertyBindingResult(qustnrItemManageVO, "qustnrItemManageVO");
+			model.addAttribute(BindingResult.MODEL_KEY_PREFIX + "qustnrItemManageVO", bindingResult);
+		}
+
         if(sCmd.equals("save")){
 
-    		//서버  validate 체크
-            beanValidator.validate(qustnrItemManageVO, bindingResult);
     		if(bindingResult.hasErrors()){
             	//설문항목(을)를  정보 불러오기
                 model.addAttribute("listQustnrTmplat", egovQustnrItemManageService.selectQustnrTmplatManageList(qustnrItemManageVO));

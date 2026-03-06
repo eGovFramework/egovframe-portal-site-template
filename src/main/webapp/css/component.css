@@ -7,6 +7,7 @@
 
 /* Button */
 .btn {display: inline-block; vertical-align: top;}
+    .btn_blue_15 {height: 30px; border-radius: 15px; color: #fff; font-size: 14px; font-weight: 300; text-align: center; line-height: 30px; background: #169bd5;}
     .btn_blue_30 {height: 30px; border-radius: 5px; color: #fff; font-size: 14px; font-weight: 300; text-align: center; line-height: 30px; background: #169bd5;}
     .btn_blue_46 {height: 46px; border-radius: 5px; color: #fff; font-size: 16px; text-align: center; line-height: 46px; background: #169bd5;}
     .btn_skyblue_h46 {height: 46px; border-radius: 5px; color: #005b82; font-size: 16px; text-align: center; line-height: 46px; background: #daedf5;}
@@ -39,6 +40,7 @@
     .board_list td.al {padding: 16px 10px 19px 10px; text-align: left;}
     .board_list td .lnk {color: #222;}
     .board_list td .lnk:hover {color: #169bd5; text-decoration: underline;}
+    .board_list td .re {vertical-align: 0px;}
 
     .board_list2 {border-top: 2px solid #222;}
     .board_list2 table {font-size: 16px; font-weight: 300;}

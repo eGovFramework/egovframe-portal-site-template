@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.slf4j.Logger;
@@ -18,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.com.cmm.EgovWebUtil;
 import egovframework.let.utl.fcc.service.EgovStringUtil;
+import jakarta.annotation.Resource;
 
 /**
  * @author 공통 서비스 개발팀 이삼섭
@@ -55,76 +54,76 @@ public class EgovFileMngUtil {
      * @throws Exception
      */
     public List<FileVO> parseFileInf(Map<String, MultipartFile> files, String KeyStr, int fileKeyParam, String atchFileId, String storePath) throws Exception {
-	int fileKey = fileKeyParam;
+    	int fileKey = fileKeyParam;
 
-	String storePathString = "";
-	String atchFileIdString = "";
+    	String storePathString = "";
+    	String atchFileIdString = "";
 
-	if (storePath == null || "".equals(storePath)) {
-	    storePathString = propertyService.getString("Globals.fileStorePath");
-	} else {
-	    storePathString = propertyService.getString(storePath);
-	}
+    	if (storePath == null || "".equals(storePath)) {
+    		storePathString = propertyService.getString("Globals.fileStorePath");
+    	} else {
+    		storePathString = propertyService.getString(storePath);
+    	}
 
-	if (atchFileId == null || "".equals(atchFileId)) {
-	    atchFileIdString = idgenService.getNextStringId();
-	} else {
-	    atchFileIdString = atchFileId;
-	}
+    	if (atchFileId == null || "".equals(atchFileId)) {
+    		atchFileIdString = idgenService.getNextStringId();
+    	} else {
+    		atchFileIdString = atchFileId;
+    	}
 
-	File saveFolder = new File(EgovWebUtil.filePathBlackList(storePathString));
+    	File saveFolder = new File(EgovWebUtil.filePathBlackList(storePathString));
 
-	if (!saveFolder.exists() || saveFolder.isFile()) {
-	    saveFolder.mkdirs();
-	}
+    	if (!saveFolder.exists() || saveFolder.isFile()) {
+    		saveFolder.mkdirs();
+    	}
 
-	Iterator<Entry<String, MultipartFile>> itr = files.entrySet().iterator();
-	MultipartFile file;
-	String filePath = "";
-	List<FileVO> result  = new ArrayList<FileVO>();
-	FileVO fvo;
+		Iterator<Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+		MultipartFile file;
+		String filePath = "";
+		List<FileVO> result  = new ArrayList<FileVO>();
+		FileVO fvo;
 
-	while (itr.hasNext()) {
-	    Entry<String, MultipartFile> entry = itr.next();
+		while (itr.hasNext()) {
+			Entry<String, MultipartFile> entry = itr.next();
 
-	    file = entry.getValue();
-	    String orginFileName = file.getOriginalFilename();
+		    file = entry.getValue();
+		    String orginFileName = file.getOriginalFilename();
 
-	    //--------------------------------------
-	    // 원 파일명이 없는 경우 처리
-	    // (첨부가 되지 않은 input file type)
-	    //--------------------------------------
-	    if ("".equals(orginFileName)) {
-		continue;
-	    }
-	    ////------------------------------------
+		    //--------------------------------------
+		    // 원 파일명이 없는 경우 처리
+		    // (첨부가 되지 않은 input file type)
+		    //--------------------------------------
+		    if ("".equals(orginFileName)) {
+		    	continue;
+		    }
+		    ////------------------------------------
 
-	    int index = orginFileName.lastIndexOf(".");
-	    //String fileName = orginFileName.substring(0, index);
-	    String fileExt = orginFileName.substring(index + 1);
-	    String newName = KeyStr + EgovStringUtil.getTimeStamp() + fileKey;
-	    long _size = file.getSize();
+		    int index = orginFileName.lastIndexOf(".");
+		    //String fileName = orginFileName.substring(0, index);
+		    String fileExt = orginFileName.substring(index + 1);
+		    String newName = KeyStr + EgovStringUtil.getTimeStamp() + fileKey;
+		    long _size = file.getSize();
 
-	    if (!"".equals(orginFileName)) {
-		filePath = storePathString + File.separator + newName;
-		file.transferTo(new File(EgovWebUtil.filePathBlackList(filePath)));
-	    }
-	    fvo = new FileVO();
-	    fvo.setFileExtsn(fileExt);
-	    fvo.setFileStreCours(storePathString);
-	    fvo.setFileMg(Long.toString(_size));
-	    fvo.setOrignlFileNm(orginFileName);
-	    fvo.setStreFileNm(newName);
-	    fvo.setAtchFileId(atchFileIdString);
-	    fvo.setFileSn(String.valueOf(fileKey));
+		    if (!"".equals(orginFileName)) {
+				filePath = storePathString + File.separator + newName;
+				file.transferTo(new File(EgovWebUtil.filePathBlackList(filePath)));
+		    }
 
-	    //writeFile(file, newName, storePathString);
-	    result.add(fvo);
+		    fvo = new FileVO();
+		    fvo.setFileExtsn(fileExt);
+		    fvo.setFileStreCours(storePathString);
+		    fvo.setFileMg(Long.toString(_size));
+		    fvo.setOrignlFileNm(orginFileName);
+		    fvo.setStreFileNm(newName);
+		    fvo.setAtchFileId(atchFileIdString);
+		    fvo.setFileSn(String.valueOf(fileKey));
 
-	    fileKey++;
-	}
+		    result.add(fvo);
 
-	return result;
+		    fileKey++;
+		}
+
+		return result;
     }
 
 }

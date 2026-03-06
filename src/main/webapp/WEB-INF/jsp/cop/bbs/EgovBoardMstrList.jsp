@@ -22,12 +22,12 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
 
 
 <script type="text/javascript" src="<c:url value='/js/EgovBBSMng.js' />"></script>
@@ -39,8 +39,7 @@
 	}
 	
 	function fn_egov_insert_addBrdMstr(){	
-		document.frm.action = "<c:url value='/cop/bbs/addBBSMaster.do'/>";
-		document.frm.submit();
+		location.href = "<c:url value='/cop/bbs/addBBSMaster.do'/>";
 	}
 	
 	function fn_egov_select_brdMstr(pageNo){

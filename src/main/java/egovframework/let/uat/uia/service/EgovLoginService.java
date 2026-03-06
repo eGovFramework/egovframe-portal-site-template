@@ -1,6 +1,7 @@
 package egovframework.let.uat.uia.service;
 
 import egovframework.com.cmm.LoginVO;
+
 /**
  * 일반 로그인을 처리하는 비즈니스 인터페이스 클래스
  * @author 공통서비스 개발팀 박지욱
@@ -19,35 +20,28 @@ import egovframework.com.cmm.LoginVO;
  *  </pre>
  */
 public interface EgovLoginService {
-
+	
 	/**
 	 * 일반 로그인을 처리한다
+	 * @param vo LoginVO
 	 * @return LoginVO
-	 * 
-	 * @param vo    LoginVO
-	 * @exception Exception Exception
+	 * @exception Exception
 	 */
-	public LoginVO actionLogin(LoginVO vo)
-	  throws Exception;
-
-	/**
+    LoginVO actionLogin(LoginVO vo) throws Exception;
+    
+    /**
 	 * 아이디를 찾는다.
+	 * @param vo LoginVO
 	 * @return LoginVO
-	 * 
-	 * @param vo    LoginVO
-	 * @exception Exception Exception
+	 * @exception Exception
 	 */
-	public LoginVO searchId(LoginVO vo)
-	  throws Exception;
-
-	/**
+    LoginVO searchId(LoginVO vo) throws Exception;
+    
+    /**
 	 * 비밀번호를 찾는다.
+	 * @param vo LoginVO
 	 * @return boolean
-	 * 
-	 * @param vo    LoginVO
-	 * @exception Exception Exception
+	 * @exception Exception
 	 */
-	public boolean searchPassword(LoginVO vo)
-	  throws Exception;
-
+    boolean searchPassword(LoginVO vo) throws Exception;
 }

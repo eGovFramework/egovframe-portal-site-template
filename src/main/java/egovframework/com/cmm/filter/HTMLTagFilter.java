@@ -17,23 +17,21 @@ package egovframework.com.cmm.filter;
 
 import java.io.IOException;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
 
-public class HTMLTagFilter implements Filter{
+public class HTMLTagFilter implements Filter {
 
 	@SuppressWarnings("unused")
 	private FilterConfig config;
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
-
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		chain.doFilter(new HTMLTagFilterRequestWrapper((HttpServletRequest)request), response);
 	}
 
@@ -42,8 +40,4 @@ public class HTMLTagFilter implements Filter{
 		this.config = config;
 	}
 
-	@Override
-	public void destroy() {
-
-	}
 }

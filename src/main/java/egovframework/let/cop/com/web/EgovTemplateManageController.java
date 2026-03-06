@@ -3,20 +3,9 @@ package egovframework.let.cop.com.web;
 import java.util.List;
 import java.util.Map;
 
-import egovframework.com.cmm.ComDefaultCodeVO;
-import egovframework.com.cmm.LoginVO;
-import egovframework.com.cmm.service.EgovCmmUseService;
-import egovframework.let.cop.com.service.EgovTemplateManageService;
-import egovframework.let.cop.com.service.TemplateInf;
-import egovframework.let.cop.com.service.TemplateInfVO;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -24,7 +13,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springmodules.validation.commons.DefaultBeanValidator;
+
+import egovframework.com.cmm.ComDefaultCodeVO;
+import egovframework.com.cmm.LoginVO;
+import egovframework.com.cmm.service.EgovCmmUseService;
+import egovframework.let.cop.com.service.EgovTemplateManageService;
+import egovframework.let.cop.com.service.TemplateInf;
+import egovframework.let.cop.com.service.TemplateInfVO;
+import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 
 /**
  * 템플릿 관리를 위한 컨트롤러 클래스
@@ -54,11 +51,6 @@ public class EgovTemplateManageController {
 
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertyService;
-
-	@Autowired
-	private DefaultBeanValidator beanValidator;
-
-	//Logger log = Logger.getLogger(this.getClass());
 
 	/**
 	 * 템플릿 목록을 조회한다.
@@ -129,13 +121,8 @@ public class EgovTemplateManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/com/insertTemplateInf.do")
-	public String insertTemplateInf(@ModelAttribute("searchVO") TemplateInfVO searchVO, @ModelAttribute("templateInf") TemplateInf templateInf, BindingResult bindingResult,
+	public String insertTemplateInf(@ModelAttribute("searchVO") TemplateInfVO searchVO, @Valid @ModelAttribute("templateInf") TemplateInf templateInf, BindingResult bindingResult,
 			SessionStatus status, ModelMap model) throws Exception {
-
-		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-
-		beanValidator.validate(templateInf, bindingResult);
 
 		if (bindingResult.hasErrors()) {
 			ComDefaultCodeVO vo = new ComDefaultCodeVO();
@@ -149,11 +136,23 @@ public class EgovTemplateManageController {
 			return "cop/com/EgovTemplateRegist";
 		}
 
+		// 인증 서비스 확인
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		LoginVO user = null;
+
+		// 26.03.06 KISA 보안취약점 조치 : 불필요한 try-catch 제거
+		if (isAuthenticated) {
+			user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		}
+
+		if (!isAuthenticated || user == null) {
+			model.addAttribute("message", "로그인이 필요합니다.");
+			return "uat/uia/EgovLoginUsr";
+		}
+
 		templateInf.setFrstRegisterId(user.getUniqId());
 
-		if (isAuthenticated) {
-			tmplatService.insertTemplateInf(templateInf);
-		}
+		tmplatService.insertTemplateInf(templateInf);
 
 		return "forward:/cop/com/selectTemplateInfs.do";
 	}
@@ -189,13 +188,8 @@ public class EgovTemplateManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/com/updateTemplateInf.do")
-	public String updateTemplateInf(@ModelAttribute("searchVO") TemplateInfVO tmplatInfVO, @ModelAttribute("templateInf") TemplateInf templateInf, BindingResult bindingResult,
+	public String updateTemplateInf(@ModelAttribute("searchVO") TemplateInfVO tmplatInfVO, @Valid @ModelAttribute("templateInf") TemplateInf templateInf, BindingResult bindingResult,
 			SessionStatus status, ModelMap model) throws Exception {
-
-		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-
-		beanValidator.validate(templateInf, bindingResult);
 
 		if (bindingResult.hasErrors()) {
 			ComDefaultCodeVO codeVO = new ComDefaultCodeVO();
@@ -212,11 +206,23 @@ public class EgovTemplateManageController {
 			return "cop/com/EgovTemplateUpdt";
 		}
 
+		// 인증 서비스 확인
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		LoginVO user = null;
+
+		// 26.03.06 KISA 보안취약점 조치 : 불필요한 try-catch 제거
+		if (isAuthenticated) {
+			user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		}
+
+		if (!isAuthenticated || user == null) {
+			model.addAttribute("message", "로그인이 필요합니다.");
+			return "uat/uia/EgovLoginUsr";
+		}
+
 		templateInf.setLastUpdusrId(user.getUniqId());
 
-		if (isAuthenticated) {
-			tmplatService.updateTemplateInf(templateInf);
-		}
+		tmplatService.updateTemplateInf(templateInf);
 
 		return "forward:/cop/com/selectTemplateInfs.do";
 	}
@@ -234,14 +240,21 @@ public class EgovTemplateManageController {
 	public String deleteTemplateInf(@ModelAttribute("searchVO") TemplateInfVO searchVO, @ModelAttribute("tmplatInf") TemplateInf tmplatInf, SessionStatus status, ModelMap model)
 			throws Exception {
 
-		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		LoginVO user = null;
+
+		if (isAuthenticated) {
+			user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		}
+
+		if (!isAuthenticated || user == null) {
+			model.addAttribute("message", "로그인이 필요합니다.");
+			return "uat/uia/EgovLoginUsr";
+		}
 
 		tmplatInf.setLastUpdusrId(user.getUniqId());
 
-		if (isAuthenticated) {
-			tmplatService.deleteTemplateInf(tmplatInf);
-		}
+		tmplatService.deleteTemplateInf(tmplatInf);
 
 		return "forward:/cop/com/selectTemplateInfs.do";
 	}

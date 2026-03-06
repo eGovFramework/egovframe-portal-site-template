@@ -2,16 +2,14 @@ package egovframework.let.uss.sam.ipm.service.impl;
 
 import java.util.List;
 
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
+import org.springframework.stereotype.Service;
+
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.uss.sam.ipm.service.EgovIndvdlInfoPolicyService;
 import egovframework.let.uss.sam.ipm.service.IndvdlInfoPolicy;
-
-import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
-import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
+import jakarta.annotation.Resource;
 
 /**
  * 개인정보보호정책를 처리하는 ServiceImpl Class 구현

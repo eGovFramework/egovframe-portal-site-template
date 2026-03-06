@@ -2,6 +2,17 @@ package egovframework.let.main.web;
 
 import java.util.Map;
 
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.com.cmm.LoginVO;
 import egovframework.let.cop.bbs.service.BoardVO;
@@ -11,19 +22,8 @@ import egovframework.let.sym.mnu.mpm.service.MenuManageVO;
 import egovframework.let.uss.olh.faq.service.EgovFaqManageService;
 import egovframework.let.uss.olh.faq.service.FaqManageDefaultVO;
 import egovframework.let.uss.olp.qri.service.EgovQustnrRespondInfoService;
-
-import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
-import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * 템플릿 메인 페이지 컨트롤러 클래스(Sample 소스)
@@ -45,6 +45,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @Controller@SessionAttributes(types = ComDefaultVO.class)
 public class EgovMainController {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(EgovMainController.class);
+	
 	/**
 	 * EgovBBSManageService
 	 */
@@ -112,7 +114,7 @@ public class EgovMainController {
 		// 공지사항 메인컨텐츠 조회 끝 -----------------------------------
 
 		// 자유게시판 메인 컨텐츠 조회 시작 ---------------------------------
-		boardVO.setPageUnit(9);
+		boardVO.setPageUnit(5);
 		boardVO.setPageSize(10);
 		boardVO.setBbsId("BBSMSTR_BBBBBBBBBBBB");
 
@@ -181,9 +183,9 @@ public class EgovMainController {
     		ModelMap model)
             throws Exception {
 
-    	LoginVO user =
-    		EgovUserDetailsHelper.isAuthenticated()? (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser():null;
-    	if(EgovUserDetailsHelper.isAuthenticated() && user!=null){
+		LoginVO user =  EgovUserDetailsHelper.isAuthenticated()? (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser():null;
+
+		if(EgovUserDetailsHelper.isAuthenticated() && user!=null){
     		menuManageVO.setTmp_Id(user.getId());
         	menuManageVO.setTmp_Password(user.getPassword());
         	menuManageVO.setTmp_UserSe(user.getUserSe());

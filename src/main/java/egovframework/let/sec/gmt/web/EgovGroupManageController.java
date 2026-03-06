@@ -1,17 +1,8 @@
 package egovframework.let.sec.gmt.web;
 
-import egovframework.com.cmm.EgovMessageSource;
-import egovframework.let.sec.gmt.service.EgovGroupManageService;
-import egovframework.let.sec.gmt.service.GroupManage;
-import egovframework.let.sec.gmt.service.GroupManageVO;
-
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -20,7 +11,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springmodules.validation.commons.DefaultBeanValidator;
+
+import egovframework.com.cmm.EgovMessageSource;
+import egovframework.let.sec.gmt.service.EgovGroupManageService;
+import egovframework.let.sec.gmt.service.GroupManage;
+import egovframework.let.sec.gmt.service.GroupManageVO;
+import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 
 /**
  * 그룹관리에 관한 controller 클래스를 정의한다.
@@ -57,9 +54,6 @@ public class EgovGroupManageController {
     @Resource(name="egovGroupIdGnrService")    
     private EgovIdGnrService egovGroupIdGnrService;
     
-    @Autowired
-	private DefaultBeanValidator beanValidator;
-    
     /**
 	 * 그룹 목록화면 이동
 	 * @return String
@@ -78,8 +72,7 @@ public class EgovGroupManageController {
 	 * @exception Exception
 	 */
     @RequestMapping(value="/sec/gmt/EgovGroupList.do")
-	public String selectGroupList(@ModelAttribute("groupManageVO") GroupManageVO groupManageVO, 
-                                   ModelMap model) throws Exception {
+	public String selectGroupList(@ModelAttribute("groupManageVO") GroupManageVO groupManageVO, ModelMap model) throws Exception {
     	/** paging */
     	PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(groupManageVO.getPageIndex());
@@ -108,9 +101,7 @@ public class EgovGroupManageController {
 	 * @exception Exception
 	 */
     @RequestMapping(value="/sec/gmt/EgovGroup.do")
-	public String selectGroup(@ModelAttribute("groupManageVO") GroupManageVO groupManageVO, 
-	    		               ModelMap model) throws Exception {
-
+	public String selectGroup(@ModelAttribute("groupManageVO") GroupManageVO groupManageVO, ModelMap model) throws Exception {
 	    model.addAttribute("groupManage", egovGroupManageService.selectGroup(groupManageVO));
 	    return "/sec/gmt/EgovGroupUpdate";
 	}
@@ -134,14 +125,13 @@ public class EgovGroupManageController {
 	 * @exception Exception
 	 */ 
     @RequestMapping(value="/sec/gmt/EgovGroupInsert.do")
-	public String insertGroup(@ModelAttribute("groupManage") GroupManage groupManage, 
-			                  @ModelAttribute("groupManageVO") GroupManageVO groupManageVO, 
+	public String insertGroup(@Valid @ModelAttribute("groupManage") GroupManage groupManage, 
 			                   BindingResult bindingResult,
+			                  @ModelAttribute("groupManageVO") GroupManageVO groupManageVO, 
 			                   SessionStatus status, 
 			                   ModelMap model) throws Exception {
     	
-    	beanValidator.validate(groupManage, bindingResult); //validation 수행
-    	
+    	// zzz validation 처리 필요
     	if (bindingResult.hasErrors()) { 
 			return "/sec/gmt/EgovGroupInsert";
 		} else {
@@ -162,13 +152,12 @@ public class EgovGroupManageController {
 	 * @exception Exception
 	 */     
     @RequestMapping(value="/sec/gmt/EgovGroupUpdate.do")
-	public String updateGroup(@ModelAttribute("groupManage") GroupManage groupManage, 
+	public String updateGroup(@Valid @ModelAttribute("groupManage") GroupManage groupManage, 
 			                   BindingResult bindingResult,
                                SessionStatus status, 
                                Model model) throws Exception {
     	
-    	beanValidator.validate(groupManage, bindingResult); //validation 수행
-    	
+    	// zzz validation 처리 필요
     	if (bindingResult.hasErrors()) { 
 			return "/sec/gmt/EgovGroupUpdate";
 		} else {

@@ -2,13 +2,12 @@ package egovframework.let.uss.ion.bnr.service.impl;
 
 import java.util.List;
 
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
+import org.springframework.stereotype.Repository;
+
 import egovframework.com.cmm.service.FileVO;
 import egovframework.let.uss.ion.bnr.service.Banner;
 import egovframework.let.uss.ion.bnr.service.BannerVO;
-
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
-
-import org.springframework.stereotype.Repository;
 /**
  * 배너에 대한 DAO 클래스를 정의한다.
  * 배너에 대한 등록, 수정, 삭제, 조회, 반영확인 기능을 제공한다.

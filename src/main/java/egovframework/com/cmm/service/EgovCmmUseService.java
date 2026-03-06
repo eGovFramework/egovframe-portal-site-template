@@ -5,8 +5,6 @@ import java.util.Map;
 
 import egovframework.com.cmm.ComDefaultCodeVO;
 
-
-
 /**
  *
  * 공통코드등 전체 업무에서 공용해서 사용해야 하는 서비스를 정의하기 위한 서비스 인터페이스
@@ -24,6 +22,7 @@ import egovframework.com.cmm.ComDefaultCodeVO;
  *
  * </pre>
  */
+
 public interface EgovCmmUseService {
 
     /**
@@ -61,4 +60,5 @@ public interface EgovCmmUseService {
      * @throws Exception
      */
     public List<CmmnDetailCode> selectGroupIdDetail(ComDefaultCodeVO vo) throws Exception;
+
 }

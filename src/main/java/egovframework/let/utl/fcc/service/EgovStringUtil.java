@@ -509,6 +509,7 @@ public class EgovStringUtil {
 		}
 
 		strNew = strTxt.toString();
+
 		return strNew;
 	}
 
@@ -827,7 +828,7 @@ public class EgovStringUtil {
 
 	    rtnStr = strTxt.toString();
 
-	} catch (RuntimeException e) {
+	} catch (IllegalArgumentException e) {
 		LOGGER.debug("{}", e);
 	}
 
@@ -844,17 +845,17 @@ public class EgovStringUtil {
      */
     public static String getTimeStamp() {
 
-		String rtnStr = null;
+	String rtnStr = null;
 
-		// 문자열로 변환하기 위한 패턴 설정(년도-월-일 시:분:초:초(자정이후 초))
-		String pattern = "yyyyMMddhhmmssSSS";
+	// 문자열로 변환하기 위한 패턴 설정(년도-월-일 시:분:초:초(자정이후 초))
+	String pattern = "yyyyMMddhhmmssSSS";
 
-		SimpleDateFormat sdfCurrent = new SimpleDateFormat(pattern, Locale.KOREA);
-		Timestamp ts = new Timestamp(System.currentTimeMillis());
+	SimpleDateFormat sdfCurrent = new SimpleDateFormat(pattern, Locale.KOREA);
+    Timestamp ts = new Timestamp(System.currentTimeMillis());
 
-		rtnStr = sdfCurrent.format(ts.getTime());
+    rtnStr = sdfCurrent.format(ts.getTime());
 
-		return rtnStr;
+	return rtnStr;
     }
 
     /**

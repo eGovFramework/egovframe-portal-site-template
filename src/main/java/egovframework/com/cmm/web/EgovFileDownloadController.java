@@ -9,12 +9,8 @@ import java.net.URLEncoder;
 import java.util.Base64;
 import java.util.Map;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang3.StringUtils;
-import org.egovframe.rte.fdl.cryptography.EgovCryptoService;
+import org.egovframe.rte.fdl.crypto.EgovCryptoService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +23,9 @@ import egovframework.com.cmm.EgovWebUtil;
 import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.EgovProperties;
 import egovframework.com.cmm.service.FileVO;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * 파일 다운로드를 위한 컨트롤러 클래스
@@ -51,13 +50,13 @@ import egovframework.com.cmm.service.FileVO;
  */
 @Controller
 public class EgovFileDownloadController {
-	
+
 	/** 로그설정 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovFileDownloadController.class);
 	
 	/** 암호화서비스 */
 	@Resource(name = "egovARIACryptoService")
-	EgovCryptoService cryptoService;
+	private EgovCryptoService cryptoService;
 
 	@Resource(name = "EgovFileMngService")
 	private EgovFileMngService fileService;

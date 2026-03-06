@@ -2,12 +2,11 @@ package egovframework.let.sec.ram.service.impl;
 
 import java.util.List;
 
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
+import org.springframework.stereotype.Repository;
+
 import egovframework.let.sec.ram.service.AuthorRoleManage;
 import egovframework.let.sec.ram.service.AuthorRoleManageVO;
-
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
-
-import org.springframework.stereotype.Repository;
 
 /**
  * 권한별 롤관리에 대한 DAO 클래스를 정의한다.

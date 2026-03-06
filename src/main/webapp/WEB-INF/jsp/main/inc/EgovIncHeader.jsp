@@ -16,9 +16,9 @@
 <%@ page import ="egovframework.com.cmm.LoginVO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-	<script src="<c:url value='/'/>js/jquery.js"></script>
-	<script src="<c:url value='/'/>js/jqueryui.js"></script>
-	<link rel="stylesheet" href="<c:url value='/'/>css/jqueryui.css">
+	<script src="<c:url value='/js/jquery.js'/>"></script>
+	<script src="<c:url value='/js/jqueryui.js'/>"></script>
+	<link rel="stylesheet" href="<c:url value='/css/jqueryui.css'/>">
 
 <script type="text/javaScript" language="javascript">
 
@@ -57,7 +57,12 @@ function getCurrentDate()
     minites = minites < 10 ? '0' + minites.toString() : minites.toString();
     var seconds = date.getSeconds();
     seconds = seconds < 10 ? '0' + seconds.toString() : seconds.toString();
-    document.getElementById("currentDate").innerHTML = year + "-" + month + "-" + day + " " + hour + ":" + minites + ":" + seconds;
+    
+    // currentDate 요소가 존재하는지 확인
+    var currentDateElement = document.getElementById("currentDate");
+    if (currentDateElement) {
+        currentDateElement.innerHTML = year + "-" + month + "-" + day + " " + hour + ":" + minites + ":" + seconds;
+    }
 }
 $(document).ready(function(){
     getCurrentDate();
@@ -68,7 +73,7 @@ $(document).ready(function(){
 <div class="header">
     <div class="inner">
         <div class="left_col">
-            <h1 class="logo"><a href="<c:url value='/'/>cmm/main/mainPage.do"><img src="<c:url value='/images/logo.png'/>" alt="표준프레임워크 포털 eGovFrame 샘플 포털"></a></h1>
+            <h1 class="logo"><a href="<c:url value='/cmm/main/mainPage.do'/>"><img src="<c:url value='/images/logo.png'/>" alt="표준프레임워크 포털 eGovFrame 샘플 포털"></a></h1>
             <a class="go" href="#LINK" onclick="fn_egov_modal_create(); return false;"><img src="<c:url value='/images/ico_question.png'/>" alt="메뉴구성 설명"></a>
         </div>
 
@@ -121,11 +126,11 @@ $(document).ready(function(){
             <ul>
 				<c:if test="${loginName == ''}">
                 <!-- case: 로그아웃했을경우 -->
-	                <li><a href="<c:url value='/'/>uat/uia/egovLoginUsr.do" class="login" title="로그인">로그인</a></li>
+	                <li><a href="<c:url value='/uat/uia/egovLoginUsr.do'/>" class="login" title="로그인">로그인</a></li>
 				</c:if>
 				<c:if test="${loginName != ''}">
                 <!-- case: 로그인했을경우 -->
-	                <li><a href="<c:url value='/'/>uat/uia/actionLogout.do" class="logout" title="로그아웃">로그아웃</a></li>
+	                <li><a href="<c:url value='/uat/uia/actionLogout.do'/>" class="logout" title="로그아웃">로그아웃</a></li>
 	                <li><a href="" class="mail" title="메일">메일<span>3</span>건</a></li>
 	                <li><a href="" class="allmenu" title="전체메뉴">전체메뉴</a></li>
 				</c:if>
@@ -245,9 +250,6 @@ $(document).ready(function(){
 	function goMenuPage(menuNo){
 	    event.preventDefault();
 	    document.getElementById("menuNo").value=menuNo;
-	    //document.getElementById("link").value=getLastLink(menuNo);
-	//     document.menuListForm.action = "<c:url value='/'/>"+getLastLink(menuNo).substring(1);
-	//     document.menuListForm.submit();
 	    var link = '<c:url value="/" />' + getLastLink(menuNo).substring(1);
 	    if (link.indexOf('?') === -1) {
 	        link = link + '?';

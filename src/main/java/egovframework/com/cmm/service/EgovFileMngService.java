@@ -18,6 +18,7 @@ import java.util.Map;
  * @see
  *
  */
+
 public interface EgovFileMngService {
 
     /**
@@ -112,4 +113,5 @@ public interface EgovFileMngService {
      * @throws Exception
      */
     public List<FileVO> selectImageFileList(FileVO vo) throws Exception;
+
 }

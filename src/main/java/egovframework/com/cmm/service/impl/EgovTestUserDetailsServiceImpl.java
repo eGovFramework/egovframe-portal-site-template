@@ -3,10 +3,10 @@ package egovframework.com.cmm.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
+
 import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.service.EgovUserDetailsService;
-
-import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 /**
  *
@@ -32,9 +32,9 @@ public class EgovTestUserDetailsServiceImpl extends EgovAbstractServiceImpl impl
 
 		LoginVO loginVO = new LoginVO();
 		loginVO.setId("TEST1");
-//		loginVO.setPassword("raHLBnHFcunwNzcDcfad4PhD11hHgXSUr7fc1Jk9uoQ=");
+		loginVO.setPassword("raHLBnHFcunwNzcDcfad4PhD11hHgXSUr7fc1Jk9uoQ=");
 		loginVO.setUserSe("USR");
-		loginVO.setEmail("egovframe3@nia.or.kr");
+		loginVO.setEmail("egovframe@nia.or.kr");
 		loginVO.setIhidNum("");
 		loginVO.setName("더미사용자");
 		loginVO.setOrgnztId("ORGNZT_0000000000000");

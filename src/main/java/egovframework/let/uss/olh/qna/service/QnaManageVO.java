@@ -1,5 +1,8 @@
 package egovframework.let.uss.olh.qna.service;
 
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+import jakarta.validation.constraints.Size;
+
 /**
  * 
  * Q&A를 처리하는 VO 클래스
@@ -26,21 +29,30 @@ public class QnaManageVO extends QnaManageDefaultVO {
     private String qaId;
     
     /** 질문제목 */
+    @EgovNullCheck
+    @Size(max=250)
     private String qestnSj;    
     
     /** 질문내용 */
+    @EgovNullCheck
+    @Size(max=2500)
     private String qestnCn;
     
     /** 작성비밀번호 */
+    @EgovNullCheck
+    @Size(max=20)
     private String writngPassword;
 
     /** 지역번호 */
+    @Size(max=4)
     private String areaNo;
     
     /** 중간전화번호 */     
+    @Size(max=4)
     private String middleTelno;
     
     /** 끝전화번호 */
+    @Size(max=4)
     private String endTelno;
         
     /** 이메일 주소 */
@@ -50,6 +62,8 @@ public class QnaManageVO extends QnaManageDefaultVO {
     private String emailAnswerAt;
 
     /** 작성자 명 */
+    @EgovNullCheck
+    @Size(max=4)
     private String wrterNm;
     
     /** 작성일자 */
@@ -65,6 +79,8 @@ public class QnaManageVO extends QnaManageDefaultVO {
     private String qnaProcessSttusCodeNm;
     
     /** 답변내용 */
+    @EgovNullCheck
+    @Size(max=2500)
     private String answerCn;
     
     /** 답변일자 */

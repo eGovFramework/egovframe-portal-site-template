@@ -1,14 +1,14 @@
 <%--
   Class Name : accessDenied.jsp
-  Description : Á¢±ÙºÒ°¡ ¸Þ½ÃÁö È­¸é(system)
+  Description : accessDenied í™”ë©´
   Modification Information
  
-      ¼öÁ¤ÀÏ         ¼öÁ¤ÀÚ                   ¼öÁ¤³»¿ë
+      ìˆ˜ì •ì¼         ìˆ˜ì •ìž                   ìˆ˜ì •ë‚´ìš©
     -------    --------    ---------------------------
-     2009.02.01    lee.m.j          ÃÖÃÊ »ý¼º
-     2011.08.31  JJY       °æ·®È¯°æ ¹öÀü »ý¼º
+     2009.02.01    lee.m.j          ìµœì´ˆ ìƒì„±
+     2011.08.31  JJY       ê²½ëŸ‰í™˜ê²½ ë²„ì „ ìƒì„±
  
-    author   : °øÅë¼­ºñ½º°³¹ßÆÀ lee.m.j
+    author   : ê³µí†µì„œë¹„ìŠ¤ê°œë°œíŒ€ lee.m.j
     since    : 2009.02.01
 --%>
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
@@ -40,12 +40,12 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
 	
 <title>Access is denied</title>
 <script type="text/javascript">
@@ -68,16 +68,16 @@ function fncGoAfterErrorPage(){
 <body>
 
     <!-- skip navigation -->
-    <a href="#contents" class="skip_navi">º»¹® ¹Ù·Î°¡±â</a>
+    <a href="#contents" class="skip_navi">æ²™åºš éƒŠç¨½äºœå¥„</a>
 
     <div class="wrap">
         <div class="error_page">
             <h1>Error</h1>
             <div class="inner">
-<!--				<p>¼¼¼ÇÀÌ ¸¸·áµÇ¾ú½À´Ï´Ù.</p> -->
-<!--				<p>µ¥ÀÌÅÍ Ã³¸® Áß ¿À·ù°¡ ¹ß»ýÇÏ¿´½À´Ï´Ù.</p> -->
-<!-- 				<p>¼öÇàÁß ¿À·ù°¡ ¹ß»ýÇÏ¿´½À´Ï´Ù.</p> -->
-<!-- 				<p>¾Ë ¼ö ¾ø´Â ¿À·ù°¡ ¹ß»ýÇÏ¿´½À´Ï´Ù.</p> -->
+<!--				<p>å®¤èŠæˆš å¹»æˆŸéž é†¸æŸ”è‰¦é™¥.</p> -->
+<!--				<p>æ±½æˆšæ–— å¦è»’ æŽ» ç¥žå«Œäºœ é™æŒé¦¬å¿ƒæŸ”è‰¦é™¥.</p> -->
+<!-- 				<p>å‘ªæ¥³æŽ» ç¥žå«Œäºœ é™æŒé¦¬å¿ƒæŸ”è‰¦é™¥.</p> -->
+<!-- 				<p>ç¡ å‘ª è’¸æ¾— ç¥žå«Œäºœ é™æŒé¦¬å¿ƒæŸ”è‰¦é™¥.</p> -->
 				<%= request.getAttribute(org.springframework.security.web.WebAttributes.AUTHENTICATION_EXCEPTION) %>
 				<%	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 					if (auth != null) { 
@@ -86,7 +86,7 @@ function fncGoAfterErrorPage(){
 				%>
 				<p>${exception.message}</p>
                 <br>
-                <a href="#LINK" class="btn btn_blue_46 w_130" onclick="javascript:fncGoAfterErrorPage(); return false;">ÀÌÀüÆäÀÌÁö</a>
+                <a href="#LINK" class="btn btn_blue_46 w_130" onclick="javascript:fncGoAfterErrorPage(); return false;">æˆšç©¿å‡ªæˆšèµ°</a>
             </div>
         </div>
     </div>

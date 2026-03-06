@@ -153,7 +153,7 @@
             ON a.FRST_REGISTER_ID = b.ESNTL_ID 
 			WHERE
 				a.BBS_ID = #{bbsId}
-			
+		
 			<if test="useAt != ''">AND
 				a.USE_AT = #{useAt}
 			</if>

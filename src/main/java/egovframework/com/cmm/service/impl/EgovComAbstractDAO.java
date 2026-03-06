@@ -1,9 +1,9 @@
 package egovframework.com.cmm.service.impl;
 
-import javax.annotation.Resource;
-
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
+
+import jakarta.annotation.Resource;
 
 /**
  * EgovComAbstractDAO.java 클래스

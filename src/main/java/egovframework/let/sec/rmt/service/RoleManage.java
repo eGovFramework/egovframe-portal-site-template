@@ -1,6 +1,7 @@
 package egovframework.let.sec.rmt.service;
 
 import egovframework.com.cmm.ComDefaultVO;
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
 
 /**
  * 롤관리에 대한 model 클래스를 정의한다.
@@ -36,10 +37,12 @@ public class RoleManage extends ComDefaultVO {
 	/**
 	 * 롤명
 	 */
+	@EgovNullCheck
 	private String roleNm;	
 	/**
 	 * 롤패턴
 	 */
+	@EgovNullCheck
 	private String rolePtn;	
 	/**
 	 * 롤 설명
@@ -52,6 +55,7 @@ public class RoleManage extends ComDefaultVO {
 	/**
 	 * 롤 Sort
 	 */
+	@EgovNullCheck
 	private String roleSort;
 	/**
 	 * 롤 등록일시

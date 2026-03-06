@@ -1,5 +1,16 @@
 package egovframework.let.uss.olh.qna.web;
 
+import org.egovframe.rte.fdl.property.EgovPropertyService;
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
@@ -8,22 +19,8 @@ import egovframework.let.uss.olh.qna.service.EgovQnaManageService;
 import egovframework.let.uss.olh.qna.service.QnaManageDefaultVO;
 import egovframework.let.uss.olh.qna.service.QnaManageVO;
 import egovframework.let.utl.sim.service.EgovFileScrty;
-
-import org.egovframe.rte.fdl.property.EgovPropertyService;
-import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
-import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springmodules.validation.commons.DefaultBeanValidator;
+import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 
 /**
  *
@@ -59,10 +56,6 @@ public class EgovQnaAdminManageController {
 	/** EgovMessageSource */
 	@Resource(name = "egovMessageSource")
 	EgovMessageSource egovMessageSource;
-
-	// Validation 관련
-	@Autowired
-	private DefaultBeanValidator beanValidator;
 
 	/**
 	 * 개별 배포시 메인메뉴를 조회한다.
@@ -237,10 +230,8 @@ public class EgovQnaAdminManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/uss/olh/qna/admin/QnaCnRegist.do")
-	public String insertQnaCn(@ModelAttribute("searchVO") QnaManageDefaultVO searchVO, @ModelAttribute("qnaManageVO") QnaManageVO qnaManageVO, BindingResult bindingResult,
+	public String insertQnaCn(@ModelAttribute("searchVO") QnaManageDefaultVO searchVO, @Valid @ModelAttribute("qnaManageVO") QnaManageVO qnaManageVO, BindingResult bindingResult,
 			ModelMap model) throws Exception {
-
-		beanValidator.validate(qnaManageVO, bindingResult);
 
 		if (bindingResult.hasErrors()) {
 			return "/uss/olh/qna/admin/EgovQnaCnRegist";
@@ -258,7 +249,9 @@ public class EgovQnaAdminManageController {
 		String writngPassword = qnaManageVO.getWritngPassword();
 
 		// EgovFileScrty Util에 있는 암호화 모듈을 적용해서 암호화 한다.
-		qnaManageVO.setWritngPassword(EgovFileScrty.encode(writngPassword));
+		if (writngPassword != null) { // 26.03.06 KISA 보안취약점 조치 : null check 추가
+			qnaManageVO.setWritngPassword(EgovFileScrty.encode(writngPassword));
+		}
 
 		qnaManageService.insertQnaCn(qnaManageVO);
 
@@ -304,7 +297,9 @@ public class EgovQnaAdminManageController {
 		String writngPassword = qnaManageVO.getWritngPassword();
 
 		// EgovFileScrty Util에 있는 암호화 모듈을 적용해서 암호화 한다.
-		qnaManageVO.setWritngPassword(EgovFileScrty.encode(writngPassword));
+		if (writngPassword != null) { // 26.03.06 KISA 보안취약점 조치 : null check 추가
+			qnaManageVO.setWritngPassword(EgovFileScrty.encode(writngPassword));
+		}
 
 		int searchCnt = qnaManageService.selectQnaPasswordConfirmCnt(qnaManageVO);
 
@@ -361,11 +356,8 @@ public class EgovQnaAdminManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/uss/olh/qna/admin/QnaCnUpdt.do")
-	public String updateQnaCn(@ModelAttribute("searchVO") QnaManageDefaultVO searchVO, @ModelAttribute("qnaManageVO") QnaManageVO qnaManageVO, BindingResult bindingResult)
+	public String updateQnaCn(@ModelAttribute("searchVO") QnaManageDefaultVO searchVO, @Valid @ModelAttribute("qnaManageVO") QnaManageVO qnaManageVO, BindingResult bindingResult)
 			throws Exception {
-
-		// Validation
-		beanValidator.validate(qnaManageVO, bindingResult);
 
 		if (bindingResult.hasErrors()) {
 			return "/uss/olh/qna/admin/EgovQnaCnUpdt";
@@ -382,7 +374,9 @@ public class EgovQnaAdminManageController {
 		String writngPassword = qnaManageVO.getWritngPassword();
 
 		// EgovFileScrty Util에 있는 암호화 모듈을 적용해서 암호화 한다.
-		qnaManageVO.setWritngPassword(EgovFileScrty.encode(writngPassword));
+		if (writngPassword != null) { // 26.03.06 KISA 보안취약점 조치 : null check 추가
+			qnaManageVO.setWritngPassword(EgovFileScrty.encode(writngPassword));
+		}
 
 		qnaManageService.updateQnaCn(qnaManageVO);
 

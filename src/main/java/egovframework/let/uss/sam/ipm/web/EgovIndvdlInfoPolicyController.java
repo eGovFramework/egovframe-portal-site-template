@@ -2,26 +2,24 @@ package egovframework.let.uss.sam.ipm.web;
 
 import java.util.Map;
 
+import org.egovframe.rte.fdl.property.EgovPropertyService;
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
 import egovframework.let.uss.sam.ipm.service.EgovIndvdlInfoPolicyService;
 import egovframework.let.uss.sam.ipm.service.IndvdlInfoPolicy;
-
-import org.egovframe.rte.fdl.property.EgovPropertyService;
-import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
-import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springmodules.validation.commons.DefaultBeanValidator;
+import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 
 /**
  * 개인정보보호정책를 처리하는 Controller Class 구현
@@ -40,12 +38,6 @@ import org.springmodules.validation.commons.DefaultBeanValidator;
  */
 @Controller
 public class EgovIndvdlInfoPolicyController {
-
-
-
-
-    @Autowired
-    private DefaultBeanValidator beanValidator;
 
     /** EgovMessageSource */
     @Resource(name = "egovMessageSource")
@@ -148,7 +140,7 @@ public class EgovIndvdlInfoPolicyController {
     public String EgovIndvdlInfoPolicyModify(
             @ModelAttribute("searchVO") ComDefaultVO searchVO,
             @RequestParam Map <String, Object> commandMap,
-            @ModelAttribute("indvdlInfoPolicy") IndvdlInfoPolicy indvdlInfoPolicy,
+            @Valid @ModelAttribute("indvdlInfoPolicy") IndvdlInfoPolicy indvdlInfoPolicy,
             BindingResult bindingResult, ModelMap model) throws Exception {
         // 0. Spring Security 사용자권한 처리
         Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -164,9 +156,14 @@ public class EgovIndvdlInfoPolicyController {
 
         String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
 
+        // 초기 페이지 로드 시에는 검증 에러 무시
+        if (!"save".equals(sCmd)) {
+            bindingResult = new BeanPropertyBindingResult(indvdlInfoPolicy, "indvdlInfoPolicy");
+            model.addAttribute(BindingResult.MODEL_KEY_PREFIX + "indvdlInfoPolicy", bindingResult);
+        }
+
         if (sCmd.equals("save")) {
-            //서버  validate 체크
-            beanValidator.validate(indvdlInfoPolicy, bindingResult);
+
             if(bindingResult.hasErrors()){
                 return sLocationUrl;
             }
@@ -199,7 +196,7 @@ public class EgovIndvdlInfoPolicyController {
     public String EgovIndvdlInfoPolicyRegist(
             @ModelAttribute("searchVO") ComDefaultVO searchVO,
             @RequestParam Map <String, Object> commandMap,
-            @ModelAttribute("indvdlInfoPolicy") IndvdlInfoPolicy indvdlInfoPolicy,
+            @Valid @ModelAttribute("indvdlInfoPolicy") IndvdlInfoPolicy indvdlInfoPolicy,
             BindingResult bindingResult, ModelMap model) throws Exception {
         // 0. Spring Security 사용자권한 처리
         Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -215,9 +212,14 @@ public class EgovIndvdlInfoPolicyController {
 
         String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
 
+        // 초기 페이지 로드 시에는 검증 에러 무시
+        if (!"save".equals(sCmd)) {
+            bindingResult = new BeanPropertyBindingResult(indvdlInfoPolicy, "indvdlInfoPolicy");
+            model.addAttribute(BindingResult.MODEL_KEY_PREFIX + "indvdlInfoPolicy", bindingResult);
+        }
+
         if (sCmd.equals("save")) {
-            //서버  validate 체크
-            beanValidator.validate(indvdlInfoPolicy, bindingResult);
+
             if(bindingResult.hasErrors()){
                 return sLocationUrl;
             }

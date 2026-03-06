@@ -2,7 +2,7 @@
 
 body {min-width: 1400px;}
 
-.header > .inner {position: relative; width: 1400px; height: 180px; margin: 0 auto; padding: 0 50px;}
+.header .inner {position: relative; width: 1400px; height: 180px; margin: 0 auto; padding: 0 50px;}
 .header .left_col {padding-top: 40px; font-size: 0;}
 .header .logo {display: inline-block;}
 .header .logo img {display: block;}

@@ -2,6 +2,19 @@ package egovframework.let.uss.olp.qmc.web;
 
 import java.util.Map;
 
+import org.egovframe.rte.fdl.property.EgovPropertyService;
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.com.cmm.EgovMessageSource;
@@ -9,24 +22,9 @@ import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.service.EgovCmmUseService;
 import egovframework.let.uss.olp.qmc.service.EgovQustnrManageService;
 import egovframework.let.uss.olp.qmc.service.QustnrManageVO;
-
-import org.egovframe.rte.fdl.property.EgovPropertyService;
-import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
-import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springmodules.validation.commons.DefaultBeanValidator;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 /**
  * 설문관리를 처리하는 Controller Class 구현
@@ -49,9 +47,6 @@ import org.springmodules.validation.commons.DefaultBeanValidator;
 public class EgovQustnrManageController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovQustnrManageController.class);
-
-	@Autowired
-	private DefaultBeanValidator beanValidator;
 
 	/** EgovMessageSource */
 	@Resource(name = "egovMessageSource")
@@ -202,7 +197,8 @@ public class EgovQustnrManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/uss/olp/qmc/EgovQustnrManageModify.do")
-	public String QustnrManageModify(@ModelAttribute("searchVO") ComDefaultVO searchVO, @RequestParam Map<String, Object> commandMap, QustnrManageVO qustnrManageVO,
+	public String QustnrManageModify(@ModelAttribute("searchVO") ComDefaultVO searchVO, @RequestParam Map<String, Object> commandMap,
+			@Valid @ModelAttribute("qustnrManageVO") QustnrManageVO qustnrManageVO,
 			BindingResult bindingResult, ModelMap model) throws Exception {
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -218,6 +214,12 @@ public class EgovQustnrManageController {
 
 		String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
 
+		// GET 요청 등 초기 진입시에는 검증 에러를 노출하지 않는다.
+		if (!"save".equals(sCmd)) {
+			bindingResult = new BeanPropertyBindingResult(qustnrManageVO, "qustnrManageVO");
+			model.addAttribute(BindingResult.MODEL_KEY_PREFIX + "qustnrManageVO", bindingResult);
+		}
+
 		//공통코드  직업유형 조회
 		ComDefaultCodeVO voComCode = new ComDefaultCodeVO();
 		voComCode.setCodeId("COM034");
@@ -225,7 +227,6 @@ public class EgovQustnrManageController {
 
 		if (sCmd.equals("save")) {
 
-			beanValidator.validate(qustnrManageVO, bindingResult);
 			if (bindingResult.hasErrors()) {
 
 				model.addAttribute("resultList", egovQustnrManageService.selectQustnrManageDetail(qustnrManageVO));
@@ -267,7 +268,7 @@ public class EgovQustnrManageController {
 	 */
 	@RequestMapping(value = "/uss/olp/qmc/EgovQustnrManageRegist.do")
 	public String QustnrManageRegist(@ModelAttribute("searchVO") ComDefaultVO searchVO, @RequestParam Map<String, Object> commandMap,
-			@ModelAttribute("qustnrManageVO") QustnrManageVO qustnrManageVO, BindingResult bindingResult, ModelMap model) throws Exception {
+			@Valid @ModelAttribute("qustnrManageVO") QustnrManageVO qustnrManageVO, BindingResult bindingResult, ModelMap model) throws Exception {
 		// 0. Spring Security 사용자권한 처리
 		
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -284,6 +285,12 @@ public class EgovQustnrManageController {
 		String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
 		LOGGER.info("cmd => {}", sCmd);
 
+		// 초기 페이지 로드 시에는 검증 에러 무시
+		if (!"save".equals(sCmd)) {
+			bindingResult = new BeanPropertyBindingResult(qustnrManageVO, "qustnrManageVO");
+			model.addAttribute(BindingResult.MODEL_KEY_PREFIX + "qustnrManageVO", bindingResult);
+		}
+
 		//공통코드  직업유형 조회
 		ComDefaultCodeVO voComCode = new ComDefaultCodeVO();
 		voComCode.setCodeId("COM034");
@@ -291,7 +298,6 @@ public class EgovQustnrManageController {
 
 		if (sCmd.equals("save")) {
 
-			beanValidator.validate(qustnrManageVO, bindingResult);
 			if (bindingResult.hasErrors()) {
 				//설문템플릿 정보 불러오기
 				model.addAttribute("listQustnrTmplat", egovQustnrManageService.selectQustnrTmplatManageList(qustnrManageVO));

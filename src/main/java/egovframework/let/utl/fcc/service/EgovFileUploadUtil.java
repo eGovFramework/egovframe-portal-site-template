@@ -6,13 +6,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.util.WebUtils;
 
 import egovframework.com.cmm.EgovWebUtil;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @Class Name  : EgovFileUploadUtil.java

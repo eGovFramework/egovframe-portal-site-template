@@ -48,8 +48,9 @@ button {cursor: pointer;}
 
 
 /* 정렬 */
-.al_c {text-align: center;}
-.al_r {text-align: right;}
+.al_c {text-align: center !important;}
+.al_r {text-align: right !important;}
+.al_l {text-align: left !important;}
 
 .vat {vertical-align: top;}
 .vam {vertical-align: middle;}
@@ -61,7 +62,9 @@ button {cursor: pointer;}
 .w_quarter {width: 25% !important;}
 .w_20 {width: 20px !important;}
 .w_50 {width: 50px !important;}
+.w_70 {width: 70px !important;}
 .w_80 {width: 80px !important;}
+.w_90 {width: 90px !important;}
 .w_100 {width: 100px !important;}
 .w_130 {width: 130px !important;}
 .w_150 {width: 150px !important;}

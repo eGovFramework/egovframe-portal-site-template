@@ -1,6 +1,8 @@
 package egovframework.com.cmm.service;
 
 import java.io.Serializable;
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+import jakarta.validation.constraints.Size;
 
 /**
  * 공통상세코드 모델 클래스
@@ -25,6 +27,8 @@ public class CmmnDetailCode implements Serializable {
 	/*
 	 * 코드ID
 	 */
+	@EgovNullCheck
+	@Size(max=6)
     private String codeId = "";
 
     /*
@@ -35,21 +39,28 @@ public class CmmnDetailCode implements Serializable {
     /*
      * 코드
      */
+	@EgovNullCheck
+	@Size(max=15)
 	private String code = "";
 
 	/*
 	 * 코드명
 	 */
+	@EgovNullCheck
+	@Size(max=60)
     private String codeNm = "";
 
     /*
      * 코드설명
      */
+	@EgovNullCheck
+	@Size(max=200)
     private String codeDc = "";
 
     /*
      * 사용여부
      */
+	@EgovNullCheck
     private String useAt = "";
 
     /*
@@ -189,6 +200,5 @@ public class CmmnDetailCode implements Serializable {
 	public void setLastUpdusrId(String lastUpdusrId) {
 		this.lastUpdusrId = lastUpdusrId;
 	}
-
 
 }

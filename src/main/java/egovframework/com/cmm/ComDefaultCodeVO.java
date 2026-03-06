@@ -13,16 +13,20 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  *
  * <pre>
  * << 개정이력(Modification Information) >>
- *   
+ *
  *   수정일      수정자           수정내용
  *  -------       --------    ---------------------------
  *   2009.3.11   이삼섭          최초 생성
  *
  * </pre>
  */
-@SuppressWarnings("serial")
 public class ComDefaultCodeVO implements Serializable {
-    /** 코드 ID */
+    /**
+	 *  serialVersion UID
+	 */
+	private static final long serialVersionUID = -2020648489890016404L;
+
+	/** 코드 ID */
     private String codeId = "";
     
     /** 상세코드 */

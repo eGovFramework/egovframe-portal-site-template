@@ -2,12 +2,11 @@ package egovframework.let.uss.sam.ipm.service.impl;
 
 import java.util.List;
 
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
+import org.springframework.stereotype.Repository;
+
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.uss.sam.ipm.service.IndvdlInfoPolicy;
-
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
-
-import org.springframework.stereotype.Repository;
 
 /**
  * 개인정보보호정책를 처리하는 Dao Class 구현

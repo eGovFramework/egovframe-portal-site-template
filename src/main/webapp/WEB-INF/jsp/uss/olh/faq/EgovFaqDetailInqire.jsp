@@ -24,12 +24,12 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
 
 <script type="text/javascript" src="<c:url value='/js/EgovMultiFile.js'/>" ></script>
 <script type="text/javaScript" language="javascript">
@@ -138,20 +138,32 @@ function fn_egov_delete_faq(faqId){
 										<textarea id="answerCn" name="answerCn" class="textarea" cols="30" rows="10" readonly="readonly" title="답변내용"><c:out value="${result.answerCn}"/></textarea>
                                     </div>
 
+
 									<!-- 첨부파일목록 시작 -->
                                     <div class="board_attach">
                                     <c:if test="${not empty result.atchFileId}">
                                         <dl>
                                             <dt>첨부</dt>
                                             <dd>
-                                            	<c:import charEncoding="utf-8" url="/cmm/fms/selectFileInfs.do" >
-								                    <c:param name="param_atchFileId" value="${egovc:encrypt(result.atchFileId)}" />
-								                </c:import>
+                                            	<c:forEach var="fileVO" items="${fileList}" varStatus="status">
+                                            		<a href="#LINK" onclick="fn_egov_downFile('<c:out value='${fileVO.atchFileId}'/>', '<c:out value='${fileVO.fileSn}'/>'); return false;">
+                                            			<c:out value='${fileVO.orignlFileNm}'/>
+                                            		</a>
+                                            		&nbsp;[<c:out value='${fileVO.fileMg}'/>&nbsp;byte]
+                                            		<c:if test="${!status.last}"><br/></c:if>
+                                            	</c:forEach>
                                             </dd>
                                         </dl>
                                     </c:if>
                                     </div>
                                     <!-- /첨부파일목록 끝 -->
+                                    
+                                    <script type="text/javascript">
+                                    function fn_egov_downFile(atchFileId, fileSn){
+                                        var downloadUrl = "<c:url value='/cmm/fms/FileDown.do'/>";
+                                        window.open(downloadUrl + "?atchFileId=" + encodeURIComponent(atchFileId) + "&fileSn=" + encodeURIComponent(fileSn));
+                                    }
+                                    </script>
 
 									<!-- 목록/저장버튼  시작-->
                                     <div class="board_view_bot">

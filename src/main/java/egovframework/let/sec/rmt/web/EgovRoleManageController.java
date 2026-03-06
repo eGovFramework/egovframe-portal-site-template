@@ -2,22 +2,9 @@ package egovframework.let.sec.rmt.web;
 
 import java.util.List;
 
-import egovframework.com.cmm.ComDefaultCodeVO;
-import egovframework.com.cmm.EgovMessageSource;
-import egovframework.com.cmm.service.EgovCmmUseService;
-import egovframework.let.sec.ram.service.AuthorManageVO;
-import egovframework.let.sec.ram.service.EgovAuthorManageService;
-import egovframework.let.sec.rmt.service.EgovRoleManageService;
-import egovframework.let.sec.rmt.service.RoleManage;
-import egovframework.let.sec.rmt.service.RoleManageVO;
-
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -26,7 +13,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springmodules.validation.commons.DefaultBeanValidator;
+
+import egovframework.com.cmm.ComDefaultCodeVO;
+import egovframework.com.cmm.EgovMessageSource;
+import egovframework.com.cmm.service.EgovCmmUseService;
+import egovframework.let.sec.ram.service.AuthorManageVO;
+import egovframework.let.sec.ram.service.EgovAuthorManageService;
+import egovframework.let.sec.rmt.service.EgovRoleManageService;
+import egovframework.let.sec.rmt.service.RoleManage;
+import egovframework.let.sec.rmt.service.RoleManageVO;
+import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 
 /**
  * 롤관리에 관한 controller 클래스를 정의한다.
@@ -69,9 +66,6 @@ public class EgovRoleManageController {
     @Resource(name="egovRoleIdGnrService")
     private EgovIdGnrService egovRoleIdGnrService;
 
-    @Autowired
-	private DefaultBeanValidator beanValidator;
-
     /**
 	 * 롤 목록화면 이동
 	 * @return String
@@ -90,9 +84,7 @@ public class EgovRoleManageController {
 	 * @exception Exception
 	 */
     @RequestMapping(value="/sec/rmt/EgovRoleList.do")
-	public String selectRoleList(@ModelAttribute("roleManageVO") RoleManageVO roleManageVO,
-			                      ModelMap model) throws Exception {
-
+	public String selectRoleList(@ModelAttribute("roleManageVO") RoleManageVO roleManageVO, ModelMap model) throws Exception {
     	/** paging */
     	PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(roleManageVO.getPageIndex());
@@ -176,13 +168,11 @@ public class EgovRoleManageController {
 	 * @exception Exception
 	 */
     @RequestMapping(value="/sec/rmt/EgovRoleInsert.do")
-	public String insertRole(@ModelAttribute("roleManage") RoleManage roleManage,
+	public String insertRole(@Valid @ModelAttribute("roleManage") RoleManage roleManage,
+						     BindingResult bindingResult,
 			                 @ModelAttribute("roleManageVO") RoleManageVO roleManageVO,
-			                  BindingResult bindingResult,
 			                  SessionStatus status,
                               ModelMap model) throws Exception {
-
-    	beanValidator.validate(roleManage, bindingResult); //validation 수행
 
     	if (bindingResult.hasErrors()) {
 			return "/sec/rmt/EgovRoleInsert";
@@ -214,12 +204,11 @@ public class EgovRoleManageController {
 	 * @exception Exception
 	 */
     @RequestMapping(value="/sec/rmt/EgovRoleUpdate.do")
-	public String updateRole(@ModelAttribute("roleManage") RoleManage roleManage,
+	public String updateRole(@Valid @ModelAttribute("roleManage") RoleManage roleManage,
 			BindingResult bindingResult,
 			SessionStatus status,
             ModelMap model) throws Exception {
 
-    	beanValidator.validate(roleManage, bindingResult); //validation 수행
     	if (bindingResult.hasErrors()) {
 			return "/sec/rmt/EgovRoleUpdate";
 		} else {

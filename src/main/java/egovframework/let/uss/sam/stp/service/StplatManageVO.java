@@ -1,5 +1,7 @@
 package egovframework.let.uss.sam.stp.service;
 
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+import jakarta.validation.constraints.Size;
 
 /**
  * 
@@ -27,12 +29,16 @@ public class StplatManageVO extends StplatManageDefaultVO {
     private String useStplatId;
     
     /** 이용약관명 */
+    @EgovNullCheck
+    @Size(max=100)
     private String useStplatNm;    
     
     /** 이용약관내용 */
+    @EgovNullCheck
     private String useStplatCn;
     
     /** 정보제공동의내용 */
+    @EgovNullCheck
     private String infoProvdAgreCn;
     
     /** 최초등록시점 */

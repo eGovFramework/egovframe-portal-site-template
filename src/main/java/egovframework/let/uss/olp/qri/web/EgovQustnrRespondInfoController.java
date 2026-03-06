@@ -3,6 +3,19 @@ package egovframework.let.uss.olp.qri.web;
 import java.util.List;
 import java.util.Map;
 
+import org.egovframe.rte.fdl.property.EgovPropertyService;
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.com.cmm.EgovMessageSource;
@@ -12,25 +25,10 @@ import egovframework.let.uss.olp.qri.service.EgovQustnrRespondInfoService;
 import egovframework.let.uss.olp.qri.service.QustnrRespondInfoVO;
 import egovframework.let.uss.olp.qrm.service.EgovQustnrRespondManageService;
 import egovframework.let.uss.olp.qrm.service.QustnrRespondManageVO;
-
-import org.egovframe.rte.fdl.property.EgovPropertyService;
-import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
-import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springmodules.validation.commons.DefaultBeanValidator;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 
 /**
  * 설문조사 Controller Class 구현
@@ -54,9 +52,6 @@ import org.springmodules.validation.commons.DefaultBeanValidator;
 public class EgovQustnrRespondInfoController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovQustnrRespondInfoController.class);
-
-	@Autowired
-	private DefaultBeanValidator beanValidator;
 
 	/** EgovMessageSource */
 	@Resource(name = "egovMessageSource")
@@ -506,7 +501,7 @@ public class EgovQustnrRespondInfoController {
 	@RequestMapping(value = "/uss/olp/qri/EgovQustnrRespondInfoModify.do")
 	public String QustnrRespondInfoModify(@ModelAttribute("searchVO") ComDefaultVO searchVO,
 			@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
-			@ModelAttribute("qustnrRespondInfoVO") QustnrRespondInfoVO qustnrRespondInfoVO, BindingResult bindingResult,
+			@Valid @ModelAttribute("qustnrRespondInfoVO") QustnrRespondInfoVO qustnrRespondInfoVO, BindingResult bindingResult,
 			ModelMap model) throws Exception {
 
 		// 0. Spring Security 사용자권한 처리
@@ -526,9 +521,14 @@ public class EgovQustnrRespondInfoController {
 
 		String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
 
+		// 초기 페이지 로드 시에는 검증 에러 무시
+		if (!"save".equals(sCmd)) {
+			bindingResult = new BeanPropertyBindingResult(qustnrRespondInfoVO, "qustnrRespondInfoVO");
+			model.addAttribute(BindingResult.MODEL_KEY_PREFIX + "qustnrRespondInfoVO", bindingResult);
+		}
+
 		if (sCmd.equals("save")) {
-			// 서버 validate 체크
-			beanValidator.validate(qustnrRespondInfoVO, bindingResult);
+
 			if (bindingResult.hasErrors()) {
 				return sLocationUrl;
 			}
@@ -562,7 +562,7 @@ public class EgovQustnrRespondInfoController {
 	@RequestMapping(value = "/uss/olp/qri/EgovQustnrRespondInfoRegist.do")
 	public String QustnrRespondInfoRegist(@ModelAttribute("searchVO") ComDefaultVO searchVO,
 			@RequestParam Map<String, String> commandMap, HttpServletRequest request,
-			@ModelAttribute("qustnrRespondInfoVO") QustnrRespondInfoVO qustnrRespondInfoVO, BindingResult bindingResult,
+			@Valid @ModelAttribute("qustnrRespondInfoVO") QustnrRespondInfoVO qustnrRespondInfoVO, BindingResult bindingResult,
 			ModelMap model) throws Exception {
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -582,9 +582,14 @@ public class EgovQustnrRespondInfoController {
 		String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
 		LOGGER.info("cmd => {}", sCmd);
 
+		// 초기 페이지 로드 시에는 검증 에러 무시
+		if (!"save".equals(sCmd)) {
+			bindingResult = new BeanPropertyBindingResult(qustnrRespondInfoVO, "qustnrRespondInfoVO");
+			model.addAttribute(BindingResult.MODEL_KEY_PREFIX + "qustnrRespondInfoVO", bindingResult);
+		}
+
 		if (sCmd.equals("save")) {
-			// 서버 validate 체크
-			beanValidator.validate(qustnrRespondInfoVO, bindingResult);
+
 			if (bindingResult.hasErrors()) {
 				return sLocationUrl;
 			}

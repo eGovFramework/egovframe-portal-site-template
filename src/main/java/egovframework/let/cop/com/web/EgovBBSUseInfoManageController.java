@@ -2,19 +2,8 @@ package egovframework.let.cop.com.web;
 
 import java.util.Map;
 
-import egovframework.com.cmm.LoginVO;
-import egovframework.let.cop.com.service.BoardUseInf;
-import egovframework.let.cop.com.service.BoardUseInfVO;
-import egovframework.let.cop.com.service.EgovBBSUseInfoManageService;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
-import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -22,12 +11,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springmodules.validation.commons.DefaultBeanValidator;
-//SHT-CUSTOMIZING//import egovframework.let.cop.clb.service.ClubUser;
-//SHT-CUSTOMIZING//import egovframework.let.cop.clb.service.EgovClubManageService;
-//SHT-CUSTOMIZING//import egovframework.let.cop.cmy.service.CommunityUser;
-//SHT-CUSTOMIZING//import egovframework.let.cop.cmy.service.EgovCommunityManageService;
-//import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
+
+import egovframework.com.cmm.LoginVO;
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
+import egovframework.let.cop.com.service.BoardUseInf;
+import egovframework.let.cop.com.service.BoardUseInfVO;
+import egovframework.let.cop.com.service.EgovBBSUseInfoManageService;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 /**
  * 게시판의 이용정보를 관리하기 위한 컨트롤러 클래스
@@ -54,9 +46,6 @@ public class EgovBBSUseInfoManageController {
 
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertyService;
-
-	@Autowired
-	private DefaultBeanValidator beanValidator;
 
 	/**
 	 * 게시판 사용 정보를 삭제한다.
@@ -108,16 +97,25 @@ public class EgovBBSUseInfoManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/com/insertBBSUseInf.do")
-	public String insertBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @ModelAttribute("boardUseInf") BoardUseInf boardUseInf, BindingResult bindingResult,
+	public String insertBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @Valid @ModelAttribute("boardUseInf") BoardUseInf boardUseInf, BindingResult bindingResult,
 			@RequestParam Map<String, Object> commandMap, ModelMap model) throws Exception {
-
-		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-
-		beanValidator.validate(boardUseInf, bindingResult);
 
 		if (bindingResult.hasErrors()) {
 			return "cop/com/EgovBoardUseInfRegist";
+		}
+
+		// 인증 서비스 확인
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		LoginVO user = null;
+
+		// 26.03.06 KISA 보안취약점 조치 : 불필요한 try-catch 제거
+		if (isAuthenticated) {
+			user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		}
+
+		if (!isAuthenticated || user == null) {
+			model.addAttribute("message", "로그인이 필요합니다.");
+			return "uat/uia/EgovLoginUsr";
 		}
 
 		String trgetType = (String) commandMap.get("param_trgetType");
@@ -136,9 +134,7 @@ public class EgovBBSUseInfoManageController {
 		boardUseInf.setFrstRegisterId(user.getUniqId());
 		boardUseInf.setRegistSeCode(registSeCode);
 
-		if (isAuthenticated) {
-			bbsUseService.insertBBSUseInf(boardUseInf);
-		}
+		bbsUseService.insertBBSUseInf(boardUseInf);
 
 		return "forward:/cop/com/selectBBSUseInfs.do";
 	}
@@ -192,12 +188,22 @@ public class EgovBBSUseInfoManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/com/updateBBSUseInf.do")
-	public String updateBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @ModelAttribute("boardUseInf") BoardUseInf boardUseInf, HttpServletRequest request,
+	public String updateBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @Valid @ModelAttribute("boardUseInf") BoardUseInf boardUseInf, BindingResult bindingResult, HttpServletRequest request,
 			ModelMap model) throws Exception {
 
-		if (EgovUserDetailsHelper.isAuthenticated()) {
-			bbsUseService.updateBBSUseInf(boardUseInf);
+		if (bindingResult.hasErrors()) {
+			return "cop/com/EgovBoardUseInfInqire";
 		}
+
+		// 인증 서비스 확인
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+
+		if (!isAuthenticated) {
+			model.addAttribute("message", "로그인이 필요합니다.");
+			return "uat/uia/EgovLoginUsr";
+		}
+
+		bbsUseService.updateBBSUseInf(boardUseInf);
 
 		return "forward:/cop/com/selectBBSUseInfs.do";
 	}

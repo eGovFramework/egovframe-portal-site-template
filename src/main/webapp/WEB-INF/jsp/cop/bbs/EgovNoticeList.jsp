@@ -26,15 +26,12 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
-
-<!-- <link rel="stylesheet" href="<c:url value='/'/>css_old/default.css" type="text/css" > -->
-
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
 
 <script type="text/javascript">
 <!--
@@ -146,7 +143,7 @@
 										</colgroup>
 										<thead>
 											<tr>
-												<th scope="col">번호</th>
+												<th scope="col">번호.</th>
 												<th scope="col">제목</th>
 												<c:if test="${brdMstrVO.bbsAttrbCode == 'BBSA01'}">
 													<th scope="col">게시시작일</th>
@@ -176,7 +173,7 @@
 																<c:forEach begin="0" end="${result.replyLc}" step="1">
 																	&nbsp;
 																</c:forEach>
-																<img src="<c:url value='/'/>images/ico_reply.png" alt="reply arrow">
+																<img src="<c:url value='/images/ico_reply.png'/>" alt="reply arrow">
 															</c:if>
 															<c:choose>
 																<c:when test="${result.isExpired=='Y' || result.useAt == 'N'}">

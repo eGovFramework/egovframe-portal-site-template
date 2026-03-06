@@ -4,28 +4,26 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import egovframework.com.cmm.LoginVO;
-import egovframework.let.sym.ccm.zip.service.EgovCcmZipManageService;
-import egovframework.let.sym.ccm.zip.service.Zip;
-import egovframework.let.sym.ccm.zip.service.ZipVO;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springmodules.validation.commons.DefaultBeanValidator;
+
+import egovframework.com.cmm.LoginVO;
+import egovframework.let.sym.ccm.zip.service.EgovCcmZipManageService;
+import egovframework.let.sym.ccm.zip.service.Zip;
+import egovframework.let.sym.ccm.zip.service.ZipVO;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 /**
  * 
@@ -53,9 +51,6 @@ public class EgovCcmZipManageController {
     /** EgovPropertyService */
     @Resource(name = "propertiesService")
     protected EgovPropertyService propertiesService;
-
-	@Autowired
-	private DefaultBeanValidator beanValidator;
 	
 	/**
 	 * 우편번호 찾기 팝업 메인창을 호출한다.
@@ -131,7 +126,7 @@ public class EgovCcmZipManageController {
 	 */
     @RequestMapping(value="/sym/ccm/zip/EgovCcmZipRegist.do")
 	public String insertZip (@ModelAttribute("loginVO") LoginVO loginVO
-			, @ModelAttribute("zip") Zip zip
+			, @Valid @ModelAttribute("zip") Zip zip
 			, BindingResult bindingResult
 			, ModelMap model
 			) throws Exception {
@@ -140,8 +135,7 @@ public class EgovCcmZipManageController {
 
             return "/cmm/sym/zip/EgovCcmZipRegist";
     	}
-    	
-        beanValidator.validate(zip, bindingResult);
+
 		if (bindingResult.hasErrors()){
             return "/cmm/sym/zip/EgovCcmZipRegist";
 		}
@@ -261,19 +255,25 @@ public class EgovCcmZipManageController {
 	 */
     @RequestMapping(value="/sym/ccm/zip/EgovCcmZipModify.do")
 	public String updateZip (@ModelAttribute("loginVO") LoginVO loginVO
-			, @ModelAttribute("zip") Zip zip
+			, @Valid @ModelAttribute("zip") Zip zip
 			, BindingResult bindingResult
 			, @RequestParam Map <String, Object> commandMap
 			, ModelMap model
 			) throws Exception {
 		String sCmd = commandMap.get("cmd") == null ? "" : (String)commandMap.get("cmd");
+
+		if (!"Modify".equals(sCmd)) {
+			bindingResult = new BeanPropertyBindingResult(zip, "zip");
+			model.addAttribute(BindingResult.MODEL_KEY_PREFIX + "zip", bindingResult);
+		}
+
     	if (sCmd.equals("")) {
     		Zip vo = zipManageService.selectZipDetail(zip);
     		model.addAttribute("zip", vo);
 
     		return "/cmm/sym/zip/EgovCcmZipModify";
     	} else if (sCmd.equals("Modify")) {
-	        beanValidator.validate(zip, bindingResult);
+
 			if (bindingResult.hasErrors()){
 	    		return "/cmm/sym/zip/EgovCcmZipModify";
 			}

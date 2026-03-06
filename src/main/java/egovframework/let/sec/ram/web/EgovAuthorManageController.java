@@ -1,16 +1,7 @@
 package egovframework.let.sec.ram.web;
 
-import egovframework.com.cmm.EgovMessageSource;
-import egovframework.let.sec.ram.service.AuthorManage;
-import egovframework.let.sec.ram.service.AuthorManageVO;
-import egovframework.let.sec.ram.service.EgovAuthorManageService;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -19,7 +10,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springmodules.validation.commons.DefaultBeanValidator;
+
+import egovframework.com.cmm.EgovMessageSource;
+import egovframework.let.sec.ram.service.AuthorManage;
+import egovframework.let.sec.ram.service.AuthorManageVO;
+import egovframework.let.sec.ram.service.EgovAuthorManageService;
+import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 
 /**
  * 권한관리에 관한 controller 클래스를 정의한다.
@@ -51,9 +48,6 @@ public class EgovAuthorManageController {
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertiesService;
-
-	@Autowired
-	private DefaultBeanValidator beanValidator;
 
 	/**
 	 * 권한 목록화면 이동
@@ -130,9 +124,7 @@ public class EgovAuthorManageController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sec/ram/EgovAuthorInsert.do")
-	public String insertAuthor(@ModelAttribute("authorManage") AuthorManage authorManage, BindingResult bindingResult, SessionStatus status, ModelMap model) throws Exception {
-
-		beanValidator.validate(authorManage, bindingResult); //validation 수행
+	public String insertAuthor(@Valid @ModelAttribute("authorManage") AuthorManage authorManage, BindingResult bindingResult, SessionStatus status, ModelMap model) throws Exception {
 
 		if (bindingResult.hasErrors()) {
 			return "/sec/ram/EgovAuthorInsert";
@@ -152,9 +144,7 @@ public class EgovAuthorManageController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sec/ram/EgovAuthorUpdate.do")
-	public String updateAuthor(@ModelAttribute("authorManage") AuthorManage authorManage, BindingResult bindingResult, SessionStatus status, Model model) throws Exception {
-
-		beanValidator.validate(authorManage, bindingResult); //validation 수행
+	public String updateAuthor(@Valid @ModelAttribute("authorManage") AuthorManage authorManage, BindingResult bindingResult, SessionStatus status, Model model) throws Exception {
 
 		if (bindingResult.hasErrors()) {
 			return "/sec/ram/EgovAuthorUpdate";

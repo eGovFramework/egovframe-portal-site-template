@@ -80,7 +80,7 @@
  	
 	<insert id="insertBoardArticle" parameterType="egovframework.let.cop.bbs.service.Board">
 		<selectKey keyProperty="nttNo" resultType="java.lang.Long" order="BEFORE">
-			SELECT NVL(MAX(SORT_ORDR),0)+1 AS NTT_NO  FROM LETTNBBS 
+			SELECT NVL(MAX(SORT_ORDR),0)+1 AS NTT_NO  FROM LETTNBBS
 			WHERE BBS_ID = #{bbsId}
 		</selectKey>
 		
