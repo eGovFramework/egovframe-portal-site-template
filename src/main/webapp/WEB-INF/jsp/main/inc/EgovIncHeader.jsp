@@ -131,47 +131,48 @@ $(document).ready(function(){
 				<c:if test="${loginName != ''}">
                 <!-- case: 로그인했을경우 -->
 	                <li><a href="<c:url value='/uat/uia/actionLogout.do'/>" class="logout" title="로그아웃">로그아웃</a></li>
-	                <li><a href="" class="mail" title="메일">메일<span>3</span>건</a></li>
-	                <li><a href="" class="allmenu" title="전체메뉴">전체메뉴</a></li>
+	                <li><a href="#" class="mail" title="메일">메일<span>3</span>건</a></li>
+	                <li><a href="#" class="allmenu" title="전체메뉴">전체메뉴</a></li>
 				</c:if>
             </ul>
         </div>
         
         <!-- all menu 210912 add -->
+        <c:set var="ctx" value="${pageContext.request.contextPath}"/>
             <div class="all_menu">
                 <div class="inner">
                     <div>
                         <h2>사이트소개</h2>
                         <ul>
-                            <li><a href="/pst_webapp/EgovPageLink.do?linkIndex=3">사이트소개</a></li>
-                            <li><a href="/pst_webapp/EgovPageLink.do?linkIndex=4">연혁</a></li>
-                            <li><a href="/pst_webapp/EgovPageLink.do?linkIndex=5">조직소개</a></li>
-                            <li><a href="/pst_webapp/EgovPageLink.do?linkIndex=6">찾아오시는 길</a></li>
+                            <li><a href="${ctx}/EgovPageLink.do?linkIndex=3">사이트소개</a></li>
+                            <li><a href="${ctx}/EgovPageLink.do?linkIndex=4">연혁</a></li>
+                            <li><a href="${ctx}/EgovPageLink.do?linkIndex=5">조직소개</a></li>
+                            <li><a href="${ctx}/EgovPageLink.do?linkIndex=6">찾아오시는 길</a></li>
                         </ul>
                     </div>
 
                     <div>
                         <h2>민원광장</h2>
                         <ul>
-                            <li><a href="/pst_webapp/EgovPageLink.do?linkIndex=1">민원신청</a></li>
-                            <li><a href="/pst_webapp/EgovPageLink.do?linkIndex=2">민원결과확인</a></li>
+                            <li><a href="${ctx}/EgovPageLink.do?linkIndex=1">민원신청</a></li>
+                            <li><a href="${ctx}/EgovPageLink.do?linkIndex=2">민원결과확인</a></li>
                         </ul>
                     </div>
 
                     <div>
                         <h2>알림마당</h2>
                         <ul>
-                            <li><a href="/pst_webapp/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_AAAAAAAAAAAA">공지사항</a></li>
-                            <li><a href="/pst_webapp/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_BBBBBBBBBBBB">자유게시판</a></li>
+                            <li><a href="${ctx}/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_AAAAAAAAAAAA">공지사항</a></li>
+                            <li><a href="${ctx}/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_BBBBBBBBBBBB">자유게시판</a></li>
                         </ul>
                     </div>
 
                     <div>
                         <h2>정보마당</h2>
                         <ul>
-                            <li><a href="/pst_webapp/uss/olh/faq/FaqListInqire.do">FAQ</a></li>
-                            <li><a href="/pst_webapp/uss/olh/qna/QnaListInqire.do">QnA</a></li>
-                            <li><a href="/pst_webapp/uss/olp/qnn/EgovQustnrRespondInfoManageList.do">설문조사</a></li>
+                            <li><a href="${ctx}/uss/olh/faq/FaqListInqire.do">FAQ</a></li>
+                            <li><a href="${ctx}/uss/olh/qna/QnaListInqire.do">QnA</a></li>
+                            <li><a href="${ctx}/uss/olp/qnn/EgovQustnrRespondInfoManageList.do">설문조사</a></li>
                         </ul>
                     </div>
 
@@ -179,24 +180,24 @@ $(document).ready(function(){
                         <h2>포털서비스관리</h2>
                         <h3>설문관리</h3>
                         <ul>
-                            <li><a href="/pst_webapp/uss/olp/qmc/EgovQustnrManageList.do">설문지</a></li>
-                            <li><a href="/pst_webapp/uss/olp/qtm/EgovQustnrTmplatManageList.do">설문템플릿</a></li>
-                            <li><a href="/pst_webapp/uss/olp/qqm/EgovQustnrQestnManageList.do">설문문항</a></li>
-                            <li><a href="/pst_webapp/uss/olp/qim/EgovQustnrItemManageList.do">설문항목</a></li>
-                            <li><a href="/pst_webapp/uss/olp/qrm/EgovQustnrRespondManageList.do">설문응답결과</a></li>
+                            <li><a href="${ctx}/uss/olp/qmc/EgovQustnrManageList.do">설문지</a></li>
+                            <li><a href="${ctx}/uss/olp/qtm/EgovQustnrTmplatManageList.do">설문템플릿</a></li>
+                            <li><a href="${ctx}/uss/olp/qqm/EgovQustnrQestnManageList.do">설문문항</a></li>
+                            <li><a href="${ctx}/uss/olp/qim/EgovQustnrItemManageList.do">설문항목</a></li>
+                            <li><a href="${ctx}/uss/olp/qrm/EgovQustnrRespondManageList.do">설문응답결과</a></li>
                         </ul>
                         
                         <h3>서비스관리</h3>
                         <ul>
-                            <li><a href="/pst_webapp/uss/olh/faq/admin/FaqListInqire.do">FAQ관리</a></li>
-                            <li><a href="/pst_webapp/uss/olh/qna/admin/QnaListInqire.do">QnA관리</a></li>
-                            <li><a href="/pst_webapp/uss/olh/qnm/QnaAnswerListInqire.do">QnA답변관리</a></li>
-<!--                             <li><a href="/pst_webapp/cop/com/selectTemplateInfs.do">게시판템플릿관리</a></li> -->
-                            <li><a href="/pst_webapp/cop/bbs/SelectBBSMasterInfs.do">게시판생성관리</a></li>
-                            <li><a href="/pst_webapp/cop/com/selectBBSUseInfs.do">게시판사용관리</a></li>
-                            <li><a href="/pst_webapp/cop/bbs/admin/selectBoardList.do?bbsId=BBSMSTR_AAAAAAAAAAAA">공지사항관리</a></li>
-                            <li><a href="/pst_webapp/cop/bbs/admin/selectBoardList.do?bbsId=BBSMSTR_BBBBBBBBBBBB">자유게시판관리</a></li>
-                            <li><a href="/pst_webapp/uss/ion/bnr/selectBannerList.do">배너관리</a></li>
+                            <li><a href="${ctx}/uss/olh/faq/admin/FaqListInqire.do">FAQ관리</a></li>
+                            <li><a href="${ctx}/uss/olh/qna/admin/QnaListInqire.do">QnA관리</a></li>
+                            <li><a href="${ctx}/uss/olh/qnm/QnaAnswerListInqire.do">QnA답변관리</a></li>
+<!--                             <li><a href="${ctx}/cop/com/selectTemplateInfs.do">게시판템플릿관리</a></li> -->
+                            <li><a href="${ctx}/cop/bbs/SelectBBSMasterInfs.do">게시판생성관리</a></li>
+                            <li><a href="${ctx}/cop/com/selectBBSUseInfs.do">게시판사용관리</a></li>
+                            <li><a href="${ctx}/cop/bbs/admin/selectBoardList.do?bbsId=BBSMSTR_AAAAAAAAAAAA">공지사항관리</a></li>
+                            <li><a href="${ctx}/cop/bbs/admin/selectBoardList.do?bbsId=BBSMSTR_BBBBBBBBBBBB">자유게시판관리</a></li>
+                            <li><a href="${ctx}/uss/ion/bnr/selectBannerList.do">배너관리</a></li>
                         </ul>
                     </div>
 
@@ -204,17 +205,17 @@ $(document).ready(function(){
                         <h2>포털시스템관리</h2>
                         <h3>사용자관리</h3>
                         <ul>
-                            <li><a href="/pst_webapp/uss/umt/mber/EgovMberManage.do">회원관리</a></li>
-                            <li><a href="/pst_webapp/uss/sam/stp/StplatListInqire.do">이용약관관리</a></li>
-                            <li><a href="/pst_webapp/uss/sam/ipm/listIndvdlInfoPolicy.do">개인정보보호관리</a></li>
+                            <li><a href="${ctx}/uss/umt/mber/EgovMberManage.do">회원관리</a></li>
+                            <li><a href="${ctx}/uss/sam/stp/StplatListInqire.do">이용약관관리</a></li>
+                            <li><a href="${ctx}/uss/sam/ipm/listIndvdlInfoPolicy.do">개인정보보호관리</a></li>
                         </ul>
 
                         <h3>사용자권한관리</h3>
                         <ul>
-                            <li><a href="/pst_webapp/sec/ram/EgovAuthorList.do">권한관리</a></li>
-                            <li><a href="/pst_webapp/sec/gmt/EgovGroupList.do">사용자그룹관리</a></li>
-                            <li><a href="/pst_webapp/sec/rgm/EgovAuthorGroupListView.do">사용자별권한관리</a></li>
-                            <li><a href="/pst_webapp/sec/rmt/EgovRoleList.do">롤관리</a></li>
+                            <li><a href="${ctx}/sec/ram/EgovAuthorList.do">권한관리</a></li>
+                            <li><a href="${ctx}/sec/gmt/EgovGroupList.do">사용자그룹관리</a></li>
+                            <li><a href="${ctx}/sec/rgm/EgovAuthorGroupListView.do">사용자별권한관리</a></li>
+                            <li><a href="${ctx}/sec/rmt/EgovRoleList.do">롤관리</a></li>
                         </ul>
                     </div>
                 </div>
