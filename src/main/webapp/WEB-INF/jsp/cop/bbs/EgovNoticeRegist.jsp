@@ -258,7 +258,7 @@
 			                                maxFileNum = 3; // 기본값
 			                            } 
 			                            
-			                            console.log('최대 파일 개수 설정:', maxFileNum);
+			                         	// 26.03.24 KISA 보안취약점 조치 : 디버그용 console.log 제거
 			                            
 			                            // MultiSelector 초기화
 			                            var multi_selector = new MultiSelector( document.getElementById( 'egovComFileList' ), maxFileNum );
@@ -267,7 +267,7 @@
 			                            // 폼 제출 시 파일 개수 검증
 			                            function validateFileCount() {
 			                                var fileCount = multi_selector.getFileCount();
-			                                console.log('현재 선택된 파일 개수:', fileCount);
+			                             	// 26.03.24 KISA 보안취약점 조치 : 디버그용 console.log 제거
 			                                return true; // 개별 파일 선택 시 이미 검증하므로 true 반환
 			                            }
 			                            

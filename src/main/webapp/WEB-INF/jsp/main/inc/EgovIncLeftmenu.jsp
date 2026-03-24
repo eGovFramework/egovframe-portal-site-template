@@ -28,7 +28,6 @@
 		}
 		var leftStartMenuValue = document.getElementById("menuNo").value;
 		if (leftStartMenuValue==null || leftStartMenuValue=="" || leftStartMenuValue=="null") leftStartMenuValue = '1000000';
-		console.log("leftStartMenuValue = "+leftStartMenuValue);
 		
 		// 서브 메뉴 생성
 		function subMenuTag(menuList, mainMenuNo) {
@@ -48,7 +47,6 @@
 		var mainMenuTag = "";
 		
 		menuList.forEach(function(item,index){
-			console.log(item,index);
 			var itemList = item.split('|');
 			switch(leftStartMenuValue) {
 			case itemList[0]:

@@ -313,7 +313,6 @@ public class EgovQustnrManageController {
 		} else {
 			//설문템플릿 정보 불러오기
 			model.addAttribute("listQustnrTmplat", egovQustnrManageService.selectQustnrTmplatManageList(qustnrManageVO));
-			//System.out.println("???:::" + (egovQustnrManageService.selectQustnrTmplatManageList(qustnrManageVO)).get(0));
 		}
 
 		return sLocationUrl;
