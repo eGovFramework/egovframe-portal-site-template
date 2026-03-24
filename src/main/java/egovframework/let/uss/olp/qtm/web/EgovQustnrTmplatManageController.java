@@ -254,8 +254,6 @@ public class EgovQustnrTmplatManageController {
 
 		if (!files.isEmpty()) {
 			for (MultipartFile file : files.values()) {
-				System.out.println("getName =>" + file.getName());
-				System.out.println("getOriginalFilename =>" + file.getOriginalFilename());
 				// 26.03.06 KISA 보안취약점 조치 : null check 추가
 				String originalFilename = file.getOriginalFilename();
 				if (file.getName().equals("qestnrTmplatImage") && originalFilename != null && !originalFilename.isEmpty()) { // 26.03.06 KISA 보안취약점 조치 : null check 추가
