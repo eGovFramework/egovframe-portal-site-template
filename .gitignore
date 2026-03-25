@@ -30,6 +30,7 @@
 
 # Build #
 target/
+src/main/webapp/META-INF/
 
 # OS
 .DS_Store

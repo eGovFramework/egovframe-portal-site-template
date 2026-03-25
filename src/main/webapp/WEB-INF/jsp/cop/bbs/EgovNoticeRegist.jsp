@@ -258,7 +258,7 @@
 			                                maxFileNum = 3; // 기본값
 			                            } 
 			                            
-			                         	// 26.03.24 KISA 보안취약점 조치 : 디버그용 console.log 제거
+										// 26.03.24 KISA 보안취약점 조치 : 디버그용 console.log 제거
 			                            
 			                            // MultiSelector 초기화
 			                            var multi_selector = new MultiSelector( document.getElementById( 'egovComFileList' ), maxFileNum );
