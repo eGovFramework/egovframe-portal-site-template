@@ -284,7 +284,12 @@ public class EgovBannerController {
 			SessionStatus status, ModelMap model) throws Exception {
 
 		// 26.03.24 KISA 보안취약점 조치 : null check 추가
-		String[] strBannerIds = bannerIds != null ? bannerIds.split(";") : new String[0]; 
+		String[] strBannerIds = bannerIds != null ? bannerIds.split(";") : new String[0];
+
+		if (strBannerIds.length == 0) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.delete"));
+			return "forward:/uss/ion/bnr/selectBannerList.do";
+		} 
 
 		for (int i = 0; i < strBannerIds.length; i++) {
 			banner.setBannerId(strBannerIds[i]);
