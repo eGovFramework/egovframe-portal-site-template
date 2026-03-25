@@ -51,7 +51,11 @@
 		<java.version>17</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<log4j2.version>2.25.3</log4j2.version>
+		<slf4j.version>2.0.17</slf4j.version>
+		<commons-beanutils.version>1.11.0</commons-beanutils.version>
 		<protobuf.java.version>3.25.5</protobuf.java.version>
+		<parsson.version>1.1.7</parsson.version>
 	</properties>
 
 	<dependencies>
@@ -119,18 +123,33 @@
 		</dependency>
 
 		<!-- SLF4J API 및 Log4j2 바인딩 -->
+		<!-- CVE-2025-68161: 취약점 보완용 업데이트 -->
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j2.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j2-impl</artifactId>
+			<version>${log4j2.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.googlecode.log4jdbc</groupId>
 			<artifactId>log4jdbc</artifactId>
@@ -140,6 +159,13 @@
 					<groupId>org.slf4j</groupId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		
+		<!-- CVE-2025-48734: 취약점 보완용 업데이트 -->
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>${commons-beanutils.version}</version>
 		</dependency>
 
 		<dependency>
@@ -217,6 +243,13 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		
+		<!-- CVE-2023-7272/CVE-2023-4043: 취약점 보완용 업데이트 -->
+		<dependency>
+			<groupId>org.eclipse.parsson</groupId>
+			<artifactId>parsson</artifactId>
+			<version>${parsson.version}</version>
 		</dependency>
 	</dependencies>
 
