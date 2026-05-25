@@ -2,14 +2,13 @@ package egovframework.let.sec.rmt.service.impl;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.egovframe.rte.psl.dataaccess.mapper.EgovMapper;
 
 import egovframework.let.sec.rmt.service.RoleManage;
 import egovframework.let.sec.rmt.service.RoleManageVO;
-import jakarta.annotation.Resource;
 
 /**
- * 롤관리에 대한 DAO 클래스를 정의한다.
+ * 롤관리에 대한 Mapper 인터페이스를 정의한다.
  * @author 공통서비스 개발팀 이문준
  * @since 2009.06.01
  * @version 2.0
@@ -26,12 +25,8 @@ import jakarta.annotation.Resource;
  *
  * </pre>
  */
-
-@Repository("roleManageDAO")
-public class RoleManageDAO {
-
-	@Resource(name = "roleManageMapper")
-	private RoleManageMapper roleManageMapper;
+@EgovMapper("roleManageMapper")
+public interface RoleManageMapper {
 
 	/**
 	 * 등록된 롤 정보 조회
@@ -39,9 +34,7 @@ public class RoleManageDAO {
 	 * @return RoleManageVO
 	 * @exception Exception
 	 */
-	public RoleManageVO selectRole(RoleManageVO roleManageVO) throws Exception {
-		return roleManageMapper.selectRole(roleManageVO);
-	}
+	RoleManageVO selectRole(RoleManageVO roleManageVO) throws Exception;
 
 	/**
 	 * 등록된 롤 정보 목록 조회
@@ -49,36 +42,28 @@ public class RoleManageDAO {
 	 * @return List<RoleManageVO>
 	 * @exception Exception
 	 */
-	public List<RoleManageVO> selectRoleList(RoleManageVO roleManageVO) throws Exception {
-		return roleManageMapper.selectRoleList(roleManageVO);
-	}
+	List<RoleManageVO> selectRoleList(RoleManageVO roleManageVO) throws Exception;
 
 	/**
 	 * 시스템 메뉴에 따른 접근권한, 데이터 입력, 수정, 삭제의 권한 롤을 등록
 	 * @param roleManage RoleManage
 	 * @exception Exception
 	 */
-	public void insertRole(RoleManage roleManage) throws Exception {
-		roleManageMapper.insertRole(roleManage);
-	}
+	void insertRole(RoleManage roleManage) throws Exception;
 
 	/**
 	 * 시스템 메뉴에 따른 접근권한, 데이터 입력, 수정, 삭제의 권한 롤을 수정
 	 * @param roleManage RoleManage
 	 * @exception Exception
 	 */
-	public void updateRole(RoleManage roleManage) throws Exception {
-		roleManageMapper.updateRole(roleManage);
-	}
+	void updateRole(RoleManage roleManage) throws Exception;
 
 	/**
 	 * 불필요한 롤정보를 화면에 조회하여 데이터베이스에서 삭제
 	 * @param roleManage RoleManage
 	 * @exception Exception
 	 */
-	public void deleteRole(RoleManage roleManage) throws Exception {
-		roleManageMapper.deleteRole(roleManage);
-	}
+	void deleteRole(RoleManage roleManage) throws Exception;
 
 	/**
 	 * 롤목록 총 갯수를 조회한다.
@@ -86,9 +71,7 @@ public class RoleManageDAO {
 	 * @return int
 	 * @exception Exception
 	 */
-	public int selectRoleListTotCnt(RoleManageVO roleManageVO) throws Exception {
-		return roleManageMapper.selectRoleListTotCnt(roleManageVO);
-	}
+	int selectRoleListTotCnt(RoleManageVO roleManageVO) throws Exception;
 
 	/**
 	 * 등록된 모든 롤 정보 목록 조회
@@ -96,8 +79,6 @@ public class RoleManageDAO {
 	 * @return List<RoleManageVO>
 	 * @exception Exception
 	 */
-	public List<RoleManageVO> selectRoleAllList(RoleManageVO roleManageVO) throws Exception {
-		return roleManageMapper.selectRoleAllList(roleManageVO);
-	}
+	List<RoleManageVO> selectRoleAllList(RoleManageVO roleManageVO) throws Exception;
 
 }
