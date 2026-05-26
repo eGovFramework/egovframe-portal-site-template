@@ -2,14 +2,13 @@ package egovframework.let.uss.sam.ipm.service.impl;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.egovframe.rte.psl.dataaccess.mapper.EgovMapper;
 
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.uss.sam.ipm.service.IndvdlInfoPolicy;
-import jakarta.annotation.Resource;
 
 /**
- * 개인정보보호정책를 처리하는 Dao Class 구현
+ * 개인정보보호정책를 처리하는 Mapper 인터페이스
  * @author 공통서비스 장동한
  * @since 2009.07.03
  * @version 2.0
@@ -24,11 +23,8 @@ import jakarta.annotation.Resource;
  *
  * </pre>
  */
-@Repository("onlineIndvdlInfoPolicyDao")
-public class IndvdlInfoPolicyDao {
-
-    @Resource(name = "onlineIndvdlInfoPolicyMapper")
-    private IndvdlInfoPolicyMapper indvdlInfoPolicyMapper;
+@EgovMapper("onlineIndvdlInfoPolicyMapper")
+public interface IndvdlInfoPolicyMapper {
 
     /**
      * 개인정보보호정책를(을) 목록을 한다.
@@ -36,9 +32,7 @@ public class IndvdlInfoPolicyDao {
      * @return List
      * @throws Exception
      */
-    public List<?> selectIndvdlInfoPolicyList(ComDefaultVO searchVO) throws Exception {
-        return indvdlInfoPolicyMapper.selectIndvdlInfoPolicy(searchVO);
-    }
+    List<?> selectIndvdlInfoPolicy(ComDefaultVO searchVO) throws Exception;
 
     /**
      * 개인정보보호정책를(을) 목록 전체 건수를(을) 조회한다.
@@ -46,9 +40,7 @@ public class IndvdlInfoPolicyDao {
      * @return int
      * @throws Exception
      */
-    public int selectIndvdlInfoPolicyListCnt(ComDefaultVO searchVO) throws Exception {
-        return indvdlInfoPolicyMapper.selectIndvdlInfoPolicyCnt(searchVO);
-    }
+    int selectIndvdlInfoPolicyCnt(ComDefaultVO searchVO) throws Exception;
 
     /**
      * 개인정보보호정책를(을) 상세조회 한다.
@@ -56,35 +48,27 @@ public class IndvdlInfoPolicyDao {
      * @return IndvdlInfoPolicy
      * @throws Exception
      */
-    public IndvdlInfoPolicy selectIndvdlInfoPolicyDetail(IndvdlInfoPolicy indvdlInfoPolicy) throws Exception {
-        return indvdlInfoPolicyMapper.selectIndvdlInfoPolicyDetail(indvdlInfoPolicy);
-    }
+    IndvdlInfoPolicy selectIndvdlInfoPolicyDetail(IndvdlInfoPolicy indvdlInfoPolicy) throws Exception;
 
     /**
      * 개인정보보호정책를(을) 등록한다.
      * @param indvdlInfoPolicy  개인정보보호정책 정보가 담김 VO
      * @throws Exception
      */
-    public void insertIndvdlInfoPolicy(IndvdlInfoPolicy indvdlInfoPolicy) throws Exception {
-        indvdlInfoPolicyMapper.insertIndvdlInfoPolicy(indvdlInfoPolicy);
-    }
+    void insertIndvdlInfoPolicy(IndvdlInfoPolicy indvdlInfoPolicy) throws Exception;
 
     /**
      * 개인정보보호정책를(을) 수정한다.
      * @param indvdlInfoPolicy  개인정보보호정책 정보가 담김 VO
      * @throws Exception
      */
-    public void updateIndvdlInfoPolicy(IndvdlInfoPolicy indvdlInfoPolicy) throws Exception {
-        indvdlInfoPolicyMapper.updateIndvdlInfoPolicy(indvdlInfoPolicy);
-    }
+    void updateIndvdlInfoPolicy(IndvdlInfoPolicy indvdlInfoPolicy) throws Exception;
 
     /**
      * 개인정보보호정책를(을) 삭제한다.
      * @param indvdlInfoPolicy  개인정보보호정책 정보가 담김 VO
      * @throws Exception
      */
-    public void deleteIndvdlInfoPolicy(IndvdlInfoPolicy indvdlInfoPolicy) throws Exception {
-        indvdlInfoPolicyMapper.deleteIndvdlInfoPolicy(indvdlInfoPolicy);
-    }
+    void deleteIndvdlInfoPolicy(IndvdlInfoPolicy indvdlInfoPolicy) throws Exception;
 
 }
