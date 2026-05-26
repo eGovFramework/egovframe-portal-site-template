@@ -2,17 +2,15 @@ package egovframework.let.uss.ion.bnr.service.impl;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.egovframe.rte.psl.dataaccess.mapper.EgovMapper;
 
 import egovframework.com.cmm.service.FileVO;
 import egovframework.let.uss.ion.bnr.service.Banner;
 import egovframework.let.uss.ion.bnr.service.BannerVO;
-import jakarta.annotation.Resource;
 
 /**
- * 배너에 대한 DAO 클래스를 정의한다.
+ * 배너에 대한 Mapper 인터페이스를 정의한다.
  * 배너에 대한 등록, 수정, 삭제, 조회, 반영확인 기능을 제공한다.
- * 배너의 조회기능은 목록조회, 상세조회로 구분된다.
  * @author 공통서비스개발팀 lee.m.j
  * @since 2009.08.03
  * @version 2.0
@@ -29,11 +27,8 @@ import jakarta.annotation.Resource;
  *
  * </pre>
  */
-@Repository("bannerDAO")
-public class BannerDAO {
-
-	@Resource(name = "bannerMapper")
-	private BannerMapper bannerMapper;
+@EgovMapper("bannerMapper")
+public interface BannerMapper {
 
 	/**
 	 * 배너를 관리하기 위해 등록된 배너목록을 조회한다.
@@ -41,9 +36,7 @@ public class BannerDAO {
 	 * @return List - 배너 목록
 	 * @exception Exception
 	 */
-	public List<BannerVO> selectBannerList(BannerVO bannerVO) throws Exception {
-		return bannerMapper.selectBannerList(bannerVO);
-	}
+	List<BannerVO> selectBannerList(BannerVO bannerVO) throws Exception;
 
 	/**
 	 * 배너목록 총 갯수를 조회한다.
@@ -51,9 +44,7 @@ public class BannerDAO {
 	 * @return int
 	 * @exception Exception
 	 */
-	public int selectBannerListTotCnt(BannerVO bannerVO) throws Exception {
-		return bannerMapper.selectBannerListTotCnt(bannerVO);
-	}
+	int selectBannerListTotCnt(BannerVO bannerVO) throws Exception;
 
 	/**
 	 * 등록된 배너의 상세정보를 조회한다.
@@ -61,36 +52,28 @@ public class BannerDAO {
 	 * @return BannerVO - 배너 VO
 	 * @exception Exception
 	 */
-	public BannerVO selectBanner(BannerVO bannerVO) throws Exception {
-		return bannerMapper.selectBanner(bannerVO);
-	}
+	BannerVO selectBanner(BannerVO bannerVO) throws Exception;
 
 	/**
 	 * 배너정보를 신규로 등록한다.
 	 * @param banner - 배너 model
 	 * @exception Exception
 	 */
-	public void insertBanner(Banner banner) throws Exception {
-		bannerMapper.insertBanner(banner);
-	}
+	void insertBanner(Banner banner) throws Exception;
 
 	/**
 	 * 기 등록된 배너정보를 수정한다.
 	 * @param banner - 배너 model
 	 * @exception Exception
 	 */
-	public void updateBanner(Banner banner) throws Exception {
-		bannerMapper.updateBanner(banner);
-	}
+	void updateBanner(Banner banner) throws Exception;
 
 	/**
 	 * 기 등록된 배너정보를 삭제한다.
 	 * @param banner - 배너 model
 	 * @exception Exception
 	 */
-	public void deleteBanner(Banner banner) throws Exception {
-		bannerMapper.deleteBanner(banner);
-	}
+	void deleteBanner(Banner banner) throws Exception;
 
 	/**
 	 * 기 등록된 배너정보의 이미지파일을 삭제하기 위해 파일정보를 조회한다.
@@ -98,9 +81,7 @@ public class BannerDAO {
 	 * @return FileVO - 파일 VO
 	 * @exception Exception
 	 */
-	public FileVO selectBannerFile(Banner banner) throws Exception {
-		return bannerMapper.selectBannerFile(banner);
-	}
+	FileVO selectBannerFile(Banner banner) throws Exception;
 
 	/**
 	 * 배너가 특정화면에 반영된 결과를 조회한다.
@@ -108,8 +89,6 @@ public class BannerDAO {
 	 * @return List - 배너 목록
 	 * @exception Exception
 	 */
-	public List<BannerVO> selectBannerResult(BannerVO bannerVO) throws Exception {
-		return bannerMapper.selectBannerResult(bannerVO);
-	}
+	List<BannerVO> selectBannerResult(BannerVO bannerVO) throws Exception;
 
 }
