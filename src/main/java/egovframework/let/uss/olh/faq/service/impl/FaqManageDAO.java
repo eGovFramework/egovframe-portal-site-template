@@ -2,17 +2,18 @@ package egovframework.let.uss.olh.faq.service.impl;
 
 import java.util.List;
 
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 import org.springframework.stereotype.Repository;
 
 import egovframework.let.uss.olh.faq.service.FaqManageDefaultVO;
 import egovframework.let.uss.olh.faq.service.FaqManageVO;
+import jakarta.annotation.Resource;
+
 /**
  *
  * FAQ를 처리하는 DAO 클래스
  * @author 공통서비스 개발팀 박정규
  * @since 2009.04.01
- * @version 1.0
+ * @version 2.0
  * @see
  *
  * <pre>
@@ -22,12 +23,15 @@ import egovframework.let.uss.olh.faq.service.FaqManageVO;
  *  -------    --------    ---------------------------
  *   2009.04.01  박정규          최초 생성
  *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2024.11.01  표준프레임워크센터  @EgovMapper 어노테이션 방식으로 전환
  *
  * </pre>
  */
 @Repository("FaqManageDAO")
-public class FaqManageDAO extends EgovAbstractMapper {
+public class FaqManageDAO {
 
+    @Resource(name = "faqManageMapper")
+    private FaqManageMapper faqManageMapper;
 
     /**
 	 * FAQ 글 목록에 대한 상세내용을 조회한다.
@@ -36,9 +40,7 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
     public FaqManageVO selectFaqListDetail(FaqManageVO vo) throws Exception {
-
-        return (FaqManageVO) selectOne("FaqManageDAO.selectFaqListDetail", vo);
-
+        return faqManageMapper.selectFaqListDetail(vo);
     }
 
 	/**
@@ -47,9 +49,7 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
     public void updateFaqInqireCo(FaqManageVO vo) throws Exception {
-
-        update("FaqManageDAO.updateFaqInqireCo", vo);
-
+        faqManageMapper.updateFaqInqireCo(vo);
     }
 
     /**
@@ -59,9 +59,7 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
 	public List<?> selectFaqList(FaqManageDefaultVO searchVO) throws Exception {
-
-        return selectList("FaqManageDAO.selectFaqList", searchVO);
-
+        return faqManageMapper.selectFaqList(searchVO);
     }
 
     /**
@@ -70,9 +68,7 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * @return 글 총 갯수
 	 */
     public int selectFaqListTotCnt(FaqManageDefaultVO searchVO) {
-
-        return (Integer)selectOne("FaqManageDAO.selectFaqListTotCnt", searchVO);
-
+        return faqManageMapper.selectFaqListTotCnt(searchVO);
     }
 
 	/**
@@ -81,9 +77,7 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
     public void insertFaqCn(FaqManageVO vo) throws Exception {
-
-        insert("FaqManageDAO.insertFaqCn", vo);
-
+        faqManageMapper.insertFaqCn(vo);
     }
 
 	/**
@@ -92,9 +86,7 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
     public void updateFaqCn(FaqManageVO vo) throws Exception {
-
-        update("FaqManageDAO.updateFaqCn", vo);
-
+        faqManageMapper.updateFaqCn(vo);
     }
 
 	/**
@@ -103,9 +95,7 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
     public void deleteFaqCn(FaqManageVO vo) throws Exception {
-
-        delete("FaqManageDAO.deleteFaqCn", vo);
-
+        faqManageMapper.deleteFaqCn(vo);
     }
 
 }
