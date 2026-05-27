@@ -24,6 +24,7 @@ import jakarta.annotation.Resource;
  *  -------    --------    ---------------------------
  *  2009.03.06  박지욱          최초 생성
  *  2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *  2025.05.28  dasomel        LoginDAO(EgovAbstractMapper) → LoginMapper(@EgovMapper) 방식으로 전환
  *
  *  </pre>
  */
@@ -31,7 +32,7 @@ import jakarta.annotation.Resource;
 public class EgovLoginServiceImpl extends EgovAbstractServiceImpl implements EgovLoginService {
 
 	@Resource(name = "loginDAO")
-	private LoginDAO loginDAO;
+	private LoginMapper loginDAO;
 
 	/**
 	 * 일반 로그인을 처리한다

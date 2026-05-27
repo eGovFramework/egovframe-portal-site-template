@@ -22,5 +22,10 @@
 	</bean>
 	
 	<alias name="sqlSession" alias="egov.sqlSession" />
-	
+
+	<!-- @EgovMapper 어노테이션 기반 Mapper 인터페이스 스캔 -->
+	<bean class="org.egovframe.rte.psl.dataaccess.mapper.MapperConfigurer">
+		<property name="basePackage" value="egovframework.let" />
+	</bean>
+
 </beans>
