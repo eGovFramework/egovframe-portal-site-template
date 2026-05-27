@@ -26,6 +26,7 @@ import jakarta.annotation.Resource;
  *  -------    --------    ---------------------------
  *   2009.04.01  박정규          최초 생성
  *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2025.05.28  표준프레임워크센터   EgovQnaManageMapper(@EgovMapper) 추가
  *
  * </pre>
  */
@@ -35,6 +36,9 @@ public class EgovQnaManageServiceImpl extends EgovAbstractServiceImpl implements
 
     @Resource(name="QnaManageDAO")
     private QnaManageDAO qnaManageDAO;
+
+    @Resource(name="QnaManageDAO")
+    private EgovQnaManageMapper qnaManageMapper;
 
     /** ID Generation */
 	@Resource(name="egovQnaManageIdGnrService")
