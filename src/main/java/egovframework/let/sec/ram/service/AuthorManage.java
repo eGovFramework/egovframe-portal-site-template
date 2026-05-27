@@ -1,6 +1,8 @@
 package egovframework.let.sec.ram.service;
 
 import egovframework.com.cmm.ComDefaultVO;
+import lombok.Getter;
+import lombok.Setter;
 import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
 
 /**
@@ -21,6 +23,8 @@ import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
  * </pre>
  */
 
+@Getter
+@Setter
 public class AuthorManage extends ComDefaultVO {
 
 	/**
@@ -29,7 +33,7 @@ public class AuthorManage extends ComDefaultVO {
 	private static final long serialVersionUID = 1L;
 	/**
 	 * 권한관리
-	 */	
+	 */
 	private AuthorManage authorManage;
 	/**
 	 * 권한코드
@@ -49,80 +53,5 @@ public class AuthorManage extends ComDefaultVO {
 	 */
 	@EgovNullCheck
 	private String authorNm;
-	
-	/**
-	 * authorManage attribute 를 리턴한다.
-	 * @return AuthorManage
-	 */
-	public AuthorManage getAuthorManage() {
-		return authorManage;
-	}
-	/**
-	 * authorManage attribute 값을 설정한다.
-	 * @param authorManage AuthorManage 
-	 */
-	public void setAuthorManage(AuthorManage authorManage) {
-		this.authorManage = authorManage;
-	}
-	/**
-	 * authorCode attribute 를 리턴한다.
-	 * @return String
-	 */
-	public String getAuthorCode() {
-		return authorCode;
-	}
-	/**
-	 * authorCode attribute 값을 설정한다.
-	 * @param authorCode String 
-	 */
-	public void setAuthorCode(String authorCode) {
-		this.authorCode = authorCode;
-	}
-	/**
-	 * authorCreatDe attribute 를 리턴한다.
-	 * @return String
-	 */
-	public String getAuthorCreatDe() {
-		return authorCreatDe;
-	}
-	/**
-	 * authorCreatDe attribute 값을 설정한다.
-	 * @param authorCreatDe String 
-	 */
-	public void setAuthorCreatDe(String authorCreatDe) {
-		this.authorCreatDe = authorCreatDe;
-	}
-	/**
-	 * authorDc attribute 를 리턴한다.
-	 * @return String
-	 */
-	public String getAuthorDc() {
-		return authorDc;
-	}
-	/**
-	 * authorDc attribute 값을 설정한다.
-	 * @param authorDc String 
-	 */
-	public void setAuthorDc(String authorDc) {
-		this.authorDc = authorDc;
-	}
-	/**
-	 * authorNm attribute 를 리턴한다.
-	 * @return String
-	 */
-	public String getAuthorNm() {
-		return authorNm;
-	}
-	/**
-	 * authorNm attribute 값을 설정한다.
-	 * @param authorNm String 
-	 */
-	public void setAuthorNm(String authorNm) {
-		this.authorNm = authorNm;
-	}
-	
-
-
-	
 
 }

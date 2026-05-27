@@ -2,6 +2,9 @@ package egovframework.let.sec.ram.service;
 
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 권한관리에 대한 Vo 클래스를 정의한다.
  * @author 공통서비스 개발팀 이문준
@@ -20,28 +23,13 @@ import java.util.List;
  * </pre>
  */
 
+@Getter
+@Setter
 public class AuthorManageVO extends AuthorManage {
 
 	private static final long serialVersionUID = 1L;
 
-	List <AuthorManageVO> authorManageList;
-
-	/**
-	 * authorManageList attribute 를 리턴한다.
-	 * @return List<AuthorManageVO>
-	 */
-	public List<AuthorManageVO> getAuthorManageList() {
-		return authorManageList;
-	}
-
-	/**
-	 * authorManageList attribute 값을 설정한다.
-	 * @param authorManageList List<AuthorManageVO> 
-	 */
-	public void setAuthorManageList(List<AuthorManageVO> authorManageList) {
-		this.authorManageList = authorManageList;
-	}
-
-
+	/** 권한관리 목록 */
+	private List<AuthorManageVO> authorManageList;
 
 }
