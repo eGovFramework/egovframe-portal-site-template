@@ -3,11 +3,11 @@ package egovframework.let.sym.mnu.mpm.service.impl;
 import java.util.List;
 
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import egovframework.let.sym.mnu.mpm.service.EgovMenuManageService;
 import egovframework.let.sym.mnu.mpm.service.MenuManageVO;
-import jakarta.annotation.Resource;
 
 /**
  * 메뉴목록관리, 생성, 사이트맵을 처리하는 비즈니스 구현 클래스를 정의한다.
@@ -32,8 +32,8 @@ import jakarta.annotation.Resource;
 @Service("meunManageService")
 public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implements EgovMenuManageService{
 
-	@Resource(name="menuManageDAO")
-    private MenuManageDAO menuManageDAO;
+	@Autowired
+    private MenuManageMapper menuManageMapper;
 
 	/*### 메뉴관련 프로세스 ###*/
 	/**
@@ -44,7 +44,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 */
 	@Override
 	public List<?> selectMainMenuHead(MenuManageVO vo) throws Exception {
-   		return menuManageDAO.selectMainMenuHead(vo);
+   		return menuManageMapper.selectMainMenuHead(vo);
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 */
 	@Override
 	public List<?> selectMainMenuLeft(MenuManageVO vo) throws Exception {
-   		return menuManageDAO.selectMainMenuLeft(vo);
+   		return menuManageMapper.selectMainMenuLeft(vo);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	public String selectLastMenuURL(int iMenuNo, String sUniqId) throws Exception {
 		MenuManageVO vo = new MenuManageVO();
 		vo.setMenuNo(selectLastMenuNo(iMenuNo, sUniqId)) ;
-   		return menuManageDAO.selectLastMenuURL(vo);
+   		return menuManageMapper.selectLastMenuURL(vo);
 	}
 
 	/**
@@ -104,9 +104,9 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 		vo.setTempValue(sUniqId) ;
 		int chkMenuNo = 0;
 		int cntMenuNo = 0;
-		cntMenuNo = menuManageDAO.selectLastMenuNoCnt(vo);
+		cntMenuNo = menuManageMapper.selectLastMenuNoCnt(vo);
 		if(cntMenuNo>0){
-			chkMenuNo = menuManageDAO.selectLastMenuNo(vo);
+			chkMenuNo = menuManageMapper.selectLastMenuNo(vo);
 		}else{
 			chkMenuNo = -1;
 		}
@@ -121,7 +121,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 */
 	@Override
 	public List<?> selectMainMenuHeadByAuthor(MenuManageVO vo) throws Exception {
-   		return menuManageDAO.selectMainMenuHeadByAuthor(vo);
+   		return menuManageMapper.selectMainMenuHeadByAuthor(vo);
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 */
 	@Override
 	public List<?> selectMainMenuLeftByAuthor(MenuManageVO vo) throws Exception {
-   		return menuManageDAO.selectMainMenuLeftByAuthor(vo);
+   		return menuManageMapper.selectMainMenuLeftByAuthor(vo);
 	}
 
 }
