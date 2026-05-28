@@ -22,5 +22,12 @@
 	</bean>
 	
 	<alias name="sqlSession" alias="egov.sqlSession" />
-	
+
+	<!-- @EgovMapper 어노테이션이 붙은 Mapper 인터페이스 자동 스캔 등록 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="egovframework" />
+		<property name="annotationClass" value="org.egovframe.rte.psl.dataaccess.mapper.EgovMapper" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSession" />
+	</bean>
+
 </beans>
