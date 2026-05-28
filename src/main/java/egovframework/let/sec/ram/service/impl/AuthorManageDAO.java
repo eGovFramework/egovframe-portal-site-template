@@ -2,11 +2,11 @@ package egovframework.let.sec.ram.service.impl;
 
 import java.util.List;
 
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 import org.springframework.stereotype.Repository;
 
 import egovframework.let.sec.ram.service.AuthorManage;
 import egovframework.let.sec.ram.service.AuthorManageVO;
+import jakarta.annotation.Resource;
 
 /**
  * 권한관리에 대한 DAO 클래스를 정의한다.
@@ -27,72 +27,76 @@ import egovframework.let.sec.ram.service.AuthorManageVO;
  */
 
 @Repository("authorManageDAO")
-public class AuthorManageDAO extends EgovAbstractMapper {
+public class AuthorManageDAO {
 
-    /**
+	@Resource
+	private AuthorManageMapper authorManageMapper;
+
+	/**
 	 * 권한목록을 조회한다.
 	 * @param authorManageVO AuthorManageVO
 	 * @return List<AuthorManageVO>
 	 * @exception Exception
 	 */
 	public List<AuthorManageVO> selectAuthorList(AuthorManageVO authorManageVO) throws Exception {
-        return selectList("authorManageDAO.selectAuthorList", authorManageVO);
-    }
+		return authorManageMapper.selectAuthorList(authorManageVO);
+	}
 
 	/**
 	 * 권한을 등록한다.
 	 * @param authorManage AuthorManage
 	 * @exception Exception
 	 */
-    public void insertAuthor(AuthorManage authorManage) throws Exception {
-        insert("authorManageDAO.insertAuthor", authorManage);
-    }
+	public void insertAuthor(AuthorManage authorManage) throws Exception {
+		authorManageMapper.insertAuthor(authorManage);
+	}
 
-    /**
+	/**
 	 * 권한을 수정한다.
 	 * @param authorManage AuthorManage
 	 * @exception Exception
 	 */
-    public void updateAuthor(AuthorManage authorManage) throws Exception {
-        update("authorManageDAO.updateAuthor", authorManage);
-    }
+	public void updateAuthor(AuthorManage authorManage) throws Exception {
+		authorManageMapper.updateAuthor(authorManage);
+	}
 
-    /**
+	/**
 	 * 권한을 삭제한다.
 	 * @param authorManage AuthorManage
 	 * @exception Exception
 	 */
-    public void deleteAuthor(AuthorManage authorManage) throws Exception {
-        delete("authorManageDAO.deleteAuthor", authorManage);
-    }
+	public void deleteAuthor(AuthorManage authorManage) throws Exception {
+		authorManageMapper.deleteAuthor(authorManage);
+	}
 
-    /**
+	/**
 	 * 권한을 조회한다.
 	 * @param authorManageVO AuthorManageVO
 	 * @return AuthorManageVO
 	 * @exception Exception
 	 */
-    public AuthorManageVO selectAuthor(AuthorManageVO authorManageVO) throws Exception {
-        return (AuthorManageVO) selectOne("authorManageDAO.selectAuthor", authorManageVO);
-    }
+	public AuthorManageVO selectAuthor(AuthorManageVO authorManageVO) throws Exception {
+		return authorManageMapper.selectAuthor(authorManageVO);
+	}
 
-    /**
+	/**
 	 * 권한목록 총 갯수를 조회한다.
 	 * @param authorManageVO AuthorManageVO
 	 * @return int
 	 * @exception Exception
 	 */
-    public int selectAuthorListTotCnt(AuthorManageVO authorManageVO)  throws Exception {
-        return (Integer)selectOne("authorManageDAO.selectAuthorListTotCnt", authorManageVO);
-    }
+	public int selectAuthorListTotCnt(AuthorManageVO authorManageVO) throws Exception {
+		return authorManageMapper.selectAuthorListTotCnt(authorManageVO);
+	}
 
-    /**
+	/**
 	 * 모든 권한목록을 조회한다.
 	 * @param authorManageVO AuthorManageVO
 	 * @return List<AuthorManageVO>
 	 * @exception Exception
 	 */
 	public List<AuthorManageVO> selectAuthorAllList(AuthorManageVO authorManageVO) throws Exception {
-        return selectList("authorManageDAO.selectAuthorAllList", authorManageVO);
-    }
+		return authorManageMapper.selectAuthorAllList(authorManageVO);
+	}
+
 }

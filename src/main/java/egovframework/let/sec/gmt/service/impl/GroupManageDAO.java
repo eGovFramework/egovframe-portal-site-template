@@ -2,11 +2,11 @@ package egovframework.let.sec.gmt.service.impl;
 
 import java.util.List;
 
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 import org.springframework.stereotype.Repository;
 
 import egovframework.let.sec.gmt.service.GroupManage;
 import egovframework.let.sec.gmt.service.GroupManageVO;
+import jakarta.annotation.Resource;
 
 /**
  * 그룹관리에 대한 DAO 클래스를 정의한다.
@@ -27,7 +27,10 @@ import egovframework.let.sec.gmt.service.GroupManageVO;
  */
 
 @Repository("groupManageDAO")
-public class GroupManageDAO extends EgovAbstractMapper {
+public class GroupManageDAO {
+
+	@Resource
+	private GroupManageMapper groupManageMapper;
 
 	/**
 	 * 검색조건에 따른 그룹정보를 조회
@@ -36,17 +39,17 @@ public class GroupManageDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
 	public GroupManageVO selectGroup(GroupManageVO groupManageVO) throws Exception {
-		return (GroupManageVO) selectOne("groupManageDAO.selectGroup", groupManageVO);
+		return groupManageMapper.selectGroup(groupManageVO);
 	}
 
 	/**
 	 * 시스템사용 목적별 그룹 목록 조회
 	 * @param groupManageVO GroupManageVO
-	 * @return GroupManageVO
+	 * @return List<GroupManageVO>
 	 * @exception Exception
 	 */
 	public List<GroupManageVO> selectGroupList(GroupManageVO groupManageVO) throws Exception {
-		return selectList("groupManageDAO.selectGroupList", groupManageVO);
+		return groupManageMapper.selectGroupList(groupManageVO);
 	}
 
 	/**
@@ -55,7 +58,7 @@ public class GroupManageDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
 	public void insertGroup(GroupManage groupManage) throws Exception {
-		insert("groupManageDAO.insertGroup", groupManage);
+		groupManageMapper.insertGroup(groupManage);
 	}
 
 	/**
@@ -64,7 +67,7 @@ public class GroupManageDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
 	public void updateGroup(GroupManage groupManage) throws Exception {
-		update("groupManageDAO.updateGroup", groupManage);
+		groupManageMapper.updateGroup(groupManage);
 	}
 
 	/**
@@ -73,16 +76,17 @@ public class GroupManageDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
 	public void deleteGroup(GroupManage groupManage) throws Exception {
-		delete("groupManageDAO.deleteGroup", groupManage);
+		groupManageMapper.deleteGroup(groupManage);
 	}
 
-    /**
-	 * 롤목록 총 갯수를 조회한다.
+	/**
+	 * 그룹목록 총 갯수를 조회한다.
 	 * @param groupManageVO GroupManageVO
 	 * @return int
 	 * @exception Exception
 	 */
-    public int selectGroupListTotCnt(GroupManageVO groupManageVO) throws Exception {
-        return (Integer)selectOne("groupManageDAO.selectGroupListTotCnt", groupManageVO);
-    }
+	public int selectGroupListTotCnt(GroupManageVO groupManageVO) throws Exception {
+		return groupManageMapper.selectGroupListTotCnt(groupManageVO);
+	}
+
 }

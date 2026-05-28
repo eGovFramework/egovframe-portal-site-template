@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import egovframework.let.sec.ram.service.AuthorRoleManage;
 import egovframework.let.sec.ram.service.AuthorRoleManageVO;
+import jakarta.annotation.Resource;
 
 /**
  * 권한별 롤관리에 대한 DAO 클래스를 정의한다.
@@ -29,6 +30,9 @@ import egovframework.let.sec.ram.service.AuthorRoleManageVO;
 @Repository("authorRoleManageDAO")
 public class AuthorRoleManageDAO extends EgovAbstractMapper {
 
+	@Resource
+	private AuthorRoleManageMapper authorRoleManageMapper;
+
 	/**
 	 * 권한 롤 관계정보를 조회
 	 * @param authorRoleManageVO AuthorRoleManageVO
@@ -46,7 +50,7 @@ public class AuthorRoleManageDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
 	public List<AuthorRoleManageVO> selectAuthorRoleList(AuthorRoleManageVO authorRoleManageVO) throws Exception {
-		return selectList("authorRoleManageDAO.selectAuthorRoleList", authorRoleManageVO);
+		return authorRoleManageMapper.selectAuthorRoleList(authorRoleManageVO);
 	}
 
 	/**
@@ -55,7 +59,7 @@ public class AuthorRoleManageDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
 	public void insertAuthorRole(AuthorRoleManage authorRoleManage) throws Exception {
-		insert("authorRoleManageDAO.insertAuthorRole", authorRoleManage);
+		authorRoleManageMapper.insertAuthorRole(authorRoleManage);
 	}
 
 	/**
@@ -73,17 +77,17 @@ public class AuthorRoleManageDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
 	public void deleteAuthorRole(AuthorRoleManage authorRoleManage) throws Exception {
-		delete("authorRoleManageDAO.deleteAuthorRole", authorRoleManage);
+		authorRoleManageMapper.deleteAuthorRole(authorRoleManage);
 	}
 
-    /**
+	/**
 	 * 목록조회 카운트를 반환한다
 	 * @param authorRoleManageVO AuthorRoleManageVO
 	 * @return int
 	 * @exception Exception
 	 */
 	public int selectAuthorRoleListTotCnt(AuthorRoleManageVO authorRoleManageVO) throws Exception {
-		return (Integer)selectOne("authorRoleManageDAO.selectAuthorRoleListTotCnt", authorRoleManageVO);
+		return authorRoleManageMapper.selectAuthorRoleListTotCnt(authorRoleManageVO);
 	}
 
 }

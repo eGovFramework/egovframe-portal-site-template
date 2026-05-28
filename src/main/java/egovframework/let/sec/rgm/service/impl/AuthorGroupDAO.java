@@ -2,11 +2,11 @@ package egovframework.let.sec.rgm.service.impl;
 
 import java.util.List;
 
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 import org.springframework.stereotype.Repository;
 
 import egovframework.let.sec.rgm.service.AuthorGroup;
 import egovframework.let.sec.rgm.service.AuthorGroupVO;
+import jakarta.annotation.Resource;
 
 /**
  * 권한그룹에 대한 DAO 클래스를 정의한다.
@@ -27,7 +27,10 @@ import egovframework.let.sec.rgm.service.AuthorGroupVO;
  */
 
 @Repository("authorGroupDAO")
-public class AuthorGroupDAO extends EgovAbstractMapper {
+public class AuthorGroupDAO {
+
+	@Resource
+	private AuthorGroupMapper authorGroupMapper;
 
 	/**
 	 * 그룹별 할당된 권한 목록 조회
@@ -36,7 +39,7 @@ public class AuthorGroupDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
 	public List<AuthorGroupVO> selectAuthorGroupList(AuthorGroupVO authorGroupVO) throws Exception {
-		return selectList("authorGroupDAO.selectAuthorGroupList", authorGroupVO);
+		return authorGroupMapper.selectAuthorGroupList(authorGroupVO);
 	}
 
 	/**
@@ -45,7 +48,7 @@ public class AuthorGroupDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
 	public void insertAuthorGroup(AuthorGroup authorGroup) throws Exception {
-		insert("authorGroupDAO.insertAuthorGroup", authorGroup);
+		authorGroupMapper.insertAuthorGroup(authorGroup);
 	}
 
 	/**
@@ -54,7 +57,7 @@ public class AuthorGroupDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
 	public void updateAuthorGroup(AuthorGroup authorGroup) throws Exception {
-		update("authorGroupDAO.updateAuthorGroup", authorGroup);
+		authorGroupMapper.updateAuthorGroup(authorGroup);
 	}
 
 	/**
@@ -63,16 +66,17 @@ public class AuthorGroupDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
 	public void deleteAuthorGroup(AuthorGroup authorGroup) throws Exception {
-		delete("authorGroupDAO.deleteAuthorGroup", authorGroup);
+		authorGroupMapper.deleteAuthorGroup(authorGroup);
 	}
 
-    /**
+	/**
 	 * 그룹권한목록 총 갯수를 조회한다.
 	 * @param authorGroupVO AuthorGroupVO
 	 * @return int
 	 * @exception Exception
 	 */
-    public int selectAuthorGroupListTotCnt(AuthorGroupVO authorGroupVO) throws Exception {
-        return (Integer)selectOne("authorGroupDAO.selectAuthorGroupListTotCnt", authorGroupVO);
-    }
+	public int selectAuthorGroupListTotCnt(AuthorGroupVO authorGroupVO) throws Exception {
+		return authorGroupMapper.selectAuthorGroupListTotCnt(authorGroupVO);
+	}
+
 }
