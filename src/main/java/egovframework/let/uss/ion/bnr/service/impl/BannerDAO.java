@@ -2,12 +2,14 @@ package egovframework.let.uss.ion.bnr.service.impl;
 
 import java.util.List;
 
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
+import jakarta.annotation.Resource;
+
 import org.springframework.stereotype.Repository;
 
 import egovframework.com.cmm.service.FileVO;
 import egovframework.let.uss.ion.bnr.service.Banner;
 import egovframework.let.uss.ion.bnr.service.BannerVO;
+
 /**
  * 배너에 대한 DAO 클래스를 정의한다.
  * 배너에 대한 등록, 수정, 삭제, 조회, 반영확인 기능을 제공한다.
@@ -28,7 +30,10 @@ import egovframework.let.uss.ion.bnr.service.BannerVO;
  * </pre>
  */
 @Repository("bannerDAO")
-public class BannerDAO extends EgovAbstractMapper {
+public class BannerDAO {
+
+	@Resource
+	private BannerMapper bannerMapper;
 
 	/**
 	 * 배너를 관리하기 위해 등록된 배너목록을 조회한다.
@@ -37,28 +42,26 @@ public class BannerDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
 	public List<BannerVO> selectBannerList(BannerVO bannerVO) throws Exception {
-		return selectList("bannerDAO.selectBannerList", bannerVO);
+		return bannerMapper.selectBannerList(bannerVO);
 	}
 
-    /**
+	/**
 	 * 배너목록 총 갯수를 조회한다.
 	 * @param bannerVO BannerVO
 	 * @return int
 	 * @exception Exception
 	 */
-    public int selectBannerListTotCnt(BannerVO bannerVO) throws Exception {
-        return (Integer)selectOne("bannerDAO.selectBannerListTotCnt", bannerVO);
-    }
+	public int selectBannerListTotCnt(BannerVO bannerVO) throws Exception {
+		return bannerMapper.selectBannerListTotCnt(bannerVO);
+	}
 
 	/**
 	 * 등록된 배너의 상세정보를 조회한다.
 	 * @param bannerVO - 배너 Vo
 	 * @return BannerVO - 배너 Vo
-	 *
-	 * @param bannerVO
 	 */
 	public BannerVO selectBanner(BannerVO bannerVO) throws Exception {
-		return (BannerVO) selectOne("bannerDAO.selectBanner", bannerVO);
+		return bannerMapper.selectBanner(bannerVO);
 	}
 
 	/**
@@ -66,7 +69,7 @@ public class BannerDAO extends EgovAbstractMapper {
 	 * @param banner - 배너 model
 	 */
 	public void insertBanner(Banner banner) throws Exception {
-		insert("bannerDAO.insertBanner", banner);
+		bannerMapper.insertBanner(banner);
 	}
 
 	/**
@@ -74,17 +77,15 @@ public class BannerDAO extends EgovAbstractMapper {
 	 * @param banner - 배너 model
 	 */
 	public void updateBanner(Banner banner) throws Exception {
-        update("bannerDAO.updateBanner", banner);
+		bannerMapper.updateBanner(banner);
 	}
 
 	/**
 	 * 기 등록된 배너정보를 삭제한다.
 	 * @param banner - 배너 model
-	 *
-	 * @param banner
 	 */
 	public void deleteBanner(Banner banner) throws Exception {
-		delete("bannerDAO.deleteBanner", banner);
+		bannerMapper.deleteBanner(banner);
 	}
 
 	/**
@@ -93,7 +94,7 @@ public class BannerDAO extends EgovAbstractMapper {
 	 * @return FileVO - 파일 VO
 	 */
 	public FileVO selectBannerFile(Banner banner) throws Exception {
-		return (FileVO) selectOne("bannerDAO.selectBannerFile", banner);
+		return bannerMapper.selectBannerFile(banner);
 	}
 
 	/**
@@ -103,7 +104,7 @@ public class BannerDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
 	public List<BannerVO> selectBannerResult(BannerVO bannerVO) throws Exception {
-		return selectList("bannerDAO.selectBannerResult", bannerVO);
+		return bannerMapper.selectBannerResult(bannerVO);
 	}
 
 }

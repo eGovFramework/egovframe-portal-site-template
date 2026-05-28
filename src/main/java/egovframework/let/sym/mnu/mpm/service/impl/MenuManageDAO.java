@@ -2,10 +2,12 @@ package egovframework.let.sym.mnu.mpm.service.impl;
 
 import java.util.List;
 
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
+import jakarta.annotation.Resource;
+
 import org.springframework.stereotype.Repository;
 
 import egovframework.let.sym.mnu.mpm.service.MenuManageVO;
+
 /**
  * 메뉴관리, 메뉴생성, 사이트맵 생성에 대한 DAO 클래스를 정의한다.
  * @author 개발환경 개발팀 이용
@@ -19,15 +21,16 @@ import egovframework.let.sym.mnu.mpm.service.MenuManageVO;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.03.20  이  용          최초 생성
- *   2011.07.01  서준식			자기 메뉴 정보를 상위메뉴 정보로 참조하는 메뉴정보가 있는지 조회하는
- *   							selectUpperMenuNoByPk() 메서드 추가
+ *   2011.07.01  서준식          selectUpperMenuNoByPk() 메서드 추가
  *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
  *
  * </pre>
  */
-
 @Repository("menuManageDAO")
-public class MenuManageDAO extends EgovAbstractMapper{
+public class MenuManageDAO {
+
+	@Resource
+	private MenuManageMapper menuManageMapper;
 
 	/*### 메뉴관련 프로세스 ###*/
 	/**
@@ -36,8 +39,8 @@ public class MenuManageDAO extends EgovAbstractMapper{
 	 * @return List
 	 * @exception Exception
 	 */
-	public List<?> selectMainMenuHead(MenuManageVO vo) throws Exception{
-		return selectList("menuManageDAO.selectMainMenuHead", vo);
+	public List<?> selectMainMenuHead(MenuManageVO vo) throws Exception {
+		return menuManageMapper.selectMainMenuHead(vo);
 	}
 
 	/**
@@ -46,18 +49,18 @@ public class MenuManageDAO extends EgovAbstractMapper{
 	 * @return List
 	 * @exception Exception
 	 */
-	public List<?> selectMainMenuLeft(MenuManageVO vo) throws Exception{
-		return selectList("menuManageDAO.selectMainMenuLeft", vo);
+	public List<?> selectMainMenuLeft(MenuManageVO vo) throws Exception {
+		return menuManageMapper.selectMainMenuLeft(vo);
 	}
 
 	/**
 	 * MainMenu Head MenuURL 조회
 	 * @param vo MenuManageVO
-	 * @return  String
+	 * @return String
 	 * @exception Exception
 	 */
-	public String selectLastMenuURL(MenuManageVO vo) throws Exception{
-		return (String)selectOne("menuManageDAO.selectLastMenuURL", vo);
+	public String selectLastMenuURL(MenuManageVO vo) throws Exception {
+		return menuManageMapper.selectLastMenuURL(vo);
 	}
 
 	/**
@@ -66,8 +69,8 @@ public class MenuManageDAO extends EgovAbstractMapper{
 	 * @return int
 	 * @exception Exception
 	 */
-	public int selectLastMenuNo(MenuManageVO vo) throws Exception{
-		return (Integer)selectOne("menuManageDAO.selectLastMenuNo", vo);
+	public int selectLastMenuNo(MenuManageVO vo) throws Exception {
+		return menuManageMapper.selectLastMenuNo(vo);
 	}
 
 	/**
@@ -76,8 +79,8 @@ public class MenuManageDAO extends EgovAbstractMapper{
 	 * @return int
 	 * @exception Exception
 	 */
-	public int selectLastMenuNoCnt(MenuManageVO vo) throws Exception{
-		return (Integer)selectOne("menuManageDAO.selectLastMenuNoCnt", vo);
+	public int selectLastMenuNoCnt(MenuManageVO vo) throws Exception {
+		return menuManageMapper.selectLastMenuNoCnt(vo);
 	}
 
 	/**
@@ -86,8 +89,8 @@ public class MenuManageDAO extends EgovAbstractMapper{
 	 * @return List
 	 * @exception Exception
 	 */
-	public List<?> selectMainMenuHeadByAuthor(MenuManageVO vo) throws Exception{
-		return selectList("menuManageDAO.selectMainMenuHeadByAuthor", vo);
+	public List<?> selectMainMenuHeadByAuthor(MenuManageVO vo) throws Exception {
+		return menuManageMapper.selectMainMenuHeadByAuthor(vo);
 	}
 
 	/**
@@ -96,8 +99,8 @@ public class MenuManageDAO extends EgovAbstractMapper{
 	 * @return List
 	 * @exception Exception
 	 */
-	public List<?> selectMainMenuLeftByAuthor(MenuManageVO vo) throws Exception{
-		return selectList("menuManageDAO.selectMainMenuLeftByAuthor", vo);
+	public List<?> selectMainMenuLeftByAuthor(MenuManageVO vo) throws Exception {
+		return menuManageMapper.selectMainMenuLeftByAuthor(vo);
 	}
 
 }
