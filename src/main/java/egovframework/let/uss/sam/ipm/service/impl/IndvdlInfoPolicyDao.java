@@ -2,7 +2,8 @@ package egovframework.let.uss.sam.ipm.service.impl;
 
 import java.util.List;
 
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
+import jakarta.annotation.Resource;
+
 import org.springframework.stereotype.Repository;
 
 import egovframework.com.cmm.ComDefaultVO;
@@ -24,7 +25,10 @@ import egovframework.let.uss.sam.ipm.service.IndvdlInfoPolicy;
  * </pre>
  */
 @Repository("onlineIndvdlInfoPolicyDao")
-public class IndvdlInfoPolicyDao extends EgovAbstractMapper {
+public class IndvdlInfoPolicyDao {
+
+	@Resource
+	private IndvdlInfoPolicyMapper indvdlInfoPolicyMapper;
 
     /**
      * 개인정보보호정책를(을) 목록을 한다.
@@ -33,7 +37,7 @@ public class IndvdlInfoPolicyDao extends EgovAbstractMapper {
      * @throws Exception
      */
 	public List<?> selectIndvdlInfoPolicyList(ComDefaultVO searchVO) throws Exception {
-        return selectList("IndvdlInfoPolicy.selectIndvdlInfoPolicy", searchVO);
+        return indvdlInfoPolicyMapper.selectIndvdlInfoPolicy(searchVO);
     }
 
     /**
@@ -43,7 +47,7 @@ public class IndvdlInfoPolicyDao extends EgovAbstractMapper {
      * @throws Exception
      */
     public int selectIndvdlInfoPolicyListCnt(ComDefaultVO searchVO) throws Exception {
-        return (Integer)selectOne("IndvdlInfoPolicy.selectIndvdlInfoPolicyCnt");
+        return indvdlInfoPolicyMapper.selectIndvdlInfoPolicyCnt();
     }
 
     /**
@@ -53,7 +57,7 @@ public class IndvdlInfoPolicyDao extends EgovAbstractMapper {
      * @throws Exception
      */
     public IndvdlInfoPolicy selectIndvdlInfoPolicyDetail(IndvdlInfoPolicy indvdlInfoPolicy) throws Exception {
-        return (IndvdlInfoPolicy)selectOne("IndvdlInfoPolicy.selectIndvdlInfoPolicyDetail", indvdlInfoPolicy);
+        return indvdlInfoPolicyMapper.selectIndvdlInfoPolicyDetail(indvdlInfoPolicy);
     }
 
     /**
@@ -62,7 +66,7 @@ public class IndvdlInfoPolicyDao extends EgovAbstractMapper {
      * @throws Exception
      */
     public void insertIndvdlInfoPolicy(IndvdlInfoPolicy indvdlInfoPolicy) throws Exception {
-        insert("IndvdlInfoPolicy.insertIndvdlInfoPolicy", indvdlInfoPolicy);
+        indvdlInfoPolicyMapper.insertIndvdlInfoPolicy(indvdlInfoPolicy);
     }
 
     /**
@@ -71,7 +75,7 @@ public class IndvdlInfoPolicyDao extends EgovAbstractMapper {
      * @throws Exception
      */
     public void updateIndvdlInfoPolicy(IndvdlInfoPolicy indvdlInfoPolicy) throws Exception {
-        update("IndvdlInfoPolicy.updateIndvdlInfoPolicy", indvdlInfoPolicy);
+        indvdlInfoPolicyMapper.updateIndvdlInfoPolicy(indvdlInfoPolicy);
     }
 
     /**
@@ -80,7 +84,7 @@ public class IndvdlInfoPolicyDao extends EgovAbstractMapper {
      * @throws Exception
      */
     public void deleteIndvdlInfoPolicy(IndvdlInfoPolicy indvdlInfoPolicy) throws Exception {
-        delete("IndvdlInfoPolicy.deleteIndvdlInfoPolicy", indvdlInfoPolicy);
+        indvdlInfoPolicyMapper.deleteIndvdlInfoPolicy(indvdlInfoPolicy);
     }
 
 }

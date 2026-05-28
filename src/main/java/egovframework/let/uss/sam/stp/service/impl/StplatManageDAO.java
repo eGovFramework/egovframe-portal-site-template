@@ -2,7 +2,8 @@ package egovframework.let.uss.sam.stp.service.impl;
 
 import java.util.List;
 
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
+import jakarta.annotation.Resource;
+
 import org.springframework.stereotype.Repository;
 
 import egovframework.let.uss.sam.stp.service.StplatManageDefaultVO;
@@ -28,8 +29,10 @@ import egovframework.let.uss.sam.stp.service.StplatManageVO;
  * </pre>
  */
 @Repository("StplatManageDAO")
-public class StplatManageDAO extends EgovAbstractMapper {
+public class StplatManageDAO {
 
+	@Resource
+	private StplatManageMapper stplatManageMapper;
 
     /**
 	 * 약관정보 글 목록에 대한 상세내용을 조회한다.
@@ -38,9 +41,7 @@ public class StplatManageDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
     public StplatManageVO selectStplatDetail(StplatManageVO vo) throws Exception {
-
-        return (StplatManageVO) selectOne("StplatManageDAO.selectStplatDetail", vo);
-
+        return stplatManageMapper.selectStplatDetail(vo);
     }
 
     /**
@@ -50,9 +51,7 @@ public class StplatManageDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
     public List<?> selectStplatList(StplatManageDefaultVO searchVO) throws Exception {
-
-        return selectList("StplatManageDAO.selectStplatList", searchVO);
-
+        return stplatManageMapper.selectStplatList(searchVO);
     }
 
     /**
@@ -61,9 +60,7 @@ public class StplatManageDAO extends EgovAbstractMapper {
 	 * @return 글 총 갯수
 	 */
     public int selectStplatListTotCnt(StplatManageDefaultVO searchVO) {
-
-        return (Integer)selectOne("StplatManageDAO.selectStplatListTotCnt", searchVO);
-
+        return stplatManageMapper.selectStplatListTotCnt(searchVO);
     }
 
 	/**
@@ -72,9 +69,7 @@ public class StplatManageDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
     public void insertStplatCn(StplatManageVO vo) throws Exception {
-
-        insert("StplatManageDAO.insertStplatCn", vo);
-
+        stplatManageMapper.insertStplatCn(vo);
     }
 
 	/**
@@ -83,9 +78,7 @@ public class StplatManageDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
     public void updateStplatCn(StplatManageVO vo) throws Exception {
-
-        update("StplatManageDAO.updateStplatCn", vo);
-
+        stplatManageMapper.updateStplatCn(vo);
     }
 
 	/**
@@ -94,9 +87,7 @@ public class StplatManageDAO extends EgovAbstractMapper {
 	 * @exception Exception
 	 */
     public void deleteStplatCn(StplatManageVO vo) throws Exception {
-
-        delete("StplatManageDAO.deleteStplatCn", vo);
-
+        stplatManageMapper.deleteStplatCn(vo);
     }
 
 }

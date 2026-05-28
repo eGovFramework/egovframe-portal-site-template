@@ -2,7 +2,8 @@ package egovframework.let.uss.umt.service.impl;
 
 import java.util.List;
 
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
+import jakarta.annotation.Resource;
+
 import org.springframework.stereotype.Repository;
 
 import egovframework.let.uss.umt.service.MberManageVO;
@@ -26,7 +27,10 @@ import egovframework.let.uss.umt.service.UserDefaultVO;
  * </pre>
  */
 @Repository("mberManageDAO")
-public class MberManageDAO extends EgovAbstractMapper{
+public class MberManageDAO {
+
+	@Resource
+	private MberManageMapper mberManageMapper;
 
     /**
      * 기 등록된 특정 일반회원의 정보를 데이터베이스에서 읽어와 화면에 출력
@@ -34,7 +38,7 @@ public class MberManageDAO extends EgovAbstractMapper{
      * @return List<MberManageVO> 기업회원 목록정보
      */
 	public List<MberManageVO> selectMberList(UserDefaultVO userSearchVO){
-        return selectList("mberManageDAO.selectMberList", userSearchVO);
+        return mberManageMapper.selectMberList(userSearchVO);
     }
 
     /**
@@ -43,7 +47,7 @@ public class MberManageDAO extends EgovAbstractMapper{
      * @return int 일반회원총갯수
      */
     public int selectMberListTotCnt(UserDefaultVO userSearchVO) {
-        return (Integer)selectOne("mberManageDAO.selectMberListTotCnt", userSearchVO);
+        return mberManageMapper.selectMberListTotCnt(userSearchVO);
     }
 
     /**
@@ -51,7 +55,7 @@ public class MberManageDAO extends EgovAbstractMapper{
      * @param delId 삭제 대상 일반회원아이디
      */
     public void deleteMber(String delId){
-        delete("mberManageDAO.deleteMber_S", delId);
+        mberManageMapper.deleteMber_S(delId);
     }
 
     /**
@@ -60,7 +64,7 @@ public class MberManageDAO extends EgovAbstractMapper{
      * @return String 등록결과
      */
     public int insertMber(MberManageVO mberManageVO){
-        return insert("mberManageDAO.insertMber_S", mberManageVO);
+        return mberManageMapper.insertMber_S(mberManageVO);
     }
 
     /**
@@ -69,7 +73,7 @@ public class MberManageDAO extends EgovAbstractMapper{
      * @return MberManageVO 일반회원 상세정보
      */
     public MberManageVO selectMber(String mberId){
-        return (MberManageVO) selectOne("mberManageDAO.selectMber_S", mberId);
+        return mberManageMapper.selectMber_S(mberId);
     }
 
     /**
@@ -77,7 +81,7 @@ public class MberManageDAO extends EgovAbstractMapper{
      * @param mberManageVO 일반회원수정정보
      */
     public void updateMber(MberManageVO mberManageVO){
-        update("mberManageDAO.updateMber_S",mberManageVO);
+        mberManageMapper.updateMber_S(mberManageVO);
     }
 
     /**
@@ -86,7 +90,7 @@ public class MberManageDAO extends EgovAbstractMapper{
      * @return List 일반회원약관정보
      */
 	public List<?> selectStplat(String stplatId){
-    	return selectList("mberManageDAO.selectStplat_S", stplatId);
+    	return mberManageMapper.selectStplat_S(stplatId);
     }
 
     /**
@@ -94,7 +98,7 @@ public class MberManageDAO extends EgovAbstractMapper{
      * @param passVO 기업회원수정정보(비밀번호)
      */
     public void updatePassword(MberManageVO passVO) {
-        update("mberManageDAO.updatePassword_S", passVO);
+        mberManageMapper.updatePassword_S(passVO);
     }
 
     /**
@@ -103,7 +107,7 @@ public class MberManageDAO extends EgovAbstractMapper{
      * @return MberManageVO 일반회원 암호정보
      */
     public MberManageVO selectPassword(MberManageVO mberManageVO){
-    	return (MberManageVO) selectOne("mberManageDAO.selectPassword_S", mberManageVO);
+    	return mberManageMapper.selectPassword_S(mberManageVO);
     }
 
     /**
@@ -112,7 +116,7 @@ public class MberManageDAO extends EgovAbstractMapper{
      * @return int 사용가능여부(아이디 사용회수 )
      */
     public int checkIdDplct(String checkId){
-        return (Integer)selectOne("mberManageDAO.checkIdDplct_S", checkId);
+        return mberManageMapper.checkIdDplct_S(checkId);
     }
 
 }

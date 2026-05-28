@@ -22,5 +22,11 @@
 	</bean>
 	
 	<alias name="sqlSession" alias="egov.sqlSession" />
-	
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="egovframework.let,egovframework.com" />
+		<property name="annotationClass" value="org.egovframe.rte.psl.dataaccess.mapper.EgovMapper" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSession" />
+	</bean>
+
 </beans>
