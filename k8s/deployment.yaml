@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: egovframe-portal-site
+  labels:
+    app: egovframe-portal-site
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: egovframe-portal-site
+  template:
+    metadata:
+      labels:
+        app: egovframe-portal-site
+    spec:
+      containers:
+        - name: egovframe-portal-site
+          image: egovframe-portal-site:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: JAVA_OPTS
+              value: "-Xms512m -Xmx1024m"
