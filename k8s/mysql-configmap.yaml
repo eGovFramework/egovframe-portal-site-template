@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+  labels:
+    app.kubernetes.io/name: mysql
+    app.kubernetes.io/part-of: egovframe-template
+data:
+  MYSQL_DATABASE: pst
+  MYSQL_USER: pst

@@ -21,6 +21,26 @@ spec:
         app.kubernetes.io/name: egov-portal-site
         app.kubernetes.io/part-of: egovframe-template
     spec:
+      # MySQL이 준비될 때까지 대기하는 initContainer
+      initContainers:
+        - name: wait-for-mysql
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - |
+              echo "MySQL(mysql-db:3306) 준비 대기 중..."
+              while ! nc -z mysql-db 3306; do
+                sleep 3
+              done
+              echo "MySQL 준비 완료"
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "16Mi"
+            limits:
+              cpu: "50m"
+              memory: "32Mi"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -31,6 +51,20 @@ spec:
           # Replace with your registry/tag, e.g. ghcr.io/<org>/egov-portal-site:5.0.0
           image: egovframe-portal-site-template:5.0.0
           imagePullPolicy: IfNotPresent
+          env:
+            - name: DB_HOST
+              value: mysql-db
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_NAME
+              value: pst
+            - name: DB_USERNAME
+              value: pst
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_PASSWORD
           ports:
             - name: http
               containerPort: 8080

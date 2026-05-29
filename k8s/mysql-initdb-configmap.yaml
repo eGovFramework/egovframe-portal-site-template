@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-initdb
+  labels:
+    app.kubernetes.io/name: mysql
+    app.kubernetes.io/part-of: egovframe-template
+  annotations:
+    description: |
+      MySQL 초기화 SQL을 ConfigMap으로 관리합니다.
+      DDL/DML 파일 크기가 ConfigMap 한도(1 MiB)를 초과할 경우
+      initContainer + git clone 또는 PV 마운트 방식으로 전환하십시오.
+      사용법: DATABASE/mysql/ 아래의 SQL 파일 내용을 data 항목에 넣거나
+      아래 명령으로 ConfigMap을 직접 생성합니다.
+      kubectl create configmap mysql-initdb \
+        --from-file=01-ddl.sql=DATABASE/mysql/all_pst_ddl_mysql.sql \
+        --from-file=02-data.sql=DATABASE/mysql/all_pst_data_mysql.sql
+data:
+  README: |
+    이 ConfigMap은 placeholder입니다.
+    실제 DDL/DML은 kubectl create configmap 명령으로 생성하십시오.
+    상세 절차는 k8s/README.md의 "데이터베이스 설정" 섹션을 참고하십시오.

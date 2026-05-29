@@ -22,8 +22,12 @@ FROM tomcat:10.1-jre17
 RUN rm -rf /usr/local/tomcat/webapps/ROOT
 COPY --from=build /workspace/ROOT.war /usr/local/tomcat/webapps/ROOT.war
 
+# globals.properties DB 접속정보를 환경변수로 치환하는 entrypoint
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 ENV JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=70 -XX:+ExitOnOutOfMemoryError"
 
 EXPOSE 8080
 
-CMD ["catalina.sh","run"]
+ENTRYPOINT ["docker-entrypoint.sh"]

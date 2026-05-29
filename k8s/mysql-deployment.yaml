@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  labels:
+    app.kubernetes.io/name: mysql
+    app.kubernetes.io/part-of: egovframe-template
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mysql
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mysql
+        app.kubernetes.io/part-of: egovframe-template
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8
+          args:
+            - --character-set-server=utf8mb4
+            - --collation-server=utf8mb4_unicode_ci
+          ports:
+            - name: mysql
+              containerPort: 3306
+          envFrom:
+            - configMapRef:
+                name: mysql-config
+            - secretRef:
+                name: mysql-secret
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"
+          readinessProbe:
+            exec:
+              command:
+                - mysqladmin
+                - ping
+                - -h
+                - localhost
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            failureThreshold: 6
+          livenessProbe:
+            exec:
+              command:
+                - mysqladmin
+                - ping
+                - -h
+                - localhost
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            failureThreshold: 3
+          volumeMounts:
+            - name: mysql-data
+              mountPath: /var/lib/mysql
+            - name: initdb
+              mountPath: /docker-entrypoint-initdb.d
+              readOnly: true
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: mysql-pvc
+        - name: initdb
+          configMap:
+            name: mysql-initdb
