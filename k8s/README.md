@@ -38,25 +38,14 @@ docker push ghcr.io/<org>/egov-portal-site:5.0.0
 
 k8s 디렉터리에 포함된 매니페스트를 사용하여 MySQL을 클러스터 내에 배포합니다.
 
-#### 2-1. DDL/DML ConfigMap 생성
+#### 2-1. MySQL 리소스 배포
 
-`DATABASE/mysql/` 아래의 SQL 파일을 ConfigMap으로 생성합니다. MySQL 최초 기동 시 `/docker-entrypoint-initdb.d/` 에 마운트되어 자동 실행됩니다.
-
-```bash
-# 프로젝트 루트에서 실행
-kubectl create configmap mysql-initdb \
-  --from-file=01-ddl.sql=DATABASE/mysql/all_pst_ddl_mysql.sql \
-  --from-file=02-data.sql=DATABASE/mysql/all_pst_data_mysql.sql
-```
-
-> **참고**: SQL 파일 크기 합계가 1 MiB를 초과하면 ConfigMap 한도에 걸릴 수 있습니다.
-> 이 경우 initContainer에서 git clone으로 SQL 파일을 가져오거나, PV에 직접 복사하는 방식을 사용하십시오.
-
-#### 2-2. MySQL 리소스 배포
+`k8s/mysql-initdb-configmap.yaml`에 DDL/DML SQL이 내장되어 있습니다. MySQL 최초 기동 시 `/docker-entrypoint-initdb.d/` 에 마운트되어 자동 실행됩니다.
 
 ```bash
 kubectl apply -f k8s/mysql-secret.yaml
 kubectl apply -f k8s/mysql-configmap.yaml
+kubectl apply -f k8s/mysql-initdb-configmap.yaml
 kubectl apply -f k8s/mysql-pvc.yaml
 kubectl apply -f k8s/mysql-deployment.yaml
 kubectl apply -f k8s/mysql-service.yaml
@@ -171,6 +160,5 @@ Tomcat이 ROOT 컨텍스트(`/`)를 정상적으로 서비스하면 HTTP 200을 
 
 ```bash
 kubectl delete -f k8s/
-kubectl delete configmap mysql-initdb    # DDL/DML ConfigMap 별도 삭제
 kubectl delete pvc mysql-pvc             # 데이터 볼륨 삭제 (주의: 데이터 유실)
 ```
