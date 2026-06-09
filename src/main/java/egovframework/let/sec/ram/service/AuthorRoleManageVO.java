@@ -22,12 +22,14 @@ import lombok.Setter;
  *
  * </pre>
  */
+
 @Getter
 @Setter
 public class AuthorRoleManageVO extends AuthorRoleManage {
 
 	private static final long serialVersionUID = 1L;
 
-	List<AuthorRoleManageVO> authorRoleList;
+	/** 권한별 롤 목록 */
+	private List<AuthorRoleManageVO> authorRoleList;
 
 }

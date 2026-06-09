@@ -22,12 +22,14 @@ import lombok.Setter;
  *
  * </pre>
  */
+
 @Getter
 @Setter
 public class AuthorManageVO extends AuthorManage {
 
 	private static final long serialVersionUID = 1L;
 
-	List<AuthorManageVO> authorManageList;
+	/** 권한관리 목록 */
+	private List<AuthorManageVO> authorManageList;
 
 }
