@@ -97,7 +97,7 @@ $(document).ready(function(){
         </div>
         <!--// 전체검색 -->
 <%
-    LoginVO loginVO = (LoginVO)session.getAttribute("LoginVO");
+    LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
     if(loginVO == null){
 %>
 		<c:set var="loginName" value=""/>

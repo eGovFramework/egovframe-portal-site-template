@@ -1,7 +1,8 @@
 package egovframework.let.sec.rmt.service;
 
-import egovframework.com.cmm.ComDefaultVO;
 import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+
+import egovframework.com.cmm.ComDefaultVO;
 
 /**
  * 롤관리에 대한 model 클래스를 정의한다.

@@ -39,9 +39,7 @@ function actionLogin() {
     } else if (document.loginForm.password.value =="") {
         alert("비밀번호를 입력하세요");
     } else {
-        document.loginForm.action="<c:url value='/uat/uia/actionSecurityLogin.do'/>";
-        //document.loginForm.j_username.value = document.loginForm.userSe.value + document.loginForm.username.value;
-        //document.loginForm.action="<c:url value='/j_spring_security_check'/>";
+        document.loginForm.action="<c:url value='/uat/uia/actionLogin.do'/>";
         document.loginForm.submit();
     }
 }
@@ -121,7 +119,7 @@ function fnInit() {
                     로그인을 하시면 모든 서비스를 제한없이 이용하실 수 있습니다.</p>
                 <div class="loginbox">
                 
-                    <form name="loginForm" action ="<c:url value='/uat/uia/actionSecurityLogin.do'/>" method="post">
+                    <form name="loginForm" action ="<c:url value='/uat/uia/actionLogin.do'/>" method="post">
                     <div style="visibility:hidden;display:none;">
 		                <input name="iptSubmit1" type="submit" value="전송" title="전송" />
 		            </div> 

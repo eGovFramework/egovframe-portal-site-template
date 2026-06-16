@@ -1,9 +1,10 @@
 package egovframework.let.uss.ion.bnr.service;
 
-import egovframework.com.cmm.ComDefaultVO;
 import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
-import jakarta.validation.constraints.Size;
+
+import egovframework.com.cmm.ComDefaultVO;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 /**
  * 배너에 대한 model 클래스를 정의한다.
  * 배너의 일련번호, 배너명, 링크URL, 배너설명, 반영여부 항목을 관리한다.

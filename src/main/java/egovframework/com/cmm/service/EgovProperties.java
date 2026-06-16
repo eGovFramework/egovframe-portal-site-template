@@ -1,5 +1,6 @@
 package egovframework.com.cmm.service;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -64,7 +65,7 @@ public class EgovProperties {
 		try {
 			Properties props = new Properties();
 			fis = new FileInputStream(GLOBALS_PROPERTIES_FILE);
-			props.load(new java.io.BufferedInputStream(fis));
+			props.load(new BufferedInputStream(fis));
 			value = props.getProperty(keyName).trim();
 		} catch (FileNotFoundException fne) {
 			debug(fne);
@@ -100,9 +101,9 @@ public class EgovProperties {
 			File srcFile = new File(src);
 			if (srcFile.exists()) {
 
-				java.util.Properties props = new java.util.Properties();
+				Properties props = new Properties();
 				fis = new FileInputStream(src);
-				props.load(new java.io.BufferedInputStream(fis));
+				props.load(new BufferedInputStream(fis));
 				fis.close();
 
 				int i = 0;
@@ -134,7 +135,7 @@ public class EgovProperties {
 	 * @param obj Object
 	 */
 	private static void debug(Object obj) {
-		if (obj instanceof java.lang.Exception) {
+		if (obj instanceof Exception) {
 			LOGGER.debug("IGNORED: {}", ((Exception)obj).getMessage());
 		}
 	}

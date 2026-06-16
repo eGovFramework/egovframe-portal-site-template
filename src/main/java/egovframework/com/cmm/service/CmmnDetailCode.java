@@ -1,7 +1,9 @@
 package egovframework.com.cmm.service;
 
 import java.io.Serializable;
+
 import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+
 import jakarta.validation.constraints.Size;
 
 /**
@@ -28,40 +30,40 @@ public class CmmnDetailCode implements Serializable {
 	 * 코드ID
 	 */
 	@EgovNullCheck
-	@Size(max=6)
-    private String codeId = "";
+	@Size(max = 6)
+    private String codeId;
 
     /*
      * 코드ID명
      */
-    private String codeIdNm = "";
+    private String codeIdNm;
 
     /*
      * 코드
      */
 	@EgovNullCheck
-	@Size(max=15)
-	private String code = "";
+	@Size(max = 15)
+	private String code;
 
 	/*
 	 * 코드명
 	 */
 	@EgovNullCheck
-	@Size(max=60)
-    private String codeNm = "";
+	@Size(max = 60)
+    private String codeNm;
 
     /*
      * 코드설명
      */
 	@EgovNullCheck
-	@Size(max=200)
-    private String codeDc = "";
+	@Size(max = 200)
+    private String codeDc;
 
     /*
      * 사용여부
      */
 	@EgovNullCheck
-    private String useAt = "";
+    private String useAt;
 
     /*
      * 최초등록자ID

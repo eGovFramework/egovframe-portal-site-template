@@ -223,15 +223,25 @@ public class EgovMainController {
      * @exception Exception
      */
 	@RequestMapping(value="/sym/mms/EgovMenuLeft.do")
-    public String selectMenuLeft(ModelMap model) throws Exception {
+    public String selectMenuLeft(
+    		@ModelAttribute("menuManageVO") MenuManageVO menuManageVO,
+    		ModelMap model)
+            throws Exception {
 
-    	//LoginVO user = EgovUserDetailsHelper.isAuthenticated()? (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser():null;
-
-    	//LoginVO user = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
-    	if(EgovUserDetailsHelper.isAuthenticated()){
-    		//인증된 경우 처리할 사항 추가 ...
-    		model.addAttribute("lastLogoutDateTime", "로그아웃 타임: 2021-08-12 11:30");
-    		//최근 로그아웃 시간 등에 대한 확보 후 메인 컨텐츠로 활용
+    	LoginVO user =
+    		EgovUserDetailsHelper.isAuthenticated()? (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser():null;
+    	if(EgovUserDetailsHelper.isAuthenticated() && user!=null){
+    		menuManageVO.setTmp_Id(user.getId());
+        	menuManageVO.setTmp_Password(user.getPassword());
+        	menuManageVO.setTmp_UserSe(user.getUserSe());
+        	menuManageVO.setTmp_Name(user.getName());
+        	menuManageVO.setTmp_Email(user.getEmail());
+        	menuManageVO.setTmp_OrgnztId(user.getOrgnztId());
+        	menuManageVO.setTmp_UniqId(user.getUniqId());
+    		model.addAttribute("list_menulist", menuManageService.selectMainMenuLeft(menuManageVO));
+    	}else{
+    		menuManageVO.setAuthorCode("ROLE_ANONYMOUS");
+    		model.addAttribute("list_menulist", menuManageService.selectMainMenuLeftByAuthor(menuManageVO));
     	}
 
       	return "main/inc/EgovIncLeftmenu";
