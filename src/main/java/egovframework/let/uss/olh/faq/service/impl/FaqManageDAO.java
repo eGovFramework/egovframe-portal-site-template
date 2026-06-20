@@ -35,7 +35,7 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * @return 조회한 글
 	 * @exception Exception
 	 */
-    public FaqManageVO selectFaqListDetail(FaqManageVO vo) throws Exception {
+    public FaqManageVO selectFaqListDetail(FaqManageVO vo) {
 
         return (FaqManageVO) selectOne("FaqManageDAO.selectFaqListDetail", vo);
 
@@ -46,7 +46,7 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * @param vo
 	 * @exception Exception
 	 */
-    public void updateFaqInqireCo(FaqManageVO vo) throws Exception {
+    public void updateFaqInqireCo(FaqManageVO vo) {
 
         update("FaqManageDAO.updateFaqInqireCo", vo);
 
@@ -58,7 +58,7 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * @return 글 목록
 	 * @exception Exception
 	 */
-	public List<?> selectFaqList(FaqManageDefaultVO searchVO) throws Exception {
+	public List<?> selectFaqList(FaqManageDefaultVO searchVO) {
 
         return selectList("FaqManageDAO.selectFaqList", searchVO);
 
@@ -80,7 +80,7 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * @param vo
 	 * @exception Exception
 	 */
-    public void insertFaqCn(FaqManageVO vo) throws Exception {
+    public void insertFaqCn(FaqManageVO vo) {
 
         insert("FaqManageDAO.insertFaqCn", vo);
 
@@ -91,7 +91,7 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * @param vo
 	 * @exception Exception
 	 */
-    public void updateFaqCn(FaqManageVO vo) throws Exception {
+    public void updateFaqCn(FaqManageVO vo) {
 
         update("FaqManageDAO.updateFaqCn", vo);
 
@@ -102,7 +102,7 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * @param vo
 	 * @exception Exception
 	 */
-    public void deleteFaqCn(FaqManageVO vo) throws Exception {
+    public void deleteFaqCn(FaqManageVO vo) {
 
         delete("FaqManageDAO.deleteFaqCn", vo);
 

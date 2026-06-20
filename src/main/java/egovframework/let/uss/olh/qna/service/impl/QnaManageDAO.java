@@ -35,7 +35,7 @@ public class QnaManageDAO extends EgovAbstractMapper {
 	 * @return 조회한 글
 	 * @exception Exception
 	 */
-    public QnaManageVO selectQnaListDetail(QnaManageVO vo) throws Exception {
+    public QnaManageVO selectQnaListDetail(QnaManageVO vo) {
 
         return (QnaManageVO) selectOne("QnaManageDAO.selectQnaListDetail", vo);
 
@@ -46,7 +46,7 @@ public class QnaManageDAO extends EgovAbstractMapper {
 	 * @param vo
 	 * @exception Exception
 	 */
-    public void updateQnaInqireCo(QnaManageVO vo) throws Exception {
+    public void updateQnaInqireCo(QnaManageVO vo) {
 
         update("QnaManageDAO.updateQnaInqireCo", vo);
 
@@ -58,7 +58,7 @@ public class QnaManageDAO extends EgovAbstractMapper {
 	 * @return 글 목록
 	 * @exception Exception
 	 */
-	public List<?> selectQnaList(QnaManageDefaultVO searchVO) throws Exception {
+	public List<?> selectQnaList(QnaManageDefaultVO searchVO) {
 
         return selectList("QnaManageDAO.selectQnaList", searchVO);
 
@@ -80,7 +80,7 @@ public class QnaManageDAO extends EgovAbstractMapper {
 	 * @param vo
 	 * @exception Exception
 	 */
-    public void insertQnaCn(QnaManageVO vo) throws Exception {
+    public void insertQnaCn(QnaManageVO vo) {
 
         insert("QnaManageDAO.insertQnaCn", vo);
 
@@ -102,7 +102,7 @@ public class QnaManageDAO extends EgovAbstractMapper {
 	 * @param vo
 	 * @exception Exception
 	 */
-    public void updateQnaCn(QnaManageVO vo) throws Exception {
+    public void updateQnaCn(QnaManageVO vo) {
 
         update("QnaManageDAO.updateQnaCn", vo);
 
@@ -113,7 +113,7 @@ public class QnaManageDAO extends EgovAbstractMapper {
 	 * @param vo
 	 * @exception Exception
 	 */
-    public void deleteQnaCn(QnaManageVO vo) throws Exception {
+    public void deleteQnaCn(QnaManageVO vo) {
 
         delete("QnaManageDAO.deleteQnaCn", vo);
 
@@ -126,7 +126,7 @@ public class QnaManageDAO extends EgovAbstractMapper {
 	 * @return 조회한 글
 	 * @exception Exception
 	 */
-    public QnaManageVO selectQnaAnswerListDetail(QnaManageVO vo) throws Exception {
+    public QnaManageVO selectQnaAnswerListDetail(QnaManageVO vo) {
 
         return (QnaManageVO) selectOne("QnaManageDAO.selectQnaAnswerListDetail", vo);
 
@@ -139,7 +139,7 @@ public class QnaManageDAO extends EgovAbstractMapper {
 	 * @return 글 목록
 	 * @exception Exception
 	 */
-	public List<?> selectQnaAnswerList(QnaManageDefaultVO searchVO) throws Exception {
+	public List<?> selectQnaAnswerList(QnaManageDefaultVO searchVO) {
 
         return selectList("QnaManageDAO.selectQnaAnswerList", searchVO);
 
@@ -161,7 +161,7 @@ public class QnaManageDAO extends EgovAbstractMapper {
 	 * @param vo
 	 * @exception Exception
 	 */
-    public void updateQnaCnAnswer(QnaManageVO vo) throws Exception {
+    public void updateQnaCnAnswer(QnaManageVO vo) {
 
         update("QnaManageDAO.updateQnaCnAnswer", vo);
 

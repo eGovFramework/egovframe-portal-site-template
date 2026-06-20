@@ -35,7 +35,7 @@ public class AuthorRoleManageDAO extends EgovAbstractMapper {
 	 * @return AuthorRoleManageVO
 	 * @exception Exception
 	 */
-	public AuthorRoleManageVO selectAuthorRole(AuthorRoleManageVO authorRoleManageVO) throws Exception {
+	public AuthorRoleManageVO selectAuthorRole(AuthorRoleManageVO authorRoleManageVO) {
 		return (AuthorRoleManageVO) selectOne("authorRoleManageDAO.selectAuthorRole", authorRoleManageVO);
 	}
 
@@ -45,7 +45,7 @@ public class AuthorRoleManageDAO extends EgovAbstractMapper {
 	 * @return List<AuthorRoleManageVO>
 	 * @exception Exception
 	 */
-	public List<AuthorRoleManageVO> selectAuthorRoleList(AuthorRoleManageVO authorRoleManageVO) throws Exception {
+	public List<AuthorRoleManageVO> selectAuthorRoleList(AuthorRoleManageVO authorRoleManageVO) {
 		return selectList("authorRoleManageDAO.selectAuthorRoleList", authorRoleManageVO);
 	}
 
@@ -54,7 +54,7 @@ public class AuthorRoleManageDAO extends EgovAbstractMapper {
 	 * @param authorRoleManage AuthorRoleManage
 	 * @exception Exception
 	 */
-	public void insertAuthorRole(AuthorRoleManage authorRoleManage) throws Exception {
+	public void insertAuthorRole(AuthorRoleManage authorRoleManage) {
 		insert("authorRoleManageDAO.insertAuthorRole", authorRoleManage);
 	}
 
@@ -63,7 +63,7 @@ public class AuthorRoleManageDAO extends EgovAbstractMapper {
 	 * @param authorRoleManage AuthorRoleManage
 	 * @exception Exception
 	 */
-	public void updateAuthorRole(AuthorRoleManage authorRoleManage) throws Exception {
+	public void updateAuthorRole(AuthorRoleManage authorRoleManage) {
 		update("authorRoleManageDAO.updateAuthorRole", authorRoleManage);
 	}
 
@@ -72,7 +72,7 @@ public class AuthorRoleManageDAO extends EgovAbstractMapper {
 	 * @param authorRoleManage AuthorRoleManage
 	 * @exception Exception
 	 */
-	public void deleteAuthorRole(AuthorRoleManage authorRoleManage) throws Exception {
+	public void deleteAuthorRole(AuthorRoleManage authorRoleManage) {
 		delete("authorRoleManageDAO.deleteAuthorRole", authorRoleManage);
 	}
 
@@ -82,7 +82,7 @@ public class AuthorRoleManageDAO extends EgovAbstractMapper {
 	 * @return int
 	 * @exception Exception
 	 */
-	public int selectAuthorRoleListTotCnt(AuthorRoleManageVO authorRoleManageVO) throws Exception {
+	public int selectAuthorRoleListTotCnt(AuthorRoleManageVO authorRoleManageVO) {
 		return (Integer)selectOne("authorRoleManageDAO.selectAuthorRoleListTotCnt", authorRoleManageVO);
 	}
 
