@@ -43,7 +43,6 @@ public class EgovSpringSecurityLoginFilter extends OncePerRequestFilter {
 	@Resource(name = "egovMessageSource")
 	private EgovMessageSource egovMessageSource;
 
-
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
