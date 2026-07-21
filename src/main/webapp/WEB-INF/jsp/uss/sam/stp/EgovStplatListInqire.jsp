@@ -113,6 +113,7 @@ function fn_egov_inquire_stplatdetail(useStplatId) {
                                 <!--// Location -->
 
 								<form id="StplatListForm" name="StplatListForm" action="<c:url value='/uss/sam/stp/StplatListInqire.do'/>" method="post">
+								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 
                                 <h1 class="tit_1">포털시스템관리</h1>
 

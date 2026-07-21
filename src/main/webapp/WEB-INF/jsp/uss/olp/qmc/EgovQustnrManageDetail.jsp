@@ -118,6 +118,7 @@ function fn_egov_delete_QustnrManage(){
                                 <div class="board_view2">
                                 
                                 	<form name="QustnrManageForm" action="<c:url value='/uss/olp/qmc/EgovQustnrManageDetail.do'/>" method="post">
+                                	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                 
                                     <table summary="상세조회 목록을 제공한다.">
                                     	<caption>설문관리 상세조회 정보를 제공한다</caption>
@@ -191,10 +192,12 @@ function fn_egov_delete_QustnrManage(){
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
                                     	<form name="formUpdt" action="<c:url value='/uss/olp/qmc/EgovQustnrManageModify.do'/>" method="post" style="display: inline; margin-right: 10px;">
+                                    	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 	                                        <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_modify_QustnrManage(); return false;"><spring:message code="button.update" /></a><!-- 수정 -->
 	                                        <input name="qestnrId" type="hidden" value="<c:out value='${resultList[0].qestnrId}'/>"/>
                                         </form>
                                         <form name="formDelete" action="<c:url value='/uss/olp/qmc/EgovQustnrManageDetail.do'/>" method="post" style="display: inline; margin-right: 10px;">
+                                        <c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 	                                        <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_QustnrManage(); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
 	                                        <input name="qestnrId" type="hidden" value="<c:out value='${resultList[0].qestnrId}'/>"/>
 											<input name="cmd" type="hidden" value="del"/>
@@ -203,6 +206,7 @@ function fn_egov_delete_QustnrManage(){
 
                                     <div class="right_col btn1">
                                     	<form name="formList" action="<c:url value='/uss/olp/qmc/EgovQustnrManageList.do'/>" method="post">
+                                    	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                         	<a href="" class="btn btn_blue_46 w_100" onclick="fn_egov_list_QustnrManage(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
                                         </form>
                                     </div>

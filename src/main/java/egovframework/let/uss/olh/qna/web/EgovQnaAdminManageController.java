@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.com.cmm.ComDefaultCodeVO;
+import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.service.EgovCmmUseService;
@@ -63,6 +64,7 @@ public class EgovQnaAdminManageController {
 	 * @return	"/uss/olh/qna/admin/"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/olh/qna/admin/EgovMain.do")
 	public String EgovMain(ModelMap model) throws Exception {
 		return "/uss/olh/qna/admin/EgovMain";
@@ -74,6 +76,7 @@ public class EgovQnaAdminManageController {
 	 * @return	"/uss/olh/qna/admin/EgovLeft"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/olh/qna/admin/EgovLeft.do")
 	public String EgovLeft(ModelMap model) throws Exception {
 		return "/uss/olh/qna/admin/EgovLeft";
@@ -86,6 +89,7 @@ public class EgovQnaAdminManageController {
 	 * @return	"/uss/olh/qna/admin/EgovQnaListInqire"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/olh/qna/admin/QnaListInqire.do")
 	public String selectQnaList(@ModelAttribute("searchVO") QnaManageDefaultVO searchVO, ModelMap model) throws Exception {
 
@@ -134,6 +138,7 @@ public class EgovQnaAdminManageController {
 	 * @return	"/uss/olh/qna/admin/EgovQnaDetailInqire"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/uss/olh/qna/admin/QnaDetailInqire.do")
 	public String selectQnaListDetail(@RequestParam("passwordConfirmAt") String passwordConfirmAt, QnaManageVO qnaManageVO,
 			@ModelAttribute("searchVO") QnaManageDefaultVO searchVO, ModelMap model) throws Exception {
@@ -142,11 +147,8 @@ public class EgovQnaAdminManageController {
 
 		vo.setPasswordConfirmAt(passwordConfirmAt); // 작성비밀번호 확인여부
 
-		// 작성 비밀번호를 얻는다.
-		String writngPassword = vo.getWritngPassword();
-
-		// EgovFileScrty Util에 있는 암호화 모듈을 적용해서 복호화한다.
-		vo.setWritngPassword(EgovFileScrty.decode(writngPassword));
+		// 26.07.20 KISA 보안취약점 조치: 작성비밀번호는 일방향 해시로 저장되어 복호화할 수 없으며,
+		// <form:password>는 바인딩된 값을 렌더링하지 않으므로 복호화가 불필요하다.
 
 		model.addAttribute("result", vo);
 
@@ -160,6 +162,7 @@ public class EgovQnaAdminManageController {
 	 * @return	"forward:/uss/olh/qna/admin/QnaDetailInqire.do"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/uss/olh/qna/admin/QnaInqireCoUpdt.do")
 	public String updateQnaInqireCo(QnaManageVO qnaManageVO, @ModelAttribute("searchVO") QnaManageDefaultVO searchVO) throws Exception {
 
@@ -177,6 +180,7 @@ public class EgovQnaAdminManageController {
 	 * @return	/uss/olh/qna/admin/EgovLoginRealnmChoice
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/uss/olh/qna/admin/LoginRealnmChoice.do")
 	public String selectLoginRealnmChoice(QnaManageVO qnaManageVO, @ModelAttribute("searchVO") QnaManageDefaultVO searchVO, Model model) throws Exception {
 
@@ -193,6 +197,7 @@ public class EgovQnaAdminManageController {
 	 * @return	"/uss/olh/qna/admin/EgovQnaCnRegist"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/uss/olh/qna/admin/QnaCnRegistView.do")
 	public String insertQnaCnView(@ModelAttribute("searchVO") QnaManageDefaultVO searchVO, QnaManageVO qnaManageVO, Model model) throws Exception {
 
@@ -229,6 +234,7 @@ public class EgovQnaAdminManageController {
 	 * @return	"forward:/uss/olh/qna/admin/QnaListInqire.do"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/uss/olh/qna/admin/QnaCnRegist.do")
 	public String insertQnaCn(@ModelAttribute("searchVO") QnaManageDefaultVO searchVO, @Valid @ModelAttribute("qnaManageVO") QnaManageVO qnaManageVO, BindingResult bindingResult,
 			ModelMap model) throws Exception {
@@ -250,7 +256,7 @@ public class EgovQnaAdminManageController {
 
 		// EgovFileScrty Util에 있는 암호화 모듈을 적용해서 암호화 한다.
 		if (writngPassword != null) { // 26.03.06 KISA 보안취약점 조치 : null check 추가
-			qnaManageVO.setWritngPassword(EgovFileScrty.encode(writngPassword));
+			qnaManageVO.setWritngPassword(EgovFileScrty.encryptPassword(writngPassword));
 		}
 
 		qnaManageService.insertQnaCn(qnaManageVO);
@@ -266,6 +272,7 @@ public class EgovQnaAdminManageController {
 	 * @return	"/uss/olh/qna/admin/EgovQnaPasswordConfirm"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/uss/olh/qna/admin/QnaPasswordConfirmView.do")
 	public String selectPasswordConfirmView(QnaManageVO qnaManageVO, @ModelAttribute("searchVO") QnaManageDefaultVO searchVO, Model model) throws Exception {
 
@@ -281,6 +288,7 @@ public class EgovQnaAdminManageController {
 	 * @return	"forward:/uss/olh/qna/admin/QnaDetailInqire.do"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/uss/olh/qna/admin/QnaPasswordConfirm.do")
 	public String selectPasswordConfirm(QnaManageVO qnaManageVO, @ModelAttribute("searchVO") QnaManageDefaultVO searchVO, Model model) throws Exception {
 
@@ -298,7 +306,7 @@ public class EgovQnaAdminManageController {
 
 		// EgovFileScrty Util에 있는 암호화 모듈을 적용해서 암호화 한다.
 		if (writngPassword != null) { // 26.03.06 KISA 보안취약점 조치 : null check 추가
-			qnaManageVO.setWritngPassword(EgovFileScrty.encode(writngPassword));
+			qnaManageVO.setWritngPassword(EgovFileScrty.encryptPassword(writngPassword));
 		}
 
 		int searchCnt = qnaManageService.selectQnaPasswordConfirmCnt(qnaManageVO);
@@ -327,16 +335,14 @@ public class EgovQnaAdminManageController {
 	 * @return	"/uss/olh/qna/admin/EgovQnaCnUpdt
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/uss/olh/qna/admin/QnaCnUpdtView.do")
 	public String updateQnaCnView(QnaManageVO qnaManageVO, @ModelAttribute("searchVO") QnaManageDefaultVO searchVO, ModelMap model) throws Exception {
 
 		QnaManageVO vo = qnaManageService.selectQnaListDetail(qnaManageVO);
 
-		// 작성 비밀번호를 얻는다.
-		String writngPassword = vo.getWritngPassword();
-
-		// EgovFileScrty Util에 있는 암호화 모듈을 적용해서 복호화한다.
-		vo.setWritngPassword(EgovFileScrty.decode(writngPassword));
+		// 26.07.20 KISA 보안취약점 조치: 작성비밀번호는 일방향 해시로 저장되어 복호화할 수 없으며,
+		// <form:password>는 바인딩된 값을 렌더링하지 않으므로 복호화가 불필요하다.
 
 		// 복호화된 패스워드를 넘긴다..
 		model.addAttribute("qnaManageVO", vo);
@@ -355,6 +361,7 @@ public class EgovQnaAdminManageController {
 	 * @return	"forward:/uss/olh/qna/admin/QnaListInqire.do"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/uss/olh/qna/admin/QnaCnUpdt.do")
 	public String updateQnaCn(@ModelAttribute("searchVO") QnaManageDefaultVO searchVO, @Valid @ModelAttribute("qnaManageVO") QnaManageVO qnaManageVO, BindingResult bindingResult)
 			throws Exception {
@@ -375,7 +382,7 @@ public class EgovQnaAdminManageController {
 
 		// EgovFileScrty Util에 있는 암호화 모듈을 적용해서 암호화 한다.
 		if (writngPassword != null) { // 26.03.06 KISA 보안취약점 조치 : null check 추가
-			qnaManageVO.setWritngPassword(EgovFileScrty.encode(writngPassword));
+			qnaManageVO.setWritngPassword(EgovFileScrty.encryptPassword(writngPassword));
 		}
 
 		qnaManageService.updateQnaCn(qnaManageVO);
@@ -391,6 +398,7 @@ public class EgovQnaAdminManageController {
 	 * @return	"forward:/uss/olh/qna/admin/QnaListInqire.do"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/uss/olh/qna/admin/QnaCnDelete.do")
 	public String deleteQnaCn(QnaManageVO qnaManageVO, @ModelAttribute("searchVO") QnaManageDefaultVO searchVO, Model model) throws Exception {
 		
@@ -414,6 +422,7 @@ public class EgovQnaAdminManageController {
 	 * @return	"/uss/olh/qna/admin/EgovQnaAnswerListInqire"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/olh/qnm/admin/QnaAnswerListInqire.do")
 	public String selectQnaAnswerList(@ModelAttribute("searchVO") QnaManageDefaultVO searchVO, ModelMap model) throws Exception {
 
@@ -448,6 +457,7 @@ public class EgovQnaAdminManageController {
 	 * @return	"/uss/olh/qna/admin/EgovQnaAnswerDetailInqire"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/uss/olh/qnm/admin/QnaAnswerDetailInqire.do")
 	public String selectQnaAnswerListDetail(QnaManageVO qnaManageVO, @ModelAttribute("searchVO") QnaManageDefaultVO searchVO, ModelMap model) throws Exception {
 
@@ -466,6 +476,7 @@ public class EgovQnaAdminManageController {
 	 * @return	"/uss/olh/qna/admin/EgovQnaCnAnswerUpdt"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/uss/olh/qnm/admin/QnaCnAnswerUpdtView.do")
 	public String updateQnaCnAnswerView(QnaManageVO qnaManageVO, @ModelAttribute("searchVO") QnaManageDefaultVO searchVO, ModelMap model) throws Exception {
 
@@ -488,6 +499,7 @@ public class EgovQnaAdminManageController {
 	 * @return	"forward:/uss/olh/qnm/admin/QnaAnswerListInqire.do"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/uss/olh/qnm/admin/QnaCnAnswerUpdt.do")
 	public String updateQnaCnAnswer(QnaManageVO qnaManageVO, @ModelAttribute("searchVO") QnaManageDefaultVO searchVO) throws Exception {
 

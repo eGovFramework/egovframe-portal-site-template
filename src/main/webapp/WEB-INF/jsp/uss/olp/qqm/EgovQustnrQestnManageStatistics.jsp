@@ -110,6 +110,7 @@ function fn_egov_delete_QustnrQestnManage(){
                                 <!--// Location -->
 
 								<form name="QustnrQestnManageForm" action="<c:url value=''/>" method="post">
+								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 
                                 <h1 class="tit_1">포털서비스 관리</h1>
 

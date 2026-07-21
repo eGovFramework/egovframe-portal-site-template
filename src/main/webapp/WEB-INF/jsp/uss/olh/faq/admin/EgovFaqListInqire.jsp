@@ -135,6 +135,7 @@ function fn_egov_inquire_faqlistdetail(faqId) {
                                 <div class="condition">
                                 
                                 	<form name="FaqListForm" action="<c:url value='/uss/olh/faq/admin/FaqListInqire.do'/>" method="post">
+                                	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                 
                                     <label class="item f_select" for="sel1">
                                         <select name="searchCondition" id="sel1" title="조회조건 선택">

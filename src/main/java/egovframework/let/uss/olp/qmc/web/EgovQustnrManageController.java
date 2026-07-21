@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.com.cmm.ComDefaultCodeVO;
+import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
@@ -71,6 +72,7 @@ public class EgovQustnrManageController {
 	 * @return "/uss/olp/qmc/EgovQustnrManageListPopup"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/olp/qmc/EgovQustnrManageListPopup.do")
 	public String EgovQustnrManageListPopup(@ModelAttribute("searchVO") ComDefaultVO searchVO, @RequestParam Map<String, Object> commandMap, QustnrManageVO qustnrManageVO,
 			ModelMap model) throws Exception {
@@ -115,6 +117,7 @@ public class EgovQustnrManageController {
 	 * @return  "/uss/olp/qmc/EgovQustnrManageList"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/olp/qmc/EgovQustnrManageList.do")
 	public String EgovQustnrManageList(@ModelAttribute("searchVO") ComDefaultVO searchVO, @RequestParam Map<String, Object> commandMap, QustnrManageVO qustnrManageVO,
 			ModelMap model, HttpServletRequest request) throws Exception {
@@ -162,6 +165,7 @@ public class EgovQustnrManageController {
 	 * @return "/uss/olp/qmc/EgovQustnrManageDetail";
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/olp/qmc/EgovQustnrManageDetail.do")
 	public String EgovQustnrManageDetail(@ModelAttribute("searchVO") ComDefaultVO searchVO, QustnrManageVO qustnrManageVO, @RequestParam Map<String, Object> commandMap,
 			ModelMap model) throws Exception {
@@ -196,6 +200,7 @@ public class EgovQustnrManageController {
 	 * @return "/uss/olp/qmc/EgovQustnrManageModify"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/olp/qmc/EgovQustnrManageModify.do")
 	public String QustnrManageModify(@ModelAttribute("searchVO") ComDefaultVO searchVO, @RequestParam Map<String, Object> commandMap,
 			@Valid @ModelAttribute("qustnrManageVO") QustnrManageVO qustnrManageVO,
@@ -266,6 +271,7 @@ public class EgovQustnrManageController {
 	 * @return "/uss/olp/qmc/EgovQustnrManageRegist"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/olp/qmc/EgovQustnrManageRegist.do")
 	public String QustnrManageRegist(@ModelAttribute("searchVO") ComDefaultVO searchVO, @RequestParam Map<String, Object> commandMap,
 			@Valid @ModelAttribute("qustnrManageVO") QustnrManageVO qustnrManageVO, BindingResult bindingResult, ModelMap model) throws Exception {

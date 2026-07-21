@@ -142,12 +142,20 @@ public class EgovFileDownloadController {
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
 		if (isAuthenticated) {
-			
+
 			// 암호화된 atchFileId 를 복호화. (2022.12.06 추가) - 파일아이디가 유추 불가능하도록 조치
 			String param_atchFileId = (String) commandMap.get("atchFileId");
 			param_atchFileId = param_atchFileId.replaceAll(" ", "+");
 			byte[] decodedBytes = Base64.getDecoder().decode(param_atchFileId);
 			String decodedString = new String(cryptoService.decrypt(decodedBytes, ALGORITHM_KEY));
+
+			// 세션 바인딩 검증 - atchFileId 발급 당시의 세션ID와 현재 세션ID가 일치해야 한다.
+			String issuedSessionId = StringUtils.substringBefore(decodedString, "|");
+			if (issuedSessionId == null || issuedSessionId.isEmpty() || !issuedSessionId.equals(request.getSession().getId())) {
+				response.sendError(HttpServletResponse.SC_FORBIDDEN);
+				return;
+			}
+
 			String decodedFileId = StringUtils.substringAfter(decodedString, "|");
 			String fileSn = (String) commandMap.get("fileSn");
 	

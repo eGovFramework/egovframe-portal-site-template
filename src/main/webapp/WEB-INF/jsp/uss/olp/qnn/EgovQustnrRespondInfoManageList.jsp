@@ -101,6 +101,7 @@ function fn_egov_regist_QustnrRespondInfoManage(qestnrId, qestnrTmplatId){
                             <div id="contents" class="content">
                             
                             <form name="listForm" id="listForm" action="<c:url value='/uss/olp/qnn/EgovQustnrRespondInfoManageList.do'/>" method="post">
+                            <c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                             
                             
                                  <!-- Location -->

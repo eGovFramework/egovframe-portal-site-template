@@ -131,6 +131,7 @@ function fn_egov_inquire_qnaanswerdetail(qaId) {
                                 <div class="condition">
                                 
                                 	<form name="QnaAnswerListForm" action="<c:url value='/uss/olh/qnm/QnaAnswerListInqire.do'/>" method="post">
+                                	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                 
                                     <label class="item f_select" for="sel1">
                                         <select id="sel1" name="searchCondition" class="select" title="조회조건 선택">

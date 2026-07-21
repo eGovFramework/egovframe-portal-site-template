@@ -146,6 +146,7 @@ function fnSearch(){
                                 <!--// Location -->
 
 								<form name="listForm" action="/uss/umt/mber/EgovMberManage.do" method="post">
+								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 								<input name="selectedId" type="hidden" />
 								<input name="checkedIdForDel" type="hidden" />
 								<input name="pageIndex" type="hidden" value="<c:out value='${userSearchVO.pageIndex}'/>"/>

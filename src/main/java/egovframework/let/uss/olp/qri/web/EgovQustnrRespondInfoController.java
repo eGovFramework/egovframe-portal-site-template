@@ -84,7 +84,13 @@ public class EgovQustnrRespondInfoController {
 	public String EgovQustnrRespondInfoManageTemplate(@ModelAttribute("searchVO") ComDefaultVO searchVO,
 			HttpServletRequest request, @RequestParam Map<String, Object> commandMap, ModelMap model) throws Exception {
 
+		// templateUrl이 검증 없이 Spring 뷰네임으로 그대로 반환되면 forward:/redirect: 접두사를 통해
+		// WEB-INF 내부 자원 열람이나 FORWARD 기반 보안 필터 우회로 이어질 수 있으므로,
+		// 애플리케이션의 설문템플릿 뷰 네임스페이스 내부 값만 허용한다.
 		String sTemplateUrl = (String) commandMap.get("templateUrl");
+		if (!isSafeTemplateView(sTemplateUrl)) {
+			sTemplateUrl = DEFAULT_TEMPLATE_VIEW;
+		}
 
 		// log.debug("qestnrId=>" + commandMap.get("qestnrId"));
 		// log.debug("qestnrTmplatId=>" + commandMap.get("qestnrTmplatId"));
@@ -117,7 +123,10 @@ public class EgovQustnrRespondInfoController {
 				egovQustnrRespondInfoService.selectQustnrRespondInfoManageStatistics2(commandMap));
 
 		// 이전 주소
-		model.addAttribute("returnUrl", request.getHeader("REFERER"));
+		// Referer 헤더는 요청자가 임의로 조작할 수 있으므로, JS 문자열(location.href)로 그대로
+		// 출력해도 안전한 내부 상대경로인 경우에만 노출한다. javascript:/data: 등 스킴이나
+		// 외부 URL은 차단하여 반사형 XSS·오픈 리다이렉트를 방지한다.
+		model.addAttribute("returnUrl", sanitizeReturnUrl(request.getHeader("REFERER")));
 
 		return sTemplateUrl;
 	}
@@ -162,7 +171,10 @@ public class EgovQustnrRespondInfoController {
 				egovQustnrRespondInfoService.selectQustnrRespondInfoManageStatistics2(commandMap));
 
 		// 이전 주소
-		model.addAttribute("returnUrl", request.getHeader("REFERER"));
+		// Referer 헤더는 요청자가 임의로 조작할 수 있으므로, JS 문자열(location.href)로 그대로
+		// 출력해도 안전한 내부 상대경로인 경우에만 노출한다. javascript:/data: 등 스킴이나
+		// 외부 URL은 차단하여 반사형 XSS·오픈 리다이렉트를 방지한다.
+		model.addAttribute("returnUrl", sanitizeReturnUrl(request.getHeader("REFERER")));
 
 		return sLocationUrl;
 	}
@@ -603,5 +615,45 @@ public class EgovQustnrRespondInfoController {
 		}
 
 		return sLocationUrl;
+	}
+
+	/** 설문 템플릿 조회 실패 시 사용할 기본(유일) 템플릿 뷰 */
+	private static final String DEFAULT_TEMPLATE_VIEW = "/uss/olp/qri/template/template";
+
+	/**
+	 * templateUrl이 forward:/redirect: 등 뷰 접두사나 콜론(스킴), 상위 경로 이동 없이
+	 * 설문템플릿 뷰 네임스페이스 내부를 가리키는 값인지 검증한다.
+	 *
+	 * @param viewName 검증할 뷰 이름
+	 * @return 안전한 내부 템플릿 뷰이면 true
+	 */
+	private boolean isSafeTemplateView(String viewName) {
+		if (viewName == null) {
+			return false;
+		}
+		String trimmed = viewName.trim();
+		if (trimmed.isEmpty() || trimmed.contains(":") || trimmed.contains("..")) {
+			return false;
+		}
+		return trimmed.startsWith("/uss/olp/qri/template/") || trimmed.startsWith("/uss/olp/mgt/template/");
+	}
+
+	/**
+	 * Referer 헤더 값을 JS 문자열(location.href)로 그대로 노출해도 안전한 내부 상대경로인
+	 * 경우에만 반환한다. 외부 URL, 프로토콜 상대경로, javascript:/data: 등 스킴 URI는 차단한다.
+	 *
+	 * @param referer 요청의 Referer 헤더 값
+	 * @return 안전한 내부 경로이면 그대로, 아니면 빈 문자열
+	 */
+	private String sanitizeReturnUrl(String referer) {
+		if (referer == null) {
+			return "";
+		}
+		String trimmed = referer.trim();
+		if (trimmed.isEmpty() || !trimmed.startsWith("/") || trimmed.startsWith("//")
+				|| trimmed.startsWith("/\\") || trimmed.contains(":")) {
+			return "";
+		}
+		return trimmed;
 	}
 }

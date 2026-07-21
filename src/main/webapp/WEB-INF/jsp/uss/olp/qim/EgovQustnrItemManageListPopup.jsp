@@ -96,6 +96,7 @@ function fn_egov_cancel_popup() {
 <noscript class="noScriptTitle">자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
 
 	<form name="listForm" id="listForm" action="<c:url value='/uss/olp/qim/EgovQustnrItemManageListPopup.do'/>" method="post">
+	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 	
 	<!-- 설문항목 목록 팝업 -->
     <div class="popup EgovQustnrItemManageListPopup">

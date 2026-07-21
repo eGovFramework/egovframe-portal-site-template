@@ -133,6 +133,7 @@ function fn_egov_search_QustnrTmplatManage(){
                                 <div class="condition">
                                 	
                                 	<form name="listForm" id="listForm" action="<c:url value='${pageContext.request.contextPath}/uss/olp/qtm/EgovQustnrTmplatManageList.do'/>" method="post">
+                                	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                 	
                                     <label class="item f_select" for="sel1">
                                         <select name="searchCondition" title="검색조건 선택" id="sel1">
@@ -195,6 +196,7 @@ function fn_egov_search_QustnrTmplatManage(){
                                                 <!-- onLoad="if(this.width>65){this.width=65}" -->
                                                 <td class="al">
                                                 	<form name="subForm" method="post" action="<c:url value='/uss/olp/qtm/EgovQustnrTmplatManageDetail.do'/>">
+                                                	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 	                                                	<input name="qestnrTmplatId" type="hidden" value="<c:out value='${resultInfo.qestnrTmplatId}'/>">
 	                                                	<input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>">
 	                                                	<a href="" class="lnk" onclick="fn_egov_detail_QustnrTmplatManage('${resultInfo.qestnrTmplatId}'); return false;"><c:out value="${resultInfo.qestnrTmplatCn}"/></a>

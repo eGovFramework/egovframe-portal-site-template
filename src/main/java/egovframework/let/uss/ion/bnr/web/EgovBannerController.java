@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import egovframework.com.cmm.EgovMessageSource;
+import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.EgovFileMngUtil;
@@ -149,6 +150,7 @@ public class EgovBannerController {
 	 * @param banner - 배너 model
 	 * @return String - 리턴 Url
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/ion/bnr/addBanner.do")
 	public String insertBanner(final MultipartHttpServletRequest multiRequest,
 			@Valid @ModelAttribute("banner") Banner banner, BindingResult bindingResult,
@@ -201,6 +203,7 @@ public class EgovBannerController {
 	 * @param banner - 배너 model
 	 * @return String - 리턴 Url
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/ion/bnr/updtBanner.do")
 	public String updateBanner(final MultipartHttpServletRequest multiRequest,
 			@Valid @ModelAttribute("banner") Banner banner, BindingResult bindingResult, SessionStatus status,
@@ -259,6 +262,7 @@ public class EgovBannerController {
 	 * @return String
 	 * @exception Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/ion/bnr/removeBanner.do")
 	public String deleteBanner(@RequestParam("bannerId") String bannerId, @ModelAttribute("banner") Banner banner,
 			SessionStatus status, ModelMap model) throws Exception {
@@ -279,6 +283,7 @@ public class EgovBannerController {
 	 * @return String
 	 * @exception Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/ion/bnr/removeBannerList.do")
 	public String deleteBannerList(@RequestParam("bannerIds") String bannerIds, @ModelAttribute("banner") Banner banner,
 			SessionStatus status, ModelMap model) throws Exception {

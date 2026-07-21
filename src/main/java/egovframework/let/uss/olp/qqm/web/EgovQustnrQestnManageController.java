@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.com.cmm.ComDefaultCodeVO;
+import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
@@ -71,6 +72,7 @@ public class EgovQustnrQestnManageController {
      * @return "/uss/olp/qqm/EgovQustnrQestnManageStatistics"
      * @throws Exception
      */
+    @RequireAdmin
     @RequestMapping(value="/uss/olp/qqm/EgovQustnrQestnManageStatistics.do")
 	public String EgovQustnrQestnManageStatistics(
 			@ModelAttribute("searchVO") ComDefaultVO searchVO,
@@ -103,6 +105,7 @@ public class EgovQustnrQestnManageController {
 	 * @return "/uss/olp/qqm/EgovQustnrQestnManageListPopup"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value="/uss/olp/qqm/EgovQustnrQestnManageListPopup.do")
 	public String EgovQustnrQestnManageListPopup(
 			@ModelAttribute("searchVO") ComDefaultVO searchVO,
@@ -151,6 +154,7 @@ public class EgovQustnrQestnManageController {
 	 * @return "/uss/olp/qqm/EgovQustnrQestnManageList"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value="/uss/olp/qqm/EgovQustnrQestnManageList.do")
 	public String EgovQustnrQestnManageList(
 			@ModelAttribute("searchVO") ComDefaultVO searchVO,
@@ -210,6 +214,7 @@ public class EgovQustnrQestnManageController {
 	 * @return "/uss/olp/qqm/EgovQustnrQestnManageDetail"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value="/uss/olp/qqm/EgovQustnrQestnManageDetail.do")
 	public String EgovQustnrQestnManageDetail(
 			@ModelAttribute("searchVO") ComDefaultVO searchVO,
@@ -251,6 +256,7 @@ public class EgovQustnrQestnManageController {
 	 * @return "/uss/olp/qqm/EgovQustnrQestnManageModify"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value="/uss/olp/qqm/EgovQustnrQestnManageModify.do")
 	public String QustnrQestnManageModify(
 			@ModelAttribute("searchVO") ComDefaultVO searchVO,
@@ -334,6 +340,7 @@ public class EgovQustnrQestnManageController {
 	 * @return "/uss/olp/qqm/EgovQustnrQestnManageRegist"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value="/uss/olp/qqm/EgovQustnrQestnManageRegist.do")
 	public String QustnrQestnManageRegist(
 			@ModelAttribute("searchVO") ComDefaultVO searchVO,

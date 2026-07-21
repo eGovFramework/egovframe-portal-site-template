@@ -117,6 +117,7 @@ function fn_egov_delete_IndvdlInfoPolicy(){
                                 <div class="board_view2">
                                 
                                 	<form name="IndvdlInfoPolicyForm" method="post" action="#LINK">
+                                	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                 
                                     <table summary="이 표는 개인정보보호정책 상세정보를 제공합니다.">
                                         <colgroup>
@@ -160,6 +161,7 @@ function fn_egov_delete_IndvdlInfoPolicy(){
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
                                     	<form name="formDelete" action="<c:url value='/uss/sam/ipm/detailIndvdlInfoPolicy.do'/>" method="post">
+                                    	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                     		<a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_IndvdlInfoPolicy(); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
                                     		<input name="indvdlInfoId" type="hidden" value="<c:out value='${indvdlInfoPolicy.indvdlInfoId}'/>">
 											<input name="cmd" type="hidden" value="<c:out value='del'/>">
@@ -168,10 +170,12 @@ function fn_egov_delete_IndvdlInfoPolicy(){
 
                                     <div class="right_col btn1">
                                     	<form name="formUpdt" action="<c:url value='/uss/sam/ipm/updtIndvdlInfoPolicy.do'/>" method="post" style="display: inline;">
+                                    	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                     		<a href="#LINK" class="btn btn_blue_46 w_100" onclick="fn_egov_modify_IndvdlInfoPolicy(); return false;"><spring:message code="button.update" /></a><!-- 수정 -->
                                     		<input name="indvdlInfoId" type="hidden" value="<c:out value='${indvdlInfoPolicy.indvdlInfoId}'/>">
                                     	</form>
                                     	<form name="formList" action="<c:url value='/uss/sam/ipm/listIndvdlInfoPolicy.do'/>" method="post" style="display: inline; margin-left: 10px;">
+                                    	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                         	<a href="#LINK" class="btn btn_blue_46 w_100" onclick="fn_egov_list_IndvdlInfoPolicy(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
                                         </form>
                                     </div>

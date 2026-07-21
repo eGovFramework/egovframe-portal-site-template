@@ -149,11 +149,8 @@ public class EgovQnaManageController {
 
 		vo.setPasswordConfirmAt(passwordConfirmAt); // 작성비밀번호 확인여부
 
-		// 작성 비밀번호를 얻는다.
-		String writngPassword = vo.getWritngPassword();
-
-		// EgovFileScrty Util에 있는 암호화 모듈을 적용해서 복호화한다.
-		vo.setWritngPassword(EgovFileScrty.decode(writngPassword));
+		// 26.07.20 KISA 보안취약점 조치: 작성비밀번호는 일방향 해시로 저장되어 복호화할 수 없으며,
+		// <form:password>는 바인딩된 값을 렌더링하지 않으므로 복호화가 불필요하다.
 
 		model.addAttribute("result", vo);
 
@@ -265,7 +262,7 @@ public class EgovQnaManageController {
 
 		// EgovFileScrty Util에 있는 암호화 모듈을 적용해서 암호화 한다.
 		if (writngPassword != null) { // 26.03.06 KISA 보안취약점 조치 : null check 추가
-			qnaManageVO.setWritngPassword(EgovFileScrty.encode(writngPassword));
+			qnaManageVO.setWritngPassword(EgovFileScrty.encryptPassword(writngPassword));
 		}
 
 		qnaManageService.insertQnaCn(qnaManageVO);
@@ -316,7 +313,7 @@ public class EgovQnaManageController {
 
 			// EgovFileScrty Util에 있는 암호화 모듈을 적용해서 암호화 한다.
 			if (writngPassword != null) { // 26.03.06 KISA 보안취약점 조치 : null check 추가
-				qnaManageVO.setWritngPassword(EgovFileScrty.encode(writngPassword));
+				qnaManageVO.setWritngPassword(EgovFileScrty.encryptPassword(writngPassword));
 			}
 
 			int searchCnt = qnaManageService.selectQnaPasswordConfirmCnt(qnaManageVO);
@@ -352,11 +349,8 @@ public class EgovQnaManageController {
 
 		QnaManageVO vo = qnaManageService.selectQnaListDetail(qnaManageVO);
 
-		// 작성 비밀번호를 얻는다.
-		String writngPassword = vo.getWritngPassword();
-
-		// EgovFileScrty Util에 있는 암호화 모듈을 적용해서 복호화한다.
-		vo.setWritngPassword(EgovFileScrty.decode(writngPassword));
+		// 26.07.20 KISA 보안취약점 조치: 작성비밀번호는 일방향 해시로 저장되어 복호화할 수 없으며,
+		// <form:password>는 바인딩된 값을 렌더링하지 않으므로 복호화가 불필요하다.
 
 		// 복호화된 패스워드를 넘긴다..
 		model.addAttribute("qnaManageVO", vo);
@@ -396,7 +390,7 @@ public class EgovQnaManageController {
 		String writngPassword = qnaManageVO.getWritngPassword();
 
 		// EgovFileScrty Util에 있는 암호화 모듈을 적용해서 암호화 한다.
-		qnaManageVO.setWritngPassword(EgovFileScrty.encode(writngPassword));
+		qnaManageVO.setWritngPassword(EgovFileScrty.encryptPassword(writngPassword));
 
 		qnaManageService.updateQnaCn(qnaManageVO);
 

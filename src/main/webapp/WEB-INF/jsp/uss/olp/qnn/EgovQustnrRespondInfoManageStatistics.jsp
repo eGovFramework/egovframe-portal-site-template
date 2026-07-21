@@ -124,6 +124,7 @@ return  FValue;
                                 <!--// Location -->
 
 								<form name="qustnrRespondInfoManage" action="#LINK" method="post">
+								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 
                                 <h1 class="tit_1">정보마당</h1>
 
