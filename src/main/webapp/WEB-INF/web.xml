@@ -145,6 +145,13 @@
 	<session-config>
 		<session-timeout>60</session-timeout>
 		<tracking-mode>COOKIE</tracking-mode>
+		<cookie-config>
+			<http-only>true</http-only>
+			<!-- Secure 속성이 true이면 HTTPS가 아닌 연결에서는 브라우저가 세션 쿠키를 전송하지 않아
+				 로컬 HTTP 환경에서 로그인 후 리다이렉트 무한루프가 발생한다. 로컬 개발 시에는 false로
+				 두고, 운영환경은 반드시 HTTPS로 서비스하며 이 값을 true로 변경해야 한다. -->
+			<secure>false</secure>
+		</cookie-config>
 	</session-config>
 
 	<error-page>

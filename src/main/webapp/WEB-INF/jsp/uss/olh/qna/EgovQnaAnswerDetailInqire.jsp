@@ -92,6 +92,7 @@ function fn_egov_updt_qnacnanswer(qaId){
                                 <!--// Location -->
 
 								<form name="QnaManageForm" action="<c:url value='/uss/olh/qnm/QnaCnAnswerUpdtView.do'/>" method="post">
+								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 
                                 <h1 class="tit_1">포털서비스관리</h1>
 

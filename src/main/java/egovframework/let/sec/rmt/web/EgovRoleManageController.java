@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -167,7 +168,7 @@ public class EgovRoleManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-    @RequestMapping(value="/sec/rmt/EgovRoleInsert.do")
+    @RequestMapping(value="/sec/rmt/EgovRoleInsert.do", method = RequestMethod.POST)
 	public String insertRole(@Valid @ModelAttribute("roleManage") RoleManage roleManage,
 						     BindingResult bindingResult,
 			                 @ModelAttribute("roleManageVO") RoleManageVO roleManageVO,
@@ -203,7 +204,7 @@ public class EgovRoleManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-    @RequestMapping(value="/sec/rmt/EgovRoleUpdate.do")
+    @RequestMapping(value="/sec/rmt/EgovRoleUpdate.do", method = RequestMethod.POST)
 	public String updateRole(@Valid @ModelAttribute("roleManage") RoleManage roleManage,
 			BindingResult bindingResult,
 			SessionStatus status,
@@ -225,7 +226,7 @@ public class EgovRoleManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-    @RequestMapping(value="/sec/rmt/EgovRoleDelete.do")
+    @RequestMapping(value="/sec/rmt/EgovRoleDelete.do", method = RequestMethod.POST)
 	public String deleteRole(@ModelAttribute("roleManage") RoleManage roleManage,
             SessionStatus status,
             ModelMap model) throws Exception {
@@ -244,7 +245,7 @@ public class EgovRoleManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value="/sec/rmt/EgovRoleListDelete.do")
+	@RequestMapping(value="/sec/rmt/EgovRoleListDelete.do", method = RequestMethod.POST)
 	public String deleteRoleList(@RequestParam("roleCodes") String roleCodes,
 			                     @ModelAttribute("roleManage") RoleManage roleManage,
 	                              SessionStatus status,

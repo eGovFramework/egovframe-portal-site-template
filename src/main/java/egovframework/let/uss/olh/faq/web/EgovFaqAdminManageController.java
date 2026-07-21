@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import egovframework.com.cmm.EgovMessageSource;
+import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.EgovFileMngUtil;
@@ -73,6 +74,7 @@ public class EgovFaqAdminManageController {
      * @return	"/uss/olh/faq/admin/EgovFaqListInqireAdmin"
      * @throws Exception
      */
+    @RequireAdmin
     @RequestMapping(value="/uss/olh/faq/admin/FaqListInqire.do")
     public String selectFaqList(@ModelAttribute("searchVO") FaqManageDefaultVO searchVO, ModelMap model, HttpServletRequest request) throws Exception {
     		// 메인화면에서 넘어온 경우 메뉴 갱신을 위해 추가
@@ -109,6 +111,7 @@ public class EgovFaqAdminManageController {
      * @return	"/uss/olh/faq/admin/EgovFaqDetailInqire"
      * @throws Exception
      */
+    @RequireAdmin
     @RequestMapping("/uss/olh/faq/admin/FaqListDetailInqire.do")
     public String	selectFaqListDetail(FaqManageVO faqManageVO,
             @ModelAttribute("searchVO") FaqManageDefaultVO searchVO,
@@ -150,6 +153,7 @@ public class EgovFaqAdminManageController {
      * @return	"forward:/uss/olh/faq/admin/FaqListDetailInqire.do"
      * @throws Exception
      */
+    @RequireAdmin
     @RequestMapping("/uss/olh/faq/admin/FaqInqireCoUpdt.do")
     public String updateFaqInqireCo(
             FaqManageVO faqManageVO,
@@ -183,6 +187,7 @@ public class EgovFaqAdminManageController {
      * @return	"/uss/olh/faq/admin/EgovFaqCnRegist"
      * @throws Exception
      */
+    @RequireAdmin
     @RequestMapping("/uss/olh/faq/admin/FaqCnRegistView.do")
     public String insertFaqCnView(
             @ModelAttribute("searchVO") FaqManageDefaultVO searchVO, Model model)
@@ -207,6 +212,7 @@ public class EgovFaqAdminManageController {
      * @return	"forward:/uss/olh/faq/admin/FaqListInqire.do"
      * @throws Exception
      */
+    @RequireAdmin
     @RequestMapping("/uss/olh/faq/admin/FaqCnRegist.do")
     public String insertFaqCn(
     		final MultipartHttpServletRequest multiRequest,		// 첨부파일을 위한...
@@ -270,6 +276,7 @@ public class EgovFaqAdminManageController {
      * @return	"/uss/olh/faq/admin/EgovFaqCnUpdt"
      * @throws Exception
      */
+    @RequireAdmin
     @RequestMapping("/uss/olh/faq/admin/FaqCnUpdtView.do")
     public String updateFaqCnView(@RequestParam("faqId") String faqId ,
             @ModelAttribute("searchVO") FaqManageDefaultVO searchVO, ModelMap model, HttpServletRequest request)
@@ -306,6 +313,7 @@ public class EgovFaqAdminManageController {
      * @return	"forward:/uss/olh/faq/admin/FaqListInqire.do"
      * @throws Exception
      */
+    @RequireAdmin
     @RequestMapping("/uss/olh/faq/admin/FaqCnUpdt.do")
     public String updateFaqCn(@RequestParam("atchFileAt") String atchFileAt ,
     		final MultipartHttpServletRequest multiRequest,
@@ -376,6 +384,7 @@ public class EgovFaqAdminManageController {
      * @return	"forward:/uss/olh/faq/admin/FaqListInqire.do"
      * @throws Exception
      */
+    @RequireAdmin
     @RequestMapping("/uss/olh/faq/admin/FaqCnDelete.do")
     public String deleteFaqCn(
             FaqManageVO faqManageVO,

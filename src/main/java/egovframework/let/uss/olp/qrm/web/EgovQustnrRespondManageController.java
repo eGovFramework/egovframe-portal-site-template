@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.com.cmm.ComDefaultCodeVO;
+import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
@@ -70,6 +71,7 @@ public class EgovQustnrRespondManageController {
 	 * @return "/uss/olp/qrm/EgovQustnrRespondManageList"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value="/uss/olp/qrm/EgovQustnrRespondManageList.do")
 	public String EgovQustnrRespondManageList(
 			@ModelAttribute("searchVO") ComDefaultVO searchVO,
@@ -121,6 +123,7 @@ public class EgovQustnrRespondManageController {
 	 * @return "/uss/olp/qrm/EgovQustnrRespondManageDetail"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value="/uss/olp/qrm/EgovQustnrRespondManageDetail.do")
 	public String EgovQustnrRespondManageDetail(
 			@ModelAttribute("searchVO") ComDefaultVO searchVO,
@@ -162,6 +165,7 @@ public class EgovQustnrRespondManageController {
 	 * @return "/uss/olp/qrm/EgovQustnrRespondManageModify"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value="/uss/olp/qrm/EgovQustnrRespondManageModify.do")
 	public String QustnrRespondManageModify(
 			@ModelAttribute("searchVO") ComDefaultVO searchVO,
@@ -229,6 +233,7 @@ public class EgovQustnrRespondManageController {
 	 * @return "/uss/olp/qrm/EgovQustnrRespondManageRegist"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value="/uss/olp/qrm/EgovQustnrRespondManageRegist.do")
 	public String QustnrRespondManageRegist(
 			@ModelAttribute("searchVO") ComDefaultVO searchVO,

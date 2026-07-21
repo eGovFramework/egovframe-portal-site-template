@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -751,7 +752,7 @@ public class EgovBBSManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/bbs/deleteGuestList.do")
+	@RequestMapping(value = "/cop/bbs/deleteGuestList.do", method = RequestMethod.POST)
 	public String deleteGuestList(@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("board") Board board,
 			ModelMap model) throws Exception {
 		@SuppressWarnings("unused")
@@ -774,7 +775,7 @@ public class EgovBBSManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/bbs/updateGuestList.do")
+	@RequestMapping(value = "/cop/bbs/updateGuestList.do", method = RequestMethod.POST)
 	public String updateGuestList(@ModelAttribute("searchVO") BoardVO boardVO, @Valid @ModelAttribute("board") Board board,
 			BindingResult bindingResult, ModelMap model) throws Exception {
 
@@ -845,7 +846,7 @@ public class EgovBBSManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/bbs/insertGuestList.do")
+	@RequestMapping(value = "/cop/bbs/insertGuestList.do", method = RequestMethod.POST)
 	public String insertGuestList(@ModelAttribute("searchVO") BoardVO boardVO, @Valid @ModelAttribute("board") Board board,
 			BindingResult bindingResult, ModelMap model) throws Exception {
 
@@ -1039,7 +1040,7 @@ public class EgovBBSManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/bbs/anonymous/insertBoardArticle.do")
+	@RequestMapping(value = "/cop/bbs/anonymous/insertBoardArticle.do", method = RequestMethod.POST)
 	public String insertAnonymousBoardArticle(final MultipartHttpServletRequest multiRequest,
 			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
 			@Valid @ModelAttribute("board") Board board, BindingResult bindingResult, SessionStatus status, ModelMap model)
@@ -1173,7 +1174,7 @@ public class EgovBBSManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/bbs/anonymous/deleteBoardArticle.do")
+	@RequestMapping(value = "/cop/bbs/anonymous/deleteBoardArticle.do", method = RequestMethod.POST)
 	public String deleteAnonymousBoardArticle(@ModelAttribute("searchVO") BoardVO boardVO,
 			@ModelAttribute("board") Board board, @ModelAttribute("bdMstr") BoardMaster bdMstr, ModelMap model)
 			throws Exception {
@@ -1304,7 +1305,7 @@ public class EgovBBSManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/bbs/anonymous/updateBoardArticle.do")
+	@RequestMapping(value = "/cop/bbs/anonymous/updateBoardArticle.do", method = RequestMethod.POST)
 	public String updateAnonymousBoardArticle(final MultipartHttpServletRequest multiRequest,
 			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
 			@Valid @ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model, SessionStatus status)
@@ -1432,7 +1433,7 @@ public class EgovBBSManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/bbs/anonymous/replyBoardArticle.do")
+	@RequestMapping(value = "/cop/bbs/anonymous/replyBoardArticle.do", method = RequestMethod.POST)
 	public String replyAnonymousBoardArticle(final MultipartHttpServletRequest multiRequest,
 			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
 			@Valid @ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model, SessionStatus status)

@@ -94,6 +94,7 @@ function fn_egov_cancel_popup() {
         <div class="pop_inner">
         
         	<form name="listForm" id="listForm" action="<c:url value='/uss/olp/qmc/EgovQustnrManageListPopup.do'/>" method="post">
+        	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
         	
         	<div class="pop_header">
                 <h1>설문관리 정보</h1>

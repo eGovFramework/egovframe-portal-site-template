@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
@@ -80,7 +81,7 @@ public class EgovLoginController {
 	 * 로그아웃한다.
 	 * 실제 로그아웃은 EgovSpringSecurityLogoutFilter가 선행 처리한다.
 	 */
-	@RequestMapping(value = "/uat/uia/actionLogout.do")
+	@RequestMapping(value = "/uat/uia/actionLogout.do", method = RequestMethod.POST)
 	public String actionLogout(HttpServletRequest request) {
 		request.getSession().setAttribute("loginVO", null);
 		request.getSession().setAttribute("accessUser", null);

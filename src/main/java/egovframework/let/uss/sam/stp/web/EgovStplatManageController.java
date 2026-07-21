@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.com.cmm.EgovMessageSource;
+import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.com.cmm.LoginVO;
 import egovframework.let.uss.sam.stp.service.EgovStplatManageService;
 import egovframework.let.uss.sam.stp.service.StplatManageDefaultVO;
@@ -58,6 +59,7 @@ public class EgovStplatManageController {
 	 * @return "/uss/sam/stp/EgovMain"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/sam/stp/EgovMain.do")
 	public String EgovMain(ModelMap model) throws Exception {
 		return "/uss/sam/stp/EgovMain";
@@ -70,6 +72,7 @@ public class EgovStplatManageController {
 	 * @return "/uss/sam/stp/EgovLeft"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/sam/stp/EgovLeft.do")
 	public String EgovLeft(ModelMap model) throws Exception {
 		return "/uss/sam/stp/EgovLeft";
@@ -83,6 +86,7 @@ public class EgovStplatManageController {
 	 * @return "/uss/sam/stp/EgovStplatListInqire"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/sam/stp/StplatListInqire.do")
 	public String selectStplatList(@ModelAttribute("searchVO") StplatManageDefaultVO searchVO, ModelMap model)
 			throws Exception {
@@ -119,6 +123,7 @@ public class EgovStplatManageController {
 	 * @return "/uss/sam/stp/EgovStplatDetailInqire"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/uss/sam/stp/StplatDetailInqire.do")
 	public String selectStplatDetail(StplatManageVO stplatManageVO,
 			@ModelAttribute("searchVO") StplatManageDefaultVO searchVO, ModelMap model) throws Exception {
@@ -138,6 +143,7 @@ public class EgovStplatManageController {
 	 * @return "/uss/sam/stp/EgovStplatCnRegist"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/uss/sam/stp/StplatCnRegistView.do")
 	public String insertStplatCnView(@ModelAttribute("searchVO") StplatManageDefaultVO searchVO, Model model)
 			throws Exception {
@@ -157,6 +163,7 @@ public class EgovStplatManageController {
 	 * @return "forward:/uss/sam/stp/StplatListInqire.do"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/uss/sam/stp/StplatCnRegist.do")
 	public String insertStplatCn(@ModelAttribute("searchVO") StplatManageDefaultVO searchVO,
 			@Valid @ModelAttribute("stplatManageVO") StplatManageVO stplatManageVO,
@@ -190,6 +197,7 @@ public class EgovStplatManageController {
 	 * @return "/uss/sam/stp/EgovStplatCnUpdt"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/uss/sam/stp/StplatCnUpdtView.do")
 	public String updateStplatCnView(@RequestParam("useStplatId") String useStplatId,
 			@ModelAttribute("searchVO") StplatManageDefaultVO searchVO, ModelMap model) throws Exception {
@@ -217,6 +225,7 @@ public class EgovStplatManageController {
 	 * @return "forward:/uss/sam/stp/StplatListInqire.do"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/uss/sam/stp/StplatCnUpdt.do")
 	public String updateStplatCn(@ModelAttribute("searchVO") StplatManageDefaultVO searchVO,
 			@Valid @ModelAttribute("stplatManageVO") StplatManageVO stplatManageVO,
@@ -248,6 +257,7 @@ public class EgovStplatManageController {
 	 * @return "forward:/uss/sam/stp/StplatListInqire.do"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/uss/sam/stp/StplatCnDelete.do")
 	public String deleteStplatCn(StplatManageVO stplatManageVO,
 			@ModelAttribute("searchVO") StplatManageDefaultVO searchVO) throws Exception {

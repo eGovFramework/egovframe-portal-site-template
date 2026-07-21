@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.com.cmm.ComDefaultVO;
+import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
 import egovframework.let.uss.olp.qim.service.EgovQustnrItemManageService;
@@ -65,6 +66,7 @@ public class EgovQustnrItemManageController {
 	 * @return "/uss/olp/qim/EgovQustnrItemManageListPopup"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value="/uss/olp/qim/EgovQustnrItemManageListPopup.do")
 	public String EgovQustnrItemManageListPopup(
 			@ModelAttribute("searchVO") ComDefaultVO searchVO,
@@ -113,6 +115,7 @@ public class EgovQustnrItemManageController {
 	 * @return "/uss/olp/qim/EgovQustnrItemManageList"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value="/uss/olp/qim/EgovQustnrItemManageList.do")
 	public String EgovQustnrItemManageList(
 			@ModelAttribute("searchVO") ComDefaultVO searchVO,
@@ -164,6 +167,7 @@ public class EgovQustnrItemManageController {
 	 * @return  "/uss/olp/qim/EgovQustnrItemManageDetail"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value="/uss/olp/qim/EgovQustnrItemManageDetail.do")
 	public String EgovQustnrItemManageDetail(
 			@ModelAttribute("searchVO") ComDefaultVO searchVO,
@@ -196,6 +200,7 @@ public class EgovQustnrItemManageController {
 	 * @return "/uss/olp/qim/EgovQustnrItemManageModify"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value="/uss/olp/qim/EgovQustnrItemManageModify.do")
 	public String QustnrItemManageModify(
 			@ModelAttribute("searchVO") ComDefaultVO searchVO,
@@ -261,6 +266,7 @@ public class EgovQustnrItemManageController {
 	 * @return "/uss/olp/qim/EgovQustnrItemManageRegist"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value="/uss/olp/qim/EgovQustnrItemManageRegist.do")
 	public String QustnrItemManageRegist(
 			@ModelAttribute("searchVO") ComDefaultVO searchVO,

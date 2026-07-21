@@ -129,6 +129,7 @@ function fn_egov_inquire_qnadetail(qaId) {
                                 <div class="condition">
                                 
                                 	<form name="QnaListForm" action="<c:url value='/uss/olh/qna/QnaListInqire.do'/>" method="post">
+                                	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 
 										<!--실명확인을 위한  설정   Start...-->
 										<input type="hidden" name="ihidnum" value="">

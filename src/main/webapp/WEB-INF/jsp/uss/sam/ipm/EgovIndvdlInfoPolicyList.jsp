@@ -110,6 +110,7 @@ function fn_egov_search_IndvdlInfoPolicy(){
                                 <div class="condition2">
                                 	
                                 	<form name="listForm" action="<c:url value='/uss/sam/ipm/listIndvdlInfoPolicy.do'/>" method="post">
+                                	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                 	
                                     <label class="item f_select" for="sel1">
                                         <select id="sel1" name="searchCondition" title="검색조건 선택">
@@ -171,6 +172,7 @@ function fn_egov_search_IndvdlInfoPolicy(){
                                                 </td>
                                                 <td>
                                                 	<form name="subForm" method="post" action="<c:url value='/uss/sam/ipm/detailIndvdlInfoPolicy.do'/>">
+                                                	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                                 		<c:out value="${resultInfo.indvdlInfoNm}"/>
                                                 		<a href="#LINK" class="btn btn_blue_30 w_80" onclick="fn_egov_detail_IndvdlInfoPolicy('<c:out value="${resultInfo.indvdlInfoId}"/>');">상세보기</a>
                                                 		<input name="indvdlInfoId" type="hidden" value="<c:out value='${resultInfo.indvdlInfoId}'/>">

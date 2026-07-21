@@ -91,6 +91,7 @@ function fn_egov_cancel_popup() {
 <body onLoad="fn_egov_initl_qnacn();">
 
 	<form name="QnaManageForm" method="post" onsubmit="fn_egov_confirm_qnapassword();" action="#LINK">
+	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 	
 	<!-- 작성비밀번호확인 팝업 -->
     <div class="popup POP_CONFIRM_PWD">

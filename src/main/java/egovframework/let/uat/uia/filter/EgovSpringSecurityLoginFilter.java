@@ -43,24 +43,6 @@ public class EgovSpringSecurityLoginFilter extends OncePerRequestFilter {
 	@Resource(name = "egovMessageSource")
 	private EgovMessageSource egovMessageSource;
 
-	@Override
-	protected boolean shouldNotFilter(HttpServletRequest request) {
-		if (!"POST".equalsIgnoreCase(request.getMethod())) {
-			return true;
-		}
-		String uri = stripContextPath(request);
-		if (!uri.equals(ACTION_LOGIN_PATH)) {
-			return true;
-		}
-		String id = request.getParameter("id");
-		if (!StringUtils.hasText(id)) {
-			return true;
-		}
-		if (StringUtils.hasText(request.getParameter("username"))) {
-			return true;
-		}
-		return false;
-	}
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -92,7 +74,7 @@ public class EgovSpringSecurityLoginFilter extends OncePerRequestFilter {
 			}
 
 			String securityUser = resultVO.getUserSe().concat(resultVO.getId());
-			String securityPass = resultVO.getUniqId();
+			String securityPass = password;
 			if (!StringUtils.hasText(securityPass)) {
 				LOGGER.warn("Login succeeded but uniqId is empty for user {}", securityUser);
 				forwardLoginFailure(request, response);

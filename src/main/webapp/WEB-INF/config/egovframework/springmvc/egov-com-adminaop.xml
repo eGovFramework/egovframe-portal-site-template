@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	@RequireAdmin 애노테이션이 붙은 컨트롤러 메소드에 대해 로그인 여부/관리자 권한(ROLE_ADMIN)을
+	검증하는 AOP 설정. 대상 컨트롤러 빈이 DispatcherServlet의 자체 컨텍스트
+	(egov-com-servlet.xml의 component-scan)에서 생성되므로, 이 설정도 동일한 컨텍스트
+	(WEB-INF/config/egovframework/springmvc/*.xml)에 위치해야 AOP 프록시가 적용된다.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="egov.adminAuthorizationAspect" class="egovframework.com.cmm.util.EgovAdminAuthorizationAspect" />
+
+	<aop:config>
+		<aop:pointcut id="egov.requireAdminMethod" expression="@annotation(egovframework.com.cmm.annotation.RequireAdmin)" />
+
+		<aop:aspect ref="egov.adminAuthorizationAspect">
+			<aop:before pointcut-ref="egov.requireAdminMethod" method="assertAdmin" />
+		</aop:aspect>
+	</aop:config>
+
+</beans>

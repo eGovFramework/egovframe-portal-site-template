@@ -128,6 +128,7 @@ function fn_egov_passwordConfirm(){
                                 <!--// Location -->
                                 
                                 <form name="QnaManageForm" action="<c:url value='/uss/olh/qna/QnaPasswordConfirm.do'/>" method="post">
+                                <c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 								<input name="qaId" type="hidden" value="<c:out value='${result.qaId}'/>">
 
                                 <h1 class="tit_1">포털서비스관리</h1>

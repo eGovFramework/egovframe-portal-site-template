@@ -258,6 +258,7 @@ function fn_egov_RadioBoxValue(sbName)
                                 <!--// Location -->
 
 								<form name="qustnrRespondInfoManage" method="post" action="#LINK">
+								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 
                                 <h1 class="tit_1">정보마당</h1>
 

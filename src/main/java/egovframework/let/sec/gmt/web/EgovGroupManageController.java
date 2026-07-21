@@ -9,6 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -124,7 +125,7 @@ public class EgovGroupManageController {
 	 * @return String
 	 * @exception Exception
 	 */ 
-    @RequestMapping(value="/sec/gmt/EgovGroupInsert.do")
+    @RequestMapping(value="/sec/gmt/EgovGroupInsert.do", method = RequestMethod.POST)
 	public String insertGroup(@Valid @ModelAttribute("groupManage") GroupManage groupManage, 
 			                   BindingResult bindingResult,
 			                  @ModelAttribute("groupManageVO") GroupManageVO groupManageVO, 
@@ -151,7 +152,7 @@ public class EgovGroupManageController {
 	 * @return String
 	 * @exception Exception
 	 */     
-    @RequestMapping(value="/sec/gmt/EgovGroupUpdate.do")
+    @RequestMapping(value="/sec/gmt/EgovGroupUpdate.do", method = RequestMethod.POST)
 	public String updateGroup(@Valid @ModelAttribute("groupManage") GroupManage groupManage, 
 			                   BindingResult bindingResult,
                                SessionStatus status, 
@@ -174,7 +175,7 @@ public class EgovGroupManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value="/sec/gmt/EgovGroupDelete.do")
+	@RequestMapping(value="/sec/gmt/EgovGroupDelete.do", method = RequestMethod.POST)
 	public String deleteGroup(@ModelAttribute("groupManage") GroupManage groupManage, 
                              SessionStatus status, 
                              Model model) throws Exception {
@@ -191,7 +192,7 @@ public class EgovGroupManageController {
 	 * @return String
 	 * @exception Exception
 	 */   
-	@RequestMapping(value="/sec/gmt/EgovGroupListDelete.do")
+	@RequestMapping(value="/sec/gmt/EgovGroupListDelete.do", method = RequestMethod.POST)
 	public String deleteGroupList(@RequestParam("groupIds") String groupIds,
 			                      @ModelAttribute("groupManage") GroupManage groupManage, 
 	                               SessionStatus status, 

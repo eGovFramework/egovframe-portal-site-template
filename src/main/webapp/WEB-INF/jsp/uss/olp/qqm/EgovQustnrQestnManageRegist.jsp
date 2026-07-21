@@ -124,6 +124,7 @@ function fn_egov_save_QustnrQestnManage(form){
                                 <!--// Location -->
 
 								<form name="qustnrQestnManageVO"  id="qustnrQestnManageVO" action="${pageContext.request.contextPath}/uss/olp/qqm/EgovQustnrQestnManageRegist.do" method="post">
+								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 								
 
                                 <h1 class="tit_1">포털서비스관리</h1>

@@ -84,6 +84,7 @@ function fnUpdate(){
                                 <!--// Location -->
 
 								<form name="passwordChgVO" method="post" action="<c:url value="${'/uss/umt/mber/EgovMberPasswordUpdt.do'}"/>" >
+								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 						        <!-- 상세정보 사용자 삭제시 prameter 전달용 input -->
 						        <input name="checkedIdForDel" type="hidden" />
 						        <!-- 검색조건 유지 -->

@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import egovframework.com.cmm.ComDefaultVO;
+import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
 import egovframework.let.uss.olp.qtm.service.EgovQustnrTmplatManageService;
@@ -55,10 +56,14 @@ public class EgovQustnrTmplatManageController {
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertiesService;
 
+	@RequireAdmin
+
 	@RequestMapping(value = "/uss/olp/qtm/EgovQustnrTmplatManageMain.do")
 	public String EgovQustnrTmplatManageMain(ModelMap model) throws Exception {
 		return "/uss/olp/qtm/EgovQustnrTmplatManageMain";
 	}
+
+	@RequireAdmin
 
 	@RequestMapping(value = "/uss/olp/qtm/EgovQustnrTmplatManageLeft.do")
 	public String EgovQustnrTmplatManageLeft(ModelMap model) throws Exception {
@@ -71,6 +76,7 @@ public class EgovQustnrTmplatManageController {
 	 * @return	"/uss/sam/cpy/"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/olp/EgovMain.do")
 	public String EgovMain(ModelMap model) throws Exception {
 		return "/uss/olp/qtm/EgovMain";
@@ -82,6 +88,7 @@ public class EgovQustnrTmplatManageController {
 	 * @return	"/uss/sam/cpy/EgovLeft"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/olp/EgovLeft.do")
 	public String EgovLeft(ModelMap model) throws Exception {
 		return "/uss/olp/qtm/EgovLeft";
@@ -96,6 +103,7 @@ public class EgovQustnrTmplatManageController {
 	 * @return "/uss/olp/qtm/EgovQustnrTmplatManageList"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/olp/qtm/EgovQustnrTmplatManageList.do")
 	public String EgovQustnrTmplatManageList(@ModelAttribute("searchVO") ComDefaultVO searchVO, @RequestParam Map<String, Object> commandMap,
 			QustnrTmplatManageVO qustnrTmplatManageVO, ModelMap model) throws Exception {
@@ -142,6 +150,7 @@ public class EgovQustnrTmplatManageController {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unused")
+	@RequireAdmin
 	@RequestMapping(value = "/uss/olp/qtm/EgovQustnrTmplatManageImg.do")
 	public void EgovQustnrTmplatManageImg(HttpServletRequest request, HttpServletResponse response, QustnrTmplatManageVO qustnrTmplatManageVO,
 			@RequestParam Map<String, Object> commandMap) throws Exception {
@@ -171,6 +180,7 @@ public class EgovQustnrTmplatManageController {
 	 * @return "/uss/olp/qtm/EgovQustnrTmplatManageDetail"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/olp/qtm/EgovQustnrTmplatManageDetail.do")
 	public String EgovQustnrTmplatManageDetail(@ModelAttribute("searchVO") ComDefaultVO searchVO, QustnrTmplatManageVO qustnrTmplatManageVO,
 			@RequestParam Map<String, Object> commandMap, ModelMap model) throws Exception {
@@ -199,6 +209,7 @@ public class EgovQustnrTmplatManageController {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unused")
+	@RequireAdmin
 	@RequestMapping(value = "/uss/olp/qtm/EgovQustnrTmplatManageModify.do")
 	public String QustnrTmplatManageModify(@ModelAttribute("searchVO") ComDefaultVO searchVO, @RequestParam Map<String, Object> commandMap,
 			QustnrTmplatManageVO qustnrTmplatManageVO, ModelMap model) throws Exception {
@@ -222,6 +233,7 @@ public class EgovQustnrTmplatManageController {
 	 * @return "/uss/olp/qtm/EgovQustnrTmplatManageModifyActor"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/olp/qtm/EgovQustnrTmplatManageModifyActor.do")
 	public String QustnrTmplatManageModifyActor(final MultipartHttpServletRequest multiRequest, @ModelAttribute("searchVO") ComDefaultVO searchVO,
 			@RequestParam Map<String, Object> commandMap, @Valid @ModelAttribute("qustnrTmplatManageVO") QustnrTmplatManageVO qustnrTmplatManageVO, BindingResult bindingResult,
@@ -275,6 +287,7 @@ public class EgovQustnrTmplatManageController {
 	 * @return "/uss/olp/qtm/EgovQustnrTmplatManageRegist"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/olp/qtm/EgovQustnrTmplatManageRegist.do")
 	public String QustnrTmplatManageRegist(@ModelAttribute("searchVO") ComDefaultVO searchVO, @RequestParam Map<String, Object> commandMap,
 			@ModelAttribute("qustnrTmplatManageVO") QustnrTmplatManageVO qustnrTmplatManageVO, ModelMap model) throws Exception {
@@ -307,6 +320,7 @@ public class EgovQustnrTmplatManageController {
 	 * @return "/uss/olp/qtm/EgovQustnrTmplatManageRegistActor"
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping(value = "/uss/olp/qtm/EgovQustnrTmplatManageRegistActor.do")
 	public String QustnrTmplatManageRegistActor(final MultipartHttpServletRequest multiRequest, @ModelAttribute("searchVO") ComDefaultVO searchVO,
 			@Valid @ModelAttribute("qustnrTmplatManageVO") QustnrTmplatManageVO qustnrTmplatManageVO, BindingResult bindingResult, ModelMap model) throws Exception {

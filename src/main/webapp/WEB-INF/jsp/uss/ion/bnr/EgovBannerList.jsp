@@ -199,6 +199,7 @@ function press() {
                                 <div class="condition2">
                                 
                                 	<form name="listForm" action="<c:url value='/uss/ion/bnr/selectBannerList.do'/>" method="post">
+                                	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 								
 									<input type="hidden" name="bannerId">
 									<input type="hidden" name="pageIndex" value="<c:if test="${empty bannerVO.pageIndex }">1</c:if><c:if test="${!empty bannerVO.pageIndex }"><c:out value='${bannerVO.pageIndex}'/></c:if>">
@@ -248,6 +249,7 @@ function press() {
                                             <tr>
                                                 <td>
                                                 	<form name="item" method="post" action="<c:url value='/uss/ion/bnr/getBanner.do'/>">
+                                                	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                                 		<a href="#LINK" class="lnk" onclick="fncSelectBanner('<c:out value="${banner.bannerId}"/>'); return false;"><c:out value="${banner.bannerNm}"/></a>
                                                 		<input type="hidden" name="bannerId" value="<c:out value="${banner.bannerId}"/>">
                                                 		<input type="hidden" name="pageIndex" value="<c:out value='${bannerVO.pageIndex}'/>">

@@ -88,6 +88,7 @@
                                 <!--// Location -->
 
 								<form name="frm" action ="<c:url value='/cop/com/selectTemplateInfs.do'/>" method="post">
+								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 								<input type="hidden" name="tmplatId" value="" />
 
                                 <h1 class="tit_1">포털서비스관리</h1>

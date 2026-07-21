@@ -120,6 +120,7 @@ function fnInit() {
                 <div class="loginbox">
                 
                     <form name="loginForm" action ="<c:url value='/uat/uia/actionLogin.do'/>" method="post">
+                    <c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                     <div style="visibility:hidden;display:none;">
 		                <input name="iptSubmit1" type="submit" value="전송" title="전송" />
 		            </div> 

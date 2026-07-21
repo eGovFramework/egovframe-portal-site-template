@@ -109,6 +109,7 @@ function fn_egov_updt_stplatcn(useStplatId){
                                 <div class="board_view2">
                                 
                                 	<form id="StplatManageForm" name="StplatManageForm" action="<c:url value='/uss/sam/stp/StplatDetailInqire.do'/>" method="post">
+                                	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                 
                                     <table summary="이 표는 약관내용 대상 정보를 제공하며, 이용약관명, 이용약관내용, 정보제공동의내용 정보로 구성되어 있습니다 .">
                                         <colgroup>
@@ -166,6 +167,7 @@ function fn_egov_updt_stplatcn(useStplatId){
                                     <div class="right_col btn1">
                                         <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fn_egov_updt_stplatcn('<c:out value="${result.useStplatId}"/>'); return false;"><spring:message code="button.update" /></a><!-- 수정 -->
                                         <form name="formList" action="<c:url value='/uss/sam/stp/StplatListInqire.do'/>" method="post" style="display: inline; margin-left: 10px;">
+                                        <c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                         	<a href="<c:url value='/uss/sam/stp/StplatListInqire.do'/>" class="btn btn_blue_46 w_100" onclick="fn_egov_inqire_stplatlist(); return false;" type="submit"><spring:message code="button.list" /></a><!-- 목록 -->
                                         </form>
                                     </div>

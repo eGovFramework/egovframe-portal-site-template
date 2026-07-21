@@ -117,6 +117,7 @@ function fn_egov_delete_QustnrRespondInfo(){
                                 <div class="board_view2">
                                 
                                 	<form name="QustnrRespondInfoForm" id="QustnrRespondInfoForm" action="<c:url value='/uss/olp/qri/EgovQustnrRespondInfoModify.do'/>" method="post">
+                                	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                 
                                     <table summary="이 표는 설문조사 대상 정보를 제공하며, 설문관리정보, 설문문항정보, 설문유형, 성문항목정보, 응답자답변내용, 기타답변내용, 응답자명 정보로 구성되어 있습니다 .">
                                         <colgroup>
@@ -197,6 +198,7 @@ function fn_egov_delete_QustnrRespondInfo(){
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
                                     	<form name="formDelete" action="<c:url value='/uss/olp/qri/EgovQustnrRespondInfoDetail.do'/>" method="post" style="display: inline; margin-right: 10px;">
+                                    	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                         	<a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_QustnrRespondInfo(); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
                                         	<input name="qestnrQesrspnsId" type="hidden" value="${resultList[0].qestnrQesrspnsId}"/>
 											<input name="cmd" type="hidden" value="del"/>
@@ -205,10 +207,12 @@ function fn_egov_delete_QustnrRespondInfo(){
 
                                     <div class="right_col btn1">
                                     	<form name="formUpdt" action="<c:url value='/uss/olp/qri/EgovQustnrRespondInfoModify.do'/>" method="post" style="display: inline; margin-right: 10px;">
+                                    	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 	                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fn_egov_modify_QustnrRespondInfo(); return false;"><spring:message code="button.update" /></a><!-- 수정 -->
 	                                        <input name="qestnrQesrspnsId" type="hidden" value="${resultList[0].qestnrQesrspnsId}"/>
                                         </form>
                                     	<form name="formList" action="<c:url value='/uss/olp/qri/EgovQustnrRespondInfoList.do'/>" method="post" style="display: inline;">
+                                    	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                         	<a href="#LINK" class="btn btn_blue_46 w_100" onclick="fn_egov_list_QustnrRespondInfo(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
                                         </form>
                                     </div>

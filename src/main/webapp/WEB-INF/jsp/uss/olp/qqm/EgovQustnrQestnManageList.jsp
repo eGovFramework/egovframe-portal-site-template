@@ -145,6 +145,7 @@ function fn_egov_search_QustnrQestnManage(){
                                 <div class="condition">
                                 
                                 	<form name="listForm" id="listForm" action="<c:url value='/uss/olp/qqm/EgovQustnrQestnManageList.do'/>" method="post">
+                                	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                 
                                     <label class="item f_select" for="sel1">
                                         <select name="searchCondition" title="검색조건 선택" id="sel1">
@@ -213,6 +214,7 @@ function fn_egov_search_QustnrQestnManage(){
                                                 <td>${(searchVO.pageIndex-1) * searchVO.pageSize + status.count}</td>
                                                 <td class="al">
                                                 	<form name="subForm" method="post" action="<c:url value='/uss/olp/qqm/EgovQustnrQestnManageDetail.do'/>">
+                                                	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                                 	<c:if test="${qustnrQestnManageVO.searchMode == 'Y'}">
 	                                                	<input name="qestnrTmplatId" type="hidden" value="${qustnrQestnManageVO.qestnrTmplatId}">
 	                                                	<input name="qestnrId" type="hidden" value="${qustnrQestnManageVO.qestnrId}">
@@ -228,6 +230,7 @@ function fn_egov_search_QustnrQestnManage(){
                                                 </td>
                                                 <td>
                                                 	<form name="subForm" method="post" action="<c:url value='/uss/olp/qim/EgovQustnrItemManageList.do'/>">
+                                                	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                                 		<input name="qestnrQesitmId" type="hidden" value="${resultInfo.qestnrQesitmId}">
                                                 		<input name="searchMode" type="hidden" value="Y">
                                                 		<input type="submit" class="btn btn_blue_30 w_50" style="border: none; cursor: pointer;" value="보기">
@@ -235,6 +238,7 @@ function fn_egov_search_QustnrQestnManage(){
                                                 </td>
                                                 <td>
                                                 	<form name="subForm" method="post" action="<c:url value='/uss/olp/qqm/EgovQustnrQestnManageStatistics.do'/>">
+                                                	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                                 		<c:if test="${qustnrQestnManageVO.searchMode == 'Y'}">
                                                 			<input name="qestnrTmplatId" type="hidden" value="${qustnrQestnManageVO.qestnrTmplatId}">
                                                 			<input name="qestnrId" type="hidden" value="${qustnrQestnManageVO.qestnrId}">

@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -123,7 +124,7 @@ public class EgovAuthorManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/ram/EgovAuthorInsert.do")
+	@RequestMapping(value = "/sec/ram/EgovAuthorInsert.do", method = RequestMethod.POST)
 	public String insertAuthor(@Valid @ModelAttribute("authorManage") AuthorManage authorManage, BindingResult bindingResult, SessionStatus status, ModelMap model) throws Exception {
 
 		if (bindingResult.hasErrors()) {
@@ -143,7 +144,7 @@ public class EgovAuthorManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/ram/EgovAuthorUpdate.do")
+	@RequestMapping(value = "/sec/ram/EgovAuthorUpdate.do", method = RequestMethod.POST)
 	public String updateAuthor(@Valid @ModelAttribute("authorManage") AuthorManage authorManage, BindingResult bindingResult, SessionStatus status, Model model) throws Exception {
 
 		if (bindingResult.hasErrors()) {
@@ -162,7 +163,7 @@ public class EgovAuthorManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/ram/EgovAuthorDelete.do")
+	@RequestMapping(value = "/sec/ram/EgovAuthorDelete.do", method = RequestMethod.POST)
 	public String deleteAuthor(@ModelAttribute("authorManage") AuthorManage authorManage, SessionStatus status, Model model) throws Exception {
 
 		egovAuthorManageService.deleteAuthor(authorManage);
@@ -178,7 +179,7 @@ public class EgovAuthorManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/ram/EgovAuthorListDelete.do")
+	@RequestMapping(value = "/sec/ram/EgovAuthorListDelete.do", method = RequestMethod.POST)
 	public String deleteAuthorList(@RequestParam("authorCodes") String authorCodes, @ModelAttribute("authorManage") AuthorManage authorManage, SessionStatus status, Model model)
 			throws Exception {
 

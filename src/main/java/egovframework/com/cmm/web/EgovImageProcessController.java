@@ -8,8 +8,12 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.Map;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.egovframe.rte.fdl.crypto.EgovCryptoService;
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -24,6 +28,7 @@ import egovframework.com.cmm.service.EgovProperties;
 import egovframework.com.cmm.service.FileVO;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
@@ -62,6 +67,10 @@ public class EgovImageProcessController extends HttpServlet {
 	// 주의 : 반드시 기본값 "egovframe"을 다른것으로 변경하여 사용하시기 바랍니다.
 	public static final String ALGORITHM_KEY = EgovProperties.getProperty("Globals.File.algorithmKey");
 
+	/** getImage.do가 인라인(image/*)으로 제공할 수 있는 안전한 이미지 확장자 화이트리스트 */
+	private static final List<String> SAFE_INLINE_IMAGE_EXTENSIONS =
+			Arrays.asList("jpg", "jpeg", "png", "gif", "bmp", "webp");
+
 	/**
 	 * 첨부된 이미지에 대한 미리보기 기능을 제공한다.
 	 *
@@ -73,12 +82,26 @@ public class EgovImageProcessController extends HttpServlet {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cmm/fms/getImage.do")
-	public void getImageInf(SessionVO sessionVO, ModelMap model, @RequestParam Map<String, Object> commandMap, HttpServletResponse response) throws Exception {
+	public void getImageInf(SessionVO sessionVO, ModelMap model, @RequestParam Map<String, Object> commandMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		// 사용자권한 처리
+		if (!Boolean.TRUE.equals(EgovUserDetailsHelper.isAuthenticated())) {
+			response.sendError(HttpServletResponse.SC_FORBIDDEN);
+			return;
+		}
 
 		String param_atchFileId = (String) commandMap.get("atchFileId");
 		param_atchFileId = param_atchFileId.replaceAll(" ", "+");
 		byte[] decodedBytes = Base64.getDecoder().decode(param_atchFileId);
 		String decodedString = new String(cryptoService.decrypt(decodedBytes, ALGORITHM_KEY));
+
+		// 세션 바인딩 검증 - atchFileId 발급 당시의 세션ID와 현재 세션ID가 일치해야 한다.
+		String issuedSessionId = StringUtils.substringBefore(decodedString, "|");
+		if (issuedSessionId == null || issuedSessionId.isEmpty() || !issuedSessionId.equals(request.getSession().getId())) {
+			response.sendError(HttpServletResponse.SC_FORBIDDEN);
+			return;
+		}
+
 		String decodedFileId = StringUtils.substringAfter(decodedString, "|");
 
 		String fileSn = (String) commandMap.get("fileSn");
@@ -107,21 +130,20 @@ public class EgovImageProcessController extends HttpServlet {
 				bStream.write(imgByte);
 			}
 
-			String type = "";
+			String extsn = fvo.getFileExtsn() == null ? "" : fvo.getFileExtsn().toLowerCase();
 
-			if (fvo.getFileExtsn() != null && !"".equals(fvo.getFileExtsn())) {
-				if ("jpg".equals(fvo.getFileExtsn().toLowerCase())) {
-					type = "image/jpeg";
-				} else {
-					type = "image/" + fvo.getFileExtsn().toLowerCase();
-				}
-				type = "image/" + fvo.getFileExtsn().toLowerCase();
-
+			// 화이트리스트에 없는 확장자(svg, html 등)는 브라우저가 인라인으로 해석해
+			// 저장형 XSS로 이어질 수 있으므로, image/* 콘텐츠 타입 대신 다운로드(attachment)로 처리한다.
+			if (!SAFE_INLINE_IMAGE_EXTENSIONS.contains(extsn)) {
+				response.setHeader("Content-Type", "application/octet-stream");
+				response.setHeader("Content-Disposition", "attachment");
+				response.setHeader("X-Content-Type-Options", "nosniff");
 			} else {
-				LOGGER.debug("Image fileType is null.");
+				String type = "jpg".equals(extsn) ? "image/jpeg" : "image/" + extsn;
+				response.setHeader("Content-Type", type);
+				response.setHeader("X-Content-Type-Options", "nosniff");
 			}
 
-			response.setHeader("Content-Type", type);
 			response.setContentLength(bStream.size());
 			bStream.writeTo(response.getOutputStream());
 			response.getOutputStream().flush();

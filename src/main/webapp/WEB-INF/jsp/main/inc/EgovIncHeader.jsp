@@ -81,6 +81,7 @@ $(document).ready(function(){
         <div id="TopSearch" class="total_search">
             <div class="search_box">
                 <form method="post" action="#LINK" name="TopSearchForm" id="TopSearchForm">
+                <c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                     <fieldset>
                         <legend>전체검색</legend>
                         <input type="text" name="search" id="search" placeholder="검색어를 입력하세요.">
@@ -130,7 +131,12 @@ $(document).ready(function(){
 				</c:if>
 				<c:if test="${loginName != ''}">
                 <!-- case: 로그인했을경우 -->
-	                <li><a href="<c:url value='/uat/uia/actionLogout.do'/>" class="logout" title="로그아웃">로그아웃</a></li>
+	                <li>
+	                	<a href="#" onclick="document.logoutForm.submit(); return false;" class="logout" title="로그아웃">로그아웃</a>
+	                	<form name="logoutForm" method="post" action="<c:url value='/uat/uia/actionLogout.do'/>" style="display:none;">
+	                		<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
+	                	</form>
+	                </li>
 	                <li><a href="#" class="mail" title="메일">메일<span>3</span>건</a></li>
 	                <li><a href="#" class="allmenu" title="전체메뉴">전체메뉴</a></li>
 				</c:if>
@@ -264,6 +270,7 @@ $(document).ready(function(){
 </script>
 
 <form name="menuListForm" action ="" method="post">
+<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
     <input type="hidden" id="menuNo" name="menuNo" value="<%=session.getAttribute("menuNo")%>" />
     <input type="hidden" id="link" name="link" value="" />
     <div style="width:0px; height:0px;">

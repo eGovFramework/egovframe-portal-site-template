@@ -103,6 +103,7 @@ function fn_egov_search_QustnrRespondManage(){
                                 <!--// Location -->
 
 								<form name="listForm" action="<c:url value='/uss/olp/qrm/EgovQustnrRespondManageList.do'/>" method="post">
+								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 
                                 <h1 class="tit_1">포털서비스관리</h1>
 

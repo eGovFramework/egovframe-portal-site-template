@@ -100,6 +100,7 @@
                                 <div class="condition">
                                 
                                 	<form name="frm" action="<c:url value='/cop/bbs/SelectBBSMasterInfs.do'/>" method="post">
+                                	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 									<input type="hidden" name="bbsId">
 									<input type="hidden" name="trgetId">
                                 

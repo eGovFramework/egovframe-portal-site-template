@@ -10,10 +10,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
 import egovframework.com.cmm.LoginVO;
+import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.let.cop.com.service.BoardUseInf;
 import egovframework.let.cop.com.service.BoardUseInfVO;
 import egovframework.let.cop.com.service.EgovBBSUseInfoManageService;
@@ -58,7 +60,8 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/com/deleteBBSUseInf.do")
+	@RequireAdmin
+	@RequestMapping(value = "/cop/com/deleteBBSUseInf.do", method = RequestMethod.POST)
 	public String deleteBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @ModelAttribute("bdUseInf") BoardUseInf bdUseInf, SessionStatus status, ModelMap model)
 			throws Exception {
 
@@ -80,6 +83,7 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/cop/com/addBBSUseInf.do")
 	public String addBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) throws Exception {
 		return "cop/com/EgovBoardUseInfRegist";
@@ -96,7 +100,8 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/com/insertBBSUseInf.do")
+	@RequireAdmin
+	@RequestMapping(value = "/cop/com/insertBBSUseInf.do", method = RequestMethod.POST)
 	public String insertBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @Valid @ModelAttribute("boardUseInf") BoardUseInf boardUseInf, BindingResult bindingResult,
 			@RequestParam Map<String, Object> commandMap, ModelMap model) throws Exception {
 
@@ -148,6 +153,7 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/cop/com/selectBBSUseInfs.do")
 	public String selectBBSUseInfs(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) throws Exception {
 
@@ -187,7 +193,8 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/com/updateBBSUseInf.do")
+	@RequireAdmin
+	@RequestMapping(value = "/cop/com/updateBBSUseInf.do", method = RequestMethod.POST)
 	public String updateBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @Valid @ModelAttribute("boardUseInf") BoardUseInf boardUseInf, BindingResult bindingResult, HttpServletRequest request,
 			ModelMap model) throws Exception {
 
@@ -217,6 +224,7 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/cop/com/selectBBSUseInf.do")
 	public String selectBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) throws Exception {
 		BoardUseInfVO vo = bbsUseService.selectBBSUseInf(bdUseVO);
@@ -242,6 +250,7 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@RequestMapping("/cop/com/selectBBSUseInfsByTrget.do")
 	public String selectBBSUseInfsByTrget(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) throws Exception {
 
@@ -282,7 +291,8 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/com/updateBBSUseInfByTrget.do")
+	@RequireAdmin
+	@RequestMapping(value = "/cop/com/updateBBSUseInfByTrget.do", method = RequestMethod.POST)
 	public String updateBBSUseInfByTrget(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @ModelAttribute("boardUseInf") BoardUseInf boardUseInf,
 			@RequestParam Map<String, Object> commandMap, SessionStatus status, ModelMap model) throws Exception {
 
@@ -308,7 +318,8 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/com/insertBBSUseInfByTrget.do")
+	@RequireAdmin
+	@RequestMapping(value = "/cop/com/insertBBSUseInfByTrget.do", method = RequestMethod.POST)
 	public String insertBBSUseInfByTrget(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @ModelAttribute("boardUseInf") BoardUseInf boardUseInf,
 			@RequestParam Map<String, Object> commandMap, SessionStatus status, ModelMap model) throws Exception {
 

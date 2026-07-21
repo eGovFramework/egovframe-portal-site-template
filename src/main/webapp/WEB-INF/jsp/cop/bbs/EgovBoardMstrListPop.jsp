@@ -60,6 +60,7 @@
 <body>
 	
 	<form name="frm" method="post" action="${pageContext.request.contextPath}/cop/bbs/SelectBBSMasterInfsPop.do">
+	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 	
 	<input type="hidden" name="bbsId" value="">
 	

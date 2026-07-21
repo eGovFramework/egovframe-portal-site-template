@@ -137,6 +137,7 @@ function fn_egov_list_QustnrQestnManag(qestnrId, qestnrTmplatId){
                                 <!--// Location -->
 
 								<form name="listForm" id="listForm" action="<c:url value='/uss/olp/qim/EgovQustnrItemManageList.do'/>" method="post">
+								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 
                                 <h1 class="tit_1">포털서비스관리</h1>
 

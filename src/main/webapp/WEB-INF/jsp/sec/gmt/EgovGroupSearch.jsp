@@ -131,6 +131,7 @@ function press() {
 <body>
 
 	<form name="listForm" action="<c:url value='/sec/gmt/EgovGroupSearchList.do'/>" method="post">
+	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 	
     <!-- 그룹조회 팝업 -->
     <div class="popup EgovGroupSearch" style="background-color: white;">
