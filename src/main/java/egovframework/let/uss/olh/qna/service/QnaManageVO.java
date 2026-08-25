@@ -118,4 +118,7 @@ public class QnaManageVO extends QnaManageDefaultVO {
     /** 최종수정자ID */
     private String lastUpdusrId;
 
+    /** 관리자 수정 여부 (SQL 방어용, DB 컬럼 아님) */
+    private String mngrAt = "N";
+
 }

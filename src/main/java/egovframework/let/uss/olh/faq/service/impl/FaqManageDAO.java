@@ -108,4 +108,10 @@ public class FaqManageDAO extends EgovAbstractMapper {
 
     }
 
+    public int countFaqByAtchFileId(String atchFileId) throws Exception {
+    	FaqManageVO vo = new FaqManageVO();
+    	vo.setAtchFileId(atchFileId);
+    	return (Integer) selectOne("FaqManageDAO.countFaqByAtchFileId", vo);
+    }
+
 }

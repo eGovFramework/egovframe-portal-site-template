@@ -165,9 +165,12 @@
 				  ,	EMAIL_ADRES=#{emailAdres}
 				  , EMAIL_ANSWER_AT=NVL(#{emailAnswerAt},'N')
 				  , WRTER_NM=#{wrterNm}
-				  , WRITNG_DE=TO_CHAR(sysdate,'YYYYMMDD')
-				  , FRST_REGIST_PNTTM=
-				  , FRST_REGISTER_ID=#{frstRegisterId}
+				  <!-- 26.08.19 조치 : 수정 시 작성일자/최초등록정보를 덮어쓰던 오류를 제거하고,
+				       updateQnaCnAnswer와 동일하게 최종수정 정보를 기록한다.
+				       FRST_REGISTER_ID가 보존되어야 소유자 검증이 SQL 수준에서도 성립한다.
+				       (기존 FRST_REGIST_PNTTM= 은 값이 비어 있어 문법 오류 상태였다) -->
+				  , LAST_UPDT_PNTTM=SYSDATETIME
+				  , LAST_UPDUSR_ID=#{lastUpdusrId}
 			WHERE  QA_ID=#{qaId}
 		
 	</update>
@@ -176,8 +179,10 @@
 		
 			DELETE FROM LETTNQAINFO 
 			WHERE  QA_ID=#{qaId}
-		
-	</delete>
+			<if test='!"Y".equals(mngrAt)'>
+			AND FRST_REGISTER_ID = #{lastUpdusrId}
+			</if>
+		</delete>
 	
 	<select id="selectQnaAnswerListDetail" resultMap="QnaManage">
 				
@@ -251,7 +256,8 @@
 				  	QNA_PROCESS_STTUS_CODE=#{qnaProcessSttusCode}
 				  , ANSWER_CN=#{answerCn}
 				  , ANSWER_DE=TO_CHAR(sysdate,'YYYYMMDD')
-				  , LAST_UPDT_PNTTM=
+				  <!-- 26.08.19 조치 : 값이 비어 있어 문법 오류였던 것을 CUBRID 관용구로 교정 -->
+				  , LAST_UPDT_PNTTM=SYSDATETIME
 				  , LAST_UPDUSR_ID=#{lastUpdusrId}
 			WHERE  QA_ID=#{qaId}
 		

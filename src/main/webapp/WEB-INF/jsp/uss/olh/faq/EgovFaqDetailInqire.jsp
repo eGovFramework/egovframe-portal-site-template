@@ -50,26 +50,9 @@ function fn_egov_inqire_faqlist() {
 }
 
 /* ********************************************************
- * 수정처리화면
+ * 26.08.18 보안취약점 조치 : FAQ 수정/삭제는 관리자 전용 기능이므로
+ * 사용자 화면의 호출 함수를 제거한다. 관리자는 /uss/olh/faq/admin/ 화면을 사용한다.
  ******************************************************** */
-function fn_egov_updt_faq(faqId){
-
-	// Update하기 위한 키값(faqId)을 셋팅
-	document.FaqManageForm.faqId.value = faqId;	
-	document.FaqManageForm.action = "<c:url value='/uss/olh/faq/FaqCnUpdtView.do'/>";
-	document.FaqManageForm.submit();	
-	
-}
-
-function fn_egov_delete_faq(faqId){
-
-	if	(confirm('<spring:message code="common.delete.msg" />')) {
-		// Delete하기 위한 키값(faqId)을 셋팅
-		document.FaqManageForm.faqId.value = faqId;	
-		document.FaqManageForm.action = "<c:url value='/uss/olh/faq/FaqCnDelete.do'/>";
-		document.FaqManageForm.submit();
-	}
-}
 
 </script>
 </head>
@@ -104,7 +87,9 @@ function fn_egov_delete_faq(faqId){
                                 </div>
                                 <!--// Location -->
 
-								<form name="FaqManageForm" action="${pageContext.request.contextPath}/uss/olh/faq/FaqCnUpdtView.do" method="post">
+								<!-- 26.08.18 보안취약점 조치 : 기본 action이 관리자 전용이 된 FaqCnUpdtView.do를
+								     가리키고 있어, 실제 사용처(목록 이동)와 동일한 URL로 교정한다. -->
+								<form name="FaqManageForm" action="${pageContext.request.contextPath}/uss/olh/faq/FaqListInqire.do" method="post">
 								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 
                                 <h1 class="tit_1">정보마당</h1>
@@ -169,8 +154,7 @@ function fn_egov_delete_faq(faqId){
 									<!-- 목록/저장버튼  시작-->
                                     <div class="board_view_bot">
                                         <div class="left_col btn3">
-                                            <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_updt_faq('<c:out value="${result.faqId}"/>'); return false;"><spring:message code="button.update" /></a><!-- 수정 -->
-                                            <a href="<c:url value='/uss/olh/faq/FaqCnDelete.do'/>?faqId=<c:out value='${result.faqId}'/>" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_faq('<c:out value="${result.faqId}"/>'); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
+                                            <!-- 26.08.18 보안취약점 조치 : FAQ 수정/삭제는 관리자 전용 기능이므로 사용자 화면에서 제거 -->
                                         </div>
 
                                         <div class="right_col btn1">

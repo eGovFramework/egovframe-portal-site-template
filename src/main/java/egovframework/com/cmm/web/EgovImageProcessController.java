@@ -5,13 +5,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Base64;
 import java.util.Map;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.egovframe.rte.fdl.crypto.EgovCryptoService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.slf4j.Logger;
@@ -26,6 +24,8 @@ import egovframework.com.cmm.SessionVO;
 import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.EgovProperties;
 import egovframework.com.cmm.service.FileVO;
+import egovframework.com.cmm.service.impl.EgovFileAuthServiceImpl;
+import egovframework.com.cmm.util.EgovFileTokenUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -59,7 +59,10 @@ public class EgovImageProcessController extends HttpServlet {
 
 	@Resource(name = "EgovFileMngService")
 	private EgovFileMngService fileService;
-	
+
+	@Resource(name = "EgovFileAuthService")
+	private EgovFileAuthServiceImpl fileAuthService;
+
 	/** 암호화서비스 */
 	@Resource(name = "egovARIACryptoService")
 	EgovCryptoService cryptoService;
@@ -92,17 +95,12 @@ public class EgovImageProcessController extends HttpServlet {
 
 		String param_atchFileId = (String) commandMap.get("atchFileId");
 		param_atchFileId = param_atchFileId.replaceAll(" ", "+");
-		byte[] decodedBytes = Base64.getDecoder().decode(param_atchFileId);
-		String decodedString = new String(cryptoService.decrypt(decodedBytes, ALGORITHM_KEY));
-
 		// 세션 바인딩 검증 - atchFileId 발급 당시의 세션ID와 현재 세션ID가 일치해야 한다.
-		String issuedSessionId = StringUtils.substringBefore(decodedString, "|");
-		if (issuedSessionId == null || issuedSessionId.isEmpty() || !issuedSessionId.equals(request.getSession().getId())) {
-			response.sendError(HttpServletResponse.SC_FORBIDDEN);
-			return;
-		}
-
-		String decodedFileId = StringUtils.substringAfter(decodedString, "|");
+		EgovFileTokenUtil.DecodedFileToken token = EgovFileTokenUtil.decodeAndValidateSession(
+				param_atchFileId, request.getSession().getId(), cryptoService, ALGORITHM_KEY);
+		String decodedFileId = token.getAtchFileId();
+		// 첨부파일 소유자(또는 관리자)만 조회할 수 있도록 검증한다 (IDOR 방지)
+		fileAuthService.assertFileAccess(decodedFileId);
 
 		String fileSn = (String) commandMap.get("fileSn");
 

@@ -16,6 +16,7 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="egovc" uri="/WEB-INF/tlds/egovc.tld" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -69,6 +70,15 @@ function fn_egov_updt_qnacn(qaId){
 	
 	// qaId 값 세팅
 	document.QnaManageForm.qaId.value = qaId;
+	
+<c:if test="${adminAt == 'Y'}">
+	// 26.08.20 조치 : 관리자는 타인의 작성 비밀번호를 알 방법이 없으므로
+	// 비밀번호 확인 모달을 건너뛰고 바로 수정화면으로 이동한다.
+	// QnaCnUpdtView.do 의 assertCanModifyQna() 가 관리자를 무조건 통과시킨다.
+	document.QnaManageForm.action = "<c:url value='/uss/olh/qna/QnaCnUpdtView.do'/>";
+	document.QnaManageForm.submit();
+	return;
+</c:if>
 	
 	var url 	= "<c:url value='/uss/olh/qna/QnaPasswordConfirmView.do'/>";
 	
@@ -150,7 +160,7 @@ function fn_egov_passwordConfirm(){
 
 								<form name="QnaManageForm" action="<c:url value='/uss/olh/qna/QnaPasswordConfirm.do'/>" method="post">
 								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
-								<input name="qaId" type="hidden" value="<c:out value='${result.qaId}'/>">
+								<input name="qaId" type="hidden" value="<c:out value='${egovc:encrypt(result.qaId)}'/>">
 
                                 <h1 class="tit_1">정보마당</h1>
 
@@ -285,13 +295,19 @@ function fn_egov_passwordConfirm(){
 								<!-- 목록/저장버튼  시작-->
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
-                                        <a href="<c:url value='/uss/olh/qna/QnaCnDelete.do'/>?qaId=<c:out value='${result.qaId}'/>" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_qnacn('<c:out value="${result.qaId}"/>'); return false;">
+                                        <%-- 26.08.20 조치 : 노출 조건이 없어 타인 글에도 수정/삭제 버튼이 노출됐다.
+                                             노출 조건을 컨트롤러가 넣어둔 modifyAt(작성자 또는 관리자)로 감싼다. --%>
+                                        <c:if test="${modifyAt == 'Y'}">
+                                        <a href="<c:url value='/uss/olh/qna/QnaCnDelete.do'/>?qaId=<c:out value='${egovc:encrypt(result.qaId)}'/>" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_qnacn('<c:out value="${egovc:encrypt(result.qaId)}"/>'); return false;">
                                         	<spring:message code="button.delete" />
                                         </a><!-- 삭제 -->
+                                        </c:if>
                                     </div>
 
                                     <div class="right_col btn1">
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fn_egov_updt_qnacn('<c:out value="${result.qaId}"/>'); return false;"><spring:message code="button.update" /></a><!-- 수정 -->
+                                        <c:if test="${modifyAt == 'Y'}">
+                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fn_egov_updt_qnacn('<c:out value="${egovc:encrypt(result.qaId)}"/>'); return false;"><spring:message code="button.update" /></a><!-- 수정 -->
+                                        </c:if>
                                         <a href="<c:url value='/uss/olh/qna/QnaListInqire.do'/>" class="btn btn_blue_46 w_100" onclick="fn_egov_inqire_qnalist(); return false;">
                                         	<spring:message code="button.list" />
                                         </a><!-- 목록 -->
@@ -299,7 +315,11 @@ function fn_egov_passwordConfirm(){
                                 </div>
                                 <!-- 목록/저장버튼  끝-->
                                 
-                                <c:if test="${result.passwordConfirmAt == 'N,'}">
+                                <%-- 26.08.24 조치 : 기존 조건 result.passwordConfirmAt == 'N,' 은
+                                     forward 가 붙인 passwordConfirmAt=N 과 아래 빈 hidden 필드가
+                                     파라미터 두 개로 합쳐져 만들어진 값에 의존하고 있었다.
+                                     컨트롤러가 명시적으로 넣어주는 passwordFailAt 로 판정한다. --%>
+                                <c:if test="${passwordFailAt == 'Y'}">
 								<tr> 
 									<td class="lt_text3" colspan=10>
 										<script type="text/javascript">

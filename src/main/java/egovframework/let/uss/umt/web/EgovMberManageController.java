@@ -202,7 +202,7 @@ public class EgovMberManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/uss/umt/mber/EgovMberSelectUpdtView.do")
-	public String updateMberView(@RequestParam("selectedId") String mberId, @ModelAttribute("searchVO") UserDefaultVO userSearchVO, Model model) throws Exception {
+	public String updateMberView(@RequestParam("selectedId") String mberId, @ModelAttribute("userSearchVO") UserDefaultVO userSearchVO, Model model) throws Exception {
 
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -245,7 +245,10 @@ public class EgovMberManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/uss/umt/mber/EgovMberSelectUpdt.do", method = RequestMethod.POST)
-	public String updateMber(@Valid @ModelAttribute("mberManageVO") MberManageVO mberManageVO, BindingResult bindingResult, Model model) throws Exception {
+	// 26.08.20 조치 : 검증 실패 시 상세화면을 다시 그리는데 userSearchVO 가 모델에 없어
+	// JSP의 hidden pageIndex 가 빈 값으로 렌더되고, 목록 버튼이 pageIndex="" 를 보내 400이 발생하는 오류 수정
+	public String updateMber(@Valid @ModelAttribute("mberManageVO") MberManageVO mberManageVO, BindingResult bindingResult,
+			@ModelAttribute("userSearchVO") UserDefaultVO userSearchVO, Model model) throws Exception {
 
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -255,6 +258,7 @@ public class EgovMberManageController {
     	}
 
 		if (bindingResult.hasErrors()) {
+
 			ComDefaultCodeVO vo = new ComDefaultCodeVO();
 
 			//패스워드힌트목록을 코드정보로부터 조회
@@ -290,7 +294,7 @@ public class EgovMberManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/uss/umt/mber/EgovMberDelete.do", method = RequestMethod.POST)
-	public String deleteMber(@RequestParam("checkedIdForDel") String checkedIdForDel, @ModelAttribute("searchVO") UserDefaultVO userSearchVO, Model model) throws Exception {
+	public String deleteMber(@RequestParam("checkedIdForDel") String checkedIdForDel, @ModelAttribute("userSearchVO") UserDefaultVO userSearchVO, Model model) throws Exception {
 
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -403,7 +407,7 @@ public class EgovMberManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/uss/umt/mber/EgovMberPasswordUpdt.do", method = RequestMethod.POST)
-	public String updatePassword(ModelMap model, @RequestParam Map<String, Object> commandMap, @ModelAttribute("searchVO") UserDefaultVO userSearchVO,
+	public String updatePassword(ModelMap model, @RequestParam Map<String, Object> commandMap, @ModelAttribute("userSearchVO") UserDefaultVO userSearchVO,
 			@ModelAttribute("mberManageVO") MberManageVO mberManageVO) throws Exception {
 
 		// 미인증 사용자에 대한 보안처리
@@ -464,7 +468,7 @@ public class EgovMberManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/uss/umt/mber/EgovMberPasswordUpdtView.do")
-	public String updatePasswordView(ModelMap model, @RequestParam Map<String, Object> commandMap, @ModelAttribute("searchVO") UserDefaultVO userSearchVO,
+	public String updatePasswordView(ModelMap model, @RequestParam Map<String, Object> commandMap, @ModelAttribute("userSearchVO") UserDefaultVO userSearchVO,
 			@ModelAttribute("mberManageVO") MberManageVO mberManageVO) throws Exception {
 
 		// 미인증 사용자에 대한 보안처리

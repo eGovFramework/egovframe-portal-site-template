@@ -215,8 +215,10 @@
 			DELETE FROM LETTNQUSTNRRSPNSRESULT
 			WHERE 1=1
 			AND QUSTNR_RSPNS_RESULT_ID = #{qestnrQesrspnsId}
-		
-	</delete>
+			<if test='!"Y".equals(mngrAt)'>
+			AND FRST_REGISTER_ID = #{lastUpdusrId}
+			</if>
+		</delete>
 
 	<!-- 응답자결과(설문조사)::수정  -->
 	<update id="updateQustnrRespondInfo">
@@ -230,6 +232,9 @@
 			LAST_UPDUSR_ID = #{lastUpdusrId}
 		WHERE 1=1
 			AND QUSTNR_RSPNS_RESULT_ID = #{qestnrQesrspnsId}
+			<if test='!"Y".equals(mngrAt)'>
+			AND FRST_REGISTER_ID = #{lastUpdusrId}
+			</if>
 	</update>
 
 	<!-- 응답자결과(설문조사)::상세보기 -->
@@ -390,4 +395,7 @@
 	</insert>
 
 
+  <select id="selectFrstRegisterIdByRespondId" parameterType="egovframework.let.uss.olp.qri.service.QustnrRespondInfoVO" resultType="java.lang.String">
+			SELECT FRST_REGISTER_ID FROM LETTNQUSTNRRSPNSRESULT WHERE QUSTNR_RSPNS_RESULT_ID = #{qestnrQesrspnsId}
+  </select>
 </mapper>

@@ -15,6 +15,7 @@ import egovframework.com.cmm.service.FileVO;
 import egovframework.let.cop.bbs.service.Board;
 import egovframework.let.cop.bbs.service.BoardVO;
 import egovframework.let.cop.bbs.service.EgovBBSManageService;
+import egovframework.let.cop.bbs.util.EgovBBSAuthUtil;
 import egovframework.let.utl.fcc.service.EgovDateUtil;
 import jakarta.annotation.Resource;
 
@@ -53,6 +54,7 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
      * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#deleteBoardArticle(egovframework.let.cop.bbs.brd.service.Board)
      */
     public void deleteBoardArticle(Board board) throws Exception {
+	prepareManagerFlag(board);
 	FileVO fvo = new FileVO();
 
 	fvo.setAtchFileId(board.getAtchFileId());
@@ -155,7 +157,12 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
      * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#updateBoardArticle(egovframework.let.cop.bbs.brd.service.Board)
      */
     public void updateBoardArticle(Board board) throws Exception {
-			bbsMngDAO.updateBoardArticle(board);
+	prepareManagerFlag(board);
+	bbsMngDAO.updateBoardArticle(board);
+    }
+
+    private void prepareManagerFlag(Board board) {
+	board.setMngrAt(EgovBBSAuthUtil.isAdminUser() ? "Y" : "N");
     }
 
     /**
