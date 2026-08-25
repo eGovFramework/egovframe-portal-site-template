@@ -485,6 +485,17 @@ public class Board implements Serializable {
 		this.ntceBgndeView = ntceBgndeView;
 	}
 
+    /** 관리자 수정 여부 (SQL 방어용, DB 컬럼 아님) */
+    private String mngrAt = "N";
+
+    public String getMngrAt() {
+        return mngrAt;
+    }
+
+    public void setMngrAt(String mngrAt) {
+        this.mngrAt = mngrAt;
+    }
+
 	/**
 	 * toString 메소드를 대치한다.
 	 */

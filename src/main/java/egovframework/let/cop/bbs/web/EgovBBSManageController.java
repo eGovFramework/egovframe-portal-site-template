@@ -10,6 +10,7 @@ import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.EgovFileMngUtil;
 import egovframework.com.cmm.service.FileVO;
 import egovframework.let.cop.bbs.service.Board;
+import egovframework.let.cop.bbs.util.EgovBBSAuthUtil;
 import egovframework.let.cop.bbs.service.BoardMaster;
 import egovframework.let.cop.bbs.service.BoardMasterVO;
 import egovframework.let.cop.bbs.service.BoardVO;
@@ -216,6 +217,8 @@ public class EgovBBSManageController {
 		model.addAttribute("result", vo);
 
 		model.addAttribute("sessionUniqId", user.getUniqId());
+		// 26.08.20 조치 : 수정/삭제 버튼 노출 조건. 작성자 한정이던 것을 관리자도 포함하도록 한다.
+		model.addAttribute("modifyAt", EgovBBSAuthUtil.canShowModifyButtons(vo, user) ? "Y" : "N");
 		//----------------------------
 		// template 처리 (기본 BBS template 지정  포함)
 		//----------------------------
@@ -501,6 +504,7 @@ public class EgovBBSManageController {
 		if (isAuthenticated) {
 			bmvo = bbsAttrbService.selectBBSMasterInf(master);
 			bdvo = bbsMngService.selectBoardArticle(boardVO);
+			EgovBBSAuthUtil.assertCanModifyArticle(bdvo, user);
 		}
 
 		model.addAttribute("result", bdvo);
@@ -538,7 +542,10 @@ public class EgovBBSManageController {
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
-		String atchFileId = boardVO.getAtchFileId();
+		// 26.08.18 보안취약점 조치 : 기존 게시글을 조회해 소유자 검증에 사용한다.
+		// 요청 파라미터의 atchFileId 를 그대로 신뢰하지 않고 DB 값을 쓴다.
+		BoardVO existingBoard = bbsMngService.selectBoardArticle(boardVO);
+		String atchFileId = existingBoard.getAtchFileId();
 
 		beanValidator.validate(board, bindingResult);
 		if (bindingResult.hasErrors()) {
@@ -562,6 +569,7 @@ public class EgovBBSManageController {
 		}
 
 		if (isAuthenticated) {
+			EgovBBSAuthUtil.assertCanModifyArticle(existingBoard, user);
 			final Map<String, MultipartFile> files = multiRequest.getFileMap();
 			if (!files.isEmpty()) {
 				if ("".equals(atchFileId)) {
@@ -613,6 +621,8 @@ public class EgovBBSManageController {
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
 		if (isAuthenticated) {
+			BoardVO existingBoard = bbsMngService.selectBoardArticle(boardVO);
+			EgovBBSAuthUtil.assertCanModifyArticle(existingBoard, user);
 			board.setLastUpdusrId(user.getUniqId());
 
 			bbsMngService.deleteBoardArticle(board);
@@ -1127,6 +1137,8 @@ public class EgovBBSManageController {
 
 		model.addAttribute("result", vo);
 		model.addAttribute("sessionUniqId", "ANONYMOUS");
+		// 26.08.20 조치 : 익명게시판은 작성자가 모두 "ANONYMOUS"이므로 기존 노출 조건을 그대로 옮긴다.
+		model.addAttribute("modifyAt", "ANONYMOUS".equals(vo.getFrstRegisterId()) ? "Y" : "N");
 
 		//----------------------------
 		// template 처리 (기본 BBS template 지정  포함)

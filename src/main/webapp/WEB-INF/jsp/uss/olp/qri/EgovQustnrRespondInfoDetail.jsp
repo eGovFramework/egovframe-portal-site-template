@@ -62,13 +62,10 @@ function fn_egov_modify_QustnrRespondInfo(){
  * 삭제처리
  ******************************************************** */
 function fn_egov_delete_QustnrRespondInfo(){
-	var vFrom = document.QustnrRespondInfoForm;
+	var vFrom = document.formDelete;
 	if(confirm('<spring:message code="common.delete.msg" />')) {
-		vFrom.cmd.value = 'del';
-		vFrom.action = "<c:url value='/uss/olp/qri/EgovQustnrRespondInfoDetail.do'/>";
+		vFrom.action = "<c:url value='/uss/olp/qri/EgovQustnrRespondInfoDelete.do'/>";
 		vFrom.submit();
-	}else{
-		vFrom.cmd.value = '';
 	}
 }
 </script>
@@ -196,10 +193,9 @@ function fn_egov_delete_QustnrRespondInfo(){
 								<!-- 목록/저장버튼  시작-->
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
-                                    	<form name="formDelete" action="<c:url value='/uss/olp/qri/EgovQustnrRespondInfoDetail.do'/>" method="post" style="display: inline; margin-right: 10px;">
+                                    	<form name="formDelete" action="<c:url value='/uss/olp/qri/EgovQustnrRespondInfoDelete.do'/>" method="post" style="display: inline; margin-right: 10px;">
                                         	<a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_QustnrRespondInfo(); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
                                         	<input name="qestnrQesrspnsId" type="hidden" value="${resultList[0].qestnrQesrspnsId}"/>
-											<input name="cmd" type="hidden" value="del"/>
                                         </form>
                                     </div>
 

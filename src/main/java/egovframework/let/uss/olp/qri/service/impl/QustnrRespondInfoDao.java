@@ -171,4 +171,8 @@ public class QustnrRespondInfoDao extends EgovAbstractMapper {
 	public void deleteQustnrRespondInfo(QustnrRespondInfoVO qustnrRespondInfoVO) throws Exception{
 		insert("QustnrRespondInfo.deleteQustnrRespondInfo", qustnrRespondInfoVO);
 	}
+
+	public String selectFrstRegisterIdByRespondId(QustnrRespondInfoVO qustnrRespondInfoVO) throws Exception {
+		return (String) selectOne("QustnrRespondInfo.selectFrstRegisterIdByRespondId", qustnrRespondInfoVO);
+	}
 }

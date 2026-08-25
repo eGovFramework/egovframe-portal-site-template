@@ -97,6 +97,9 @@ public class QnaManageVO extends QnaManageDefaultVO {
     /** 최종수정자ID */
     private String lastUpdusrId;
 
+    /** 관리자 수정 여부 (SQL 방어용, DB 컬럼 아님) */
+    private String mngrAt = "N";
+
 	/**
 	 * qaId attribute 를 리턴한다.
 	 * @return the String
@@ -495,6 +498,22 @@ public class QnaManageVO extends QnaManageDefaultVO {
 	 */
 	public void setLastUpdusrId(String lastUpdusrId) {
 		this.lastUpdusrId = lastUpdusrId;
+	}
+
+	/**
+	 * mngrAt attribute 를 리턴한다.
+	 * @return String
+	 */
+	public String getMngrAt() {
+		return mngrAt;
+	}
+
+	/**
+	 * mngrAt attribute 값을 설정한다.
+	 * @param mngrAt String
+	 */
+	public void setMngrAt(String mngrAt) {
+		this.mngrAt = mngrAt;
 	}
 
     

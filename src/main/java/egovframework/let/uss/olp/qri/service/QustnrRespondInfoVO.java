@@ -63,6 +63,17 @@ public class QustnrRespondInfoVO implements Serializable {
 	/** 최종수정시점ID */
 	private String lastUpdusrId = "";
 
+	/** 관리자 수정 여부 (SQL 방어용, DB 컬럼 아님) */
+	private String mngrAt = "N";
+
+	public String getMngrAt() {
+		return mngrAt;
+	}
+
+	public void setMngrAt(String mngrAt) {
+		this.mngrAt = mngrAt;
+	}
+
 	/**
 	 * qestnrQesrspnsId attribute 를 리턴한다.
 	 * @return the String

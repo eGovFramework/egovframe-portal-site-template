@@ -118,4 +118,7 @@
 		
 	</delete>
 	
+  <select id="countFaqByAtchFileId" parameterType="egovframework.let.uss.olh.faq.service.FaqManageVO" resultType="java.lang.Integer">
+			SELECT COUNT(*) FROM LETTNFAQINFO WHERE ATCH_FILE_ID = #{atchFileId}
+  </select>
 </mapper>

@@ -1,14 +1,14 @@
 <%--
   Class Name : accessDenied.jsp
-  Description : ���ٺҰ� �޽��� ȭ��(system)
+  Description : 접근불가 메시지 화면(system)
   Modification Information
  
-      ������         ������                   ��������
+      수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.02.01    lee.m.j          ���� ����
-     2011.08.31  JJY       �淮ȯ�� ���� ����
+     2009.02.01    lee.m.j          최초 생성
+     2011.08.31  JJY       경량환경 버전 생성
  
-    author   : ���뼭�񽺰����� lee.m.j
+    author   : 공통서비스개발팀 lee.m.j
     since    : 2009.02.01
 --%>
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
@@ -16,7 +16,10 @@
 <%@ page import="org.springframework.security.web.access.AccessDeniedHandlerImpl" %> 
 
 <%@ page isErrorPage="true"%>
-<%@ page contentType="text/html; charset=euc-kr" %>
+<%-- 26.08.20 조치 : 이 파일만 EUC-KR로 저장되어 있었다(나머지 JSP 는 전부 UTF-8).
+     파일을 UTF-8로 변환하고 선언도 utf-8로 맞춘다. pageEncoding을 함께 지정해
+     컨테이너가 파일을 읽는 인코딩과 응답 인코딩이 어긋나지 않게 한다. --%>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
 <%@ page import="org.egovframe.rte.fdl.string.EgovStringUtil" %>
 <%@ page import="java.lang.String" %>
@@ -68,16 +71,16 @@ function fncGoAfterErrorPage(){
 <body>
 
     <!-- skip navigation -->
-    <a href="#contents" class="skip_navi">���� �ٷΰ���</a>
+    <a href="#contents" class="skip_navi">본문 바로가기</a>
 
     <div class="wrap">
         <div class="error_page">
             <h1>Error</h1>
             <div class="inner">
-<!--				<p>������ ����Ǿ����ϴ�.</p> -->
-<!--				<p>������ ó�� �� ������ �߻��Ͽ����ϴ�.</p> -->
-<!-- 				<p>������ ������ �߻��Ͽ����ϴ�.</p> -->
-<!-- 				<p>�� �� ���� ������ �߻��Ͽ����ϴ�.</p> -->
+<!--				<p>세션이 만료되었습니다.</p> -->
+<!--				<p>데이터 처리 중 오류가 발생하였습니다.</p> -->
+<!-- 				<p>수행중 오류가 발생하였습니다.</p> -->
+<!-- 				<p>알 수 없는 오류가 발생하였습니다.</p> -->
 				<%= request.getAttribute(org.springframework.security.web.WebAttributes.AUTHENTICATION_EXCEPTION) %>
 				<%	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 					if (auth != null) { 
@@ -86,7 +89,7 @@ function fncGoAfterErrorPage(){
 				%>
 				<p>${exception.message}</p>
                 <br>
-                <a href="#LINK" class="btn btn_blue_46 w_130" onclick="javascript:fncGoAfterErrorPage(); return false;">����������</a>
+                <a href="#LINK" class="btn btn_blue_46 w_130" onclick="javascript:fncGoAfterErrorPage(); return false;">이전페이지</a>
             </div>
         </div>
     </div>

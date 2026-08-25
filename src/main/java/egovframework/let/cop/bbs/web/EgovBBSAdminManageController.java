@@ -32,6 +32,7 @@ import egovframework.let.cop.bbs.service.BoardMasterVO;
 import egovframework.let.cop.bbs.service.BoardVO;
 import egovframework.let.cop.bbs.service.EgovBBSAttributeManageService;
 import egovframework.let.cop.bbs.service.EgovBBSManageService;
+import egovframework.let.cop.bbs.util.EgovBBSAuthUtil;
 
 
 /**
@@ -211,6 +212,8 @@ public class EgovBBSAdminManageController {
 		model.addAttribute("result", vo);
 
 		model.addAttribute("sessionUniqId", user.getUniqId());
+		// 26.08.20 조치 : 수정/삭제 버튼 노출 조건. 작성자 한정이던 것을 관리자도 포함하도록 한다.
+		model.addAttribute("modifyAt", EgovBBSAuthUtil.canShowModifyButtons(vo, user) ? "Y" : "N");
 		//----------------------------
 		// template 처리 (기본 BBS template 지정  포함)
 		//----------------------------

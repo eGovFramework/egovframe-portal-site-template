@@ -398,7 +398,7 @@ CREATE TABLE LETTNQAINFO (
   QNA_PROCESS_STTUS_CODE char(1) ,
   WRTER_NM varchar2(20) ,
   ANSWER_CN varchar2(2500) ,
-  WRITNG_PASSWORD varchar2(20) ,
+  WRITNG_PASSWORD varchar2(200) ,
   ANSWER_DE char(20) ,
   EMAIL_ANSWER_AT char(1) ,
   AREA_NO varchar2(4) ,

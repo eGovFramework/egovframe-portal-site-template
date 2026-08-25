@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import egovframework.com.cmm.ComDefaultVO;
+import egovframework.let.cop.bbs.util.EgovBBSAuthUtil;
 import egovframework.let.uss.olp.qri.service.EgovQustnrRespondInfoService;
 import egovframework.let.uss.olp.qri.service.QustnrRespondInfoVO;
 
@@ -188,6 +189,7 @@ public class EgovQustnrRespondInfoServiceImpl extends EgovAbstractServiceImpl im
 	 */
 	@Override
 	public void updateQustnrRespondInfo(QustnrRespondInfoVO qustnrRespondInfoVO) throws Exception{
+		prepareMngrAt(qustnrRespondInfoVO);
 		dao.updateQustnrRespondInfo(qustnrRespondInfoVO);
 	}
 
@@ -198,6 +200,16 @@ public class EgovQustnrRespondInfoServiceImpl extends EgovAbstractServiceImpl im
 	 */
 	@Override
 	public void deleteQustnrRespondInfo(QustnrRespondInfoVO qustnrRespondInfoVO) throws Exception{
+		prepareMngrAt(qustnrRespondInfoVO);
 		dao.deleteQustnrRespondInfo(qustnrRespondInfoVO);
+	}
+
+	@Override
+	public String selectFrstRegisterIdByRespondId(QustnrRespondInfoVO qustnrRespondInfoVO) throws Exception {
+		return dao.selectFrstRegisterIdByRespondId(qustnrRespondInfoVO);
+	}
+
+	private void prepareMngrAt(QustnrRespondInfoVO vo) {
+		vo.setMngrAt(EgovBBSAuthUtil.isAdminUser() ? "Y" : "N");
 	}
 }

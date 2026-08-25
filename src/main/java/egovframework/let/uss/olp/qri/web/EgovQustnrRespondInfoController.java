@@ -10,6 +10,7 @@ import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.service.EgovCmmUseService;
 import egovframework.let.uss.olp.qri.service.EgovQustnrRespondInfoService;
 import egovframework.let.uss.olp.qri.service.QustnrRespondInfoVO;
+import egovframework.let.uss.olp.qri.util.EgovQustnrRespondInfoAuthUtil;
 import egovframework.let.uss.olp.qrm.service.EgovQustnrRespondManageService;
 import egovframework.let.uss.olp.qrm.service.QustnrRespondManageVO;
 
@@ -29,6 +30,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
@@ -476,19 +478,55 @@ public class EgovQustnrRespondInfoController {
 			QustnrRespondInfoVO qustnrRespondInfoVO, @RequestParam Map<String, Object> commandMap, ModelMap model)
 			throws Exception {
 
-		String sLocationUrl = "/uss/olp/qri/EgovQustnrRespondInfoDetail";
-
-		String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
-
-		if (sCmd.equals("del")) {
-			egovQustnrRespondInfoService.deleteQustnrRespondInfo(qustnrRespondInfoVO);
-			sLocationUrl = "redirect:/uss/olp/qri/EgovQustnrRespondInfoList.do";
-		} else {
-			model.addAttribute("resultList",
-					egovQustnrRespondInfoService.selectQustnrRespondInfoDetail(qustnrRespondInfoVO));
+		if (!EgovUserDetailsHelper.isAuthenticated()) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+			return "uat/uia/EgovLoginUsr";
 		}
 
-		return sLocationUrl;
+		assertCanAccessRespondInfo(qustnrRespondInfoVO);
+		model.addAttribute("resultList",
+				egovQustnrRespondInfoService.selectQustnrRespondInfoDetail(qustnrRespondInfoVO));
+
+		return "/uss/olp/qri/EgovQustnrRespondInfoDetail";
+	}
+
+	/**
+	 * 응답자결과(설문조사)를 삭제한다.
+	 *
+	 * @param searchVO
+	 * @param qustnrRespondInfoVO
+	 * @param model
+	 * @return "redirect:/uss/olp/qri/EgovQustnrRespondInfoList.do"
+	 * @throws Exception
+	 */
+	@PostMapping(value = "/uss/olp/qri/EgovQustnrRespondInfoDelete.do")
+	public String EgovQustnrRespondInfoDelete(@ModelAttribute("searchVO") ComDefaultVO searchVO,
+			QustnrRespondInfoVO qustnrRespondInfoVO, ModelMap model) throws Exception {
+
+		if (!EgovUserDetailsHelper.isAuthenticated()) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+			return "uat/uia/EgovLoginUsr";
+		}
+
+		assertCanAccessRespondInfo(qustnrRespondInfoVO);
+		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		qustnrRespondInfoVO.setLastUpdusrId(loginVO.getUniqId());
+		egovQustnrRespondInfoService.deleteQustnrRespondInfo(qustnrRespondInfoVO);
+
+		return "redirect:/uss/olp/qri/EgovQustnrRespondInfoList.do";
+	}
+
+	/**
+	 * 응답자결과(설문조사)의 소유자(또는 관리자)만 접근할 수 있도록 검증한다 (IDOR 방지).
+	 *
+	 * @param qustnrRespondInfoVO
+	 * @throws Exception
+	 */
+	private void assertCanAccessRespondInfo(QustnrRespondInfoVO qustnrRespondInfoVO) throws Exception {
+		String ownerId = egovQustnrRespondInfoService.selectFrstRegisterIdByRespondId(qustnrRespondInfoVO);
+		QustnrRespondInfoVO authVo = new QustnrRespondInfoVO();
+		authVo.setFrstRegisterId(ownerId);
+		EgovQustnrRespondInfoAuthUtil.assertCanModifyRespondInfo(authVo);
 	}
 
 	/**
@@ -533,6 +571,8 @@ public class EgovQustnrRespondInfoController {
 				return sLocationUrl;
 			}
 
+			assertCanAccessRespondInfo(qustnrRespondInfoVO);
+
 			// 아이디 설정
 			qustnrRespondInfoVO.setFrstRegisterId((String) loginVO.getUniqId());
 			qustnrRespondInfoVO.setLastUpdusrId((String) loginVO.getUniqId());
@@ -540,6 +580,7 @@ public class EgovQustnrRespondInfoController {
 			egovQustnrRespondInfoService.updateQustnrRespondInfo(qustnrRespondInfoVO);
 			sLocationUrl = "redirect:/uss/olp/qri/EgovQustnrRespondInfoList.do";
 		} else {
+			assertCanAccessRespondInfo(qustnrRespondInfoVO);
 			model.addAttribute("resultList",
 					egovQustnrRespondInfoService.selectQustnrRespondInfoDetail(qustnrRespondInfoVO));
 		}

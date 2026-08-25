@@ -2,9 +2,11 @@ package egovframework.let.uss.olh.qna.service.impl;
 
 import java.util.List;
 
+import egovframework.let.cop.bbs.util.EgovBBSAuthUtil;
 import egovframework.let.uss.olh.qna.service.EgovQnaManageService;
 import egovframework.let.uss.olh.qna.service.QnaManageDefaultVO;
 import egovframework.let.uss.olh.qna.service.QnaManageVO;
+import egovframework.let.utl.sim.service.EgovFileScrty;
 
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
@@ -101,6 +103,13 @@ public class EgovQnaManageServiceImpl extends EgovAbstractServiceImpl implements
 
 		vo.setQaId(qaId);
 
+		// 26.08.19 조치 : 작성비밀번호는 qaId를 salt로 사용해 해시한다.
+		// salt가 되는 qaId가 이 시점에 채번되므로 해싱을 컨트롤러가 아닌 여기에서 수행한다.
+		// deprecated된 EgovFileScrty.encryptPassword(String) 대신 salt 지정 버전을 사용한다.
+		if (vo.getWritngPassword() != null) {
+			vo.setWritngPassword(EgovFileScrty.encryptPassword(vo.getWritngPassword(), qaId));
+		}
+
     	qnaManageDAO.insertQnaCn(vo);
     }
 
@@ -122,6 +131,8 @@ public class EgovQnaManageServiceImpl extends EgovAbstractServiceImpl implements
     @Override
 	public void updateQnaCn(QnaManageVO vo) throws Exception {
 
+		prepareMngrAt(vo);
+
     	qnaManageDAO.updateQnaCn(vo);
     }
 
@@ -133,8 +144,21 @@ public class EgovQnaManageServiceImpl extends EgovAbstractServiceImpl implements
     @Override
 	public void deleteQnaCn(QnaManageVO vo) throws Exception {
 
+		prepareMngrAt(vo);
+
     	qnaManageDAO.deleteQnaCn(vo);
     }
+
+	/**
+	 * 26.08.19 조치 : updateQnaCn/deleteQnaCn SQL에 추가된 소유자 방어 조건
+	 * (AND FRST_REGISTER_ID = #{lastUpdusrId})은 관리자에게는 적용되면 안 된다.
+	 * mngrAt이 설정되지 않으면 기본값 "N"이 유지되어 관리자도 타인 글을 수정/삭제할 수 없다.
+	 *
+	 * @param vo
+	 */
+	private void prepareMngrAt(QnaManageVO vo) {
+		vo.setMngrAt(EgovBBSAuthUtil.isAdminUser() ? "Y" : "N");
+	}
 
 
     /**

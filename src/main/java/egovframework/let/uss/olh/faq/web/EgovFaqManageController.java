@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
 import egovframework.com.cmm.EgovMessageSource;
+import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.EgovFileMngUtil;
@@ -191,6 +192,8 @@ public class EgovFaqManageController {
      * @return	"/uss/olh/faq/EgovFaqCnRegist"
      * @throws Exception
      */
+    // 26.08.18 보안취약점 조치 : FAQ는 관리자가 관리하는 공용 안내 콘텐츠이므로 관리자 전용으로 제한한다.
+    @RequireAdmin
     @RequestMapping("/uss/olh/faq/FaqCnRegistView.do")
     public String insertFaqCnView(
             @ModelAttribute("searchVO") FaqManageDefaultVO searchVO, Model model)
@@ -215,6 +218,8 @@ public class EgovFaqManageController {
      * @return	"forward:/uss/olh/faq/FaqListInqire.do"
      * @throws Exception
      */
+    // 26.08.18 보안취약점 조치 : 관리자 전용으로 제한. 기존에는 인증 체크가 없었다.
+    @RequireAdmin
     @RequestMapping("/uss/olh/faq/FaqCnRegist.do")
     public String insertFaqCn(
     		final MultipartHttpServletRequest multiRequest,		// 첨부파일을 위한...
@@ -267,6 +272,8 @@ public class EgovFaqManageController {
      * @return	"/uss/olh/faq/EgovFaqCnUpdt"
      * @throws Exception
      */
+    // 26.08.18 보안취약점 조치 : 관리자 전용으로 제한.
+    @RequireAdmin
     @RequestMapping("/uss/olh/faq/FaqCnUpdtView.do")
     public String updateFaqCnView(@RequestParam("faqId") String faqId ,
             @ModelAttribute("searchVO") FaqManageDefaultVO searchVO, ModelMap model)
@@ -303,6 +310,8 @@ public class EgovFaqManageController {
      * @return	"forward:/uss/olh/faq/FaqListInqire.do"
      * @throws Exception
      */
+    // 26.08.18 보안취약점 조치 : 관리자 전용으로 제한. 기존에는 인증·소유자 검증이 모두 없었다.
+    @RequireAdmin
     @RequestMapping("/uss/olh/faq/FaqCnUpdt.do")
     public String updateFaqCn(@RequestParam("atchFileAt") String atchFileAt ,
     		final MultipartHttpServletRequest multiRequest,
@@ -366,6 +375,8 @@ public class EgovFaqManageController {
      * @return	"forward:/uss/olh/faq/FaqListInqire.do"
      * @throws Exception
      */
+    // 26.08.18 보안취약점 조치 : 관리자 전용으로 제한. 기존에는 인증 검증이 없어 익명 삭제가 가능했다.
+    @RequireAdmin
     @RequestMapping("/uss/olh/faq/FaqCnDelete.do")
     public String deleteFaqCn(
             FaqManageVO faqManageVO,

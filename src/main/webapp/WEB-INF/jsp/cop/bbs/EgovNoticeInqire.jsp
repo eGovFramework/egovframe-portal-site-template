@@ -215,7 +215,9 @@
 									<!-- 버튼 시작 -->
                                     <div class="board_view_bot">
                                         <div class="left_col btn3">
-                                        	<c:if test="${result.frstRegisterId == sessionUniqId}">
+                                        	<%-- 26.08.20 조치 : 작성자 한정이라 관리자가 타인 글을 관리할 수 없었다.
+	                                             노출 조건을 컨트롤러의 modifyAt(작성자 또는 관리자)로 옮긴다. --%>
+                                        	<c:if test="${modifyAt == 'Y'}">
 	                                            <a href="" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_moveUpdt_notice();">수정</a>
 	                                            <a href="" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_notice();">삭제</a>
                                             </c:if>

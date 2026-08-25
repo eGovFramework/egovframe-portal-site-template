@@ -16,6 +16,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+<%@ taglib prefix="egovc" uri="/WEB-INF/tlds/egovc.tld" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="validator" uri="http://www.springmodules.org/tags/commons-validator" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -133,7 +134,7 @@ function fn_egov_pop_mailform() {
 
 								<form:form modelAttribute="qnaManageVO" name="qnaManageVO" action="${pageContext.request.contextPath}/uss/olh/qnm/QnaCnAnswerUpdt.do" method="post">
 								
-								<input name="qaId" type="hidden" value="<c:out value='${result.qaId}'/>">
+								<input name="qaId" type="hidden" value="<c:out value='${egovc:encrypt(result.qaId)}'/>">
 								<input name="writngPassword" type="hidden" value="<c:out value='${result.writngPassword}'/>">
 
                                 <h1 class="tit_1">포털서비스관리</h1>
@@ -235,7 +236,7 @@ function fn_egov_pop_mailform() {
                                     </div>
 
                                     <div class="right_col btn1">
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fn_egov_updt_qnacnanswer(document.qnaManageVO,'<c:out value="${result.qaId}"/>'); return false;">저장</a><!-- 저장 -->
+                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fn_egov_updt_qnacnanswer(document.qnaManageVO,'<c:out value="${egovc:encrypt(result.qaId)}"/>'); return false;">저장</a><!-- 저장 -->
                                         <a href="<c:url value='/uss/olh/qnm/QnaAnswerListInqire.do'/>" class="btn btn_blue_46 w_100" onclick="fn_egov_inqire_qnaanswerlist(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
                                     </div>
                                 </div>
