@@ -16,6 +16,7 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="egovc" uri="/WEB-INF/tlds/egovc.tld" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -244,7 +245,7 @@ function fn_egov_updt_qnacnanswer(qaId){
                                     </div>
 
                                     <div class="right_col btn1">
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fn_egov_updt_qnacnanswer('<c:out value="${result.qaId}"/>'); return false;">답변</a><!-- 답변 -->
+                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fn_egov_updt_qnacnanswer('<c:out value="${egovc:encrypt(result.qaId)}"/>'); return false;">답변</a><!-- 답변 -->
                                         <a href="<c:url value='/uss/olh/qnm/QnaAnswerListInqire.do'/>" class="btn btn_blue_46 w_100" onclick="fn_egov_inqire_qnaanswerlist(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
                                     </div>
                                 </div>

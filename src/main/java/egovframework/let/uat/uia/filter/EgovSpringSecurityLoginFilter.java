@@ -47,9 +47,15 @@ public class EgovSpringSecurityLoginFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 
-		String password = request.getParameter("password");
-		if (!StringUtils.hasText(password)) {
+		if (!isActionLoginUri(request)) {
 			filterChain.doFilter(request, response);
+			return;
+		}
+
+		String id = request.getParameter("id");
+		String password = request.getParameter("password");
+		if (!StringUtils.hasText(id) || !StringUtils.hasText(password)) {
+			forwardLoginFailure(request, response);
 			return;
 		}
 
@@ -59,7 +65,7 @@ public class EgovSpringSecurityLoginFilter extends OncePerRequestFilter {
 		}
 
 		LoginVO loginVO = new LoginVO();
-		loginVO.setId(request.getParameter("id").trim());
+		loginVO.setId(id.trim());
 		loginVO.setPassword(password);
 		loginVO.setUserSe(userSe);
 
@@ -106,6 +112,20 @@ public class EgovSpringSecurityLoginFilter extends OncePerRequestFilter {
 		}
 		request.setAttribute("message", egovMessageSource.getMessage("fail.common.login"));
 		request.getRequestDispatcher(LOGIN_PATH).forward(request, response);
+	}
+
+	private static boolean isActionLoginUri(HttpServletRequest request) {
+		return "POST".equalsIgnoreCase(request.getMethod())
+				&& ACTION_LOGIN_PATH.equals(normalizeRequestUri(request));
+	}
+
+	private static String normalizeRequestUri(HttpServletRequest request) {
+		String uri = stripContextPath(request);
+		int semicolonIndex = uri.indexOf(';');
+		if (semicolonIndex > -1) {
+			uri = uri.substring(0, semicolonIndex);
+		}
+		return uri;
 	}
 
 	private static String stripContextPath(HttpServletRequest request) {

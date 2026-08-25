@@ -240,7 +240,9 @@
 				LAST_UPDT_PNTTM = SYSDATE
 			WHERE BBS_ID = #{bbsId}
 			AND NTT_ID = #{nttId}
- 		
+			<if test='!"Y".equals(mngrAt)'>
+			AND FRST_REGISTER_ID = #{lastUpdusrId}
+			</if>
  	</update>
 
  	<update id="deleteBoardArticle" parameterType="egovframework.let.cop.bbs.service.Board">
@@ -252,7 +254,9 @@
 				LAST_UPDT_PNTTM = SYSDATE
 			WHERE BBS_ID = #{bbsId}
 			AND NTT_ID = #{nttId}
- 		
+			<if test='!"Y".equals(mngrAt)'>
+			AND FRST_REGISTER_ID = #{lastUpdusrId}
+			</if>
  	</update>
 
  	<select id="selectMaxInqireCo" parameterType="egovframework.let.cop.bbs.service.BoardVO" resultType="java.lang.Integer">
@@ -375,4 +379,10 @@
 			AND NTT_ID = #{nttId}
  		
  	</update>
+  <select id="countArticleByAtchFileIdAndOwner" parameterType="egovframework.let.cop.bbs.service.BoardVO" resultType="java.lang.Integer">
+			SELECT COUNT(*) FROM LETTNBBS WHERE ATCH_FILE_ID = #{atchFileId} AND FRST_REGISTER_ID = #{frstRegisterId} AND USE_AT = 'Y'
+  </select>
+  <select id="countArticleByAtchFileId" parameterType="egovframework.let.cop.bbs.service.BoardVO" resultType="java.lang.Integer">
+			SELECT COUNT(*) FROM LETTNBBS WHERE ATCH_FILE_ID = #{atchFileId} AND USE_AT = 'Y'
+  </select>
 </mapper>

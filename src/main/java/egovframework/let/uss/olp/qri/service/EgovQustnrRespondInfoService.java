@@ -136,5 +136,6 @@ public interface EgovQustnrRespondInfoService {
 	 */
 	void  deleteQustnrRespondInfo(QustnrRespondInfoVO qustnrRespondInfoVO) throws Exception;
 
+	String selectFrstRegisterIdByRespondId(QustnrRespondInfoVO qustnrRespondInfoVO) throws Exception;
 
 }

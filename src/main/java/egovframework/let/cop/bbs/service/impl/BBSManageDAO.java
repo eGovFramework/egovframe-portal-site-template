@@ -221,4 +221,17 @@ public class BBSManageDAO extends EgovAbstractMapper {
     public String getPasswordInf(Board board) throws Exception {
     	return (String)selectOne("BBSManageDAO.getPasswordInf", board);
     }
+
+    public int countArticleByAtchFileIdAndOwner(String atchFileId, String uniqId) throws Exception {
+    	BoardVO vo = new BoardVO();
+    	vo.setAtchFileId(atchFileId);
+    	vo.setFrstRegisterId(uniqId);
+    	return (Integer) selectOne("BBSManageDAO.countArticleByAtchFileIdAndOwner", vo);
+    }
+
+    public int countArticleByAtchFileId(String atchFileId) throws Exception {
+    	BoardVO vo = new BoardVO();
+    	vo.setAtchFileId(atchFileId);
+    	return (Integer) selectOne("BBSManageDAO.countArticleByAtchFileId", vo);
+    }
 }

@@ -9,13 +9,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.service.EgovCmmUseService;
+import egovframework.com.cmm.web.EgovFileMngController;
 import egovframework.let.uss.olh.qna.service.EgovQnaManageService;
 import egovframework.let.uss.olh.qna.service.QnaManageDefaultVO;
 import egovframework.let.uss.olh.qna.service.QnaManageVO;
@@ -38,6 +38,7 @@ import jakarta.validation.Valid;
  *  -------    --------    ---------------------------
  *   2009.04.01  박정규          최초 생성
  *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2026.08.19  유지보수        관리자 화면도 암호화된 qaId를 전송하므로 복호화 처리 추가
  *
  * </pre>
  */
@@ -57,6 +58,17 @@ public class EgovQnaAdminManageController {
 	/** EgovMessageSource */
 	@Resource(name = "egovMessageSource")
 	EgovMessageSource egovMessageSource;
+
+	/**
+	 * 화면에 노출되는 qaId는 암호화되어 있으므로(egovc:encrypt), 요청으로 들어온 값을
+	 * 실제 QA_ID로 복호화한다. 복호화에 실패하면 원본과 매칭되지 않는 값을 반환하여
+	 * (조회결과 없음으로 안전하게 실패 처리됨).
+	 *
+	 * @param qnaManageVO
+	 */
+	private static void decryptQaId(QnaManageVO qnaManageVO) {
+		qnaManageVO.setQaId(EgovFileMngController.decrypt(qnaManageVO.getQaId()));
+	}
 
 	/**
 	 * 개별 배포시 메인메뉴를 조회한다.
@@ -131,7 +143,6 @@ public class EgovQnaAdminManageController {
 
 	/**
 	 * Q&A정보 목록에 대한 상세정보를 조회한다.
-	 * @param passwordConfirmAt
 	 * @param qnaManageVO
 	 * @param searchVO
 	 * @param model
@@ -140,12 +151,14 @@ public class EgovQnaAdminManageController {
 	 */
 	@RequireAdmin
 	@RequestMapping("/uss/olh/qna/admin/QnaDetailInqire.do")
-	public String selectQnaListDetail(@RequestParam("passwordConfirmAt") String passwordConfirmAt, QnaManageVO qnaManageVO,
+	public String selectQnaListDetail(QnaManageVO qnaManageVO,
 			@ModelAttribute("searchVO") QnaManageDefaultVO searchVO, ModelMap model) throws Exception {
 
+		decryptQaId(qnaManageVO);
 		QnaManageVO vo = qnaManageService.selectQnaListDetail(qnaManageVO);
 
-		vo.setPasswordConfirmAt(passwordConfirmAt); // 작성비밀번호 확인여부
+		// 26.08.24 조치 : passwordConfirmAt 은 관리자 비밀번호 확인 흐름에서만 쓰이던 값이다.
+		// 그 흐름을 제거했으므로 필수 요청 파라미터 선언과 모델 전달을 함께 없앤다.
 
 		// 26.07.20 KISA 보안취약점 조치: 작성비밀번호는 일방향 해시로 저장되어 복호화할 수 없으며,
 		// <form:password>는 바인딩된 값을 렌더링하지 않으므로 복호화가 불필요하다.
@@ -166,6 +179,7 @@ public class EgovQnaAdminManageController {
 	@RequestMapping("/uss/olh/qna/admin/QnaInqireCoUpdt.do")
 	public String updateQnaInqireCo(QnaManageVO qnaManageVO, @ModelAttribute("searchVO") QnaManageDefaultVO searchVO) throws Exception {
 
+		decryptQaId(qnaManageVO);
 		qnaManageService.updateQnaInqireCo(qnaManageVO);
 
 		return "forward:/uss/olh/qna/admin/QnaDetailInqire.do";
@@ -251,80 +265,11 @@ public class EgovQnaAdminManageController {
 		qnaManageVO.setFrstRegisterId(frstRegisterId); // 최초등록자ID
 		qnaManageVO.setLastUpdusrId(frstRegisterId); // 최종수정자ID
 
-		// 작성비밀번호를 암호화 하기 위해서 Get
-		String writngPassword = qnaManageVO.getWritngPassword();
-
-		// EgovFileScrty Util에 있는 암호화 모듈을 적용해서 암호화 한다.
-		if (writngPassword != null) { // 26.03.06 KISA 보안취약점 조치 : null check 추가
-			qnaManageVO.setWritngPassword(EgovFileScrty.encryptPassword(writngPassword));
-		}
-
+		// 26.08.19 조치 : 작성비밀번호 해싱은 salt로 쓰이는 qaId가 채번되는
+		// EgovQnaManageServiceImpl.insertQnaCn에서 수행한다.
 		qnaManageService.insertQnaCn(qnaManageVO);
 
 		return "forward:/uss/olh/qna/admin/QnaListInqire.do";
-	}
-
-	/**
-	 * 작성 비밀번호를 확인하기 위한 전 처리
-	 * @param qnaManageVO
-	 * @param searchVO
-	 * @param model
-	 * @return	"/uss/olh/qna/admin/EgovQnaPasswordConfirm"
-	 * @throws Exception
-	 */
-	@RequireAdmin
-	@RequestMapping("/uss/olh/qna/admin/QnaPasswordConfirmView.do")
-	public String selectPasswordConfirmView(QnaManageVO qnaManageVO, @ModelAttribute("searchVO") QnaManageDefaultVO searchVO, Model model) throws Exception {
-
-			model.addAttribute("QnaManageVO", new QnaManageVO());
-
-			return "/uss/olh/qna/admin/EgovQnaPasswordConfirm";	
-	}
-
-	/**
-	 * 작성 비밀번호를 확인한다.
-	 * @param qnaManageVO
-	 * @param searchVO
-	 * @return	"forward:/uss/olh/qna/admin/QnaDetailInqire.do"
-	 * @throws Exception
-	 */
-	@RequireAdmin
-	@RequestMapping("/uss/olh/qna/admin/QnaPasswordConfirm.do")
-	public String selectPasswordConfirm(QnaManageVO qnaManageVO, @ModelAttribute("searchVO") QnaManageDefaultVO searchVO, Model model) throws Exception {
-
-
-		// 인증여부 체크
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-
-		if (!isAuthenticated) {
-			model.addAttribute("result", qnaManageVO);
-			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "uat/uia/EgovLoginUsr";
-		}else {
-		// 작성비밀번호를 암호화 하기 위해서 Get
-		String writngPassword = qnaManageVO.getWritngPassword();
-
-		// EgovFileScrty Util에 있는 암호화 모듈을 적용해서 암호화 한다.
-		if (writngPassword != null) { // 26.03.06 KISA 보안취약점 조치 : null check 추가
-			qnaManageVO.setWritngPassword(EgovFileScrty.encryptPassword(writngPassword));
-		}
-
-		int searchCnt = qnaManageService.selectQnaPasswordConfirmCnt(qnaManageVO);
-
-		if (searchCnt > 0) { // 작성 비밀번호가 일치하는 경우
-
-			// Q&A를 수정할 수 있는 화면으로 이동.
-			return "forward:/uss/olh/qna/admin/QnaCnUpdtView.do";
-
-		} else { // 작성비밀번호가 틀린경우
-
-			String passwordConfirmAt = "N";
-
-			// Q&A 상세조회 화면으로 이동.
-			return "forward:/uss/olh/qna/admin/QnaDetailInqire.do?passwordConfirmAt=" + passwordConfirmAt;
-
-		}
-		}
 	}
 
 	/**
@@ -339,6 +284,7 @@ public class EgovQnaAdminManageController {
 	@RequestMapping("/uss/olh/qna/admin/QnaCnUpdtView.do")
 	public String updateQnaCnView(QnaManageVO qnaManageVO, @ModelAttribute("searchVO") QnaManageDefaultVO searchVO, ModelMap model) throws Exception {
 
+		decryptQaId(qnaManageVO);
 		QnaManageVO vo = qnaManageService.selectQnaListDetail(qnaManageVO);
 
 		// 26.07.20 KISA 보안취약점 조치: 작성비밀번호는 일방향 해시로 저장되어 복호화할 수 없으며,
@@ -348,7 +294,9 @@ public class EgovQnaAdminManageController {
 		model.addAttribute("qnaManageVO", vo);
 
 		// result에도 세팅(jstl 사용을 위해)
-		model.addAttribute(selectQnaListDetail("Y", qnaManageVO, searchVO, model));
+		// 26.08.19 조치 : selectQnaListDetail()로 위임하면 이미 복호화된 qaId를 한 번 더
+		// 복호화하게 되어 조회에 실패한다. 사용자 컨트롤러와 동일하게 위에서 조회한 vo를 사용한다.
+		model.addAttribute("result", vo);
 
 		return "/uss/olh/qna/admin/EgovQnaCnUpdt";
 	}
@@ -370,6 +318,9 @@ public class EgovQnaAdminManageController {
 			return "/uss/olh/qna/admin/EgovQnaCnUpdt";
 		}
 
+		decryptQaId(qnaManageVO);
+		QnaManageVO existing = qnaManageService.selectQnaListDetail(qnaManageVO);
+
 		// 로그인VO에서  사용자 정보 가져오기
 		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 
@@ -380,9 +331,14 @@ public class EgovQnaAdminManageController {
 		// 작성비밀번호를 암호화 하기 위해서 Get
 		String writngPassword = qnaManageVO.getWritngPassword();
 
-		// EgovFileScrty Util에 있는 암호화 모듈을 적용해서 암호화 한다.
-		if (writngPassword != null) { // 26.03.06 KISA 보안취약점 조치 : null check 추가
-			qnaManageVO.setWritngPassword(EgovFileScrty.encryptPassword(writngPassword));
+		// 26.08.19 조치 : deprecated된 encryptPassword(String) 대신 qaId를 salt로 사용한다.
+		// 빈 값이 들어오면 기존 해시를 보존한다. @EgovNullCheck로 화면단에서 걸러지지만,
+		// 서버측 방어를 사용자 컨트롤러와 동일하게 갖춘다. (보존하지 않으면 hash("")로 덮어써진다)
+		if (writngPassword != null && !writngPassword.isEmpty()) {
+			qnaManageVO.setWritngPassword(
+					EgovFileScrty.encryptPassword(writngPassword, qnaManageVO.getQaId()));
+		} else {
+			qnaManageVO.setWritngPassword(existing.getWritngPassword());
 		}
 
 		qnaManageService.updateQnaCn(qnaManageVO);
@@ -410,6 +366,8 @@ public class EgovQnaAdminManageController {
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
 			return "uat/uia/EgovLoginUsr";
 		}
+
+		decryptQaId(qnaManageVO);
 		qnaManageService.deleteQnaCn(qnaManageVO);
 
 		return "forward:/uss/olh/qna/admin/QnaListInqire.do";
@@ -461,6 +419,7 @@ public class EgovQnaAdminManageController {
 	@RequestMapping("/uss/olh/qnm/admin/QnaAnswerDetailInqire.do")
 	public String selectQnaAnswerListDetail(QnaManageVO qnaManageVO, @ModelAttribute("searchVO") QnaManageDefaultVO searchVO, ModelMap model) throws Exception {
 
+		decryptQaId(qnaManageVO);
 		QnaManageVO vo = qnaManageService.selectQnaListDetail(qnaManageVO);
 
 		model.addAttribute("result", vo);
@@ -502,6 +461,8 @@ public class EgovQnaAdminManageController {
 	@RequireAdmin
 	@RequestMapping("/uss/olh/qnm/admin/QnaCnAnswerUpdt.do")
 	public String updateQnaCnAnswer(QnaManageVO qnaManageVO, @ModelAttribute("searchVO") QnaManageDefaultVO searchVO) throws Exception {
+
+		decryptQaId(qnaManageVO);
 
 		// 로그인VO에서  사용자 정보 가져오기
 		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();

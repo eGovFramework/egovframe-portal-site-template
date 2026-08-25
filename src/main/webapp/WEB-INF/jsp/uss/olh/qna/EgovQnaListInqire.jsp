@@ -17,6 +17,7 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="egovc" uri="/WEB-INF/tlds/egovc.tld" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -203,7 +204,7 @@ function fn_egov_inquire_qnadetail(qaId) {
                                             <tr>
                                                 <td><c:out value="${paginationInfo.totalRecordCount+1 - ((searchVO.pageIndex-1) * searchVO.pageSize + status.count)}"/></td>
                                                 <td class="al">
-                                                	<a href = "<c:url value='/uss/olh/qna/QnaInqireCoUpdt.do'/>?qaId=${resultInfo.qaId}&amp;pageIndex=${searchVO.pageIndex}" class="lnk" onclick="fn_egov_inquire_qnadetail('<c:out value="${resultInfo.qaId}"/>'); return false;" >
+                                                	<a href = "<c:url value='/uss/olh/qna/QnaInqireCoUpdt.do'/>?qaId=${egovc:encrypt(resultInfo.qaId)}&amp;pageIndex=${searchVO.pageIndex}" class="lnk" onclick="fn_egov_inquire_qnadetail('<c:out value="${egovc:encrypt(resultInfo.qaId)}"/>'); return false;" >
                                                 		<c:out value="${resultInfo.qestnSj}"/>
                                                 	</a>
                                                 </td>

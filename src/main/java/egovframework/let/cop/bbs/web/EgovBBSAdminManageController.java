@@ -29,6 +29,7 @@ import egovframework.let.cop.bbs.service.BoardMasterVO;
 import egovframework.let.cop.bbs.service.BoardVO;
 import egovframework.let.cop.bbs.service.EgovBBSAttributeManageService;
 import egovframework.let.cop.bbs.service.EgovBBSManageService;
+import egovframework.let.cop.bbs.util.EgovBBSAuthUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -208,6 +209,8 @@ public class EgovBBSAdminManageController {
 		model.addAttribute("result", vo);
 
 		model.addAttribute("sessionUniqId", user.getUniqId());
+		// 관리자는 무조건 수정/삭제 버튼 노출
+		model.addAttribute("modifyAt", EgovBBSAuthUtil.canShowModifyButtons(vo, user) ? "Y" : "N");
 		//----------------------------
 		// template 처리 (기본 BBS template 지정  포함)
 		//----------------------------

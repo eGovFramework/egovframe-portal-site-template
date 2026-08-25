@@ -23,6 +23,8 @@ import egovframework.com.cmm.EgovWebUtil;
 import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.EgovProperties;
 import egovframework.com.cmm.service.FileVO;
+import egovframework.com.cmm.service.impl.EgovFileAuthServiceImpl;
+import egovframework.com.cmm.util.EgovFileTokenUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -60,6 +62,9 @@ public class EgovFileDownloadController {
 
 	@Resource(name = "EgovFileMngService")
 	private EgovFileMngService fileService;
+
+	@Resource(name = "EgovFileAuthService")
+	private EgovFileAuthServiceImpl fileAuthService;
 
 	// 주의 : 반드시 기본값 "egovframe"을 다른것으로 변경하여 사용하시기 바랍니다.
 	public static final String ALGORITHM_KEY = EgovProperties.getProperty("Globals.File.algorithmKey");
@@ -139,37 +144,29 @@ public class EgovFileDownloadController {
 	@RequestMapping(value = "/cmm/fms/FileDown.do")
 	public void cvplFileDownload(@RequestParam Map<String, Object> commandMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		if (!EgovUserDetailsHelper.isAuthenticated()) {
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+			return;
+		}
 
-		if (isAuthenticated) {
+		String param_atchFileId = (String) commandMap.get("atchFileId");
+		EgovFileTokenUtil.DecodedFileToken token = EgovFileTokenUtil.decodeAndValidateSession(
+				param_atchFileId, request.getSession().getId(), cryptoService, ALGORITHM_KEY);
+		String decodedFileId = token.getAtchFileId();
+		fileAuthService.assertFileAccess(decodedFileId);
+		String fileSn = (String) commandMap.get("fileSn");
 
-			// 암호화된 atchFileId 를 복호화. (2022.12.06 추가) - 파일아이디가 유추 불가능하도록 조치
-			String param_atchFileId = (String) commandMap.get("atchFileId");
-			param_atchFileId = param_atchFileId.replaceAll(" ", "+");
-			byte[] decodedBytes = Base64.getDecoder().decode(param_atchFileId);
-			String decodedString = new String(cryptoService.decrypt(decodedBytes, ALGORITHM_KEY));
+		FileVO fileVO = new FileVO();
+		fileVO.setAtchFileId(decodedFileId);
+		fileVO.setFileSn(fileSn);
+		FileVO fvo = fileService.selectFileInf(fileVO);
 
-			// 세션 바인딩 검증 - atchFileId 발급 당시의 세션ID와 현재 세션ID가 일치해야 한다.
-			String issuedSessionId = StringUtils.substringBefore(decodedString, "|");
-			if (issuedSessionId == null || issuedSessionId.isEmpty() || !issuedSessionId.equals(request.getSession().getId())) {
-				response.sendError(HttpServletResponse.SC_FORBIDDEN);
-				return;
-			}
+		String fileStreCours = EgovWebUtil.filePathBlackList(fvo.getFileStreCours());
+		String streFileNm = EgovWebUtil.filePathBlackList(fvo.getStreFileNm());
+		File uFile = new File(fileStreCours, streFileNm);
+		long fSize = uFile.length();
 
-			String decodedFileId = StringUtils.substringAfter(decodedString, "|");
-			String fileSn = (String) commandMap.get("fileSn");
-	
-			FileVO fileVO = new FileVO();
-			fileVO.setAtchFileId(decodedFileId);
-			fileVO.setFileSn(fileSn);
-			FileVO fvo = fileService.selectFileInf(fileVO);
-
-			String fileStreCours = EgovWebUtil.filePathBlackList(fvo.getFileStreCours());
-			String streFileNm = EgovWebUtil.filePathBlackList(fvo.getStreFileNm());
-			File uFile = new File(fileStreCours, streFileNm);
-			long fSize = uFile.length();
-
-			if (fSize > 0) {
+		if (fSize > 0) {
 				String mimetype = "application/x-msdownload";
 
 				response.setContentType(mimetype);
@@ -207,6 +204,5 @@ public class EgovFileDownloadController {
 			} else {
 				request.getRequestDispatcher("/cmm/error/egovBizException.jsp").forward(request, response);
 			}
-		}
 	}
 }

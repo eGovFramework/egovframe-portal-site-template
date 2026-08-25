@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.EgovProperties;
 import egovframework.com.cmm.service.FileVO;
+import egovframework.com.cmm.service.impl.EgovFileAuthServiceImpl;
+import egovframework.com.cmm.util.EgovFileTokenUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -59,6 +61,9 @@ public class EgovFileMngController {
 
 	@Resource(name = "EgovFileMngService")
 	private EgovFileMngService fileService;
+
+	@Resource(name = "EgovFileAuthService")
+	private EgovFileAuthServiceImpl fileAuthService;
 
 	// 주의 : 반드시 기본값 "egovframe"을 다른것으로 변경하여 사용하시기 바랍니다.
 	public static final String ALGORITHM_KEY = EgovProperties.getProperty("Globals.File.algorithmKey");
@@ -162,11 +167,16 @@ public class EgovFileMngController {
 			HttpServletRequest request, ModelMap model)
 			throws Exception {
 
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-
-		if (isAuthenticated) {
-			fileService.deleteFileInf(fileVO);
+		if (!EgovUserDetailsHelper.isAuthenticated()) {
+			return "redirect:/uat/uia/egovLoginUsr.do";
 		}
+
+		// 첨부파일 소유자(또는 관리자)만 삭제할 수 있도록 검증한다 (IDOR 방지)
+		EgovFileTokenUtil.DecodedFileToken token = EgovFileTokenUtil.decodeFileToken(
+				fileVO.getAtchFileId(), request.getSession().getId(), cryptoService, ALGORITHM_KEY, false);
+		fileVO.setAtchFileId(token.getAtchFileId());
+		fileAuthService.assertFileAccess(token.getAtchFileId());
+		fileService.deleteFileInf(fileVO);
 
 		// 오픈 리다이렉트(CWE-601) 방지 - 외부 URL이나 프로토콜 상대경로가 아닌
 		// 애플리케이션 내부의 절대경로만 리다이렉트 대상으로 허용한다.

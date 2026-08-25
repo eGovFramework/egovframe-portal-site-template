@@ -16,7 +16,7 @@
 <%@ page import="org.springframework.security.web.access.AccessDeniedHandlerImpl" %> 
 
 <%@ page isErrorPage="true"%>
-<%@ page contentType="text/html; charset=euc-kr" %>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
 <%@ page import="org.egovframe.rte.fdl.string.EgovStringUtil" %>
 <%@ page import="java.lang.String" %>

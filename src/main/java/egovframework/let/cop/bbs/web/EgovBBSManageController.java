@@ -26,6 +26,7 @@ import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.EgovFileMngUtil;
 import egovframework.com.cmm.service.FileVO;
 import egovframework.let.cop.bbs.service.Board;
+import egovframework.let.cop.bbs.util.EgovBBSAuthUtil;
 import egovframework.let.cop.bbs.service.BoardMaster;
 import egovframework.let.cop.bbs.service.BoardMasterVO;
 import egovframework.let.cop.bbs.service.BoardVO;
@@ -211,6 +212,8 @@ public class EgovBBSManageController {
 		model.addAttribute("result", vo);
 
 		model.addAttribute("sessionUniqId", user.getUniqId());
+		// 관리자는 무조건 수정/삭제 버튼 노출
+		model.addAttribute("modifyAt", EgovBBSAuthUtil.canShowModifyButtons(vo, user) ? "Y" : "N");
 		//----------------------------
 		// template 처리 (기본 BBS template 지정  포함)
 		//----------------------------
@@ -496,6 +499,7 @@ public class EgovBBSManageController {
 		if (isAuthenticated) {
 			bmvo = bbsAttrbService.selectBBSMasterInf(master);
 			bdvo = bbsMngService.selectBoardArticle(boardVO);
+			EgovBBSAuthUtil.assertCanModifyArticle(bdvo, user);
 		}
 
 		model.addAttribute("result", bdvo);
@@ -564,6 +568,7 @@ public class EgovBBSManageController {
 		}
 
 		if (isAuthenticated) {
+			EgovBBSAuthUtil.assertCanModifyArticle(existingBoard, user);
 			final Map<String, MultipartFile> files = multiRequest.getFileMap();
 			if (!files.isEmpty()) {
 				if ("".equals(atchFileId)) {
@@ -622,6 +627,8 @@ public class EgovBBSManageController {
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
 		if (isAuthenticated) {
+			BoardVO existingBoard = bbsMngService.selectBoardArticle(boardVO);
+			EgovBBSAuthUtil.assertCanModifyArticle(existingBoard, user);
 			board.setLastUpdusrId(user.getUniqId());
 
 			bbsMngService.deleteBoardArticle(board);
@@ -1133,6 +1140,8 @@ public class EgovBBSManageController {
 
 		model.addAttribute("result", vo);
 		model.addAttribute("sessionUniqId", "ANONYMOUS");
+		// 익명게시판은 작성자가 모두 "ANONYMOUS"이므로 기존 노출 조건을 그대로 옮긴다.
+		model.addAttribute("modifyAt", "ANONYMOUS".equals(vo.getFrstRegisterId()) ? "Y" : "N");
 
 		//----------------------------
 		// template 처리 (기본 BBS template 지정  포함)
