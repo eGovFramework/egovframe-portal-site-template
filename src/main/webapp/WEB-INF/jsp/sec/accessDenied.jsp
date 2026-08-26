@@ -1,39 +1,9 @@
 <%--
   Class Name : accessDenied.jsp
-  Description : accessDenied 화면
-  Modification Information
- 
-      수정일         수정자                   수정내용
-    -------    --------    ---------------------------
-     2009.02.01    lee.m.j          최초 생성
-     2011.08.31  JJY       경량환경 버전 생성
- 
-    author   : 공통서비스개발팀 lee.m.j
-    since    : 2009.02.01
+  Description : 접근 권한 없음 안내 화면
 --%>
-<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
-<%@ page import="org.springframework.security.core.Authentication" %>
-<%@ page import="org.springframework.security.web.access.AccessDeniedHandlerImpl" %> 
-
-<%@ page isErrorPage="true"%>
-<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
-<%@ page import="org.egovframe.rte.fdl.string.EgovStringUtil" %>
-<%@ page import="java.lang.String" %>
-<%
-  	boolean authenticateFail = false;
-  	if(request.getAttribute("authenticateFail")!=null && !request.getAttribute("authenticateFail").toString().equals("")){
-		authenticateFail = true;
-  	}
-  
-  	boolean authFail = false;
-  	if(request.getAttribute("authFail")!=null && !request.getAttribute("authFail").toString().equals("")){
-		authFail = true;
-  	}  
-
-  	String target = EgovStringUtil.null2void((String)request.getAttribute("target"));
-  	target = target.equals("") ? "_top" : target;  	
-%>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -46,50 +16,25 @@
 	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
 	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
 	<script src="<c:url value='/js/ui.js'/>"></script>
-	
-<title>Access is denied</title>
-<script type="text/javascript">
-function fncGoAfterErrorPage(){
-	if('<%=authenticateFail%>' == 'true' ){
-		document.dummyForm.target="_top";
-		document.dummyForm.action = "<c:url value='/empaftererrorpage.do'/>";
-		document.dummyForm.submit();
-	}else if('<%=authFail%>' == 'true'){
-		document.dummyForm.target="<%=target%>";
-		document.dummyForm.action = "<c:url value='/empaftererrorpage.do'/>";
-		document.dummyForm.submit();
-	}else{
-		//document.location.href = "<c:url value='/empaftererrorpage.do'/>";
-		history.back(-2);
-	}
-}
-</script>
+	<title>접근 권한 없음</title>
+	<script type="text/javascript">
+		function fncGoAfterErrorPage() {
+			history.back();
+		}
+	</script>
 </head>
 <body>
-
-    <!-- skip navigation -->
-    <a href="#contents" class="skip_navi">沙庚 郊稽亜奄</a>
-
-    <div class="wrap">
-        <div class="error_page">
-            <h1>Error</h1>
-            <div class="inner">
-<!--				<p>室芝戚 幻戟鞠醸柔艦陥.</p> -->
-<!--				<p>汽戚斗 坦軒 掻 神嫌亜 降持馬心柔艦陥.</p> -->
-<!-- 				<p>呪楳掻 神嫌亜 降持馬心柔艦陥.</p> -->
-<!-- 				<p>硝 呪 蒸澗 神嫌亜 降持馬心柔艦陥.</p> -->
-				<%= request.getAttribute(org.springframework.security.web.WebAttributes.AUTHENTICATION_EXCEPTION) %>
-				<%	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-					if (auth != null) { 
-						
-					}
-				%>
-				<p>${exception.message}</p>
-                <br>
-                <a href="#LINK" class="btn btn_blue_46 w_130" onclick="javascript:fncGoAfterErrorPage(); return false;">戚穿凪戚走</a>
-            </div>
-        </div>
-    </div>
-    
+	<a href="#contents" class="skip_navi">본문 바로가기</a>
+	<div class="wrap">
+		<div class="error_page">
+			<h1>접근 권한 없음</h1>
+			<div class="inner" id="contents">
+				<p>요청하신 기능을 사용할 권한이 없습니다.</p>
+				<p>관리자에게 문의하시거나 이전 화면으로 돌아가 주세요.</p>
+				<br>
+				<a href="javascript:fncGoAfterErrorPage();" class="btn btn_blue_46 w_130">이전페이지</a>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
