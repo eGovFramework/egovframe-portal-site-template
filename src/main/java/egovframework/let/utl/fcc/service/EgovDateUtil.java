@@ -267,8 +267,12 @@ public class EgovDateUtil {
 		}
 		if (EgovStringUtil.isNullToString(fromDateFormat).trim().equals(""))
 			_fromDateFormat = "yyyyMMddHHmmss"; // default값
+		else
+			_fromDateFormat = fromDateFormat;
 		if (EgovStringUtil.isNullToString(toDateFormat).trim().equals(""))
 			_toDateFormat = "yyyy-MM-dd HH:mm:ss"; // default값
+		else
+			_toDateFormat = toDateFormat;
 
 		try {
 			simpledateformat = new SimpleDateFormat(_fromDateFormat, Locale.getDefault());
@@ -354,7 +358,8 @@ public class EgovDateUtil {
 	 */
 	public static String formatTime(String sTime, String ch) {
 		String timeStr = validChkTime(sTime);
-		return timeStr.substring(0, 2) + ch + timeStr.substring(2, 4) + ch + timeStr.substring(4, 6);
+		// validChkTime은 4자리(HHmm)만 반환하므로 초 단위 분기는 도달할 수 없다.
+		return timeStr.substring(0, 2) + ch + timeStr.substring(2, 4);
 	}
 
 	/**
@@ -375,9 +380,9 @@ public class EgovDateUtil {
 	 * <p>입력받은 연도가 윤년인지 아닌지 검사한다.</p>
 	 *
 	 * <pre>
-	 * DateUtil.isLeapYear(2004) = false
-	 * DateUtil.isLeapYear(2005) = true
-	 * DateUtil.isLeapYear(2006) = true
+	 * DateUtil.isLeapYear(2004) = true
+	 * DateUtil.isLeapYear(2005) = false
+	 * DateUtil.isLeapYear(2006) = false
 	 * </pre>
 	 *
 	 * @param  year 연도
@@ -385,9 +390,9 @@ public class EgovDateUtil {
 	 */
 	public static boolean isLeapYear(int year) {
 		if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	/**
