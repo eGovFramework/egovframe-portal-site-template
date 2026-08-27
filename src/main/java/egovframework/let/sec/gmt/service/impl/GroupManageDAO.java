@@ -35,7 +35,7 @@ public class GroupManageDAO extends EgovAbstractMapper {
 	 * @return GroupManageVO
 	 * @exception Exception
 	 */
-	public GroupManageVO selectGroup(GroupManageVO groupManageVO) throws Exception {
+	public GroupManageVO selectGroup(GroupManageVO groupManageVO) {
 		return (GroupManageVO) selectOne("groupManageDAO.selectGroup", groupManageVO);
 	}
 
@@ -45,7 +45,7 @@ public class GroupManageDAO extends EgovAbstractMapper {
 	 * @return GroupManageVO
 	 * @exception Exception
 	 */
-	public List<GroupManageVO> selectGroupList(GroupManageVO groupManageVO) throws Exception {
+	public List<GroupManageVO> selectGroupList(GroupManageVO groupManageVO) {
 		return selectList("groupManageDAO.selectGroupList", groupManageVO);
 	}
 
@@ -54,7 +54,7 @@ public class GroupManageDAO extends EgovAbstractMapper {
 	 * @param groupManage GroupManage
 	 * @exception Exception
 	 */
-	public void insertGroup(GroupManage groupManage) throws Exception {
+	public void insertGroup(GroupManage groupManage) {
 		insert("groupManageDAO.insertGroup", groupManage);
 	}
 
@@ -63,7 +63,7 @@ public class GroupManageDAO extends EgovAbstractMapper {
 	 * @param groupManage GroupManage
 	 * @exception Exception
 	 */
-	public void updateGroup(GroupManage groupManage) throws Exception {
+	public void updateGroup(GroupManage groupManage) {
 		update("groupManageDAO.updateGroup", groupManage);
 	}
 
@@ -72,7 +72,7 @@ public class GroupManageDAO extends EgovAbstractMapper {
 	 * @param groupManage GroupManage
 	 * @exception Exception
 	 */
-	public void deleteGroup(GroupManage groupManage) throws Exception {
+	public void deleteGroup(GroupManage groupManage) {
 		delete("groupManageDAO.deleteGroup", groupManage);
 	}
 
@@ -82,7 +82,7 @@ public class GroupManageDAO extends EgovAbstractMapper {
 	 * @return int
 	 * @exception Exception
 	 */
-    public int selectGroupListTotCnt(GroupManageVO groupManageVO) throws Exception {
+    public int selectGroupListTotCnt(GroupManageVO groupManageVO) {
         return (Integer)selectOne("groupManageDAO.selectGroupListTotCnt", groupManageVO);
     }
 }

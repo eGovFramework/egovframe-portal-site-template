@@ -20,6 +20,7 @@ import egovframework.let.uss.olp.qmc.service.QustnrManageVO;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.03.20  장동한          최초 생성
+ *   2026.06.20  이백행          [2026년 컨트리뷰션] 불필요한 예외(throws Exception) 제거
  *
  * </pre>
  */
@@ -30,9 +31,8 @@ public class QustnrManageDao extends EgovAbstractMapper {
 	 * 설문템플릿 목록을 조회한다.
 	 * @param qustnrManageVO - 설문관리 정보 담김 VO
 	 * @return List
-	 * @throws Exception
 	 */
-	public List<?> selectQustnrTmplatManageList(QustnrManageVO qustnrManageVO) throws Exception{
+	public List<?> selectQustnrTmplatManageList(QustnrManageVO qustnrManageVO) {
 		return selectList("QustnrManage.selectQustnrTmplatManage", qustnrManageVO);
 	}
 
@@ -40,9 +40,8 @@ public class QustnrManageDao extends EgovAbstractMapper {
 	 * 설문관리 목록을 조회한다.
 	 * @param searchVO - 조회할 정보가 담긴 VO
 	 * @return List
-	 * @throws Exception
 	 */
-	public List<?> selectQustnrManageList(ComDefaultVO searchVO) throws Exception{
+	public List<?> selectQustnrManageList(ComDefaultVO searchVO) {
 		return selectList("QustnrManage.selectQustnrManage", searchVO);
 	}
 
@@ -50,9 +49,8 @@ public class QustnrManageDao extends EgovAbstractMapper {
 	 * 설문관리를 상세조회(Model) 한다.
 	 * @param qustnrManageVO - 설문관리 정보 담김 VO
 	 * @return List
-	 * @throws Exception
 	 */
-    public QustnrManageVO selectQustnrManageDetailModel(QustnrManageVO qustnrManageVO) throws Exception {
+    public QustnrManageVO selectQustnrManageDetailModel(QustnrManageVO qustnrManageVO) {
         return (QustnrManageVO) selectOne("QustnrManage.selectQustnrManageDetailModel", qustnrManageVO);
     }
 
@@ -60,9 +58,8 @@ public class QustnrManageDao extends EgovAbstractMapper {
 	 * 설문관리를(을) 상세조회 한다.
 	 * @param qustnrManageVO - 설문관리 정보 담김 VO
 	 * @return List
-	 * @throws Exception
 	 */
-	public List<?> selectQustnrManageDetail(QustnrManageVO qustnrManageVO) throws Exception{
+	public List<?> selectQustnrManageDetail(QustnrManageVO qustnrManageVO) {
 		return selectList("QustnrManage.selectQustnrManageDetail", qustnrManageVO);
 	}
 
@@ -70,36 +67,32 @@ public class QustnrManageDao extends EgovAbstractMapper {
 	 * 설문관리를(을) 목록 전체 건수를(을) 조회한다.
 	 * @param searchVO - 조회할 정보가 담긴 VO
 	 * @return int
-	 * @throws Exception
 	 */
-	public int selectQustnrManageListCnt(ComDefaultVO searchVO) throws Exception{
+	public int selectQustnrManageListCnt(ComDefaultVO searchVO) {
 		return (Integer)selectOne("QustnrManage.selectQustnrManageCnt", searchVO);
 	}
 
     /**
 	 * 설문관리를(을) 등록한다.
 	 * @param qqustnrManageVO - 설문관리 정보 담김 VO
-	 * @throws Exception
 	 */
-	public void insertQustnrManage(QustnrManageVO qustnrManageVO) throws Exception{
+	public void insertQustnrManage(QustnrManageVO qustnrManageVO) {
 		insert("QustnrManage.insertQustnrManage", qustnrManageVO);
 	}
 
     /**
 	 * 설문관리를(을) 수정한다.
 	 * @param qustnrManageVO - 설문관리 정보 담김 VO
-	 * @throws Exception
 	 */
-	public void updateQustnrManage(QustnrManageVO qustnrManageVO) throws Exception{
+	public void updateQustnrManage(QustnrManageVO qustnrManageVO) {
 		insert("QustnrManage.updateQustnrManage", qustnrManageVO);
 	}
 
     /**
 	 * 설문관리를(을) 삭제한다.
 	 * @param qustnrManageVO - 설문관리 정보 담김 VO
-	 * @throws Exception
 	 */
-	public void deleteQustnrManage(QustnrManageVO qustnrManageVO) throws Exception{
+	public void deleteQustnrManage(QustnrManageVO qustnrManageVO) {
 		//설문응답자 삭제
 		delete("QustnrManage.deleteQustnrRespondManage", qustnrManageVO);
 		//설문조사(설문결과) 삭제

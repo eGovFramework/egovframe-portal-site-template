@@ -31,7 +31,7 @@ public class LoginDAO extends EgovAbstractMapper {
 	 * @return LoginVO
 	 * @exception Exception
 	 */
-	public LoginVO actionLogin(LoginVO vo) throws Exception {
+	public LoginVO actionLogin(LoginVO vo) {
 		return (LoginVO) selectOne("loginDAO.actionLogin", vo);
 	}
 
@@ -41,7 +41,7 @@ public class LoginDAO extends EgovAbstractMapper {
 	 * @return LoginVO
 	 * @exception Exception
 	 */
-	public LoginVO searchId(LoginVO vo) throws Exception {
+	public LoginVO searchId(LoginVO vo) {
 		return (LoginVO) selectOne("loginDAO.searchId", vo);
 	}
 
@@ -51,7 +51,7 @@ public class LoginDAO extends EgovAbstractMapper {
 	 * @return LoginVO
 	 * @exception Exception
 	 */
-	public LoginVO searchPassword(LoginVO vo) throws Exception {
+	public LoginVO searchPassword(LoginVO vo) {
 		return (LoginVO) selectOne("loginDAO.searchPassword", vo);
 	}
 
@@ -60,7 +60,7 @@ public class LoginDAO extends EgovAbstractMapper {
 	 * @param vo LoginVO
 	 * @exception Exception
 	 */
-	public void updatePassword(LoginVO vo) throws Exception {
+	public void updatePassword(LoginVO vo) {
 		update("loginDAO.updatePassword", vo);
 	}
 }

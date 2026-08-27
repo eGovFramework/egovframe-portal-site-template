@@ -30,7 +30,7 @@ public class BBSAddedOptionsDAO extends EgovAbstractMapper {
      * 
      * @param BoardMaster
      */
-    public int insertAddedOptionsInf(BoardMaster boardMaster) throws Exception {
+    public int insertAddedOptionsInf(BoardMaster boardMaster) {
 	return insert("BBSAddedOptionsDAO.insertAddedOptionsInf", boardMaster);
     }
     
@@ -39,7 +39,7 @@ public class BBSAddedOptionsDAO extends EgovAbstractMapper {
      * 
      * @param BoardMasterVO
      */
-    public BoardMasterVO selectAddedOptionsInf(BoardMaster vo) throws Exception {
+    public BoardMasterVO selectAddedOptionsInf(BoardMaster vo) {
 	return (BoardMasterVO)selectOne("BBSAddedOptionsDAO.selectAddedOptionsInf", vo);
     }
     
@@ -48,7 +48,7 @@ public class BBSAddedOptionsDAO extends EgovAbstractMapper {
      * 
      * @param BoardMaster
      */
-    public void updateAddedOptionsInf(BoardMaster boardMaster) throws Exception {
+    public void updateAddedOptionsInf(BoardMaster boardMaster) {
 	update("BBSAddedOptionsDAO.updateAddedOptionsInf", boardMaster);
     }
 }

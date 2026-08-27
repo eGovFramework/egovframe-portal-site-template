@@ -37,7 +37,7 @@ public class StplatManageDAO extends EgovAbstractMapper {
 	 * @return 조회한 글
 	 * @exception Exception
 	 */
-    public StplatManageVO selectStplatDetail(StplatManageVO vo) throws Exception {
+    public StplatManageVO selectStplatDetail(StplatManageVO vo) {
 
         return (StplatManageVO) selectOne("StplatManageDAO.selectStplatDetail", vo);
 
@@ -49,7 +49,7 @@ public class StplatManageDAO extends EgovAbstractMapper {
 	 * @return 글 목록
 	 * @exception Exception
 	 */
-    public List<?> selectStplatList(StplatManageDefaultVO searchVO) throws Exception {
+    public List<?> selectStplatList(StplatManageDefaultVO searchVO) {
 
         return selectList("StplatManageDAO.selectStplatList", searchVO);
 
@@ -71,7 +71,7 @@ public class StplatManageDAO extends EgovAbstractMapper {
 	 * @param vo
 	 * @exception Exception
 	 */
-    public void insertStplatCn(StplatManageVO vo) throws Exception {
+    public void insertStplatCn(StplatManageVO vo) {
 
         insert("StplatManageDAO.insertStplatCn", vo);
 
@@ -82,7 +82,7 @@ public class StplatManageDAO extends EgovAbstractMapper {
 	 * @param vo
 	 * @exception Exception
 	 */
-    public void updateStplatCn(StplatManageVO vo) throws Exception {
+    public void updateStplatCn(StplatManageVO vo) {
 
         update("StplatManageDAO.updateStplatCn", vo);
 
@@ -93,7 +93,7 @@ public class StplatManageDAO extends EgovAbstractMapper {
 	 * @param vo
 	 * @exception Exception
 	 */
-    public void deleteStplatCn(StplatManageVO vo) throws Exception {
+    public void deleteStplatCn(StplatManageVO vo) {
 
         delete("StplatManageDAO.deleteStplatCn", vo);
 

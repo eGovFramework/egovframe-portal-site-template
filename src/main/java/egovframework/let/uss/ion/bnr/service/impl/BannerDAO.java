@@ -36,7 +36,7 @@ public class BannerDAO extends EgovAbstractMapper {
 	 * @return List - 배너 목록
 	 * @exception Exception
 	 */
-	public List<BannerVO> selectBannerList(BannerVO bannerVO) throws Exception {
+	public List<BannerVO> selectBannerList(BannerVO bannerVO) {
 		return selectList("bannerDAO.selectBannerList", bannerVO);
 	}
 
@@ -46,7 +46,7 @@ public class BannerDAO extends EgovAbstractMapper {
 	 * @return int
 	 * @exception Exception
 	 */
-    public int selectBannerListTotCnt(BannerVO bannerVO) throws Exception {
+    public int selectBannerListTotCnt(BannerVO bannerVO) {
         return (Integer)selectOne("bannerDAO.selectBannerListTotCnt", bannerVO);
     }
 
@@ -57,7 +57,7 @@ public class BannerDAO extends EgovAbstractMapper {
 	 *
 	 * @param bannerVO
 	 */
-	public BannerVO selectBanner(BannerVO bannerVO) throws Exception {
+	public BannerVO selectBanner(BannerVO bannerVO) {
 		return (BannerVO) selectOne("bannerDAO.selectBanner", bannerVO);
 	}
 
@@ -65,7 +65,7 @@ public class BannerDAO extends EgovAbstractMapper {
 	 * 배너정보를 신규로 등록한다.
 	 * @param banner - 배너 model
 	 */
-	public void insertBanner(Banner banner) throws Exception {
+	public void insertBanner(Banner banner) {
 		insert("bannerDAO.insertBanner", banner);
 	}
 
@@ -73,7 +73,7 @@ public class BannerDAO extends EgovAbstractMapper {
 	 * 기 등록된 배너정보를 수정한다.
 	 * @param banner - 배너 model
 	 */
-	public void updateBanner(Banner banner) throws Exception {
+	public void updateBanner(Banner banner) {
         update("bannerDAO.updateBanner", banner);
 	}
 
@@ -83,7 +83,7 @@ public class BannerDAO extends EgovAbstractMapper {
 	 *
 	 * @param banner
 	 */
-	public void deleteBanner(Banner banner) throws Exception {
+	public void deleteBanner(Banner banner) {
 		delete("bannerDAO.deleteBanner", banner);
 	}
 
@@ -92,7 +92,7 @@ public class BannerDAO extends EgovAbstractMapper {
 	 * @param banner - 배너 model
 	 * @return FileVO - 파일 VO
 	 */
-	public FileVO selectBannerFile(Banner banner) throws Exception {
+	public FileVO selectBannerFile(Banner banner) {
 		return (FileVO) selectOne("bannerDAO.selectBannerFile", banner);
 	}
 
@@ -102,7 +102,7 @@ public class BannerDAO extends EgovAbstractMapper {
 	 * @return BannerVO - 배너 VO
 	 * @exception Exception
 	 */
-	public List<BannerVO> selectBannerResult(BannerVO bannerVO) throws Exception {
+	public List<BannerVO> selectBannerResult(BannerVO bannerVO) {
 		return selectList("bannerDAO.selectBannerResult", bannerVO);
 	}
 

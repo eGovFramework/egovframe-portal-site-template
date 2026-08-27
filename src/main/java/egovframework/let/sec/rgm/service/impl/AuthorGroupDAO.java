@@ -35,7 +35,7 @@ public class AuthorGroupDAO extends EgovAbstractMapper {
 	 * @return List<AuthorGroupVO>
 	 * @exception Exception
 	 */
-	public List<AuthorGroupVO> selectAuthorGroupList(AuthorGroupVO authorGroupVO) throws Exception {
+	public List<AuthorGroupVO> selectAuthorGroupList(AuthorGroupVO authorGroupVO) {
 		return selectList("authorGroupDAO.selectAuthorGroupList", authorGroupVO);
 	}
 
@@ -44,7 +44,7 @@ public class AuthorGroupDAO extends EgovAbstractMapper {
 	 * @param authorGroup AuthorGroup
 	 * @exception Exception
 	 */
-	public void insertAuthorGroup(AuthorGroup authorGroup) throws Exception {
+	public void insertAuthorGroup(AuthorGroup authorGroup) {
 		insert("authorGroupDAO.insertAuthorGroup", authorGroup);
 	}
 
@@ -53,7 +53,7 @@ public class AuthorGroupDAO extends EgovAbstractMapper {
 	 * @param authorGroup AuthorGroup
 	 * @exception Exception
 	 */
-	public void updateAuthorGroup(AuthorGroup authorGroup) throws Exception {
+	public void updateAuthorGroup(AuthorGroup authorGroup) {
 		update("authorGroupDAO.updateAuthorGroup", authorGroup);
 	}
 
@@ -62,7 +62,7 @@ public class AuthorGroupDAO extends EgovAbstractMapper {
 	 * @param authorGroup AuthorGroup
 	 * @exception Exception
 	 */
-	public void deleteAuthorGroup(AuthorGroup authorGroup) throws Exception {
+	public void deleteAuthorGroup(AuthorGroup authorGroup) {
 		delete("authorGroupDAO.deleteAuthorGroup", authorGroup);
 	}
 
@@ -72,7 +72,7 @@ public class AuthorGroupDAO extends EgovAbstractMapper {
 	 * @return int
 	 * @exception Exception
 	 */
-    public int selectAuthorGroupListTotCnt(AuthorGroupVO authorGroupVO) throws Exception {
+    public int selectAuthorGroupListTotCnt(AuthorGroupVO authorGroupVO) {
         return (Integer)selectOne("authorGroupDAO.selectAuthorGroupListTotCnt", authorGroupVO);
     }
 }

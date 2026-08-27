@@ -35,7 +35,7 @@ public class RoleManageDAO extends EgovAbstractMapper {
 	 * @return RoleManageVO
 	 * @exception Exception
 	 */
-	public RoleManageVO selectRole(RoleManageVO roleManageVO) throws Exception {
+	public RoleManageVO selectRole(RoleManageVO roleManageVO) {
 		return (RoleManageVO) selectOne("roleManageDAO.selectRole", roleManageVO);
 	}
 
@@ -45,7 +45,7 @@ public class RoleManageDAO extends EgovAbstractMapper {
 	 * @return List<RoleManageVO>
 	 * @exception Exception
 	 */
-	public List<RoleManageVO> selectRoleList(RoleManageVO roleManageVO) throws Exception {
+	public List<RoleManageVO> selectRoleList(RoleManageVO roleManageVO) {
 		return selectList("roleManageDAO.selectRoleList", roleManageVO);
 	}
 
@@ -54,7 +54,7 @@ public class RoleManageDAO extends EgovAbstractMapper {
 	 * @param roleManage RoleManage
 	 * @exception Exception
 	 */
-	public void insertRole(RoleManage roleManage) throws Exception {
+	public void insertRole(RoleManage roleManage) {
 		insert("roleManageDAO.insertRole", roleManage);
 	}
 	/**
@@ -62,7 +62,7 @@ public class RoleManageDAO extends EgovAbstractMapper {
 	 * @param roleManage RoleManage
 	 * @exception Exception
 	 */
-	public void updateRole(RoleManage roleManage) throws Exception {
+	public void updateRole(RoleManage roleManage) {
 		update("roleManageDAO.updateRole", roleManage);
 	}
 	/**
@@ -70,7 +70,7 @@ public class RoleManageDAO extends EgovAbstractMapper {
 	 * @param roleManage RoleManage
 	 * @exception Exception
 	 */
-	public void deleteRole(RoleManage roleManage) throws Exception {
+	public void deleteRole(RoleManage roleManage) {
 		delete("roleManageDAO.deleteRole", roleManage);
 	}
 
@@ -80,7 +80,7 @@ public class RoleManageDAO extends EgovAbstractMapper {
 	 * @return int
 	 * @exception Exception
 	 */
-    public int selectRoleListTotCnt(RoleManageVO roleManageVO) throws Exception {
+    public int selectRoleListTotCnt(RoleManageVO roleManageVO) {
         return (Integer)selectOne("roleManageDAO.selectAuthorListTotCnt", roleManageVO);
     }
 
@@ -90,7 +90,7 @@ public class RoleManageDAO extends EgovAbstractMapper {
 	 * @return List<RoleManageVO>
 	 * @exception Exception
 	 */
-	public List<RoleManageVO> selectRoleAllList(RoleManageVO roleManageVO) throws Exception {
+	public List<RoleManageVO> selectRoleAllList(RoleManageVO roleManageVO) {
 		return selectList("roleManageDAO.selectRoleAllList", roleManageVO);
 	}
 
