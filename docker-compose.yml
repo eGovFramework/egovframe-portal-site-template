@@ -1,0 +1,45 @@
+services:
+  mysql-db:
+    image: mysql:8
+    container_name: egov-portal-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root1234
+      MYSQL_DATABASE: pst
+      MYSQL_USER: pst
+      MYSQL_PASSWORD: pst01
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./DATABASE/mysql/all_pst_ddl_mysql.sql:/docker-entrypoint-initdb.d/01-ddl.sql:ro
+      - ./DATABASE/mysql/all_pst_data_mysql.sql:/docker-entrypoint-initdb.d/02-data.sql:ro
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot1234"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+  app:
+    build: .
+    image: egovframe-portal-site-template:${APP_VERSION:-5.0.0}
+    container_name: egov-portal-site
+    environment:
+      DB_HOST: mysql-db
+      DB_PORT: "3306"
+      DB_NAME: pst
+      DB_USERNAME: pst
+      DB_PASSWORD: pst01
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  mysql-data:
