@@ -252,6 +252,12 @@
 			<artifactId>parsson</artifactId>
 			<version>${parsson.version}</version>
 		</dependency>
+		<!-- HSQL : 인메모리 DB (Globals.DbType=hsql 사용 시) -->
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>2.7.4</version>
+		</dependency>
 	</dependencies>
 
 	<build>

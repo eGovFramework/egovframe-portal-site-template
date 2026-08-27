@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
     
     <!-- 환경설정 기본정보를 globals.properties 에서 참조하도록 propertyConfigurer 설정  -->
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -53,5 +55,21 @@
         <property name="username" value="${Globals.UserName}"/>
         <property name="password" value="${Globals.Password}"/>
     </bean>
-    
+
+    <!-- HSQL (인메모리) : 별도 DB 설치 없이 기동/테스트용. globals.properties 에서 Globals.DbType=hsql 로 전환한다.
+         기존 MySQL SQL 문법과의 호환을 위해 sql.syntax_mys=true 모드를 사용한다. -->
+    <bean id="dataSource-hsql" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
+        <property name="url" value="jdbc:hsqldb:mem:pst;sql.syntax_mys=true" />
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+    </bean>
+
+    <!-- HSQL 인메모리 사용 시 스키마/기초데이터 자동 적재. 기본 비활성(Globals.Hsql.AutoInit=false)이라
+         다른 DB 사용에는 영향이 없으며, HSQL로 기동할 때만 true 로 설정한다. -->
+    <jdbc:initialize-database data-source="dataSource-hsql" enabled="${Globals.Hsql.AutoInit}" ignore-failures="DROPS">
+        <jdbc:script location="classpath:/db/hsql/all_pst_ddl_hsql.sql" separator=";"/>
+        <jdbc:script location="classpath:/db/hsql/all_pst_data_hsql.sql" separator=";"/>
+    </jdbc:initialize-database>
+
 </beans>
