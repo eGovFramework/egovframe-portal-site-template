@@ -192,32 +192,31 @@ class EgovDateUtilTest {
     }
 
     // -------------------------------------------------------------------------
-    // isLeapYear (주의: 메서드 반환값이 반전됨 - 윤년이면 false)
+    // isLeapYear
     // -------------------------------------------------------------------------
 
     @Test
-    @DisplayName("isLeapYear: 4의 배수이고 100의 배수가 아닌 해 - 윤년(false 반환)")
+    @DisplayName("isLeapYear: 4의 배수이고 100의 배수가 아닌 해 - 윤년(true 반환)")
     void isLeapYear_divisibleBy4NotBy100() {
-        // 구현상 윤년이면 false를 반환하는 로직
-        assertFalse(EgovDateUtil.isLeapYear(2004));
+        assertTrue(EgovDateUtil.isLeapYear(2004));
     }
 
     @Test
-    @DisplayName("isLeapYear: 400의 배수인 해 - 윤년(false 반환)")
+    @DisplayName("isLeapYear: 400의 배수인 해 - 윤년(true 반환)")
     void isLeapYear_divisibleBy400() {
-        assertFalse(EgovDateUtil.isLeapYear(2000));
+        assertTrue(EgovDateUtil.isLeapYear(2000));
     }
 
     @Test
-    @DisplayName("isLeapYear: 100의 배수이지만 400의 배수가 아닌 해 - 평년(true 반환)")
+    @DisplayName("isLeapYear: 100의 배수이지만 400의 배수가 아닌 해 - 평년(false 반환)")
     void isLeapYear_divisibleBy100NotBy400() {
-        assertTrue(EgovDateUtil.isLeapYear(1900));
+        assertFalse(EgovDateUtil.isLeapYear(1900));
     }
 
     @Test
-    @DisplayName("isLeapYear: 4의 배수가 아닌 해 - 평년(true 반환)")
+    @DisplayName("isLeapYear: 4의 배수가 아닌 해 - 평년(false 반환)")
     void isLeapYear_notDivisibleBy4() {
-        assertTrue(EgovDateUtil.isLeapYear(2005));
+        assertFalse(EgovDateUtil.isLeapYear(2005));
     }
 
     // -------------------------------------------------------------------------

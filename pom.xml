@@ -54,9 +54,10 @@
 		<log4j2.version>2.25.3</log4j2.version>
 		<slf4j.version>2.0.17</slf4j.version>
 		<commons-beanutils.version>1.11.0</commons-beanutils.version>
-		<hikaricp.version>6.3.3</hikaricp.version>
 		<protobuf.java.version>3.25.5</protobuf.java.version>
 		<parsson.version>1.1.7</parsson.version>
+		<hikaricp.version>6.3.3</hikaricp.version>
+		<jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
 	</properties>
 
 	<dependencies>
@@ -151,7 +152,6 @@
 			<artifactId>log4j-over-slf4j</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>com.googlecode.log4jdbc</groupId>
 			<artifactId>log4jdbc</artifactId>
@@ -162,7 +162,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<!-- CVE-2025-48734: 취약점 보완용 업데이트 -->
 		<dependency>
 			<groupId>commons-beanutils</groupId>
@@ -187,6 +187,13 @@
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
 			<version>${protobuf.java.version}</version>
+		</dependency>
+
+		<!-- CVE-2023-7272/CVE-2023-4043: 취약점 보완용 업데이트 -->
+		<dependency>
+			<groupId>org.eclipse.parsson</groupId>
+			<artifactId>parsson</artifactId>
+			<version>${parsson.version}</version>
 		</dependency>
 
 		<dependency>
@@ -247,37 +254,28 @@
 			<artifactId>spring-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
-		<!-- CVE-2023-7272/CVE-2023-4043: 취약점 보완용 업데이트 -->
-		<dependency>
-			<groupId>org.eclipse.parsson</groupId>
-			<artifactId>parsson</artifactId>
-			<version>${parsson.version}</version>
-		</dependency>
 		<!-- HSQL : 인메모리 DB (Globals.DbType=hsql 사용 시) -->
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<version>2.7.4</version>
 		</dependency>
-	</dependencies>
 
-	<profiles>
-		<profile>
-			<id>test</id>
-			<properties>
-				<jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
-			</properties>
-			<dependencies>
-				<dependency>
-					<groupId>org.glassfish.expressly</groupId>
-					<artifactId>expressly</artifactId>
-					<version>5.0.0</version>
-					<scope>test</scope>
-				</dependency>
-			</dependencies>
-		</profile>
-	</profiles>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.27.7</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.expressly</groupId>
+			<artifactId>expressly</artifactId>
+			<version>5.0.0</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
 
 	<build>
 		<defaultGoal>install</defaultGoal>
