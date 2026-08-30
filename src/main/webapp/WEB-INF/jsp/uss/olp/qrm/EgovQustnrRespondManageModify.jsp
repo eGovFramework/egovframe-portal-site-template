@@ -87,7 +87,7 @@ function fn_egov_save_QustnrRespondManage(){
 	sParam = sParam + "searchCondition=QESTNR_ID";
 	sParam = sParam + "&searchKeyword=" + document.getElementById("qestnrId").value;
 
-  	window.showModalDialog("<c:url value='/uss/olp/qrm/EgovQustnrQestnManageListPopup.do'/>?" + sParam, self,"dialogWidth=800px;dialogHeight=500px;resizable=yes;center=yes");
+  	window.showModalDialog("<c:url value='/uss/olp/qqm/EgovQustnrQestnManageListPopup.do'/>?" + sParam, self,"dialogWidth=800px;dialogHeight=500px;resizable=yes;center=yes");
   	
   }
 /* ********************************************************
