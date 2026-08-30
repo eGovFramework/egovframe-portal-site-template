@@ -92,7 +92,7 @@
 			 FRST_REGISTER_ID, FRST_REGIST_PNTTM, USE_AT
 			 )
 			VALUES
-			( #{nttId}, #{bbsId}, #{nttSj}, #nttCn:CLOB#, #{nttNo}, 
+			( #{nttId}, #{bbsId}, #{nttSj}, #{nttCn}, #{nttNo}, 
 			  #{ntcrId}, #{ntcrNm}, #{password}, #{inqireCo}, 
 			  #{ntceBgnde}, #{ntceEndde}, #{replyAt}, 
 			  #{parnts}, 1, #{replyLc}, #{atchFileId},
@@ -115,7 +115,7 @@
 			 FRST_REGISTER_ID, FRST_REGIST_PNTTM, USE_AT
 			 )
 			VALUES
-			( #{nttId}, #{bbsId}, #{nttSj}, #nttCn:CLOB#, #{sortOrdr}, 
+			( #{nttId}, #{bbsId}, #{nttSj}, #{nttCn}, #{sortOrdr}, 
 			  #{ntcrId}, #{ntcrNm}, #{password}, #{inqireCo}, 
 			  #{ntceBgnde}, #{ntceEndde}, #{replyAt}, 
 			  #{parnts}, 1, #{replyLc}, #{atchFileId},
@@ -229,7 +229,7 @@
  		
 			UPDATE LETTNBBS SET 
 				NTT_SJ = #{nttSj},
-				NTT_CN = #nttCn:CLOB#, 
+				NTT_CN = #{nttCn}, 
 				NTCR_ID = #{ntcrId},
 				NTCR_NM = #{ntcrNm},
 				PASSWORD = #{password},
