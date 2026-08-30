@@ -370,4 +370,8 @@
 	</insert>
 
 
+  <select id="selectFrstRegisterIdByRespondId" parameterType="egovframework.let.uss.olp.qri.service.QustnrRespondInfoVO" resultType="java.lang.String">
+			SELECT FRST_REGISTER_ID FROM LETTNQUSTNRRSPNSRESULT WHERE QUSTNR_RSPNS_RESULT_ID = #{qestnrQesrspnsId}
+  </select>
+
 </mapper>
