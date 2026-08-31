@@ -22,7 +22,7 @@ import egovframework.let.sym.mnu.mpm.service.MenuManageVO;
  *   2011.07.01  서준식			자기 메뉴 정보를 상위메뉴 정보로 참조하는 메뉴정보가 있는지 조회하는
  *   							selectUpperMenuNoByPk() 메서드 추가
  *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
- *   2026.06.20  이백행           [2026년 컨트리뷰션] 불필요한 예외(throws Exception) 제거
+ *   2026.06.20  이백행           [2026년 컨트리뷰션] 불필요한 예외 제거
  *
  * </pre>
  */
