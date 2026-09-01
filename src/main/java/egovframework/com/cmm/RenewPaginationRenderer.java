@@ -26,7 +26,7 @@ import jakarta.servlet.ServletContext;
  */
 public class RenewPaginationRenderer extends AbstractPaginationRenderer implements ServletContextAware{
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ImagePaginationRenderer.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RenewPaginationRenderer.class);
 
 	private ServletContext servletContext;
 
