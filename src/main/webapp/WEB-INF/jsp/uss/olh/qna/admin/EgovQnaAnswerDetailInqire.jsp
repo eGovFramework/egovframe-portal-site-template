@@ -38,7 +38,7 @@
  ******************************************************** */
 function fn_egov_inqire_qnaanswerlist() {
 
-	document.QnaManageForm.action = "<c:url value='/uss/olh/qnm/QnaAnswerListInqire.do'/>";
+	document.QnaManageForm.action = "<c:url value='/uss/olh/qnm/admin/QnaAnswerListInqire.do'/>";
 	document.QnaManageForm.submit();
 		
 }
@@ -51,7 +51,7 @@ function fn_egov_updt_qnacnanswer(qaId){
 	// Update하기 위한 키값을 셋팅
 	document.QnaManageForm.qaId.value = qaId;	
 
-	document.QnaManageForm.action = "<c:url value='/uss/olh/qnm/QnaCnAnswerUpdtView.do'/>";
+	document.QnaManageForm.action = "<c:url value='/uss/olh/qnm/admin/QnaCnAnswerUpdtView.do'/>";
 	document.QnaManageForm.submit();	
 
 		

@@ -72,7 +72,7 @@ function fn_egov_updt_faqcn(form, faqId){
 		if(confirm('<spring:message code="common.update.msg" />')) {
 			
 			// form.faqId.value = faqId; 주석처리
-			form.action = "<c:url value='/uss/olh/faq/FaqCnUpdt.do'/>";
+			form.action = "<c:url value='/uss/olh/faq/admin/FaqCnUpdt.do'/>";
 			form.submit();
 		}
 	}
