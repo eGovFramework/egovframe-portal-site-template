@@ -95,10 +95,9 @@ public class EgovAuthorManageController {
 	 * @param authorCode String
 	 * @param authorManageVO AuthorManageVO
 	 * @return String
-	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sec/ram/EgovAuthor.do")
-	public String selectAuthor(@RequestParam("authorCode") String authorCode, @ModelAttribute("authorManageVO") AuthorManageVO authorManageVO, ModelMap model) throws Exception {
+	public String selectAuthor(@RequestParam("authorCode") String authorCode, @ModelAttribute("authorManageVO") AuthorManageVO authorManageVO, ModelMap model) {
 
 		authorManageVO.setAuthorCode(authorCode);
 
