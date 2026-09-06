@@ -114,14 +114,13 @@
 ## Quickstart
 
 ```bash
-# 1) Clone (your fork)
-git clone https://github.com/gogoleelee88/egovframe-portal-site-template.git
+# 1) Clone
+git clone https://github.com/eGovFramework/egovframe-portal-site-template.git
 cd egovframe-portal-site-template
 
 # 2) Build
 mvn clean package
 
 # 3) Run (예: 임베디드 톰캣/와스 환경에 맞게)
-# mvn spring-boot:run  # (spring-boot 사용 시)
-# 또는 IDE에서 서버 실행 후 http://localhost:8080 접속
-
+# 생성된 WAR 를 WAS 에 배포하거나, IDE 에서 서버 실행 후 http://localhost:8080 접속
+```
