@@ -92,8 +92,8 @@
 				  , LAST_UPDUSR_ID) 
 			VALUES ( #{useStplatId}
 				  , #{useStplatNm}			
-				  , #useStplatCn:CLOB#
-				  , #infoProvdAgreCn:CLOB#
+				  , #{useStplatCn}
+				  , #{infoProvdAgreCn}
 				  , sysdate
 				  , #{frstRegisterId}
 				  , sysdate
@@ -105,8 +105,8 @@
 		
 			UPDATE	LETTNSTPLATINFO	SET 
 				   	USE_STPLAT_NM=#{useStplatNm}
-				  ,	USE_STPLAT_CN=#useStplatCn:CLOB#				  
-				  ,	INFO_PROVD_AGRE_CN=#infoProvdAgreCn:CLOB#
+				  ,	USE_STPLAT_CN=#{useStplatCn}				  
+				  ,	INFO_PROVD_AGRE_CN=#{infoProvdAgreCn}
 				  , LAST_UPDT_PNTTM=sysdate
 				  , LAST_UPDUSR_ID=#{lastUpdusrId}
  			WHERE  USE_STPLAT_ID=#{useStplatId}
