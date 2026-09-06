@@ -66,7 +66,7 @@ function fn_egov_updt_qnacnanswer(form, qaId){
 
 	
 		form.qaId.value = qaId;
-		form.action = "<c:url value='/uss/olh/qnm/QnaCnAnswerUpdt.do'/>";
+		form.action = "<c:url value='/uss/olh/qnm/admin/QnaCnAnswerUpdt.do'/>";
 		form.submit();	
 				
 	}
@@ -78,7 +78,7 @@ function fn_egov_updt_qnacnanswer(form, qaId){
  ******************************************************** */
 function fn_egov_inqire_qnaanswerlist() {
 
-	qnaManageVO.action = "<c:url value='/uss/olh/qnm/QnaAnswerListInqire.do'/>";
+	qnaManageVO.action = "<c:url value='/uss/olh/qnm/admin/QnaAnswerListInqire.do'/>";
 	qnaManageVO.submit();
 		
 }

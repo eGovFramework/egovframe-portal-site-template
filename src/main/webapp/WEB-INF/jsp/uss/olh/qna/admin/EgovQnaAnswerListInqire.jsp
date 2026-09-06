@@ -50,7 +50,7 @@ function fn_egov_initl_qnaanswerlist(){
 function fn_egov_select_linkPage(pageNo){
 	
 	document.QnaAnswerListForm.pageIndex.value = pageNo;
-	document.QnaAnswerListForm.action = "<c:url value='/uss/olh/qnm/QnaAnswerListInqire.do'/>";
+	document.QnaAnswerListForm.action = "<c:url value='/uss/olh/qnm/admin/QnaAnswerListInqire.do'/>";
    	document.QnaAnswerListForm.submit();
    	
 }
@@ -82,7 +82,7 @@ function fn_egov_inquire_qnaanswerdetail(qaId) {
 
 	// Q&A ID 셋팅.
 	document.QnaAnswerListForm.qaId.value = qaId;	
-    document.QnaAnswerListForm.action = "<c:url value='/uss/olh/qnm/QnaAnswerDetailInqire.do'/>"; 
+    document.QnaAnswerListForm.action = "<c:url value='/uss/olh/qnm/admin/QnaAnswerDetailInqire.do'/>"; 
   	document.QnaAnswerListForm.submit();	
 	   	   		
 }

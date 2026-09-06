@@ -57,7 +57,7 @@ function fn_egov_initl_qnacn(){
 		
 		if(confirm('<spring:message code="common.regist.msg" />')) {
 			
-			form.action = "<c:url value='/uss/olh/qna/QnaCnRegist.do'/>";
+			form.action = "<c:url value='/uss/olh/qna/admin/QnaCnRegist.do'/>";
 			form.submit();
 		}
 	}

@@ -64,7 +64,7 @@ function fn_egov_delete_faq(faqId){
 	if	(confirm('<spring:message code="common.delete.msg" />')) {
 		// Delete하기 위한 키값(faqId)을 셋팅
 		document.FaqManageForm.faqId.value = faqId;	
-		document.FaqManageForm.action = "<c:url value='/uss/olh/faq/FaqCnDelete.do'/>";
+		document.FaqManageForm.action = "<c:url value='/uss/olh/faq/admin/FaqCnDelete.do'/>";
 		document.FaqManageForm.submit();
 	}
 }

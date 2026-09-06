@@ -57,7 +57,7 @@ function fn_egov_initl_qnacn(){
 			if(confirm('<spring:message code="common.update.msg" />')) {
 				
 				form.qaId.value = qaId;
-				form.action = "<c:url value='/uss/olh/qna/QnaCnUpdt.do'/>";
+				form.action = "<c:url value='/uss/olh/qna/admin/QnaCnUpdt.do'/>";
 				form.submit();
 			}
 		}
