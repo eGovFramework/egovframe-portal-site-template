@@ -351,7 +351,7 @@ public class EgovBBSAttributeManageController {
 	 */
 	@RequestMapping(value = "/cop/bbs/insertBdMstrByTrget.do", method = RequestMethod.POST)
 	public String insertBdMstrByTrget(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO,
-			@ModelAttribute("boardMaster") BoardMaster boardMaster,
+			@Valid @ModelAttribute("boardMaster") BoardMaster boardMaster,
 			BindingResult bindingResult, SessionStatus status,
 			ModelMap model) throws Exception {
 
@@ -475,7 +475,7 @@ public class EgovBBSAttributeManageController {
 	 */
 	@RequestMapping(value = "/cop/bbs/UpdateBBSMasterInfByTrget.do", method = RequestMethod.POST)
 	public String updateBBSMasterInfByTrget(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO,
-		@ModelAttribute("boardMaster") BoardMaster boardMaster,
+		@Valid @ModelAttribute("boardMaster") BoardMaster boardMaster,
 		BindingResult bindingResult, ModelMap model) throws Exception {
 
 		checkAuthority(boardMasterVO); // server-side 권한 확인
