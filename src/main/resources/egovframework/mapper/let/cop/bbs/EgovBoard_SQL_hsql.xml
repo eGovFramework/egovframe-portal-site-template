@@ -373,4 +373,12 @@
 			AND NTT_ID = #{nttId}
  		
  	</update>
+  <select id="countArticleByAtchFileId" parameterType="egovframework.let.cop.bbs.service.BoardVO" resultType="java.lang.Integer">
+			SELECT COUNT(*) FROM LETTNBBS WHERE ATCH_FILE_ID = #{atchFileId} AND USE_AT = 'Y'
+  </select>
+
+  <select id="countArticleByAtchFileIdAndOwner" parameterType="egovframework.let.cop.bbs.service.BoardVO" resultType="java.lang.Integer">
+			SELECT COUNT(*) FROM LETTNBBS WHERE ATCH_FILE_ID = #{atchFileId} AND FRST_REGISTER_ID = #{frstRegisterId} AND USE_AT = 'Y'
+  </select>
+
 </mapper>
