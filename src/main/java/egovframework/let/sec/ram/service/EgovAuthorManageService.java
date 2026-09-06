@@ -46,9 +46,8 @@ public interface EgovAuthorManageService {
 	/**
 	 * 개별사용자에게 할당된 권한 조회
 	 * @param authorManageVO AuthorManageVO
-	 * @exception Exception
 	 */
-	public AuthorManageVO selectAuthor(AuthorManageVO authorManageVO) throws Exception;
+	public AuthorManageVO selectAuthor(AuthorManageVO authorManageVO);
 
 	/**
 	 * 개별사용자에게 할당된 권한리스트 조회

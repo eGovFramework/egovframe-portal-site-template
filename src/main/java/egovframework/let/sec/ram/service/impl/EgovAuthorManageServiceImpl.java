@@ -3,6 +3,7 @@ package egovframework.let.sec.ram.service.impl;
 import java.util.List;
 
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.egovframe.rte.fdl.cmmn.exception.BaseRuntimeException;
 import org.springframework.stereotype.Service;
 
 import egovframework.let.sec.ram.service.AuthorManage;
@@ -75,12 +76,12 @@ public class EgovAuthorManageServiceImpl extends EgovAbstractServiceImpl impleme
 	 * 권한을 조회한다.
 	 * @param authorManageVO AuthorManageVO
 	 * @return AuthorManageVO
-	 * @exception Exception
 	 */
-    public AuthorManageVO selectAuthor(AuthorManageVO authorManageVO) throws Exception {
+    public AuthorManageVO selectAuthor(AuthorManageVO authorManageVO) {
     	AuthorManageVO resultVO = authorManageDAO.selectAuthor(authorManageVO);
-        if (resultVO == null)
-            throw processException("info.nodata.msg");
+        if (resultVO == null) {
+            throw new BaseRuntimeException(processException("info.nodata.msg"));
+        }
         return resultVO;
     }
 
