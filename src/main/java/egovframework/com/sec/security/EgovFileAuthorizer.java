@@ -29,7 +29,7 @@ public class EgovFileAuthorizer {
 		return EgovUserDetailsHelper.isAuthenticated();
 	}
 
-	public boolean canAccess(String atchFileId) throws Exception {
+	public boolean canAccess(String atchFileId) {
 		if (!isAuthenticated()) {
 			return false;
 		}

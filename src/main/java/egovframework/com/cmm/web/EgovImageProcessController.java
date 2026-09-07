@@ -5,11 +5,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Map;
-
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import org.egovframe.rte.fdl.cmmn.exception.BaseRuntimeException;
 import org.egovframe.rte.fdl.crypto.EgovCryptoService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.slf4j.Logger;
@@ -82,14 +82,17 @@ public class EgovImageProcessController extends HttpServlet {
 	 * @param sessionVO
 	 * @param model
 	 * @param response
-	 * @throws Exception
 	 */
 	@RequestMapping("/cmm/fms/getImage.do")
-	public void getImageInf(SessionVO sessionVO, ModelMap model, @RequestParam Map<String, Object> commandMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void getImageInf(SessionVO sessionVO, ModelMap model, @RequestParam Map<String, Object> commandMap, HttpServletRequest request, HttpServletResponse response) {
 
 		// 사용자권한 처리
 		if (!Boolean.TRUE.equals(EgovUserDetailsHelper.isAuthenticated())) {
-			response.sendError(HttpServletResponse.SC_FORBIDDEN);
+			try {
+				response.sendError(HttpServletResponse.SC_FORBIDDEN);
+			} catch (IOException e) {
+				throw new BaseRuntimeException(e);
+			}
 			return;
 		}
 

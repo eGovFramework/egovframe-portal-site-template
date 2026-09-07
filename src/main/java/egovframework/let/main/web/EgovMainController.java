@@ -4,8 +4,6 @@ import java.util.Map;
 
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -45,8 +43,6 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller@SessionAttributes(types = ComDefaultVO.class)
 public class EgovMainController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(EgovMainController.class);
-	
 	/**
 	 * EgovBBSManageService
 	 */
