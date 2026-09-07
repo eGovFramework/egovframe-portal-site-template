@@ -11,6 +11,7 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 		<context:exclude-filter type="assignable" expression="egovframework.com.cmm.EgovCsrfControllerAdvice"/>
 		<context:exclude-filter type="assignable" expression="egovframework.com.cmm.EgovCsrfSecurityConfig"/>
+		<context:exclude-filter type="regex" expression="egovframework\.test\..*"/>
 	</context:component-scan>
 
 	<!-- 메시지소스빈 설정 -->

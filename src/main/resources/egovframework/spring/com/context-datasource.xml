@@ -70,7 +70,7 @@
     </bean>
 
     <!-- HSQL 인메모리 기동 시 스키마/기초데이터 자동 적재. 기본 비활성이라 다른 DB에 영향 없음. -->
-    <jdbc:initialize-database data-source="dataSource-hsql" enabled="${Globals.Hsql.AutoInit}" ignore-failures="DROPS">
+    <jdbc:initialize-database data-source="dataSource-hsql" enabled="${Globals.Hsql.AutoInit}" ignore-failures="ALL">
         <jdbc:script location="classpath:/db/hsql/all_pst_ddl_hsql.sql" separator=";"/>
         <jdbc:script location="classpath:/db/hsql/all_pst_data_hsql.sql" separator=";"/>
     </jdbc:initialize-database>

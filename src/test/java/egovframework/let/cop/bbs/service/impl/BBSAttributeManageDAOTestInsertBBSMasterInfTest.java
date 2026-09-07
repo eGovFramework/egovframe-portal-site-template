@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 
-@ContextConfiguration(classes = { BBSAttributeManageDAOTestInsertBBSMasterInfTest.class, EgovTestAbstractSpring.class })
+@ContextConfiguration(classes = { BBSAttributeManageDAOTestInsertBBSMasterInfTest.class })
 
 @Configuration
 

@@ -34,8 +34,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 
-@ContextConfiguration(classes = { EgovBBSAttributeManageServiceImplTestInsertBBSMastetInfTest.class,
-		EgovTestAbstractSpring.class })
+@ContextConfiguration(classes = { EgovBBSAttributeManageServiceImplTestInsertBBSMastetInfTest.class })
 
 @Configuration
 
