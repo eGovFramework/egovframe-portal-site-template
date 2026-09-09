@@ -13,7 +13,6 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -24,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-@NoArgsConstructor
 class EgovLoginControllerTestSelenium {
 
 	/**
@@ -36,7 +34,7 @@ class EgovLoginControllerTestSelenium {
 	 * 설정
 	 */
 	@BeforeEach
-	public void setup() {
+	void setup() {
 		try {
 			driver = new ChromeDriver();
 //			driver = new EdgeDriver();
@@ -58,7 +56,11 @@ class EgovLoginControllerTestSelenium {
 		if (log.isDebugEnabled()) {
 			log.debug("로그인 화면 이동");
 		}
-		driver.get("http://localhost:8080/pst_webapp/uat/uia/egovLoginUsr.do");
+		try {
+			driver.get("http://localhost:8080/egovframe-template-portal/uat/uia/egovLoginUsr.do");
+		} catch (WebDriverException e) {
+			Assumptions.abort("WebDriver를 실행할 수 없어 테스트를 건너뜁니다.");
+		}
 
 		final JavascriptExecutor executor = (JavascriptExecutor) driver;
 

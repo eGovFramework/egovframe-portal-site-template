@@ -58,12 +58,10 @@ public class EgovBBSUseInfoManageController {
 	 * @param status
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequireAdmin
 	@RequestMapping(value = "/cop/com/deleteBBSUseInf.do", method = RequestMethod.POST)
-	public String deleteBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @ModelAttribute("bdUseInf") BoardUseInf bdUseInf, SessionStatus status, ModelMap model)
-			throws Exception {
+	public String deleteBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @ModelAttribute("bdUseInf") BoardUseInf bdUseInf, SessionStatus status, ModelMap model) {
 
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
@@ -81,11 +79,10 @@ public class EgovBBSUseInfoManageController {
 	 * @param sessionVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequireAdmin
 	@RequestMapping("/cop/com/addBBSUseInf.do")
-	public String addBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) throws Exception {
+	public String addBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) {
 		return "cop/com/EgovBoardUseInfRegist";
 	}
 
@@ -98,12 +95,11 @@ public class EgovBBSUseInfoManageController {
 	 * @param status
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequireAdmin
 	@RequestMapping(value = "/cop/com/insertBBSUseInf.do", method = RequestMethod.POST)
 	public String insertBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @Valid @ModelAttribute("boardUseInf") BoardUseInf boardUseInf, BindingResult bindingResult,
-			@RequestParam Map<String, Object> commandMap, ModelMap model) throws Exception {
+			@RequestParam Map<String, Object> commandMap, ModelMap model) {
 
 		if (bindingResult.hasErrors()) {
 			return "cop/com/EgovBoardUseInfRegist";
@@ -151,11 +147,10 @@ public class EgovBBSUseInfoManageController {
 	 * @param sessionVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequireAdmin
 	@RequestMapping("/cop/com/selectBBSUseInfs.do")
-	public String selectBBSUseInfs(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) throws Exception {
+	public String selectBBSUseInfs(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) {
 
 		bdUseVO.setPageUnit(propertyService.getInt("pageUnit"));
 		bdUseVO.setPageSize(propertyService.getInt("pageSize"));
@@ -191,12 +186,11 @@ public class EgovBBSUseInfoManageController {
 	 * @param status
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequireAdmin
 	@RequestMapping(value = "/cop/com/updateBBSUseInf.do", method = RequestMethod.POST)
 	public String updateBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @Valid @ModelAttribute("boardUseInf") BoardUseInf boardUseInf, BindingResult bindingResult, HttpServletRequest request,
-			ModelMap model) throws Exception {
+			ModelMap model) {
 
 		if (bindingResult.hasErrors()) {
 			return "cop/com/EgovBoardUseInfInqire";
@@ -222,11 +216,10 @@ public class EgovBBSUseInfoManageController {
 	 * @param sessionVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequireAdmin
 	@RequestMapping("/cop/com/selectBBSUseInf.do")
-	public String selectBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) throws Exception {
+	public String selectBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) {
 		BoardUseInfVO vo = bbsUseService.selectBBSUseInf(bdUseVO);
 
 		// 시스템 사용 게시판의 경우 URL 표시
@@ -248,11 +241,10 @@ public class EgovBBSUseInfoManageController {
 	 * @param bdUseVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequireAdmin
 	@RequestMapping("/cop/com/selectBBSUseInfsByTrget.do")
-	public String selectBBSUseInfsByTrget(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) throws Exception {
+	public String selectBBSUseInfsByTrget(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) {
 
 		bdUseVO.setPageUnit(propertyService.getInt("pageUnit"));
 		bdUseVO.setPageSize(propertyService.getInt("pageSize"));
@@ -289,12 +281,11 @@ public class EgovBBSUseInfoManageController {
 	 * @param status
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequireAdmin
 	@RequestMapping(value = "/cop/com/updateBBSUseInfByTrget.do", method = RequestMethod.POST)
 	public String updateBBSUseInfByTrget(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @ModelAttribute("boardUseInf") BoardUseInf boardUseInf,
-			@RequestParam Map<String, Object> commandMap, SessionStatus status, ModelMap model) throws Exception {
+			@RequestParam Map<String, Object> commandMap, SessionStatus status, ModelMap model) {
 
 		String param_trgetId = (String) commandMap.get("param_trgetId");
 
@@ -316,12 +307,11 @@ public class EgovBBSUseInfoManageController {
 	 * @param status
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequireAdmin
 	@RequestMapping(value = "/cop/com/insertBBSUseInfByTrget.do", method = RequestMethod.POST)
 	public String insertBBSUseInfByTrget(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @ModelAttribute("boardUseInf") BoardUseInf boardUseInf,
-			@RequestParam Map<String, Object> commandMap, SessionStatus status, ModelMap model) throws Exception {
+			@RequestParam Map<String, Object> commandMap, SessionStatus status, ModelMap model) {
 
 		String paramTrgetId = (String) commandMap.get("param_trgetId");
 		String bbsId = (String) commandMap.get("bbsId");

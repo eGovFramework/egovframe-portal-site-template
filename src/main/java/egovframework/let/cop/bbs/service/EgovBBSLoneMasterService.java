@@ -26,49 +26,39 @@ public interface EgovBBSLoneMasterService {
 	 * @param BoardMaster
 	 * 
 	 * @param boardMaster
-	 * @exception Exception Exception
 	 */
-	public void deleteMaster(BoardMaster boardMaster)
-	  throws Exception;
+	public void deleteMaster(BoardMaster boardMaster);
 
 	/**
 	 * 신규 게시판 속성정보를 생성한다.
 	 * @param BoardMaster
 	 * 
 	 * @param boardMaster
-	 * @exception Exception Exception
 	 */
-	public String insertMaster(BoardMaster boardMaster)
-	  throws Exception;
+	public String insertMaster(BoardMaster boardMaster);
 
 	/**
 	 * 게시판 속성정보 한 건을 상세조회한다.
 	 * @param BoardMasterVO
 	 * 
 	 * @param searchVO
-	 * @exception Exception Exception
 	 */
-	public BoardMasterVO selectMaster(BoardMaster searchVO)
-	  throws Exception;
+	public BoardMasterVO selectMaster(BoardMaster searchVO);
 
 	/**
 	 * 게시판 속성 정보의 목록을 조회 한다.
 	 * @param BoardMasterVO
 	 * 
 	 * @param searchVO
-	 * @exception Exception Exception
 	 */
-	public Map<String, Object> selectMasterList(BoardMasterVO searchVO)
-	  throws Exception;
+	public Map<String, Object> selectMasterList(BoardMasterVO searchVO);
 
 	/**
 	 * 게시판 속성정보를 수정한다.
 	 * @param BoardMaster
 	 * 
 	 * @param boardMaster
-	 * @exception Exception Exception
 	 */
-	public void updateMaster(BoardMaster boardMaster)
-	  throws Exception;
+	public void updateMaster(BoardMaster boardMaster);
 
 }

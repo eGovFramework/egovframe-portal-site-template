@@ -27,20 +27,16 @@ public interface EgovBBSAttributeManageService {
 	 * @param BoardMaster
 	 * 
 	 * @param boardMaster
-	 * @exception Exception Exception
 	 */
-	public void deleteBBSMasterInf(BoardMaster boardMaster)
-	  throws Exception;
+	public void deleteBBSMasterInf(BoardMaster boardMaster);
 
 	/**
 	 * 신규 게시판 속성정보를 생성한다.
 	 * @param BoardMaster
 	 * 
 	 * @param boardMaster
-	 * @exception Exception Exception
 	 */
-	public String insertBBSMastetInf(BoardMaster boardMaster)
-	  throws Exception;
+	public String insertBBSMastetInf(BoardMaster boardMaster);
 
 	/**
 	 * 유효한 게시판 마스터 정보를 호출한다.
@@ -48,79 +44,63 @@ public interface EgovBBSAttributeManageService {
 	 * @return
 	 * 
 	 * @param vo
-	 * @exception Exception Exception
 	 */
-	public List<BoardMasterVO> selectAllBBSMasteInf(BoardMasterVO vo)
-	  throws Exception;
+	public List<BoardMasterVO> selectAllBBSMasteInf(BoardMasterVO vo);
 
 	/**
 	 * 커뮤니티, 동호회에서 사용중인 게시판 속성 정보의 목록을 전체조회 한다.
 	 * @return
 	 * 
 	 * @param vo
-	 * @exception Exception Exception
 	 */
-	public List<BoardMasterVO> selectAllBdMstrByTrget(BoardMasterVO vo)
-	  throws Exception;
+	public List<BoardMasterVO> selectAllBdMstrByTrget(BoardMasterVO vo);
 
 	/**
 	 * 게시판 속성정보 한 건을 상세조회한다.
 	 * @param BoardMasterVO
 	 * 
 	 * @param searchVO
-	 * @exception Exception Exception
 	 */
-	public BoardMasterVO selectBBSMasterInf(BoardMaster searchVO)
-	  throws Exception;
+	public BoardMasterVO selectBBSMasterInf(BoardMaster searchVO);
 
 	/**
 	 * 게시판 속성 정보의 목록을 조회 한다.
 	 * @param BoardMasterVO
 	 * 
 	 * @param searchVO
-	 * @exception Exception Exception
 	 */
-	public Map<String, Object> selectBBSMasterInfs(BoardMasterVO searchVO)
-	  throws Exception;
+	public Map<String, Object> selectBBSMasterInfs(BoardMasterVO searchVO);
 
 	/**
 	 * 사용중인 게시판 속성 정보의 목록을 조회 한다.
 	 * @param BoardMasterVO
 	 * 
 	 * @param vo
-	 * @exception Exception Exception
 	 */
-	public Map<String, Object> selectBdMstrListByTrget(BoardMasterVO vo)
-	  throws Exception;
+	public Map<String, Object> selectBdMstrListByTrget(BoardMasterVO vo);
 
 	/**
 	 * 사용중이지 않은 게시판 속성 정보의 목록을 조회 한다.
 	 * @return
 	 * 
 	 * @param vo
-	 * @exception Exception Exception
 	 */
-	public Map<String, Object> selectNotUsedBdMstrList(BoardMasterVO vo)
-	  throws Exception;
+	public Map<String, Object> selectNotUsedBdMstrList(BoardMasterVO vo);
 
 	/**
 	 * 게시판 속성정보를 수정한다.
 	 * @param BoardMaster
 	 * 
 	 * @param boardMaster
-	 * @exception Exception Exception
 	 */
-	public void updateBBSMasterInf(BoardMaster boardMaster)
-	  throws Exception;
+	public void updateBBSMasterInf(BoardMaster boardMaster);
 
 	/**
 	 * 템플릿의 유효여부를 점검한다.
 	 * @param BoardMasterVO
 	 * 
 	 * @param searchVO
-	 * @exception Exception Exception
 	 */
-	public void validateTemplate(BoardMasterVO searchVO)
-	  throws Exception;
+	public void validateTemplate(BoardMasterVO searchVO);
 
 }
