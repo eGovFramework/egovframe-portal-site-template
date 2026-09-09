@@ -6,7 +6,6 @@
 	<groupId>egovframework</groupId>
 	<artifactId>egovframe-template-portal</artifactId>
 	<packaging>war</packaging>
-	<version>5.0.0</version>
 	<name>egovframe-template-portal</name>
 	<url>http://www.egovframe.go.kr</url>
 
@@ -21,7 +20,7 @@
 	<parent>
 		<groupId>org.egovframe.web</groupId>
 		<artifactId>egovframe-web-config-parent</artifactId>
-		<version>5.0.0</version>
+		<version>5.0.1</version>
 	</parent>
 
 	<repositories>
@@ -51,13 +50,8 @@
 		<java.version>17</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<log4j2.version>2.25.3</log4j2.version>
-		<slf4j.version>2.0.17</slf4j.version>
-		<commons-beanutils.version>1.11.0</commons-beanutils.version>
 		<protobuf.java.version>3.25.5</protobuf.java.version>
-		<parsson.version>1.1.7</parsson.version>
 		<hikaricp.version>6.3.3</hikaricp.version>
-		<jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
 	</properties>
 
 	<dependencies>
@@ -81,7 +75,6 @@
 		<dependency>
 			<groupId>org.egovframe.rte</groupId>
 			<artifactId>egovframe-rte-fdl-security</artifactId>
-			<version>5.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.egovframe.rte</groupId>
@@ -130,27 +123,22 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-			<version>${log4j2.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j2-impl</artifactId>
-			<version>${log4j2.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>log4j-over-slf4j</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.log4jdbc</groupId>
@@ -167,7 +155,6 @@
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
-			<version>${commons-beanutils.version}</version>
 		</dependency>
 
 		<dependency>
@@ -193,7 +180,6 @@
 		<dependency>
 			<groupId>org.eclipse.parsson</groupId>
 			<artifactId>parsson</artifactId>
-			<version>${parsson.version}</version>
 		</dependency>
 
 		<dependency>
@@ -258,7 +244,6 @@
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
-			<version>2.7.4</version>
 		</dependency>
 
 		<dependency>
