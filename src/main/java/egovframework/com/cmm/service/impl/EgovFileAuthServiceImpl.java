@@ -15,7 +15,7 @@ public class EgovFileAuthServiceImpl {
 	@Resource(name = "egovFileAuth")
 	private EgovFileAuthorizer fileAuthorizer;
 
-	public void assertFileAccess(String atchFileId) throws Exception {
+	public void assertFileAccess(String atchFileId) {
 		if (!fileAuthorizer.canAccess(atchFileId)) {
 			throw new AccessDeniedException("파일 접근 권한이 없습니다.");
 		}

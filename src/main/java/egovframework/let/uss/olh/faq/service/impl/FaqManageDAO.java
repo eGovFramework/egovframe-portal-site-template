@@ -33,7 +33,6 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * FAQ 글 목록에 대한 상세내용을 조회한다.
 	 * @param vo
 	 * @return 조회한 글
-	 * @exception Exception
 	 */
     public FaqManageVO selectFaqListDetail(FaqManageVO vo) {
 
@@ -44,7 +43,6 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	/**
 	 * FAQ 조회수를 수정한다.
 	 * @param vo
-	 * @exception Exception
 	 */
     public void updateFaqInqireCo(FaqManageVO vo) {
 
@@ -56,7 +54,6 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	 * FAQ 글 목록을 조회한다.
 	 * @param searchVO
 	 * @return 글 목록
-	 * @exception Exception
 	 */
 	public List<?> selectFaqList(FaqManageDefaultVO searchVO) {
 
@@ -78,7 +75,6 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	/**
 	 * FAQ 글을 등록한다.
 	 * @param vo
-	 * @exception Exception
 	 */
     public void insertFaqCn(FaqManageVO vo) {
 
@@ -89,7 +85,6 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	/**
 	 * FAQ 글을 수정한다.
 	 * @param vo
-	 * @exception Exception
 	 */
     public void updateFaqCn(FaqManageVO vo) {
 
@@ -100,7 +95,6 @@ public class FaqManageDAO extends EgovAbstractMapper {
 	/**
 	 * FAQ 글을 삭제한다.
 	 * @param vo
-	 * @exception Exception
 	 */
     public void deleteFaqCn(FaqManageVO vo) {
 
@@ -108,7 +102,7 @@ public class FaqManageDAO extends EgovAbstractMapper {
 
     }
 
-    public int countFaqByAtchFileId(String atchFileId) throws Exception {
+    public int countFaqByAtchFileId(String atchFileId) {
     	FaqManageVO vo = new FaqManageVO();
     	vo.setAtchFileId(atchFileId);
     	return (Integer) selectOne("FaqManageDAO.countFaqByAtchFileId", vo);

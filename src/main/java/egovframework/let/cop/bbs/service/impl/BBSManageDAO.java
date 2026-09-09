@@ -207,14 +207,14 @@ public class BBSManageDAO extends EgovAbstractMapper {
     	return (String)selectOne("BBSManageDAO.getPasswordInf", board);
     }
 
-    public int countArticleByAtchFileIdAndOwner(String atchFileId, String uniqId) throws Exception {
+    public int countArticleByAtchFileIdAndOwner(String atchFileId, String uniqId) {
     	BoardVO vo = new BoardVO();
     	vo.setAtchFileId(atchFileId);
     	vo.setFrstRegisterId(uniqId);
     	return (Integer) selectOne("BBSManageDAO.countArticleByAtchFileIdAndOwner", vo);
     }
 
-    public int countArticleByAtchFileId(String atchFileId) throws Exception {
+    public int countArticleByAtchFileId(String atchFileId) {
     	BoardVO vo = new BoardVO();
     	vo.setAtchFileId(atchFileId);
     	return (Integer) selectOne("BBSManageDAO.countArticleByAtchFileId", vo);
