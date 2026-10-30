@@ -3,6 +3,7 @@ package egovframework.let.uat.uia.web;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,14 +17,17 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * [로그인] 셀레늄 단위 테스트
- * 
+ * [로그인] 셀레늄 통합 테스트 (failsafe {@code *IT}).
+ *
+ * <p>실행 중인 서버와 ChromeDriver가 필요하므로 {@code mvn test}에서는 실행되지 않고
+ * {@code mvn verify}에서만 실행된다. 환경이 없으면 실패가 아니라 건너뛴다.</p>
+ *
  * @author 이백행
  * @since 2024-08-31
  *
  */
 @Slf4j
-class EgovLoginControllerTestSelenium {
+class EgovLoginControllerSeleniumIT {
 
 	/**
 	 * 웹 드라이버
@@ -88,6 +92,22 @@ class EgovLoginControllerTestSelenium {
 				.findElement(By.cssSelector("body > div > div.header > div > div.top_menu > span.t > span"));
 
 		assertEquals("관리자님", spanWebElement.getText(), "로그인 실패");
+	}
+
+	/**
+	 * 정리
+	 */
+	@AfterEach
+	void tearDown() {
+		if (driver != null) {
+			try {
+				driver.quit();
+			} catch (WebDriverException e) {
+				log.warn("WebDriver 종료 중 오류가 발생했습니다.", e);
+			} finally {
+				driver = null;
+			}
+		}
 	}
 
 	private void sleep() {
