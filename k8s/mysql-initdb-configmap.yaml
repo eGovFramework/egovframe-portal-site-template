@@ -7,6 +7,7 @@ metadata:
     app.kubernetes.io/part-of: egovframe-template
 data:
   01-ddl.sql: |
+    SET NAMES utf8mb4;
     CREATE TABLE IF NOT EXISTS IDS (
       TABLE_NAME varchar(20) NOT NULL,
       NEXT_ID decimal(30,0) NOT NULL DEFAULT '0',
@@ -628,6 +629,7 @@ data:
     ;
 
   02-data.sql: |
+    SET NAMES utf8mb4;
     #아래순서로 테이블생성 및 기초데이터 입력 
 
     # ID Generation
