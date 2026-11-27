@@ -45,10 +45,9 @@ public class EgovFileUploadUtil extends EgovFormBasedFileUtil {
 	public static List<EgovFormBasedFileVo> uploadFiles(HttpServletRequest request, String where, long maxFileSize) {
 		List<EgovFormBasedFileVo> list = new ArrayList<EgovFormBasedFileVo>();
 
-		//MultipartHttpServletRequest mptRequest = (MultipartHttpServletRequest) request;
 		MultipartHttpServletRequest mptRequest = WebUtils.getNativeRequest(request, MultipartHttpServletRequest.class);
 
-		if (mptRequest != null) {//2022.01 Possible null pointer dereference due to return value of called method 조치
+		if (mptRequest != null) {
 			Iterator<?> fileIter = mptRequest.getFileNames();
 
 			while (fileIter.hasNext()) {
@@ -69,7 +68,7 @@ public class EgovFileUploadUtil extends EgovFormBasedFileUtil {
 					vo.setSize(mFile.getSize());
 
 					if (tmp.lastIndexOf(".") >= 0) {
-						vo.setPhysicalName(vo.getPhysicalName()); // 2012.11 KISA 보안조치
+						vo.setPhysicalName(vo.getPhysicalName());
 					}
 
 					if (mFile.getSize() > 0) {
@@ -142,7 +141,7 @@ public class EgovFileUploadUtil extends EgovFormBasedFileUtil {
 					vo.setSize(mFile.getSize());
 
 					if (tmp.lastIndexOf(".") >= 0) {
-						vo.setPhysicalName(vo.getPhysicalName()); // 2012.11 KISA 보안조치
+						vo.setPhysicalName(vo.getPhysicalName());
 					}
 
 					if (mFile.getSize() > 0) {

@@ -40,11 +40,8 @@ class EgovLoginControllerSeleniumIT {
 	@BeforeEach
 	void setup() {
 		try {
+			// Edge/Firefox/Safari: EdgeDriver, FirefoxDriver, SafariDriver
 			driver = new ChromeDriver();
-//			driver = new EdgeDriver();
-//			driver = new FirefoxDriver();
-//			driver = new InternetExplorerDriver();
-//			driver = new SafariDriver();
 		} catch (WebDriverException e) {
 			Assumptions.abort("WebDriver를 실행할 수 없어 테스트를 건너뜁니다.");
 		}
@@ -61,7 +58,7 @@ class EgovLoginControllerSeleniumIT {
 			log.debug("로그인 화면 이동");
 		}
 		try {
-			driver.get("http://localhost:8080/egovframe-template-portal/uat/uia/egovLoginUsr.do");
+			driver.get("http://localhost:8080/uat/uia/egovLoginUsr.do");
 		} catch (WebDriverException e) {
 			Assumptions.abort("WebDriver를 실행할 수 없어 테스트를 건너뜁니다.");
 		}

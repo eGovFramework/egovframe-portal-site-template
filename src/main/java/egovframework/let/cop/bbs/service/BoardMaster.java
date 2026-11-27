@@ -100,9 +100,7 @@ public class BoardMaster implements Serializable {
     /** 템플릿 명 */
     private String tmplatNm = "";
 
-    //---------------------------------
     // 2009.06.26 : 2단계 기능 추가
-    //---------------------------------
     /** 추가 option (댓글-comment, 만족도조사-stsfdg) */
     private String option = "";
 

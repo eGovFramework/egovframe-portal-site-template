@@ -207,11 +207,16 @@ function fncBannerDelete() {
 								<!-- 목록/저장버튼  시작-->
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
+                                        <%-- 저장/삭제 버튼은 등록자 본인에게만 노출 --%>
+                                        <c:if test="${ownerAt == 'Y'}">
                                         <a href="<c:url value='/uss/ion/bnr/removeBanner.do'/>?bannerId=<c:out value='${bannerVO.bannerId}'/>" class="btn btn_skyblue_h46 w_100" onclick="fncBannerDelete(); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
+                                        </c:if>
                                     </div>
 
                                     <div class="right_col btn1">
+                                        <c:if test="${ownerAt == 'Y'}">
                                         <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fncBannerUpdate(); return false;"><spring:message code="button.save" /></a><!-- 저장 -->
+                                        </c:if>
                                         <a href="<c:url value='/uss/ion/bnr/selectBannerList.do'/>?pageIndex=<c:out value='${bannerVO.pageIndex}'/>&amp;searchKeyword=<c:out value="${bannerVO.searchKeyword}"/>&amp;searchCondition=1" class="btn btn_blue_46 w_100" onclick="fncSelectBannerList(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
                                     </div>
                                 </div>

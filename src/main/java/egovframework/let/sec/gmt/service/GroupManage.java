@@ -48,6 +48,10 @@ public class GroupManage extends ComDefaultVO {
 	 * 그룹설명
 	 */
 	private String groupDc;
+	/**
+	 * 최초등록자ID
+	 */
+	private String frstRegisterId;
 	
 	/**
 	 * groupManage attribute 를 리턴한다.
@@ -118,5 +122,20 @@ public class GroupManage extends ComDefaultVO {
 	 */
 	public void setGroupDc(String groupDc) {
 		this.groupDc = groupDc;
+	}
+
+	/**
+	 * frstRegisterId attribute 를 리턴한다.
+	 * @return String
+	 */
+	public String getFrstRegisterId() {
+		return frstRegisterId;
+	}
+	/**
+	 * frstRegisterId attribute 값을 설정한다.
+	 * @param frstRegisterId String
+	 */
+	public void setFrstRegisterId(String frstRegisterId) {
+		this.frstRegisterId = frstRegisterId;
 	}
 }

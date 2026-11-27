@@ -245,7 +245,7 @@ function fn_egov_updt_qnacnanswer(qaId){
                                     </div>
 
                                     <div class="right_col btn1">
-                                        <%-- 26.08.20 조치 : 답변 작성은 관리자 기능이므로 관리자에게만 노출한다. --%>
+                                        <%-- 답변 작성은 관리자에게만 노출 --%>
                                         <c:if test="${adminAt == 'Y'}">
                                         <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fn_egov_updt_qnacnanswer('<c:out value="${egovc:encrypt(result.qaId)}"/>'); return false;">답변</a><!-- 답변 -->
                                         </c:if>

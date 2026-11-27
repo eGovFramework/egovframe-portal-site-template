@@ -4,16 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
     
-    <!-- 환경설정 기본정보를 globals.properties 에서 참조하도록 propertyConfigurer 설정  -->
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:/egovframework/egovProps/globals.properties</value>
-            </list>
-        </property>
-    </bean>
-    
-    <!-- datasource 설정(propertyConfigurer 활용) -->
+    <!-- datasource 설정 : ${Globals.*} 값은 context-properties.xml 의 propertyConfigurer 에서 해석 -->
     <alias name="dataSource-${Globals.DbType}" alias="egov.dataSource" />
     
     <!-- mysql -->
@@ -61,18 +52,46 @@
         <property name="maximumPoolSize" value="10"/>
     </bean>
 
-    <!-- HSQL (인메모리) : 별도 DB 설치 없이 기동/테스트용. Globals.DbType=hsql 로 전환. MySQL 구문 호환(sql.syntax_mys=true). -->
-    <bean id="dataSource-hsql" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
-        <property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
-        <property name="jdbcUrl" value="jdbc:hsqldb:mem:ebt;sql.syntax_mys=true" />
-        <property name="username" value="sa"/>
-        <property name="password" value=""/>
+    <!-- PostgreSQL -->
+    <bean id="dataSource-postgres" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <property name="driverClassName" value="${Globals.DriverClassName}"/>
+        <property name="jdbcUrl" value="${Globals.Url}" />
+        <property name="username" value="${Globals.UserName}"/>
+        <property name="password" value="${Globals.Password}"/>
+        <property name="maximumPoolSize" value="10"/>
     </bean>
 
-    <!-- HSQL 인메모리 기동 시 스키마/기초데이터 자동 적재. 기본 비활성이라 다른 DB에 영향 없음. -->
-    <jdbc:initialize-database data-source="dataSource-hsql" enabled="${Globals.Hsql.AutoInit}" ignore-failures="ALL">
-        <jdbc:script location="classpath:/db/hsql/all_pst_ddl_hsql.sql" separator=";"/>
-        <jdbc:script location="classpath:/db/hsql/all_pst_data_hsql.sql" separator=";"/>
+    <!-- MariaDB -->
+    <bean id="dataSource-maria" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <property name="driverClassName" value="${Globals.DriverClassName}"/>
+        <property name="jdbcUrl" value="${Globals.Url}" />
+        <property name="username" value="${Globals.UserName}"/>
+        <property name="password" value="${Globals.Password}"/>
+        <property name="maximumPoolSize" value="10"/>
+    </bean>
+
+    <!-- Goldilocks -->
+    <bean id="dataSource-goldilocks" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <property name="driverClassName" value="${Globals.DriverClassName}"/>
+        <property name="jdbcUrl" value="${Globals.Url}" />
+        <property name="username" value="${Globals.UserName}"/>
+        <property name="password" value="${Globals.Password}"/>
+        <property name="maximumPoolSize" value="10"/>
+    </bean>
+
+    <!-- HSQL (인메모리, MySQL 호환 모드) -->
+    <bean id="dataSource-hsql" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.hsqldb.jdbc.JDBCDriver"/>
+        <property name="jdbcUrl" value="${Globals.Hsql.Url}" />
+        <property name="username" value="${Globals.Hsql.UserName}"/>
+        <property name="password" value="${Globals.Hsql.Password}"/>
+        <property name="maximumPoolSize" value="10"/>
+    </bean>
+
+    <!-- HSQL 스키마·기초데이터 자동 적재 (Globals.Hsql.AutoInit, DATABASE/hsql 을 pom.xml 에서 classpath:/db/hsql 로 패키징) -->
+    <jdbc:initialize-database data-source="dataSource-hsql" enabled="${Globals.Hsql.AutoInit}" ignore-failures="DROPS">
+        <jdbc:script location="classpath:/db/hsql/all_pst_ddl_hsql.sql" encoding="UTF-8" separator=";"/>
+        <jdbc:script location="classpath:/db/hsql/all_pst_data_hsql.sql" encoding="UTF-8" separator=";"/>
     </jdbc:initialize-database>
     
 </beans>

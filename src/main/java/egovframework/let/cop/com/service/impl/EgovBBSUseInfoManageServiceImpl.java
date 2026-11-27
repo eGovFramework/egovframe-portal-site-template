@@ -104,7 +104,6 @@ public class EgovBBSUseInfoManageServiceImpl extends EgovAbstractServiceImpl imp
 	    bdUseInf = (BoardUseInf)iter.next();
 	    
 	    bdUseInf.setLastUpdusrId(bdUseVO.getLastUpdusrId());
-	    //bdUseInf.setTrgetId(bdUseVO.getClbId());	// 사용자 ID를 넘겨야 함..
 	    bdUseInf.setTrgetId(bdUseVO.getTrgetId());
 	    
 	    bbsUseDAO.deleteBBSUseInf(bdUseInf);
@@ -126,7 +125,6 @@ public class EgovBBSUseInfoManageServiceImpl extends EgovAbstractServiceImpl imp
 	    bdUseInf = (BoardUseInf)iter.next();
 	    
 	    bdUseInf.setLastUpdusrId(bdUseVO.getLastUpdusrId());
-	    //bdUseInf.setTrgetId(bdUseVO.getCmmntyId());	// 사용자 ID를 넘겨야 함..
 	    bdUseInf.setTrgetId(bdUseVO.getTrgetId());
 	    
 	    bbsUseDAO.deleteBBSUseInf(bdUseInf);

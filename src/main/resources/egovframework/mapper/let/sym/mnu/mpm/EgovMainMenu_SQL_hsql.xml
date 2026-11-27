@@ -7,15 +7,15 @@
 	<select id="selectMainMenuHead" parameterType="egovframework.let.sym.mnu.mpm.service.MenuManageVO" resultType="egovMap">
 		 
             SELECT
-			      B.MENU_NO AS menuNo
-				, B.MENU_ORDR AS menuOrdr
-				, B.MENU_NM AS menuNm
-				, B.UPPER_MENU_NO AS upperMenuId
-				, B.MENU_DC AS menuDc
-				, B.RELATE_IMAGE_PATH AS relateImagePath
-				, B.RELATE_IMAGE_NM AS relateImageNm
-				, B.PROGRM_FILE_NM AS progrmFileNm
-				, (SELECT C.URL FROM LETTNPROGRMLIST C WHERE B.PROGRM_FILE_NM = C.PROGRM_FILE_NM) AS chkURL
+			      B.MENU_NO AS "menuNo"
+				, B.MENU_ORDR AS "menuOrdr"
+				, B.MENU_NM AS "menuNm"
+				, B.UPPER_MENU_NO AS "upperMenuId"
+				, B.MENU_DC AS "menuDc"
+				, B.RELATE_IMAGE_PATH AS "relateImagePath"
+				, B.RELATE_IMAGE_NM AS "relateImageNm"
+				, B.PROGRM_FILE_NM AS "progrmFileNm"
+				, (SELECT C.URL FROM LETTNPROGRMLIST C WHERE B.PROGRM_FILE_NM = C.PROGRM_FILE_NM) AS "chkURL"
 			FROM LETTNMENUCREATDTLS A, LETTNMENUINFO B 
 			WHERE  B.Menu_NO &gt; 0 
 			AND    B.UPPER_MENU_NO = 0  
@@ -29,13 +29,13 @@
 	<select id="selectMainMenuLeft" parameterType="egovframework.let.sym.mnu.mpm.service.MenuManageVO" resultType="egovMap">
 		 
 			SELECT
-			       B.MENU_NO AS menuNo
-				 , B.MENU_ORDR AS menuOrdr
-				 , B.MENU_NM AS menuNm
-				 , B.UPPER_MENU_NO AS upperMenuId
-				 , B.RELATE_IMAGE_PATH AS relateImagePath
-				 , B.RELATE_IMAGE_NM AS relateImageNm
-				 , (SELECT C.URL FROM LETTNPROGRMLIST C WHERE B.PROGRM_FILE_NM = C.PROGRM_FILE_NM) AS chkURL	
+			       B.MENU_NO AS "menuNo"
+				 , B.MENU_ORDR AS "menuOrdr"
+				 , B.MENU_NM AS "menuNm"
+				 , B.UPPER_MENU_NO AS "upperMenuId"
+				 , B.RELATE_IMAGE_PATH AS "relateImagePath"
+				 , B.RELATE_IMAGE_NM AS "relateImageNm"
+				 , (SELECT C.URL FROM LETTNPROGRMLIST C WHERE B.PROGRM_FILE_NM = C.PROGRM_FILE_NM) AS "chkURL"	
 			FROM   LETTNMENUCREATDTLS A, LETTNMENUINFO B
 			WHERE  A.MENU_NO  = B.MENU_NO 
 			AND    A.AUTHOR_CODE = (SELECT AUTHOR_CODE from LETTNEMPLYRSCRTYESTBS
@@ -87,15 +87,15 @@
 	<select id="selectMainMenuHeadByAuthor" parameterType="egovframework.let.sym.mnu.mpm.service.MenuManageVO" resultType="egovMap">
          
             SELECT
-                  B.MENU_NO AS menuNo
-                , B.MENU_ORDR AS menuOrdr
-                , B.MENU_NM AS menuNm
-                , B.UPPER_MENU_NO AS upperMenuId
-                , B.MENU_DC AS menuDc
-                , B.RELATE_IMAGE_PATH AS relateImagePath
-                , B.RELATE_IMAGE_NM AS relateImageNm
-                , B.PROGRM_FILE_NM AS progrmFileNm
-                , (SELECT C.URL FROM LETTNPROGRMLIST C WHERE B.PROGRM_FILE_NM = C.PROGRM_FILE_NM) AS chkURL
+                  B.MENU_NO AS "menuNo"
+                , B.MENU_ORDR AS "menuOrdr"
+                , B.MENU_NM AS "menuNm"
+                , B.UPPER_MENU_NO AS "upperMenuId"
+                , B.MENU_DC AS "menuDc"
+                , B.RELATE_IMAGE_PATH AS "relateImagePath"
+                , B.RELATE_IMAGE_NM AS "relateImageNm"
+                , B.PROGRM_FILE_NM AS "progrmFileNm"
+                , (SELECT C.URL FROM LETTNPROGRMLIST C WHERE B.PROGRM_FILE_NM = C.PROGRM_FILE_NM) AS "chkURL"
             FROM LETTNMENUCREATDTLS A, LETTNMENUINFO B 
             WHERE  B.Menu_NO &gt; 0 
             AND    B.UPPER_MENU_NO = 0  
@@ -108,13 +108,13 @@
     <select id="selectMainMenuLeftByAuthor" parameterType="egovframework.let.sym.mnu.mpm.service.MenuManageVO" resultType="egovMap">
          
             SELECT
-                   B.MENU_NO AS menuNo
-                 , B.MENU_ORDR AS menuOrdr
-                 , B.MENU_NM AS menuNm
-                 , B.UPPER_MENU_NO AS upperMenuId
-                 , B.RELATE_IMAGE_PATH AS relateImagePath
-                 , B.RELATE_IMAGE_NM AS relateImageNm
-                 , (SELECT C.URL FROM LETTNPROGRMLIST C WHERE B.PROGRM_FILE_NM = C.PROGRM_FILE_NM) AS chkURL    
+                   B.MENU_NO AS "menuNo"
+                 , B.MENU_ORDR AS "menuOrdr"
+                 , B.MENU_NM AS "menuNm"
+                 , B.UPPER_MENU_NO AS "upperMenuId"
+                 , B.RELATE_IMAGE_PATH AS "relateImagePath"
+                 , B.RELATE_IMAGE_NM AS "relateImageNm"
+                 , (SELECT C.URL FROM LETTNPROGRMLIST C WHERE B.PROGRM_FILE_NM = C.PROGRM_FILE_NM) AS "chkURL"    
             FROM   LETTNMENUCREATDTLS A, LETTNMENUINFO B
             WHERE  A.MENU_NO  = B.MENU_NO 
             AND    A.AUTHOR_CODE =  #{authorCode}

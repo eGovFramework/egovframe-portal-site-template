@@ -133,7 +133,6 @@ function fn_egov_pop_mailform() {
 								<form:form modelAttribute="qnaManageVO" name="qnaManageVO" action="${pageContext.request.contextPath}/uss/olh/qnm/QnaCnAnswerUpdt.do" method="post">
 								
 								<input name="qaId" type="hidden" value="<c:out value='${egovc:encrypt(result.qaId)}'/>">
-								<input name="writngPassword" type="hidden" value="<c:out value='${result.writngPassword}'/>">
 
                                 <h1 class="tit_1">포털서비스관리</h1>
 

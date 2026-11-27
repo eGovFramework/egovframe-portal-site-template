@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="loginDAO">
+
+
+	<!-- 로그인 처리를 위한 resultMap -->
+	<resultMap id="login" type="egovframework.com.cmm.LoginVO">
+		<result property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="ihidNum" column="ihidNum"/>
+		<result property="email" column="email"/>
+		<result property="password" column="password"/>
+		<result property="userSe" column="userSe"/>
+		<result property="orgnztId" column="orgnztId"/>
+		<result property="uniqId" column="uniqId"/>		
+	</resultMap>
+	
+	<!-- 일반 로그인 -->
+	<select id="actionLogin" resultMap="login">
+        <!-- 일반회원 -->
+        <if test="userSe == &quot;GNR&quot;">
+            
+            SELECT mber_id AS "id"
+                 , mber_nm AS "name"
+                 , ihidNum AS "ihidNum"
+                 , password AS "password"
+                 , mber_email_adres AS "email"
+                 , 'GNR' AS "userSe"
+                 , '-' AS "orgnztId"
+                 , esntl_id AS "uniqId"
+              FROM LETTNGNRLMBER
+             WHERE mber_id = #{id}
+               AND mber_sttus = 'P'
+            
+        </if>
+	</select>
+	
+</mapper>

@@ -36,7 +36,7 @@ public class EgovResourceCloseHelper {
 			if (resource != null) {
 				try {
 					resource.close();
-				} catch (IOException ignore) {//KISA 보안약점 조치 (2018-10-29, 윤창원)
+				} catch (IOException ignore) { // 닫기 실패는 무시
 					EgovBasicLogger.ignore("Occurred IOException to close resource is ingored!!");
 				}
 			}
@@ -53,13 +53,13 @@ public class EgovResourceCloseHelper {
 				if (object instanceof ResultSet) {
 					try {
 						((ResultSet)object).close();
-					} catch (SQLException ignore) {//KISA 보안약점 조치 (2018-10-29, 윤창원)
+					} catch (SQLException ignore) { // 닫기 실패는 무시
 						EgovBasicLogger.ignore("Occurred SQLException to close resource is ingored!!");
 					}
 				} else if (object instanceof Statement) {
 					try {
 						((Statement)object).close();
-					} catch (SQLException ignore) {//KISA 보안약점 조치 (2018-10-29, 윤창원)
+					} catch (SQLException ignore) { // 닫기 실패는 무시
 						EgovBasicLogger.ignore("Occurred SQLException to close resource is ingored!!");
 					}
 				} else if (object instanceof Connection) {

@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: egovframe-portal-site-template-mysql
+  labels:
+    app.kubernetes.io/name: egovframe-portal-site-template-mysql
+    app.kubernetes.io/part-of: egovframe-template
+spec:
+  replicas: 1
+  # ReadWriteOnce 볼륨 공유 방지
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: egovframe-portal-site-template-mysql
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: egovframe-portal-site-template-mysql
+        app.kubernetes.io/part-of: egovframe-template
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.4
+          args:
+            - --character-set-server=utf8mb4
+            - --collation-server=utf8mb4_unicode_ci
+          ports:
+            - name: mysql
+              containerPort: 3306
+          envFrom:
+            - secretRef:
+                name: egovframe-portal-site-template-mysql
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"
+          readinessProbe:
+            exec:
+              command: ["mysqladmin", "ping", "-h", "localhost"]
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            failureThreshold: 6
+          livenessProbe:
+            exec:
+              command: ["mysqladmin", "ping", "-h", "localhost"]
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            failureThreshold: 3
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+            # 최초 기동(빈 볼륨) 시 DDL·데이터 자동 적재
+            - name: initdb
+              mountPath: /docker-entrypoint-initdb.d
+              readOnly: true
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: egovframe-portal-site-template-mysql
+        - name: initdb
+          configMap:
+            name: egovframe-portal-site-template-mysql-initdb

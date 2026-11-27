@@ -53,7 +53,6 @@ public class EgovComCrossSiteHndlr extends BodyTagSupport {
 	// Construction and initialization
 
 	private String m_sDiffChar ="()[]{}\"',:;= \t\r\n%!+-";
-	//private String m_sDiffChar ="()[]{}\"',:;=%!+-";
 	private String m_sArrDiffChar [] = {
 						"&#40;","&#41;",
 						"&#91;","&#93;",

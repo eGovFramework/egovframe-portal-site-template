@@ -92,7 +92,7 @@ public class EgovFileMngController {
 		fileVO.setAtchFileId(decodedAtchFileId);
 		List<FileVO> result = fileService.selectFileInfs(fileVO);
 
-		// FileId를 유추하지 못하도록 세션ID와 함께 암호화하여 표시한다. (2022.12.06 추가) - 파일아이디가 유추 불가능하도록 조치
+		// FileId 유추 방지 : 세션ID와 함께 암호화
 		for (FileVO file : result) {
 			String sessionId = request.getSession().getId();
 			String toEncrypt = sessionId + "|" + file.getAtchFileId();
@@ -134,7 +134,7 @@ public class EgovFileMngController {
 
 		List<FileVO> result = fileService.selectFileInfs(fileVO);
 
-		// FileId를 유추하지 못하도록 세션ID와 함께 암호화하여 표시한다. (2022.12.06 추가) - 파일아이디가 유추 불가능하도록 조치
+		// FileId 유추 방지 : 세션ID와 함께 암호화
 		for (FileVO file : result) {
 			String sessionId = request.getSession().getId();
 			String toEncrypt = sessionId + "|" + file.getAtchFileId();
@@ -168,8 +168,10 @@ public class EgovFileMngController {
 		}
 
 		// 첨부파일 소유자(또는 관리자)만 삭제할 수 있도록 검증한다 (IDOR 방지)
+		// fileVO.atchFileId 는 EgovBindingInitializer(EgovAtchFileIdPropertyEditor)가 이미 복호화한 값이므로
+		// 암호화 여부를 판단할 수 있도록 요청 파라미터 원본을 검증한다.
 		EgovFileTokenUtil.DecodedFileToken token = EgovFileTokenUtil.decodeFileToken(
-				fileVO.getAtchFileId(), request.getSession().getId(), cryptoService, ALGORITHM_KEY, false);
+				request.getParameter("atchFileId"), request.getSession().getId(), cryptoService, ALGORITHM_KEY, false);
 		fileVO.setAtchFileId(token.getAtchFileId());
 		fileAuthService.assertFileAccess(token.getAtchFileId());
 		fileService.deleteFileInf(fileVO);
@@ -180,11 +182,7 @@ public class EgovFileMngController {
 			return "redirect:/cmm/main/mainPage.do";
 		}
 
-		// --------------------------------------------
 		// contextRoot가 있는 경우 제외 시켜야 함
-		// --------------------------------------------
-		//// return "forward:/cmm/fms/selectFileInfs.do";
-		// return "forward:" + returnUrl;
 
 		String contextPath = request.getContextPath() == null ? "" : request.getContextPath();
 		String redirectUrl = returnUrl;
@@ -227,7 +225,7 @@ public class EgovFileMngController {
 		fileVO.setAtchFileId(decodedAtchFileId);
 		List<FileVO> result = fileService.selectImageFileList(fileVO);
 
-		// FileId를 유추하지 못하도록 세션ID와 함께 암호화하여 표시한다. (2022.12.06 추가) - 파일아이디가 유추 불가능하도록 조치
+		// FileId 유추 방지 : 세션ID와 함께 암호화
 		for (FileVO file : result) {
 			String sessionId = request.getSession().getId();
 			String toEncrypt = sessionId + "|" + file.getAtchFileId();
@@ -277,7 +275,7 @@ public class EgovFileMngController {
 			try {
 				byte[] encrypted_atchFileId = Base64.getDecoder().decode(base64AtchFileId);
 				returnVal = new String(cryptoService.decrypt(encrypted_atchFileId, ALGORITHM_KEY));
-			} catch (IllegalArgumentException e) { // 26.03.06 KISA 보안취약점 조치 : 구체적 Exception 추가
+			} catch (IllegalArgumentException e) {
 				// Base64 디코딩 실패 또는 패스워드 불일치
 				LOGGER.debug(e.getMessage());
 			} catch (RuntimeException e) {

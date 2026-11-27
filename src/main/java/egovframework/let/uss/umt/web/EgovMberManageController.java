@@ -7,6 +7,7 @@ import org.egovframe.rte.fdl.cmmn.exception.BaseRuntimeException;
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -16,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import egovframework.com.cmm.util.EgovOwnerAuthUtil;
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.service.EgovCmmUseService;
 import egovframework.let.uss.umt.service.EgovMberManageService;
 import egovframework.let.uss.umt.service.MberManageVO;
 import egovframework.let.uss.umt.service.UserDefaultVO;
-import egovframework.let.utl.sim.service.EgovFileScrty;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -61,6 +62,10 @@ public class EgovMberManageController {
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertiesService;
+
+	/** 비밀번호 해시(BCrypt) */
+	@Resource(name = "egovPasswordEncoder")
+	private PasswordEncoder passwordEncoder;
 
 	/**
 	 * 일반회원목록을 조회한다. (pageing)
@@ -184,6 +189,8 @@ public class EgovMberManageController {
 			model.addAttribute("groupId_result", cmmUseService.selectGroupIdDetail(vo));
 			return "cmm/uss/umt/EgovMberInsert";
 		} else {
+			// 등록자 : 회원을 등록한 관리자
+			mberManageVO.setFrstRegisterId(EgovOwnerAuthUtil.getLoginUniqId());
 			mberManageService.insertMber(mberManageVO);
 			//Exception 없이 진행시 등록 성공메시지
 			model.addAttribute("resultMsg", "success.common.insert");
@@ -229,6 +236,8 @@ public class EgovMberManageController {
 		MberManageVO mberManageVO = mberManageService.selectMber(mberId);
 		model.addAttribute("mberManageVO", mberManageVO);
 		model.addAttribute("userSearchVO", userSearchVO);
+		// 저장/삭제/암호변경 버튼은 등록자 본인에게만 노출
+		model.addAttribute("ownerAt", EgovOwnerAuthUtil.ownerAt(mberManageVO == null ? null : mberManageVO.getFrstRegisterId()));
 
 		return "cmm/uss/umt/EgovMberSelectUpdt";
 	}
@@ -241,8 +250,7 @@ public class EgovMberManageController {
 	 * @return forward:/uss/umt/mber/EgovMberManage.do
 	 */
 	@RequestMapping(value = "/uss/umt/mber/EgovMberSelectUpdt.do", method = RequestMethod.POST)
-	// 26.08.20 조치 : 검증 실패 시 상세화면을 다시 그리는데 userSearchVO 가 모델에 없어
-	// JSP의 hidden pageIndex 가 빈 값으로 렌더되고, 목록 버튼이 pageIndex="" 를 보내 400이 발생하는 오류 수정
+	// 검증 실패로 상세화면 재표시 시 목록 이동용 userSearchVO(pageIndex) 유지
 	public String updateMber(@Valid @ModelAttribute("mberManageVO") MberManageVO mberManageVO, BindingResult bindingResult,
 			@ModelAttribute("userSearchVO") UserDefaultVO userSearchVO, Model model) {
 
@@ -252,6 +260,10 @@ public class EgovMberManageController {
     		model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
         	return "uat/uia/EgovLoginUsr";
     	}
+
+		// 등록자 본인만 수정 가능
+		assertMberOwner(mberManageVO.getUniqId());
+		model.addAttribute("ownerAt", "Y");
 
 		if (bindingResult.hasErrors()) {
 
@@ -297,6 +309,12 @@ public class EgovMberManageController {
     		model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
         	return "uat/uia/EgovLoginUsr";
     	}
+
+		// 등록자 본인이 아닌 회원이 포함되어 있으면 삭제하지 않음 (형식 : 사용자유형:고유ID,...)
+		for (String delId : checkedIdForDel.split(",")) {
+			String[] id = delId.split(":");
+			assertMberOwner(id.length > 1 ? id[1] : id[0]);
+		}
 
 		mberManageService.deleteMber(checkedIdForDel);
 		//Exception 없이 진행시 삭제성공메시지
@@ -355,6 +373,8 @@ public class EgovMberManageController {
 	@RequestMapping(value = "/uss/umt/cmm/EgovMberSbscrb.do", method = RequestMethod.POST)
 	public String sbscrbMber(@Valid @ModelAttribute("mberManageVO") MberManageVO mberManageVO, BindingResult bindingResult) {
 
+		// 회원가입은 본인이 등록자 (insertMber 에서 설정)
+		mberManageVO.setFrstRegisterId(null);
 		//가입상태 초기화
 		mberManageVO.setMberSttus("A");
 		//그룹정보 초기화
@@ -413,6 +433,9 @@ public class EgovMberManageController {
 		String newPassword2 = (String) commandMap.get("newPassword2");
 		String uniqId = (String) commandMap.get("uniqId");
 
+		// 등록자 본인만 암호 변경 가능
+		assertMberOwner(uniqId);
+
 		boolean isCorrectPassword = false;
 		MberManageVO resultVO = new MberManageVO();
 		mberManageVO.setPassword(newPassword);
@@ -421,10 +444,9 @@ public class EgovMberManageController {
 
 		String resultMsg = "";
 		resultVO = mberManageService.selectPassword(mberManageVO);
-		//패스워드 암호화
-		String encryptPass = EgovFileScrty.encryptPassword(oldPassword, mberManageVO.getMberId());
-		if (encryptPass.equals(resultVO.getPassword())) {
-			if (newPassword.equals(newPassword2)) {
+		if (resultVO != null && oldPassword != null && resultVO.getPassword() != null
+				&& passwordEncoder.matches(oldPassword, resultVO.getPassword())) {
+			if (newPassword != null && !newPassword.isEmpty() && newPassword.equals(newPassword2)) {
 				isCorrectPassword = true;
 			} else {
 				isCorrectPassword = false;
@@ -436,11 +458,15 @@ public class EgovMberManageController {
 		}
 
 		if (isCorrectPassword) {
-			mberManageVO.setPassword(EgovFileScrty.encryptPassword(newPassword, mberManageVO.getMberId()));
+			mberManageVO.setPassword(passwordEncoder.encode(newPassword));
 			mberManageService.updatePassword(mberManageVO);
+			mberManageVO.setPassword(null);
+			mberManageVO.setOldPassword(null);
 			model.addAttribute("mberManageVO", mberManageVO);
 			resultMsg = "success.common.update";
 		} else {
+			mberManageVO.setPassword(null);
+			mberManageVO.setOldPassword(null);
 			model.addAttribute("mberManageVO", mberManageVO);
 		}
 		model.addAttribute("userSearchVO", userSearchVO);
@@ -467,6 +493,9 @@ public class EgovMberManageController {
     		model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
         	return "uat/uia/EgovLoginUsr";
     	}
+
+		// 등록자 본인만 암호 변경 가능
+		assertMberOwner(mberManageVO.getUniqId());
 
 		String userTyForPassword = (String) commandMap.get("userTyForPassword");
 		mberManageVO.setUserTy(userTyForPassword);
@@ -525,5 +554,14 @@ public class EgovMberManageController {
 		model.addAttribute("checkId", checkId);
 
 		return "cmm/uss/umt/EgovIdDplctCnfirm";
+	}
+
+	/**
+	 * 회원정보의 등록자 본인 여부를 검증한다.
+	 * @param uniqId 대상 회원 고유아이디
+	 */
+	private void assertMberOwner(String uniqId) {
+		MberManageVO existing = mberManageService.selectMber(uniqId);
+		EgovOwnerAuthUtil.assertOwner(existing == null ? null : existing.getFrstRegisterId());
 	}
 }

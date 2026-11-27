@@ -6,12 +6,12 @@ import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.egovframe.rte.fdl.cmmn.exception.BaseRuntimeException;
 import org.egovframe.rte.fdl.cmmn.exception.FdlException;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import egovframework.let.uss.umt.service.EgovMberManageService;
 import egovframework.let.uss.umt.service.MberManageVO;
 import egovframework.let.uss.umt.service.UserDefaultVO;
-import egovframework.let.utl.sim.service.EgovFileScrty;
 import jakarta.annotation.Resource;
 
 /**
@@ -42,6 +42,10 @@ public class EgovMberManageServiceImpl extends EgovAbstractServiceImpl implement
 	@Resource(name="egovUsrCnfrmIdGnrService")
 	private EgovIdGnrService idgenService;
 
+	/** 비밀번호 해시(BCrypt) */
+	@Resource(name="egovPasswordEncoder")
+	private PasswordEncoder passwordEncoder;
+
 	/**
 	 * 사용자의 기본정보를 화면에서 입력하여 항목의 정합성을 체크하고 데이터베이스에 저장
 	 * @param mberManageVO 일반회원 등록정보
@@ -57,9 +61,11 @@ public class EgovMberManageServiceImpl extends EgovAbstractServiceImpl implement
 			throw new BaseRuntimeException(e);
 		}
 		mberManageVO.setUniqId(uniqId);
-		//패스워드 암호화
-		String pass = EgovFileScrty.encryptPassword(mberManageVO.getPassword(), mberManageVO.getMberId());
-		mberManageVO.setPassword(pass);
+		// 등록자가 지정되지 않은 경우(회원가입) 본인을 등록자로 한다.
+		if (mberManageVO.getFrstRegisterId() == null || mberManageVO.getFrstRegisterId().isEmpty()) {
+			mberManageVO.setFrstRegisterId(uniqId);
+		}
+		mberManageVO.setPassword(passwordEncoder.encode(mberManageVO.getPassword()));
 
 		int result = mberManageDAO.insertMber(mberManageVO);
 		return result;
@@ -102,9 +108,7 @@ public class EgovMberManageServiceImpl extends EgovAbstractServiceImpl implement
 	 */
 	@Override
 	public void updateMber(MberManageVO mberManageVO) {
-		//패스워드 암호화
-		String pass = EgovFileScrty.encryptPassword(mberManageVO.getPassword(), mberManageVO.getMberId());
-		mberManageVO.setPassword(pass);
+		// 비밀번호는 updatePassword() 로만 변경한다 (updateMber SQL 은 PASSWORD 컬럼을 갱신하지 않음)
 		mberManageDAO.updateMber(mberManageVO);
 	}
 

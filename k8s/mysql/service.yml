@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: egovframe-portal-site-template-mysql
+  labels:
+    app.kubernetes.io/name: egovframe-portal-site-template-mysql
+    app.kubernetes.io/part-of: egovframe-template
+spec:
+  # 클러스터 내부 전용
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: egovframe-portal-site-template-mysql
+  ports:
+    - name: mysql
+      port: 3306
+      targetPort: mysql

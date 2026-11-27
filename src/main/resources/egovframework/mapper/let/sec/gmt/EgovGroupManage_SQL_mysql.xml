@@ -5,6 +5,7 @@
 
 
 	<resultMap id="group" type="egovframework.let.sec.gmt.service.GroupManageVO">
+        <result property="frstRegisterId" column="FRST_REGISTER_ID"/>
         <result property="groupId" column="GROUP_ID"/>
 		<result property="groupNm" column="GROUP_NM"/>
 		<result property="groupDc" column="GROUP_DC"/>
@@ -13,7 +14,7 @@
 
     <select id="selectGroup" parameterType="egovframework.let.sec.gmt.service.GroupManageVO" resultMap="group">
         
-            SELECT GROUP_ID, GROUP_NM, GROUP_DC, GROUP_CREAT_DE
+            SELECT GROUP_ID, FRST_REGISTER_ID, GROUP_NM, GROUP_DC, GROUP_CREAT_DE
               FROM LETTNAUTHORGROUPINFO 
              WHERE GROUP_ID=#{groupId}
         
@@ -35,10 +36,12 @@
 		
 			INSERT INTO LETTNAUTHORGROUPINFO 
 				  ( GROUP_ID
+				  , FRST_REGISTER_ID
 				  , GROUP_NM
 				  , GROUP_DC
 				  , GROUP_CREAT_DE )
 		   VALUES ( #{groupId}
+			      , #{frstRegisterId}
 			      , #{groupNm}
 				  , #{groupDc}
 				  , now())

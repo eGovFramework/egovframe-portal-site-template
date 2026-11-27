@@ -146,14 +146,6 @@
 		
 	</update>
 
-	<select id="selectQnaPasswordConfirmCnt" resultType="int">
-		
-			SELECT 	COUNT(*) totcnt
-			FROM 	LETTNQAINFO
-			WHERE	QA_ID=#{qaId}
-			AND		WRITNG_PASSWORD=#{writngPassword}
-					
-	</select>
 	
 	<update id="updateQnaCn">
 		

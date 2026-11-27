@@ -5,6 +5,7 @@
 
 
     <resultMap id="author" type="egovframework.let.sec.ram.service.AuthorManageVO">
+        <result property="frstRegisterId" column="FRST_REGISTER_ID"/>
         <result property="authorCode" column="AUTHOR_CODE"/>
         <result property="authorNm" column="AUTHOR_NM"/>
         <result property="authorDc" column="AUTHOR_DC"/>
@@ -40,10 +41,12 @@
         
             INSERT INTO LETTNAUTHORINFO 
                   ( AUTHOR_CODE
+                  , FRST_REGISTER_ID
                   , AUTHOR_NM
                   , AUTHOR_DC
                   , AUTHOR_CREAT_DE )
            VALUES ( #{authorCode}
+                  , #{frstRegisterId}
                   , #{authorNm}
                   , #{authorDc}
                   , SYSDATETIME)
@@ -68,7 +71,7 @@
     
     <select id="authorManageDAO.selectAuthor" resultMap="author">
         
-            SELECT AUTHOR_CODE, AUTHOR_NM, AUTHOR_DC, AUTHOR_CREAT_DE
+            SELECT AUTHOR_CODE, FRST_REGISTER_ID, AUTHOR_NM, AUTHOR_DC, AUTHOR_CREAT_DE
               FROM LETTNAUTHORINFO 
              WHERE AUTHOR_CODE=#{authorCode}
         

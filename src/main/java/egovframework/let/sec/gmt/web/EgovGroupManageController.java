@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
+import egovframework.com.cmm.util.EgovOwnerAuthUtil;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.let.sec.gmt.service.EgovGroupManageService;
 import egovframework.let.sec.gmt.service.GroupManage;
@@ -101,7 +102,10 @@ public class EgovGroupManageController {
 	 */
     @RequestMapping(value="/sec/gmt/EgovGroup.do")
 	public String selectGroup(@ModelAttribute("groupManageVO") GroupManageVO groupManageVO, ModelMap model) {
-	    model.addAttribute("groupManage", egovGroupManageService.selectGroup(groupManageVO));
+	    GroupManageVO groupManage = egovGroupManageService.selectGroup(groupManageVO);
+	    model.addAttribute("groupManage", groupManage);
+	    // 저장/삭제 버튼은 등록자 본인에게만 노출
+	    model.addAttribute("ownerAt", EgovOwnerAuthUtil.ownerAt(groupManage == null ? null : groupManage.getFrstRegisterId()));
 	    return "/sec/gmt/EgovGroupUpdate";
 	}
 
@@ -137,6 +141,8 @@ public class EgovGroupManageController {
 				throw new BaseRuntimeException(e);
 			}
 	        groupManageVO.setGroupId(groupManage.getGroupId());
+	        groupManage.setFrstRegisterId(EgovOwnerAuthUtil.getLoginUniqId());
+	        model.addAttribute("ownerAt", "Y");
 	        
 	        status.setComplete();
 	        model.addAttribute("message", egovMessageSource.getMessage("success.common.insert"));
@@ -156,6 +162,10 @@ public class EgovGroupManageController {
                                SessionStatus status, 
                                Model model) {
     	
+    	// 등록자 본인만 수정 가능
+    	assertGroupOwner(groupManage.getGroupId());
+    	model.addAttribute("ownerAt", "Y");
+
     	// zzz validation 처리 필요
     	if (bindingResult.hasErrors()) { 
 			return "/sec/gmt/EgovGroupUpdate";
@@ -176,6 +186,8 @@ public class EgovGroupManageController {
 	public String deleteGroup(@ModelAttribute("groupManage") GroupManage groupManage, 
                              SessionStatus status, 
                              Model model) {
+		// 등록자 본인만 삭제 가능
+		assertGroupOwner(groupManage.getGroupId());
 		egovGroupManageService.deleteGroup(groupManage);
 		status.setComplete();
 		model.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
@@ -194,6 +206,10 @@ public class EgovGroupManageController {
 	                               SessionStatus status, 
 	                               Model model) {
     	String [] strGroupIds = groupIds.split(";");
+    	// 등록자 본인이 아닌 그룹이 포함되어 있으면 삭제하지 않음
+    	for(int i=0; i<strGroupIds.length;i++) {
+    		assertGroupOwner(strGroupIds[i]);
+    	}
     	for(int i=0; i<strGroupIds.length;i++) {
     		groupManage.setGroupId(strGroupIds[i]);
     		egovGroupManageService.deleteGroup(groupManage);
@@ -239,5 +255,16 @@ public class EgovGroupManageController {
         model.addAttribute("message", egovMessageSource.getMessage("success.common.select"));
 
         return "/sec/gmt/EgovGroupSearch";
+	}
+
+	/**
+	 * 그룹의 등록자 본인 여부를 검증한다.
+	 * @param groupId String
+	 */
+	private void assertGroupOwner(String groupId) {
+		GroupManageVO searchVO = new GroupManageVO();
+		searchVO.setGroupId(groupId);
+		GroupManageVO existing = egovGroupManageService.selectGroup(searchVO);
+		EgovOwnerAuthUtil.assertOwner(existing == null ? null : existing.getFrstRegisterId());
 	}
 }

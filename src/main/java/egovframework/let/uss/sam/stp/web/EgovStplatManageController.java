@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import egovframework.com.cmm.util.EgovOwnerAuthUtil;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.com.cmm.LoginVO;
@@ -126,6 +127,8 @@ public class EgovStplatManageController {
 		StplatManageVO vo = stplatManageService.selectStplatDetail(stplatManageVO);
 
 		model.addAttribute("result", vo);
+		// 수정/삭제 버튼은 등록자 본인에게만 노출
+		model.addAttribute("ownerAt", EgovOwnerAuthUtil.ownerAt(vo == null ? null : vo.getFrstRegisterId()));
 
 		return "/uss/sam/stp/EgovStplatDetailInqire";
 	}
@@ -198,6 +201,9 @@ public class EgovStplatManageController {
 		// Primary Key 값 세팅
 		stplatManageVO.setUseStplatId(useStplatId);
 
+		// 등록자 본인만 수정 가능
+		assertStplatOwner(stplatManageVO);
+
 		// 변수명은 CoC 에 따라
 		model.addAttribute(selectStplatDetail(stplatManageVO, searchVO, model));
 
@@ -220,6 +226,9 @@ public class EgovStplatManageController {
 	public String updateStplatCn(@ModelAttribute("searchVO") StplatManageDefaultVO searchVO,
 			@Valid @ModelAttribute("stplatManageVO") StplatManageVO stplatManageVO,
 			BindingResult bindingResult) {
+
+		// 등록자 본인만 수정 가능
+		assertStplatOwner(stplatManageVO);
 
 		if (bindingResult.hasErrors()) {
 
@@ -251,9 +260,22 @@ public class EgovStplatManageController {
 	public String deleteStplatCn(StplatManageVO stplatManageVO,
 			@ModelAttribute("searchVO") StplatManageDefaultVO searchVO) {
 
+		// 등록자 본인만 삭제 가능
+		assertStplatOwner(stplatManageVO);
+
 		stplatManageService.deleteStplatCn(stplatManageVO);
 
 		return "forward:/uss/sam/stp/StplatListInqire.do";
+	}
+
+	/**
+	 * 약관정보의 등록자 본인 여부를 검증한다.
+	 * 
+	 * @param stplatManageVO
+	 */
+	private void assertStplatOwner(StplatManageVO stplatManageVO) {
+		StplatManageVO existing = stplatManageService.selectStplatDetail(stplatManageVO);
+		EgovOwnerAuthUtil.assertOwner(existing == null ? null : existing.getFrstRegisterId());
 	}
 
 }

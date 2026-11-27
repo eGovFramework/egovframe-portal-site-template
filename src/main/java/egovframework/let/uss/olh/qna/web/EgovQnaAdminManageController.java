@@ -3,6 +3,8 @@ package egovframework.let.uss.olh.qna.web;
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -19,7 +21,7 @@ import egovframework.com.cmm.web.EgovFileMngController;
 import egovframework.let.uss.olh.qna.service.EgovQnaManageService;
 import egovframework.let.uss.olh.qna.service.QnaManageDefaultVO;
 import egovframework.let.uss.olh.qna.service.QnaManageVO;
-import egovframework.let.utl.sim.service.EgovFileScrty;
+import egovframework.let.uss.olh.qna.util.EgovQnaAuthUtil;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 
@@ -48,6 +50,9 @@ public class EgovQnaAdminManageController {
 	@Resource(name = "QnaManageService")
 	private EgovQnaManageService qnaManageService;
 
+	@Resource(name = "egovPasswordEncoder")
+	private PasswordEncoder passwordEncoder;
+
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertiesService;
@@ -68,6 +73,13 @@ public class EgovQnaAdminManageController {
 	 */
 	private static void decryptQaId(QnaManageVO qnaManageVO) {
 		qnaManageVO.setQaId(EgovFileMngController.decrypt(qnaManageVO.getQaId()));
+	}
+
+	/**
+	 * 포털서비스관리 > QnA관리에서는 등록된 질문을 수정할 수 없다.
+	 */
+	private static void assertQnaNotModifiable() {
+		throw new AccessDeniedException("등록된 질문은 관리자가 수정할 수 없습니다.");
 	}
 
 	/**
@@ -153,13 +165,12 @@ public class EgovQnaAdminManageController {
 		decryptQaId(qnaManageVO);
 		QnaManageVO vo = qnaManageService.selectQnaListDetail(qnaManageVO);
 
-		// 26.08.24 조치 : passwordConfirmAt 은 관리자 비밀번호 확인 흐름에서만 쓰이던 값이다.
-		// 그 흐름을 제거했으므로 필수 요청 파라미터 선언과 모델 전달을 함께 없앤다.
 
-		// 26.07.20 KISA 보안취약점 조치: 작성비밀번호는 일방향 해시로 저장되어 복호화할 수 없으며,
-		// <form:password>는 바인딩된 값을 렌더링하지 않으므로 복호화가 불필요하다.
+		// 작성비밀번호는 일방향 해시이므로 복호화하지 않음
 
 		model.addAttribute("result", vo);
+		// 등록된 질문은 관리자가 수정할 수 없으며, 삭제는 등록자 본인만 가능
+		model.addAttribute("deleteAt", EgovQnaAuthUtil.canShowModifyButtons(vo) ? "Y" : "N");
 
 		return "/uss/olh/qna/admin/EgovQnaDetailInqire";
 	}
@@ -257,8 +268,7 @@ public class EgovQnaAdminManageController {
 		qnaManageVO.setFrstRegisterId(frstRegisterId); // 최초등록자ID
 		qnaManageVO.setLastUpdusrId(frstRegisterId); // 최종수정자ID
 
-		// 26.08.19 조치 : 작성비밀번호 해싱은 salt로 쓰이는 qaId가 채번되는
-		// EgovQnaManageServiceImpl.insertQnaCn에서 수행한다.
+		// 작성비밀번호 해시는 insertQnaCn 에서 수행 (qaId 채번 후)
 		qnaManageService.insertQnaCn(qnaManageVO);
 
 		return "forward:/uss/olh/qna/admin/QnaListInqire.do";
@@ -275,18 +285,19 @@ public class EgovQnaAdminManageController {
 	@RequestMapping("/uss/olh/qna/admin/QnaCnUpdtView.do")
 	public String updateQnaCnView(QnaManageVO qnaManageVO, @ModelAttribute("searchVO") QnaManageDefaultVO searchVO, ModelMap model) {
 
+		// 등록된 질문은 관리자가 수정할 수 없음
+		assertQnaNotModifiable();
+
 		decryptQaId(qnaManageVO);
 		QnaManageVO vo = qnaManageService.selectQnaListDetail(qnaManageVO);
 
-		// 26.07.20 KISA 보안취약점 조치: 작성비밀번호는 일방향 해시로 저장되어 복호화할 수 없으며,
-		// <form:password>는 바인딩된 값을 렌더링하지 않으므로 복호화가 불필요하다.
+		// 작성비밀번호는 일방향 해시이므로 복호화하지 않음
 
 		// 복호화된 패스워드를 넘긴다..
 		model.addAttribute("qnaManageVO", vo);
 
 		// result에도 세팅(jstl 사용을 위해)
-		// 26.08.19 조치 : selectQnaListDetail()로 위임하면 이미 복호화된 qaId를 한 번 더
-		// 복호화하게 되어 조회에 실패한다. 사용자 컨트롤러와 동일하게 위에서 조회한 vo를 사용한다.
+		// qaId 이중 복호화 방지 : 조회한 vo 사용
 		model.addAttribute("result", vo);
 
 		return "/uss/olh/qna/admin/EgovQnaCnUpdt";
@@ -302,6 +313,9 @@ public class EgovQnaAdminManageController {
 	@RequireAdmin
 	@RequestMapping("/uss/olh/qna/admin/QnaCnUpdt.do")
 	public String updateQnaCn(@ModelAttribute("searchVO") QnaManageDefaultVO searchVO, @Valid @ModelAttribute("qnaManageVO") QnaManageVO qnaManageVO, BindingResult bindingResult) {
+
+		// 등록된 질문은 관리자가 수정할 수 없음
+		assertQnaNotModifiable();
 
 		if (bindingResult.hasErrors()) {
 			return "/uss/olh/qna/admin/EgovQnaCnUpdt";
@@ -320,12 +334,10 @@ public class EgovQnaAdminManageController {
 		// 작성비밀번호를 암호화 하기 위해서 Get
 		String writngPassword = qnaManageVO.getWritngPassword();
 
-		// 26.08.19 조치 : deprecated된 encryptPassword(String) 대신 qaId를 salt로 사용한다.
-		// 빈 값이 들어오면 기존 해시를 보존한다. @EgovNullCheck로 화면단에서 걸러지지만,
-		// 서버측 방어를 사용자 컨트롤러와 동일하게 갖춘다. (보존하지 않으면 hash("")로 덮어써진다)
+		// 입력 시 BCrypt 해시, 빈 값이면 기존 해시 보존
 		if (writngPassword != null && !writngPassword.isEmpty()) {
 			qnaManageVO.setWritngPassword(
-					EgovFileScrty.encryptPassword(writngPassword, qnaManageVO.getQaId()));
+					passwordEncoder.encode(writngPassword));
 		} else {
 			qnaManageVO.setWritngPassword(existing.getWritngPassword());
 		}
@@ -356,6 +368,9 @@ public class EgovQnaAdminManageController {
 		}
 
 		decryptQaId(qnaManageVO);
+		// 삭제는 등록자 본인만 가능
+		QnaManageVO existing = qnaManageService.selectQnaListDetail(qnaManageVO);
+		EgovQnaAuthUtil.assertCanModifyQna(existing, null);
 		qnaManageService.deleteQnaCn(qnaManageVO);
 
 		return "forward:/uss/olh/qna/admin/QnaListInqire.do";

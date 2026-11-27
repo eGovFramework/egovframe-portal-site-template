@@ -138,7 +138,7 @@ public class EgovValidationControllerAdvice {
 			
 			// 사용자가 명시적으로 지정한 메시지
 			return message;
-		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException e) { // 26.03.06 KISA 보안취약점 조치 : 예외처리 구체화
+		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException e) {
 			return null;
 		}
 	}
@@ -164,7 +164,7 @@ public class EgovValidationControllerAdvice {
 			try {
 				String replacement = egovMessageSource.getMessage(messageKey);
 				matcher.appendReplacement(result, Matcher.quoteReplacement(replacement));
-			} catch (NoSuchMessageException e) { // 26.03.06 KISA 보안취약점 조치 : 예외처리 구체화
+			} catch (NoSuchMessageException e) {
 				// 메시지 키를 찾을 수 없는 경우 원본 유지
 				matcher.appendReplacement(result, Matcher.quoteReplacement(matcher.group(0)));
 			}
@@ -332,7 +332,7 @@ public class EgovValidationControllerAdvice {
 			} else if (value instanceof Number) {
 				return ((Number) value).intValue();
 			}
-		} catch (NullPointerException | ClassCastException e) { // 26.03.06 KISA 보안취약점 조치 : 예외처리 구체화
+		} catch (NullPointerException | ClassCastException e) {
 			LOGGER.debug("어노테이션 속성값 조회 중 오류 발생: {}", e.getMessage());
 		}
 		return null;
@@ -349,7 +349,7 @@ public class EgovValidationControllerAdvice {
 		try {
 			return egovMessageSource.getReloadableResourceBundleMessageSource().getMessage(messageKey, null, defaultMessage,
 					Locale.getDefault());
-		} catch (NullPointerException e) { // 26.03.06 KISA 보안취약점 조치 : 예외처리 구체화
+		} catch (NullPointerException e) {
 			return defaultMessage;
 		}
 	}
@@ -366,7 +366,7 @@ public class EgovValidationControllerAdvice {
 		try {
 			return egovMessageSource.getReloadableResourceBundleMessageSource().getMessage(messageKey, args, defaultMessage,
 					Locale.getDefault());
-		} catch (NullPointerException e) { // 26.03.06 KISA 보안취약점 조치 : 예외처리 구체화
+		} catch (NullPointerException e) {
 			// 파라미터가 있는 경우 기본 메시지에 파라미터 대체
 			if (args != null && args.length > 0 && defaultMessage != null) {
 				String result = defaultMessage;

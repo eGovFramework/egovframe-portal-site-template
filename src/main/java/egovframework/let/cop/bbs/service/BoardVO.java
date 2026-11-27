@@ -109,9 +109,7 @@ public class BoardVO extends Board implements Serializable {
     /** 조회 수 증가 여부 */
     private boolean plusCount = false;
 
-    //---------------------------------
     // 2009.06.29 : 2단계 기능 추가
-    //---------------------------------
     /** 하위 페이지 인덱스 (댓글 및 만족도 조사 여부 확인용) */
     private String subPageIndex = "";
     ////-------------------------------

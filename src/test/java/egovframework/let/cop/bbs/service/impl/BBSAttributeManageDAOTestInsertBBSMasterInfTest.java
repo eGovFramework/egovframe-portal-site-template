@@ -61,11 +61,10 @@ class BBSAttributeManageDAOTestInsertBBSMasterInfTest extends EgovTestAbstractSp
 		final String now3 = now.format(DateTimeFormatter.ofPattern("uuuuMMddHHmmssS"));
 		boardMaster.setBbsId("TEST_" + now3);
 
-		// 게시판유형코드
-		// SELECT A.* FROM LETTCCMMNDETAILCODE AS A WHERE A.CODE_ID = 'COM004';
+		// 게시판유형코드 (COM004)
 		boardMaster.setBbsTyCode("BBST01");
 
-		// SELECT A.* FROM LETTCCMMNDETAILCODE AS A WHERE A.CODE_ID = 'COM009';
+		// 게시판속성코드 (COM009)
 		boardMaster.setBbsAttrbCode("BBSA03");
 
 		// 게시판명
@@ -109,7 +108,6 @@ class BBSAttributeManageDAOTestInsertBBSMasterInfTest extends EgovTestAbstractSp
 			log.debug("result={}", result);
 		}
 
-//		assertEquals(1, result, "신규 게시판 속성정보를 등록한다.");
 
 		assertThat(result).as("신규 게시판 속성정보를 등록한다.").isGreaterThan(0);
 	}

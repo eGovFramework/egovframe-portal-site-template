@@ -155,7 +155,6 @@ public class EgovNumberUtil {
 	public static Boolean getNumberValidCheck(String checkStr) {
 
 		int i;
-		//String sourceStr = String.valueOf(sourceInt);
 
 		int checkStrLt = checkStr.length();
 

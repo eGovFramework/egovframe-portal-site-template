@@ -36,6 +36,10 @@
             "fileSn": fileSn,
             "returnUrl": window.location.pathname + window.location.search
         };
+        // CSRF 토큰 (egov-security-config.properties 의 csrf = true)
+        <c:if test="${not empty _csrf}">
+        fields["<c:out value='${_csrf.parameterName}'/>"] = "<c:out value='${_csrf.token}'/>";
+        </c:if>
 
         for (var key in fields) {
             var input = document.createElement("input");

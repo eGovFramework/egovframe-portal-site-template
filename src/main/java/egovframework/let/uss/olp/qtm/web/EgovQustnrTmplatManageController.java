@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import egovframework.com.cmm.util.EgovOwnerAuthUtil;
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
@@ -110,6 +111,8 @@ public class EgovQustnrTmplatManageController {
 		String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
 
 		if (sCmd.equals("del")) {
+			// 등록자 본인만 삭제 가능
+			EgovOwnerAuthUtil.assertOwner(EgovOwnerAuthUtil.frstRegisterIdOf(egovQustnrTmplatManageService.selectQustnrTmplatManageDetail(qustnrTmplatManageVO)));
 			egovQustnrTmplatManageService.deleteQustnrTmplatManage(qustnrTmplatManageVO);
 		}
 
@@ -191,10 +194,14 @@ public class EgovQustnrTmplatManageController {
 		String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
 
 		if (sCmd.equals("del")) {
+			// 등록자 본인만 삭제 가능
+			EgovOwnerAuthUtil.assertOwner(EgovOwnerAuthUtil.frstRegisterIdOf(egovQustnrTmplatManageService.selectQustnrTmplatManageDetail(qustnrTmplatManageVO)));
 			egovQustnrTmplatManageService.deleteQustnrTmplatManage(qustnrTmplatManageVO);
 			sLocationUrl = "redirect:/uss/olp/qtm/EgovQustnrTmplatManageList.do";
 		} else {
 			model.addAttribute("resultList", egovQustnrTmplatManageService.selectQustnrTmplatManageDetail(qustnrTmplatManageVO));
+			// 수정/삭제 버튼은 등록자 본인에게만 노출
+			model.addAttribute("ownerAt", EgovOwnerAuthUtil.ownerAt(EgovOwnerAuthUtil.frstRegisterIdOf(model.get("resultList"))));
 		}
 
 		return sLocationUrl;
@@ -214,6 +221,9 @@ public class EgovQustnrTmplatManageController {
 	public String QustnrTmplatManageModify(@ModelAttribute("searchVO") ComDefaultVO searchVO, @RequestParam Map<String, Object> commandMap,
 			QustnrTmplatManageVO qustnrTmplatManageVO, ModelMap model) {
 		String sLocationUrl = "/uss/olp/qtm/EgovQustnrTmplatManageModify";
+
+		// 등록자 본인만 수정 가능
+		EgovOwnerAuthUtil.assertOwner(EgovOwnerAuthUtil.frstRegisterIdOf(egovQustnrTmplatManageService.selectQustnrTmplatManageDetail(qustnrTmplatManageVO)));
 
 		String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
 
@@ -238,6 +248,9 @@ public class EgovQustnrTmplatManageController {
 			@RequestParam Map<String, Object> commandMap, @Valid @ModelAttribute("qustnrTmplatManageVO") QustnrTmplatManageVO qustnrTmplatManageVO, BindingResult bindingResult,
 			ModelMap model) {
 
+		// 등록자 본인만 수정 가능
+		EgovOwnerAuthUtil.assertOwner(EgovOwnerAuthUtil.frstRegisterIdOf(egovQustnrTmplatManageService.selectQustnrTmplatManageDetail(qustnrTmplatManageVO)));
+
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("resultList", egovQustnrTmplatManageService.selectQustnrTmplatManageDetail(qustnrTmplatManageVO));
 			return "/uss/olp/qtm/EgovQustnrTmplatManageModify";
@@ -247,7 +260,6 @@ public class EgovQustnrTmplatManageController {
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		LoginVO loginVO = null;
 
-		// 26.03.06 KISA 보안취약점 조치 : 불필요한 try-catch 제거
 		if (isAuthenticated) {
 			loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		}
@@ -265,9 +277,8 @@ public class EgovQustnrTmplatManageController {
 
 		if (!files.isEmpty()) {
 			for (MultipartFile file : files.values()) {
-				// 26.03.06 KISA 보안취약점 조치 : null check 추가
-				String originalFilename = file.getOriginalFilename();
-				if (file.getName().equals("qestnrTmplatImage") && originalFilename != null && !originalFilename.isEmpty()) { // 26.03.06 KISA 보안취약점 조치 : null check 추가
+								String originalFilename = file.getOriginalFilename();
+				if (file.getName().equals("qestnrTmplatImage") && originalFilename != null && !originalFilename.isEmpty()) {
 					try {
 						qustnrTmplatManageVO.setQestnrTmplatImagepathnm(file.getBytes());
 					} catch (IOException e) {

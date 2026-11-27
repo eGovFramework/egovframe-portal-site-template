@@ -61,11 +61,11 @@
 		
 			SELECT  ZIP           zip       
 			     ,  SN            sn        
-			     ,  CTPRVN_NM     ctprvnNm  
-			     ,  SIGNGU_NM     signguNm
-			     ,  EMD_NM        emdNm     
-			     ,  LI_BULD_NM    liBuldNm 
-			     ,  LNBR_DONG_HO  lnbrDongHo
+			     ,  CTPRVN_NM     "ctprvnNm"  
+			     ,  SIGNGU_NM     "signguNm"
+			     ,  EMD_NM        "emdNm"     
+			     ,  LI_BULD_NM    "liBuldNm" 
+			     ,  LNBR_DONG_HO  "lnbrDongHo"
 			  FROM  LETTCZIP			     
              WHERE  ZIP = #{zip}
                AND  SN  = #{sn}

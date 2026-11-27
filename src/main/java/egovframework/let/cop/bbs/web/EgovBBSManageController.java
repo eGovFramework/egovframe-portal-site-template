@@ -7,6 +7,7 @@ import java.util.Map;
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -32,7 +33,6 @@ import egovframework.let.cop.bbs.service.BoardMasterVO;
 import egovframework.let.cop.bbs.service.BoardVO;
 import egovframework.let.cop.bbs.service.EgovBBSAttributeManageService;
 import egovframework.let.cop.bbs.service.EgovBBSManageService;
-import egovframework.let.utl.sim.service.EgovFileScrty;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -53,6 +53,7 @@ import jakarta.validation.Valid;
  *  2009.03.19  이삼섭          최초 생성
  *  2009.06.29  한성곤	       2단계 기능 추가 (댓글관리, 만족도조사)
  *  2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *  2026.10.27  유지보수          게시물 등록/수정/삭제 관리자 전용 (ROLE_USER 는 본인 답글만 수정/삭제)
  *
  *  </pre>
  */
@@ -76,6 +77,31 @@ public class EgovBBSManageController {
 
 	@Resource(name = "egovMessageSource")
 	EgovMessageSource egovMessageSource;
+
+	@Resource(name = "egovPasswordEncoder")
+	private PasswordEncoder passwordEncoder;
+
+	/** 익명게시물 비밀번호를 BCrypt 로 해시한다. */
+	private String encodePassword(String rawPassword) {
+		return (rawPassword == null || rawPassword.isEmpty()) ? null : passwordEncoder.encode(rawPassword);
+	}
+
+	/** DB 에 등록된 게시판 유형이 익명게시판(BBST02)인지 여부 (요청 파라미터의 bbsTyCode 는 신뢰하지 않는다) */
+	private boolean isAnonymousBoard(String bbsId) {
+		if (bbsId == null || bbsId.isEmpty()) {
+			return false;
+		}
+		BoardMaster master = new BoardMaster();
+		master.setBbsId(bbsId);
+		master.setUniqId("ANONYMOUS");
+		BoardMasterVO masterVo = bbsAttrbService.selectBBSMasterInf(master);
+		return masterVo != null && "BBST02".equals(masterVo.getBbsTyCode());
+	}
+
+	/** 입력 비밀번호와 저장된 BCrypt 해시의 일치 여부 */
+	private boolean matchesPassword(String rawPassword, String encodedPassword) {
+		return rawPassword != null && encodedPassword != null && passwordEncoder.matches(rawPassword, encodedPassword);
+	}
 
 	/**
 	 * XSS 방지 처리.
@@ -140,9 +166,7 @@ public class EgovBBSManageController {
 		
 		BoardMasterVO master = bbsAttrbService.selectBBSMasterInf(vo);
 		
-		//-------------------------------
 		// 방명록이면 방명록 URL로 forward
-		//-------------------------------
 		if (master.getBbsTyCode().equals("BBST04")) {
 			return "forward:/cop/bbs/selectGuestList.do";
 		}
@@ -166,20 +190,23 @@ public class EgovBBSManageController {
 
 		paginationInfo.setTotalRecordCount(totCnt);
 
-		//-------------------------------
 		// 기본 BBS template 지정
-		//-------------------------------
 		if (master.getTmplatCours() == null || master.getTmplatCours().equals("")) {
 			master.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 		}
 		////-----------------------------
+
+		// 등록 버튼은 관리자에게만 노출
+		if (!EgovBBSAuthUtil.isAdminUser()) {
+			master.setAuthFlag("N");
+		}
 
 		model.addAttribute("resultList", map.get("resultList"));
 		model.addAttribute("resultCnt", map.get("resultCnt"));
 		model.addAttribute("boardVO", boardVO);
 		model.addAttribute("brdMstrVO", master);
 		model.addAttribute("paginationInfo", paginationInfo);
-		
+
 		return "cop/bbs/EgovNoticeList";
 	}
 
@@ -212,9 +239,7 @@ public class EgovBBSManageController {
 		model.addAttribute("sessionUniqId", user.getUniqId());
 		// 관리자는 무조건 수정/삭제 버튼 노출
 		model.addAttribute("modifyAt", EgovBBSAuthUtil.canShowModifyButtons(vo, user) ? "Y" : "N");
-		//----------------------------
 		// template 처리 (기본 BBS template 지정  포함)
-		//----------------------------
 		BoardMasterVO master = new BoardMasterVO();
 
 		master.setBbsId(boardVO.getBbsId());
@@ -246,6 +271,8 @@ public class EgovBBSManageController {
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
 			return "uat/uia/EgovLoginUsr";
 		}
+		// 게시물 등록은 관리자 전용
+		EgovBBSAuthUtil.assertAdminUser();
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		BoardMasterVO bdMstr = new BoardMasterVO();
 
@@ -258,9 +285,7 @@ public class EgovBBSManageController {
 			model.addAttribute("bdMstr", bdMstr);
 		}
 
-		//----------------------------
 		// 기본 BBS template 지정
-		//----------------------------
 		if (bdMstr.getTmplatCours() == null || bdMstr.getTmplatCours().equals("")) {
 			bdMstr.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 		}
@@ -286,6 +311,9 @@ public class EgovBBSManageController {
 			@Valid @ModelAttribute("board") Board board, BindingResult bindingResult, SessionStatus status, ModelMap model,
 			RedirectAttributes redirectAttributes) {
 
+		// 게시물 등록은 관리자 전용
+		EgovBBSAuthUtil.assertAdminUser();
+
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
@@ -301,9 +329,7 @@ public class EgovBBSManageController {
 
 			model.addAttribute("bdMstr", master);
 
-			//----------------------------
 			// 기본 BBS template 지정
-			//----------------------------
 			if (master.getTmplatCours() == null || master.getTmplatCours().equals("")) {
 				master.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 			}
@@ -371,9 +397,7 @@ public class EgovBBSManageController {
 		model.addAttribute("bdMstr", master);
 		model.addAttribute("result", boardVO);
 
-		//----------------------------
 		// 기본 BBS template 지정
-		//----------------------------
 		if (master.getTmplatCours() == null || master.getTmplatCours().equals("")) {
 			master.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 		}
@@ -414,9 +438,7 @@ public class EgovBBSManageController {
 			model.addAttribute("bdMstr", master);
 			model.addAttribute("result", boardVO);
 
-			//----------------------------
 			// 기본 BBS template 지정
-			//----------------------------
 			if (master.getTmplatCours() == null || master.getTmplatCours().equals("")) {
 				master.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 			}
@@ -496,9 +518,7 @@ public class EgovBBSManageController {
 		model.addAttribute("result", bdvo);
 		model.addAttribute("bdMstr", bmvo);
 
-		//----------------------------
 		// 기본 BBS template 지정
-		//----------------------------
 		if (bmvo.getTmplatCours() == null || bmvo.getTmplatCours().equals("")) {
 			bmvo.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 		}
@@ -924,9 +944,7 @@ public class EgovBBSManageController {
 
 		BoardMasterVO master = bbsAttrbService.selectBBSMasterInf(vo);
 
-		//-------------------------------
 		// 익명게시판이 아니면.. 원래 게시판 URL로 forward
-		//-------------------------------
 		if (!master.getBbsTyCode().equals("BBST02")) {
 			return "forward:/cop/bbs/selectBoardList.do";
 		}
@@ -950,9 +968,7 @@ public class EgovBBSManageController {
 
 		paginationInfo.setTotalRecordCount(totCnt);
 
-		//-------------------------------
 		// 기본 BBS template 지정
-		//-------------------------------
 		if (master.getTmplatCours() == null || master.getTmplatCours().equals("")) {
 			master.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 		}
@@ -993,17 +1009,13 @@ public class EgovBBSManageController {
 			model.addAttribute("bdMstr", bdMstr);
 		}
 
-		//-------------------------------
 		// 익명게시판이 아니면.. 원래 게시판 URL로 forward
-		//-------------------------------
 		if (!bdMstr.getBbsTyCode().equals("BBST02")) {
 			return "forward:/cop/bbs/addBoardArticle.do";
 		}
 		////-----------------------------
 
-		//----------------------------
 		// 기본 BBS template 지정
-		//----------------------------
 		if (bdMstr.getTmplatCours() == null || bdMstr.getTmplatCours().equals("")) {
 			bdMstr.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 		}
@@ -1030,6 +1042,11 @@ public class EgovBBSManageController {
 			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
 			@Valid @ModelAttribute("board") Board board, BindingResult bindingResult, SessionStatus status, ModelMap model) {
 
+		// 익명게시판이 아니면 일반 등록 URL(관리자 권한 검증)로 forward : 유형은 요청값이 아닌 DB 기준
+		if (!isAnonymousBoard(boardVO.getBbsId()) || !isAnonymousBoard(board.getBbsId())) {
+			return "forward:/cop/bbs/insertBoardArticle.do";
+		}
+
 		Boolean isAuthenticated = true;
 
 		if (bindingResult.hasErrors()) {
@@ -1044,17 +1061,13 @@ public class EgovBBSManageController {
 
 			model.addAttribute("bdMstr", master);
 
-			//-------------------------------
 			// 익명게시판이 아니면.. 원래 게시판 URL로 forward
-			//-------------------------------
 			if (!bdMstr.getBbsTyCode().equals("BBST02")) {
 				return "forward:/cop/bbs/insertBoardArticle.do";
 			}
 			////-----------------------------
 
-			//----------------------------
 			// 기본 BBS template 지정
-			//----------------------------
 			if (master.getTmplatCours() == null || master.getTmplatCours().equals("")) {
 				master.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 			}
@@ -1082,7 +1095,7 @@ public class EgovBBSManageController {
 
 			// 익명게시판 관련
 			board.setNtcrNm(board.getNtcrNm());
-			board.setPassword(EgovFileScrty.encryptPassword(board.getPassword(), board.getBbsId()));
+			board.setPassword(encodePassword(board.getPassword()));
 
 			board.setNttCn(unscript(board.getNttCn())); // XSS 방지
 
@@ -1118,9 +1131,7 @@ public class EgovBBSManageController {
 		// 익명게시판은 작성자가 모두 "ANONYMOUS"이므로 기존 노출 조건을 그대로 옮긴다.
 		model.addAttribute("modifyAt", "ANONYMOUS".equals(vo.getFrstRegisterId()) ? "Y" : "N");
 
-		//----------------------------
 		// template 처리 (기본 BBS template 지정  포함)
-		//----------------------------
 		BoardMasterVO master = new BoardMasterVO();
 
 		master.setBbsId(boardVO.getBbsId());
@@ -1128,9 +1139,7 @@ public class EgovBBSManageController {
 
 		BoardMasterVO masterVo = bbsAttrbService.selectBBSMasterInf(master);
 
-		//-------------------------------
 		// 익명게시판이 아니면.. 원래 게시판 URL로 forward
-		//-------------------------------
 		if (!masterVo.getBbsTyCode().equals("BBST02")) {
 			return "forward:/cop/bbs/selectBoardArticle.do";
 		}
@@ -1163,9 +1172,7 @@ public class EgovBBSManageController {
 
 		Boolean isAuthenticated = true;
 
-		//--------------------------------------------------
 		// 마스터 정보 얻기
-		//--------------------------------------------------
 		BoardMasterVO master = new BoardMasterVO();
 
 		master.setBbsId(boardVO.getBbsId());
@@ -1173,21 +1180,14 @@ public class EgovBBSManageController {
 
 		BoardMasterVO masterVo = bbsAttrbService.selectBBSMasterInf(master);
 
-		//-------------------------------
 		// 익명게시판이 아니면.. 원래 게시판 URL로 forward
-		//-------------------------------
 		if (!masterVo.getBbsTyCode().equals("BBST02")) {
 			return "forward:/cop/bbs/deleteBoardArticle.do";
 		}
 		////-----------------------------
 
-		//-------------------------------
 		// 패스워드 비교
-		//-------------------------------
-		String dbpassword = bbsMngService.getPasswordInf(board);
-		String enpassword = EgovFileScrty.encryptPassword(board.getPassword(), board.getBbsId());
-
-		if (!dbpassword.equals(enpassword)) {
+		if (!matchesPassword(board.getPassword(), bbsMngService.getPasswordInf(board))) {
 
 			model.addAttribute("msg", egovMessageSource.getMessage("cop.password.not.same.msg"));
 
@@ -1233,21 +1233,14 @@ public class EgovBBSManageController {
 		if (isAuthenticated) {
 			bmvo = bbsAttrbService.selectBBSMasterInf(master);
 
-			//-------------------------------
 			// 익명게시판이 아니면.. 원래 게시판 URL로 forward
-			//-------------------------------
 			if (!bmvo.getBbsTyCode().equals("BBST02")) {
 				return "forward:/cop/bbs/forUpdateBoardArticle.do";
 			}
 			////-----------------------------
 
-			//-------------------------------
 			// 패스워드 비교
-			//-------------------------------
-			String dbpassword = bbsMngService.getPasswordInf(boardVO);
-			String enpassword = EgovFileScrty.encryptPassword(boardVO.getPassword(), boardVO.getBbsId());
-
-			if (!dbpassword.equals(enpassword)) {
+			if (!matchesPassword(boardVO.getPassword(), bbsMngService.getPasswordInf(boardVO))) {
 
 				model.addAttribute("msg", egovMessageSource.getMessage("cop.password.not.same.msg"));
 
@@ -1261,9 +1254,7 @@ public class EgovBBSManageController {
 		model.addAttribute("result", bdvo);
 		model.addAttribute("bdMstr", bmvo);
 
-		//----------------------------
 		// 기본 BBS template 지정
-		//----------------------------
 		if (bmvo.getTmplatCours() == null || bmvo.getTmplatCours().equals("")) {
 			bmvo.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 		}
@@ -1307,9 +1298,7 @@ public class EgovBBSManageController {
 
 			bmvo = bbsAttrbService.selectBBSMasterInf(master);
 
-			//-------------------------------
 			// 익명게시판이 아니면.. 원래 게시판 URL로 forward
-			//-------------------------------
 			if (!bdMstr.getBbsTyCode().equals("BBST02")) {
 				return "forward:/cop/bbs/updateBoardArticle.do";
 			}
@@ -1323,6 +1312,21 @@ public class EgovBBSManageController {
 			model.addAttribute("anonymous", "true");
 
 			return "cop/bbs/EgovNoticeUpdt";
+		}
+
+		// 게시판 유형은 요청값이 아닌 DB 기준으로 확인
+		BoardMaster master = new BoardMaster();
+		master.setBbsId(board.getBbsId());
+		master.setUniqId("ANONYMOUS");
+		BoardMasterVO masterVo = bbsAttrbService.selectBBSMasterInf(master);
+		if (masterVo == null || !"BBST02".equals(masterVo.getBbsTyCode())) {
+			return "forward:/cop/bbs/updateBoardArticle.do";
+		}
+
+		// 작성 비밀번호 확인 후 수정 허용
+		if (!matchesPassword(board.getPassword(), bbsMngService.getPasswordInf(board))) {
+			model.addAttribute("msg", egovMessageSource.getMessage("cop.password.not.same.msg"));
+			return "forward:/cop/bbs/anonymous/selectBoardArticle.do";
 		}
 
 		if (isAuthenticated) {
@@ -1345,7 +1349,7 @@ public class EgovBBSManageController {
 
 			// 익명게시판 관련
 			board.setNtcrNm(board.getNtcrNm());
-			board.setPassword(EgovFileScrty.encryptPassword(board.getPassword(), board.getBbsId()));
+			board.setPassword(encodePassword(board.getPassword()));
 
 			board.setNttCn(unscript(board.getNttCn())); // XSS 방지
 
@@ -1374,9 +1378,7 @@ public class EgovBBSManageController {
 
 		master = bbsAttrbService.selectBBSMasterInf(vo);
 
-		//-------------------------------
 		// 익명게시판이 아니면.. 원래 게시판 URL로 forward
-		//-------------------------------
 		if (!master.getBbsTyCode().equals("BBST02")) {
 			return "forward:/cop/bbs/addReplyBoardArticle.do";
 		}
@@ -1385,9 +1387,7 @@ public class EgovBBSManageController {
 		model.addAttribute("bdMstr", master);
 		model.addAttribute("result", boardVO);
 
-		//----------------------------
 		// 기본 BBS template 지정
-		//----------------------------
 		if (master.getTmplatCours() == null || master.getTmplatCours().equals("")) {
 			master.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 		}
@@ -1414,6 +1414,11 @@ public class EgovBBSManageController {
 			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
 			@Valid @ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model, SessionStatus status) {
 
+		// 익명게시판이 아니면 일반 답글 URL(로그인 사용자 기준)로 forward : 유형은 요청값이 아닌 DB 기준
+		if (!isAnonymousBoard(boardVO.getBbsId()) || !isAnonymousBoard(board.getBbsId())) {
+			return "forward:/cop/bbs/replyBoardArticle.do";
+		}
+
 		Boolean isAuthenticated = true;
 
 		if (bindingResult.hasErrors()) {
@@ -1425,9 +1430,7 @@ public class EgovBBSManageController {
 
 			master = bbsAttrbService.selectBBSMasterInf(vo);
 
-			//-------------------------------
 			// 익명게시판이 아니면.. 원래 게시판 URL로 forward
-			//-------------------------------
 			if (!master.getBbsTyCode().equals("BBST02")) {
 				return "forward:/cop/bbs/replyBoardArticle.do";
 			}
@@ -1436,9 +1439,7 @@ public class EgovBBSManageController {
 			model.addAttribute("bdMstr", master);
 			model.addAttribute("result", boardVO);
 
-			//----------------------------
 			// 기본 BBS template 지정
-			//----------------------------
 			if (master.getTmplatCours() == null || master.getTmplatCours().equals("")) {
 				master.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 			}
@@ -1470,7 +1471,7 @@ public class EgovBBSManageController {
 
 			// 익명게시판 관련
 			board.setNtcrNm(board.getNtcrNm());
-			board.setPassword(EgovFileScrty.encryptPassword(board.getPassword(), board.getBbsId()));
+			board.setPassword(encodePassword(board.getPassword()));
 
 			board.setNttCn(unscript(board.getNttCn())); // XSS 방지
 

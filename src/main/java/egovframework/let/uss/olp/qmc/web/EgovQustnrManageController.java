@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import egovframework.com.cmm.util.EgovOwnerAuthUtil;
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.com.cmm.ComDefaultVO;
@@ -78,6 +79,8 @@ public class EgovQustnrManageController {
 
 		String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
 		if (sCmd.equals("del")) {
+			// 등록자 본인만 삭제 가능
+			EgovOwnerAuthUtil.assertOwner(EgovOwnerAuthUtil.frstRegisterIdOf(egovQustnrManageService.selectQustnrManageDetail(qustnrManageVO)));
 			egovQustnrManageService.deleteQustnrManage(qustnrManageVO);
 		}
 
@@ -125,6 +128,8 @@ public class EgovQustnrManageController {
 		
 		String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
 		if (sCmd.equals("del")) {
+			// 등록자 본인만 삭제 가능
+			EgovOwnerAuthUtil.assertOwner(EgovOwnerAuthUtil.frstRegisterIdOf(egovQustnrManageService.selectQustnrManageDetail(qustnrManageVO)));
 			egovQustnrManageService.deleteQustnrManage(qustnrManageVO);
 		}
 
@@ -172,6 +177,8 @@ public class EgovQustnrManageController {
 		String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
 
 		if (sCmd.equals("del")) {
+			// 등록자 본인만 삭제 가능
+			EgovOwnerAuthUtil.assertOwner(EgovOwnerAuthUtil.frstRegisterIdOf(egovQustnrManageService.selectQustnrManageDetail(qustnrManageVO)));
 			egovQustnrManageService.deleteQustnrManage(qustnrManageVO);
 			sLocationUrl = "redirect:/uss/olp/qmc/EgovQustnrManageList.do";
 		} else {
@@ -182,6 +189,8 @@ public class EgovQustnrManageController {
 			model.addAttribute("comCode034", cmmUseService.selectCmmCodeDetail(voComCode));
 
 			model.addAttribute("resultList", egovQustnrManageService.selectQustnrManageDetail(qustnrManageVO));
+			// 수정/삭제 버튼은 등록자 본인에게만 노출
+			model.addAttribute("ownerAt", EgovOwnerAuthUtil.ownerAt(EgovOwnerAuthUtil.frstRegisterIdOf(model.get("resultList"))));
 		}
 
 		return sLocationUrl;
@@ -212,6 +221,9 @@ public class EgovQustnrManageController {
 		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 
 		String sLocationUrl = "/uss/olp/qmc/EgovQustnrManageModify";
+
+		// 등록자 본인만 수정 가능
+		EgovOwnerAuthUtil.assertOwner(EgovOwnerAuthUtil.frstRegisterIdOf(egovQustnrManageService.selectQustnrManageDetail(qustnrManageVO)));
 
 		String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
 

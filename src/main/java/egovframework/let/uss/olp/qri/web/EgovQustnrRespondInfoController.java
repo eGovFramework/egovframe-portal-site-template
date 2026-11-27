@@ -85,17 +85,12 @@ public class EgovQustnrRespondInfoController {
 	public String EgovQustnrRespondInfoManageTemplate(@ModelAttribute("searchVO") ComDefaultVO searchVO,
 			HttpServletRequest request, @RequestParam Map<String, Object> commandMap, ModelMap model) {
 
-		// templateUrl이 검증 없이 Spring 뷰네임으로 그대로 반환되면 forward:/redirect: 접두사를 통해
-		// WEB-INF 내부 자원 열람이나 FORWARD 기반 보안 필터 우회로 이어질 수 있으므로,
-		// 애플리케이션의 설문템플릿 뷰 네임스페이스 내부 값만 허용한다.
+		// templateUrl 은 설문템플릿 뷰 네임스페이스 값만 허용 (forward:/redirect: 우회 방지)
 		String sTemplateUrl = (String) commandMap.get("templateUrl");
 		if (!isSafeTemplateView(sTemplateUrl)) {
 			sTemplateUrl = DEFAULT_TEMPLATE_VIEW;
 		}
 
-		// log.debug("qestnrId=>" + commandMap.get("qestnrId"));
-		// log.debug("qestnrTmplatId=>" + commandMap.get("qestnrTmplatId"));
-		// log.debug("templateUrl=>" + commandMap.get("templateUrl"));
 
 		// 설문템플릿정보
 		model.addAttribute("QustnrTmplatManage", egovQustnrRespondInfoService.selectQustnrTmplatManage(commandMap));
@@ -123,10 +118,7 @@ public class EgovQustnrRespondInfoController {
 		model.addAttribute("qestnrStatistic2",
 				egovQustnrRespondInfoService.selectQustnrRespondInfoManageStatistics2(commandMap));
 
-		// 이전 주소
-		// Referer 헤더는 요청자가 임의로 조작할 수 있으므로, JS 문자열(location.href)로 그대로
-		// 출력해도 안전한 내부 상대경로인 경우에만 노출한다. javascript:/data: 등 스킴이나
-		// 외부 URL은 차단하여 반사형 XSS·오픈 리다이렉트를 방지한다.
+		// 이전 주소 : 내부 상대경로만 허용 (XSS·오픈 리다이렉트 방지)
 		model.addAttribute("returnUrl", sanitizeReturnUrl(request.getHeader("REFERER")));
 
 		return sTemplateUrl;
@@ -170,10 +162,7 @@ public class EgovQustnrRespondInfoController {
 		model.addAttribute("qestnrStatistic2",
 				egovQustnrRespondInfoService.selectQustnrRespondInfoManageStatistics2(commandMap));
 
-		// 이전 주소
-		// Referer 헤더는 요청자가 임의로 조작할 수 있으므로, JS 문자열(location.href)로 그대로
-		// 출력해도 안전한 내부 상대경로인 경우에만 노출한다. javascript:/data: 등 스킴이나
-		// 외부 URL은 차단하여 반사형 XSS·오픈 리다이렉트를 방지한다.
+		// 이전 주소 : 내부 상대경로만 허용 (XSS·오픈 리다이렉트 방지)
 		model.addAttribute("returnUrl", sanitizeReturnUrl(request.getHeader("REFERER")));
 
 		return sLocationUrl;
@@ -250,17 +239,14 @@ public class EgovQustnrRespondInfoController {
 		String sLocationUrl = "/uss/olp/qnn/EgovQustnrRespondInfoManageRegist";
 
 		String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
-		// log.info("cmd =>" + sCmd);
 
 		// 성별코드조회
 		ComDefaultCodeVO voComCode = new ComDefaultCodeVO();
 		voComCode.setCodeId("COM014");
-		// List listComCode = cmmUseService.selectCmmCodeDetail(voComCode);
 		model.addAttribute("comCode014", cmmUseService.selectCmmCodeDetail(voComCode));
 
 		// 직업코드조회
 		voComCode.setCodeId("COM034");
-		// listComCode = cmmUseService.selectCmmCodeDetail(voComCode);
 		model.addAttribute("comCode034", cmmUseService.selectCmmCodeDetail(voComCode));
 
 		if (sCmd.equals("save")) {
@@ -301,7 +287,6 @@ public class EgovQustnrRespondInfoController {
 						} else {
 							String[] arrVal = (String[]) commandMap.get(key);
 							for (int g = 0; g < arrVal.length; g++) {
-								// ("QQESTN arr :" + arrVal[g]);
 								QustnrRespondInfoVO qustnrRespondInfoVO = new QustnrRespondInfoVO();
 
 								qustnrRespondInfoVO.setQestnrTmplatId((String) commandMap.get("qestnrTmplatId"));

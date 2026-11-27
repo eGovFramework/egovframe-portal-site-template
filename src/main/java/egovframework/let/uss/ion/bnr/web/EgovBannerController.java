@@ -19,6 +19,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import egovframework.com.cmm.util.EgovOwnerAuthUtil;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.annotation.RequireAdmin;
@@ -125,7 +126,10 @@ public class EgovBannerController {
 
 		bannerVO.setBannerId(bannerId);
 
-		model.addAttribute("banner", egovBannerService.selectBanner(bannerVO));
+		BannerVO banner = egovBannerService.selectBanner(bannerVO);
+		model.addAttribute("banner", banner);
+		// 저장/삭제 버튼은 등록자 본인에게만 노출
+		model.addAttribute("ownerAt", EgovOwnerAuthUtil.ownerAt(banner == null ? null : banner.getUserId()));
 		model.addAttribute("message", egovMessageSource.getMessage("success.common.select"));
 
 		return "/uss/ion/bnr/EgovBannerUpdt";
@@ -190,11 +194,13 @@ public class EgovBannerController {
 			}
 			banner.setBannerImage(bannerImage);
 			banner.setBannerImageFile(atchFileId);
-			banner.setUserId(user.getId());
+			// 등록자 본인 여부 판단을 위해 고유ID(uniqId)로 저장
+			banner.setUserId(user.getUniqId());
 			bannerVO.setBannerId(banner.getBannerId());
 			status.setComplete();
 			model.addAttribute("message", egovMessageSource.getMessage("success.common.insert"));
 			model.addAttribute("banner", egovBannerService.insertBanner(banner, bannerVO));
+			model.addAttribute("ownerAt", "Y");
 
 			return "/uss/ion/bnr/EgovBannerUpdt";
 
@@ -213,8 +219,12 @@ public class EgovBannerController {
 			@Valid @ModelAttribute("banner") Banner banner, BindingResult bindingResult, SessionStatus status,
 			ModelMap model) {
 
+		// 등록자 본인만 수정 가능
+		assertBannerOwner(banner.getBannerId());
+
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("bannerVO", banner);
+			model.addAttribute("ownerAt", "Y");
 			return "/uss/ion/bnr/EgovBannerUpdt";
 		} else {
 
@@ -250,7 +260,7 @@ public class EgovBannerController {
 			}
 
 			LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
-			banner.setUserId(user.getId());
+			banner.setUserId(user.getUniqId());
 
 			egovBannerService.updateBanner(banner);
 
@@ -269,6 +279,9 @@ public class EgovBannerController {
 	@RequestMapping(value = "/uss/ion/bnr/removeBanner.do")
 	public String deleteBanner(@RequestParam("bannerId") String bannerId, @ModelAttribute("banner") Banner banner,
 			SessionStatus status, ModelMap model) {
+
+		// 등록자 본인만 삭제 가능
+		assertBannerOwner(bannerId);
 
 		banner.setBannerId(bannerId);
 		egovBannerService.deleteBanner(banner);
@@ -290,12 +303,17 @@ public class EgovBannerController {
 	public String deleteBannerList(@RequestParam("bannerIds") String bannerIds, @ModelAttribute("banner") Banner banner,
 			SessionStatus status, ModelMap model) {
 
-		// 26.03.24 KISA 보안취약점 조치 : null check 추가
+		// null 방어
 		String[] strBannerIds = bannerIds != null ? bannerIds.split(";") : new String[0];
 
 		if (strBannerIds.length == 0) {
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.delete"));
 			return "forward:/uss/ion/bnr/selectBannerList.do";
+		}
+
+		// 등록자 본인이 아닌 배너가 포함되어 있으면 삭제하지 않음
+		for (int i = 0; i < strBannerIds.length; i++) {
+			assertBannerOwner(strBannerIds[i]);
 		}
 
 		for (int i = 0; i < strBannerIds.length; i++) {
@@ -349,5 +367,17 @@ public class EgovBannerController {
 		model.addAttribute("bannerList", bannerVO.getBannerList());
 
 		return "/uss/ion/bnr/EgovBannerMainList";
+	}
+
+	/**
+	 * 배너의 등록자 본인 여부를 검증한다.
+	 * 
+	 * @param bannerId 배너ID
+	 */
+	private void assertBannerOwner(String bannerId) {
+		BannerVO searchVO = new BannerVO();
+		searchVO.setBannerId(bannerId);
+		BannerVO existing = egovBannerService.selectBanner(searchVO);
+		EgovOwnerAuthUtil.assertOwner(existing == null ? null : existing.getUserId());
 	}
 }

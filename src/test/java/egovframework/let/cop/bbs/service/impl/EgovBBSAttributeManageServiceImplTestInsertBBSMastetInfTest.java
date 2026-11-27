@@ -67,14 +67,11 @@ class EgovBBSAttributeManageServiceImplTestInsertBBSMastetInfTest extends EgovTe
 		// 게시판ID
 		final LocalDateTime now = LocalDateTime.now();
 		final String now2 = now.format(DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ss"));
-//		final String now3 = now.format(DateTimeFormatter.ofPattern("uuuuMMddHHmmssS"));
-//		boardMaster.setBbsId("TEST_" + now3);
 
-		// 게시판유형코드
-		// SELECT A.* FROM LETTCCMMNDETAILCODE AS A WHERE A.CODE_ID = 'COM004';
+		// 게시판유형코드 (COM004)
 		boardMaster.setBbsTyCode("BBST01");
 
-		// SELECT A.* FROM LETTCCMMNDETAILCODE AS A WHERE A.CODE_ID = 'COM009';
+		// 게시판속성코드 (COM009)
 		boardMaster.setBbsAttrbCode("BBSA03");
 
 		// 게시판명

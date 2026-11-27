@@ -321,13 +321,18 @@ function fn_egov_modal_remove() {
 								<!-- 목록/저장버튼  시작-->
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
+                                        <%-- 삭제/암호변경/저장 버튼은 등록자 본인에게만 노출 --%>
+                                        <c:if test="${ownerAt == 'Y'}">
                                         <a href="<c:url value='/uss/umt/mber/EgovMberManage.do'/>" class="btn btn_skyblue_h46 w_100" onclick="fnDeleteMber('<c:out value='${mberManageVO.userTy}'/>:<c:out value='${mberManageVO.uniqId}'/>'); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
                                         <a href="<c:url value='/uss/umt/mber/EgovMberPasswordUpdtView.do'/>" class="btn btn_skyblue_h46 w_100" onclick="fnPasswordMove(); return false;"><spring:message code="button.passwordUpdate" /></a><!-- 암호변경 -->
+                                        </c:if>
                                         <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="javascript:document.mberManageVO.reset();"><spring:message code="button.reset" /></a><!-- 취소 -->
                                     </div>
 
                                     <div class="right_col btn1">
+                                        <c:if test="${ownerAt == 'Y'}">
                                         <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fnUpdate(); return false;"><spring:message code="button.save" /></a><!-- 저장 -->
+                                        </c:if>
                                         <a href="<c:url value='/uss/umt/mber/EgovMberManage.do'/>" class="btn btn_blue_46 w_100" onclick="fnListPage(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
                                     </div>
                                 </div>

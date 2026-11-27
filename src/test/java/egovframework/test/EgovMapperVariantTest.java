@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 class EgovMapperVariantTest {
 
 	private static final Pattern FILE_NAME = Pattern
-			.compile("(.+)_(mysql|oracle|postgres|cubrid|tibero|altibase|hsql)\\.xml$");
+			.compile("(.+)_(mysql|oracle|postgres|cubrid|tibero|altibase|maria|goldilocks|hsql)\\.xml$");
 
 	private static final Pattern STATEMENT_ID = Pattern
 			.compile("<(?:select|insert|update|delete)\\s+id=\"([^\"]+)\"");

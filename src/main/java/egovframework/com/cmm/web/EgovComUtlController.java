@@ -54,7 +54,7 @@ public class EgovComUtlController {
 		String link = "";
 
 		// 화이트 리스트가 비었는지 확인
-		if (egovWhitelist == null || egovWhitelist.isEmpty() || egovWhitelist.size() <= linkIndex) {
+		if (egovWhitelist == null || egovWhitelist.isEmpty() || linkIndex < 0 || egovWhitelist.size() <= linkIndex) {
 
 			LOGGER.debug("Page Link WhiteList Error! Please check whitelist!");
 

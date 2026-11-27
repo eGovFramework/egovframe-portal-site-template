@@ -18,11 +18,7 @@
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
 
-	<!--
-		Tomcat 10 이상의 경우 multipart 사용 시 허용되는 최대 부분 수를 제한하는 구성을 위해 maxPartCount 추가
-		- 10.1 이상 버전부터 도입,  잠재적인 서비스 거부(DoS) 취약점을 해결
-		<Context docBase="" path="/" reloadable="true" maxPartCount="1000">
-	-->
+	<!-- 멀티파트 필터 (Tomcat 10.1+ 는 Context 의 maxPartCount 로 파트 수 제한) -->
 	<filter>
 		<display-name>springMultipartFilter</display-name>
 		<filter-name>springMultipartFilter</filter-name>
@@ -33,11 +29,7 @@
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
 
-	<!--
-		HTMLTagFilter의 경우는 파라미터에 대하여 XSS 오류 방지를 위한 변환을 처리합니다.
-		XSS 보안 위험 방지를 위하여 반드시 설정 하셔야 합니다.
-		(<c:out />의 경우 해당 뷰단의 사용한 곳에 한정하여 데이터 출력시 XSS 방지 처리가 됨)
-	-->
+	<!-- XSS 방지 : 요청 파라미터 HTML 태그 변환 (필수) -->
 	<filter>
 		<filter-name>HTMLTagFilter</filter-name>
 		<filter-class>egovframework.com.cmm.filter.HTMLTagFilter</filter-class>
@@ -122,10 +114,10 @@
 			<param-value>/WEB-INF/config/egovframework/springmvc/*.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
-		<!-- Spring Framework 6.2.8 multipart 설정 -->
+		<!-- 멀티파트 설정 -->
 		<multipart-config>
-			<max-file-size>10485760</max-file-size> <!-- 10MB (globals.properties와 일치) -->
-			<max-request-size>104857600</max-request-size> <!-- 100MB (여러 파일 업로드 고려) -->
+			<max-file-size>10485760</max-file-size> <!-- 10MB -->
+			<max-request-size>104857600</max-request-size> <!-- 100MB -->
 			<file-size-threshold>1048576</file-size-threshold> <!-- 1MB -->
 		</multipart-config>
 	</servlet>
@@ -138,17 +130,11 @@
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
-	<login-config>
-		<auth-method>BASIC</auth-method>
-	</login-config>
-
 	<session-config>
 		<session-timeout>60</session-timeout>
 		<cookie-config>
 			<http-only>true</http-only>
-			<!-- Secure 속성이 true이면 HTTPS가 아닌 연결에서는 브라우저가 세션 쿠키를 전송하지 않아
-			     로컬 HTTP 환경에서 로그인 후 리다이렉트 무한루프가 발생한다. 로컬 개발 시에는 false로
-			     두고, 운영환경은 반드시 HTTPS로 서비스하며 이 값을 true로 변경해야 한다. -->
+			<!-- 로컬 HTTP 개발용 false, 운영(HTTPS)은 true 로 변경 -->
 			<secure>false</secure>
 		</cookie-config>
 		<tracking-mode>COOKIE</tracking-mode>

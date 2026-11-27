@@ -200,7 +200,7 @@
 														<td><c:out value="${result.ntceEndde}" /></td>
 													</c:if>
 													<c:if test="${anonymous != 'true'}">
-														<td>관리자</td>
+														<td><c:out value="${result.frstRegisterNm}" /></td>
 													</c:if>
 													<td>${result.frstRegisterPnttm}</td>
 													<td>${result.inqireCo}</td>

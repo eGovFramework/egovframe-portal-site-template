@@ -63,7 +63,7 @@ public class EgovPasswordResolver {
                         LOGGER.debug("EgovEnvCryptoService.getCryptoConfig().isCrypto(): {}", cryptoEnabled);
                         return cryptoEnabled;
                     }
-                 // 26.03.06 KISA 보안취약점 조치 : 구체적 Exception 추가
+                
                 } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | ClassCastException e2) {
                     LOGGER.debug("getCryptoConfig() 방법도 실패: {}", e2.getMessage());
                 }
@@ -72,7 +72,7 @@ public class EgovPasswordResolver {
                 LOGGER.debug("crypto 설정을 확인할 수 없어 기본값으로 암호화 사용");
                 return true;
             }
-         // 26.03.06 KISA 보안취약점 조치 : 구체적 Exception 추가
+        
         } catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | ClassCastException e) {
             LOGGER.error("EgovEnvCryptoService를 통한 crypto 설정 확인 오류: {}", e.getMessage());
             return true; // 오류 시 암호화 사용 (기본값)
@@ -103,7 +103,7 @@ public class EgovPasswordResolver {
                 try {
                     String decryptedValue = cryptoService.decrypt(passwordValue);
                     return decryptedValue;
-                } catch (RuntimeException e) { // 26.03.06 KISA 보안취약점 조치 : 구체적 Exception 추가
+                } catch (RuntimeException e) {
                     LOGGER.error("패스워드 복호화 실패: {} - {}", propertyKey, e.getMessage());
                     return passwordValue;
                 }
@@ -112,7 +112,7 @@ public class EgovPasswordResolver {
                 return passwordValue;
             }
             
-        } catch (RuntimeException e) { // 26.03.06 KISA 보안취약점 조치 : 구체적 Exception 추가
+        } catch (RuntimeException e) {
             LOGGER.error("패스워드 해결 중 오류 발생: {} - {}", propertyKey, e.getMessage());
             // 오류 발생 시 원본 값 반환
             return EgovProperties.getProperty(propertyKey);

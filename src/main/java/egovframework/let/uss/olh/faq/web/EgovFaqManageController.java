@@ -202,7 +202,7 @@ public class EgovFaqManageController {
      * @param model
      * @return	"/uss/olh/faq/EgovFaqCnRegist"
      */
-    // 26.08.18 보안취약점 조치 : FAQ는 관리자가 관리하는 공용 안내 콘텐츠이므로 관리자 전용으로 제한한다.
+    // FAQ 는 관리자 전용 콘텐츠
     @RequireAdmin
     @RequestMapping("/uss/olh/faq/FaqCnRegistView.do")
     public String insertFaqCnView(
@@ -226,7 +226,7 @@ public class EgovFaqManageController {
      * @param bindingResult
      * @return	"forward:/uss/olh/faq/FaqListInqire.do"
      */
-    // 26.08.18 보안취약점 조치 : 관리자 전용으로 제한.
+    // 관리자 전용
     @RequireAdmin
     @RequestMapping("/uss/olh/faq/FaqCnRegist.do")
     public String insertFaqCn(
@@ -265,8 +265,8 @@ public class EgovFaqManageController {
             }
         }
 
-        // 리턴받은 첨부파일ID를 셋팅한다..
-        faqManageVO.setAtchFileId(_atchFileId); // 첨부파일 ID
+        // 리턴받은 첨부파일ID를 셋팅한다.. (첨부 없으면 NULL : '' 는 LETTNFILE FK 위반)
+        faqManageVO.setAtchFileId(_atchFileId.isEmpty() ? null : _atchFileId); // 첨부파일 ID
 
         // 로그인VO에서 사용자 정보 가져오기
         LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
@@ -289,7 +289,7 @@ public class EgovFaqManageController {
      * @param model
      * @return	"/uss/olh/faq/EgovFaqCnUpdt"
      */
-    // 26.08.18 보안취약점 조치 : 관리자 전용으로 제한.
+    // 관리자 전용
     @RequireAdmin
     @RequestMapping("/uss/olh/faq/FaqCnUpdtView.do")
     public String updateFaqCnView(@RequestParam("faqId") String faqId ,
@@ -325,7 +325,7 @@ public class EgovFaqManageController {
      * @param model
      * @return	"forward:/uss/olh/faq/FaqListInqire.do"
      */
-    // 26.08.18 보안취약점 조치 : 관리자 전용으로 제한. 기존에는 인증·소유자 검증이 모두 없었다.
+    // 관리자 전용
     @RequireAdmin
     @RequestMapping("/uss/olh/faq/FaqCnUpdt.do")
     public String updateFaqCn(@RequestParam("atchFileAt") String atchFileAt ,
@@ -375,6 +375,11 @@ public class EgovFaqManageController {
 		}
 		// 첨부파일 관련 ID 생성 end...
 
+		// 첨부 없으면 NULL : 폼의 빈 atchFileId('')는 LETTNFILE FK 위반
+		if (faqManageVO.getAtchFileId() != null && faqManageVO.getAtchFileId().isEmpty()) {
+			faqManageVO.setAtchFileId(null);
+		}
+
 
     	// 로그인VO에서  사용자 정보 가져오기
     	LoginVO	loginVO = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
@@ -395,7 +400,7 @@ public class EgovFaqManageController {
      * @param searchVO
      * @return	"forward:/uss/olh/faq/FaqListInqire.do"
      */
-    // 26.08.18 보안취약점 조치 : 관리자 전용으로 제한. 기존에는 인증 검증이 없어 익명 삭제가 가능했다.
+    // 관리자 전용
     @RequireAdmin
     @RequestMapping("/uss/olh/faq/FaqCnDelete.do")
     public String deleteFaqCn(

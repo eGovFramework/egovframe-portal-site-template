@@ -91,17 +91,14 @@ public class EgovFileMngUtil {
 		    file = entry.getValue();
 		    String orginFileName = file.getOriginalFilename();
 
-		    //--------------------------------------
 		    // 원 파일명이 없는 경우 처리
 		    // (첨부가 되지 않은 input file type)
-		    //--------------------------------------
 		    if ("".equals(orginFileName)) {
 		    	continue;
 		    }
 		    ////------------------------------------
 
 		    int index = orginFileName.lastIndexOf(".");
-		    //String fileName = orginFileName.substring(0, index);
 		    String fileExt = orginFileName.substring(index + 1);
 		    String newName = KeyStr + EgovStringUtil.getTimeStamp() + fileKey;
 		    long _size = file.getSize();

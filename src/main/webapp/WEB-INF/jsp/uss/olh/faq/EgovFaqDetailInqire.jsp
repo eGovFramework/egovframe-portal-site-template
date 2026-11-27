@@ -49,10 +49,7 @@ function fn_egov_inqire_faqlist() {
 	document.FaqManageForm.submit();
 }
 
-/* ********************************************************
- * 26.08.18 보안취약점 조치 : FAQ 수정/삭제는 관리자 전용 기능이므로
- * 사용자 화면의 호출 함수를 제거한다. 관리자는 /uss/olh/faq/admin/ 화면을 사용한다.
- ******************************************************** */
+// FAQ 수정/삭제는 관리자 화면(/uss/olh/faq/admin/)에서 처리
 
 </script>
 </head>
@@ -87,8 +84,7 @@ function fn_egov_inqire_faqlist() {
                                 </div>
                                 <!--// Location -->
 
-								<!-- 26.08.18 보안취약점 조치 : 기본 action이 관리자 전용이 된 FaqCnUpdtView.do를
-								     가리키고 있어, 실제 사용처(목록 이동)와 동일한 URL로 교정한다. -->
+								<!-- 기본 action : 목록 이동 -->
 								<form name="FaqManageForm" action="${pageContext.request.contextPath}/uss/olh/faq/FaqListInqire.do" method="post">
 								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 
@@ -154,7 +150,7 @@ function fn_egov_inqire_faqlist() {
 									<!-- 목록/저장버튼  시작-->
                                     <div class="board_view_bot">
                                         <div class="left_col btn3">
-                                            <!-- 26.08.18 보안취약점 조치 : FAQ 수정/삭제는 관리자 전용 기능이므로 사용자 화면에서 제거 -->
+                                            <!-- FAQ 수정/삭제는 관리자 화면에서 처리 -->
                                         </div>
 
                                         <div class="right_col btn1">

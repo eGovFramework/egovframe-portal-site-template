@@ -240,7 +240,6 @@ public class EgovMultipartResolver extends StandardServletMultipartResolver {
 	 */
 	@Override
 	public void cleanupMultipart(MultipartHttpServletRequest request) {
-		// 26.03.06 KISA 보안취약점 조치 : 불필요한 try-catch 제거
 		super.cleanupMultipart(request);
 		LOGGER.debug("Multipart cleanup completed successfully");
 	}

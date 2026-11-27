@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
+import egovframework.com.cmm.util.EgovOwnerAuthUtil;
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.service.EgovCmmUseService;
@@ -142,7 +143,6 @@ public class EgovBBSAttributeManageController {
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		LoginVO user = null;
 
-		// 26.03.06 KISA 보안취약점 조치 : 불필요한 try-catch 제거
 		if (isAuthenticated) {
 			user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		}
@@ -214,6 +214,8 @@ public class EgovBBSAttributeManageController {
 		BoardMasterVO vo = bbsAttrbService.selectBBSMasterInf(searchVO);
 
 		model.addAttribute("result", vo);
+		// 저장/삭제 버튼은 등록자 본인에게만 노출
+		model.addAttribute("ownerAt", EgovOwnerAuthUtil.ownerAt(vo == null ? null : vo.getFrstRegisterId()));
 
 		String flag = propertyService.getString("Globals.addedOptions");
 		if (flag != null && flag.trim().equalsIgnoreCase("true")) {
@@ -235,10 +237,14 @@ public class EgovBBSAttributeManageController {
 	public String updateBBSMasterInf(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO,
 			@Valid @ModelAttribute("boardMaster") BoardMaster boardMaster, BindingResult bindingResult, ModelMap model) {
 
+		// 등록자 본인만 수정 가능
+		assertBBSMasterOwner(boardMasterVO);
+
 		if (bindingResult.hasErrors()) {
 			BoardMasterVO vo = bbsAttrbService.selectBBSMasterInf(boardMasterVO);
 
 			model.addAttribute("result", vo);
+			model.addAttribute("ownerAt", EgovOwnerAuthUtil.ownerAt(vo == null ? null : vo.getFrstRegisterId()));
 
 			return "cop/bbs/EgovBoardMstrUpdt";
 		}
@@ -247,7 +253,6 @@ public class EgovBBSAttributeManageController {
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		LoginVO user = null;
 
-		// 26.03.06 KISA 보안취약점 조치 : 불필요한 try-catch 제거
 		if (isAuthenticated) {
 			user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		}
@@ -281,6 +286,9 @@ public class EgovBBSAttributeManageController {
 	 */
 	@PostMapping("/cop/bbs/DeleteBBSMasterInf.do")
 	public String deleteBBSMasterInf(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @ModelAttribute("boardMaster") BoardMaster boardMaster, SessionStatus status) {
+
+		// 등록자 본인만 삭제 가능
+		assertBBSMasterOwner(boardMasterVO);
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -575,5 +583,15 @@ public class EgovBBSAttributeManageController {
 		model.addAttribute("resultList", result);
 
 		return "cop/bbs/EgovBdListPortlet";
+	}
+
+	/**
+	 * 게시판 마스터의 등록자 본인 여부를 검증한다.
+	 *
+	 * @param boardMasterVO
+	 */
+	private void assertBBSMasterOwner(BoardMasterVO boardMasterVO) {
+		BoardMasterVO existing = bbsAttrbService.selectBBSMasterInf(boardMasterVO);
+		EgovOwnerAuthUtil.assertOwner(existing == null ? null : existing.getFrstRegisterId());
 	}
 }

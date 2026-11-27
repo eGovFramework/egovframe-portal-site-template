@@ -517,7 +517,6 @@ public class EgovDateUtil {
 		long rand = ((r.nextLong() >>> 1) % (endDate.getTimeInMillis() - beginDate.getTimeInMillis() + 1)) + beginDate.getTimeInMillis();
 
 		GregorianCalendar cal = new GregorianCalendar();
-		//SimpleDateFormat calformat = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat calformat = new SimpleDateFormat("yyyyMMdd", Locale.ENGLISH);
 		cal.setTimeInMillis(rand);
 		randomDate = calformat.format(cal.getTime());

@@ -170,7 +170,7 @@ function fncGroupDelete() {
 								<!-- 목록/저장버튼  시작-->
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
-                                    	<c:if test="${registerFlag == 'UPDATE'}">
+                                    	<c:if test="${registerFlag == 'UPDATE' and ownerAt == 'Y'}">
                                         <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="javascript:fncGroupDelete()" style="selector-dummy:expression(this.hideFocus=false);">삭제</a><!-- 삭제 -->
                                         </c:if>
                                     </div>
@@ -179,7 +179,7 @@ function fncGroupDelete() {
                                     	<c:if test="${registerFlag == 'INSERT'}">
                                         <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncGroupInsert()" style="selector-dummy:expression(this.hideFocus=false);">저장</a><!-- 저장 -->
                                         </c:if>
-                                        <c:if test="${registerFlag == 'UPDATE'}">
+                                        <c:if test="${registerFlag == 'UPDATE' and ownerAt == 'Y'}">
                                         <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncGroupUpdate()" style="selector-dummy:expression(this.hideFocus=false);">저장</a><!-- 저장 -->
                                         </c:if>
                                         <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncSelectGroupList()" style="selector-dummy:expression(this.hideFocus=false);">목록</a><!-- 목록 -->

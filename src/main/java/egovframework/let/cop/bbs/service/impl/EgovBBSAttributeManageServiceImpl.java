@@ -61,9 +61,7 @@ public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl i
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertyService;
 
-	// ---------------------------------
 	// 2009.06.26 : 2단계 기능 추가
-	// ---------------------------------
 	@Resource(name = "BBSAddedOptionsDAO")
 	private BBSAddedOptionsDAO addedOptionsDAO;
 	//// -------------------------------
@@ -101,9 +99,7 @@ public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl i
 
 		attrbMngDAO.insertBBSMasterInf(boardMaster);
 
-		// ---------------------------------
 		// 2009.06.26 : 2단계 기능 추가
-		// ---------------------------------
 		if (boardMaster.getOption().equals("comment") || boardMaster.getOption().equals("stsfdg")) {
 			addedOptionsDAO.insertAddedOptionsInf(boardMaster);
 		}
@@ -174,10 +170,6 @@ public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl i
 	 * @see egovframework.let.cop.bbs.brd.service.EgovBBSAttributeManageService#selectBBSMasterInf(egovframework.let.cop.bbs.brd.service.BoardMasterVO)
 	 */
 	public BoardMasterVO selectBBSMasterInf(BoardMaster searchVO) {
-		// ---------------------------------
-		// 2009.06.26 : 2단계 기능 추가
-		// ---------------------------------
-		// return attrbMngDAO.selectBBSMasterInf(searchVO);
 
 		BoardMasterVO result = attrbMngDAO.selectBBSMasterInf(searchVO);
 
@@ -228,9 +220,7 @@ public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl i
 	public void updateBBSMasterInf(BoardMaster boardMaster) {
 		attrbMngDAO.updateBBSMasterInf(boardMaster);
 
-		// ---------------------------------
 		// 2009.06.26 : 2단계 기능 추가
-		// ---------------------------------
 		String flag = propertyService.getString("Globals.addedOptions");
 		if (flag != null && flag.trim().equalsIgnoreCase("true")) {
 			if (boardMaster.getOption().equals("na")) {
@@ -243,7 +233,6 @@ public class EgovBBSAttributeManageServiceImpl extends EgovAbstractServiceImpl i
 				addedOptionsDAO.insertAddedOptionsInf(boardMaster);
 			} else {
 				// 수정 기능 제외 (새롭게 선택사항을 지정한 insert만 처리함)
-				// addedOptionsDAO.updateAddedOptionsInf(boardMaster);
 				LOGGER.debug("BBS Master update ignored...");
 			}
 		}

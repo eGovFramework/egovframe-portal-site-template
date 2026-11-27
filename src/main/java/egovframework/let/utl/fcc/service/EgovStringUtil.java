@@ -54,7 +54,6 @@ public class EgovStringUtil {
     /**
      * <p>Padding을 할 수 있는 최대 수치</p>
      */
-    // private static final int PAD_LIMIT = 8192;
     /**
      * <p>An array of <code>String</code>s used for padding.</p>
      * <p>Used for efficient space padding. The length of each String expands as needed.</p>
@@ -375,7 +374,6 @@ public class EgovStringUtil {
      *</pre>
      */
     public static String nullConvert(Object src) {
-	//if (src != null && src.getClass().getName().equals("java.math.BigDecimal")) {
 	if (src != null && src instanceof java.math.BigDecimal) {
 	    return ((BigDecimal)src).toString();
 	}
@@ -501,9 +499,7 @@ public class EgovStringUtil {
 				case ' ':
 					strTxt.append("&nbsp;");
 					break;
-				//case '&' :
-				//strTxt.append("&amp;");
-				//break;
+				// '&' 는 치환하지 않음
 				default:
 					strTxt.append(chrBuff);
 			}

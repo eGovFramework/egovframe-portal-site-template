@@ -5,6 +5,7 @@
 
 
     <resultMap id="role" type="egovframework.let.sec.rmt.service.RoleManageVO">
+        <result property="frstRegisterId" column="FRST_REGISTER_ID"/>
         <result property="roleCode" column="ROLE_CODE"/>
         <result property="roleNm" column="ROLE_NM"/>
         <result property="rolePtn" column="ROLE_PTTRN"/>
@@ -17,7 +18,7 @@
 
     <select id="selectRole" resultMap="role">
         
-            SELECT ROLE_CODE, 
+            SELECT ROLE_CODE, FRST_REGISTER_ID, 
                    ROLE_NM, 
                    ROLE_PTTRN, 
                    ROLE_DC, 
@@ -53,6 +54,7 @@
 		
 			INSERT INTO LETTNROLEINFO 
 				  ( ROLE_CODE
+				  , FRST_REGISTER_ID
 				  , ROLE_NM
                   , ROLE_PTTRN
                   , ROLE_DC
@@ -60,12 +62,13 @@
 				  , ROLE_SORT
 				  , ROLE_CREAT_DE )
 		   VALUES ( #{roleCode}
+			      , #{frstRegisterId}
 			      , #{roleNm}
 				  , #{rolePtn}
                   , #{roleDc}
                   , #{roleTyp}
                   , #{roleSort}
-				  , CURRENT_TIMESTAMP)
+				  , TO_CHAR(CURRENT_TIMESTAMP, 'YYYY-MM-DD HH24:MI:SS'))
 		
 	</insert>
 
@@ -77,7 +80,7 @@
                  , ROLE_DC=#{roleDc}
                  , ROLE_TY=#{roleTyp}
                  , ROLE_SORT=#{roleSort}
-				 , ROLE_CREAT_DE=CURRENT_TIMESTAMP
+				 , ROLE_CREAT_DE=TO_CHAR(CURRENT_TIMESTAMP, 'YYYY-MM-DD HH24:MI:SS')
 		  	 WHERE ROLE_CODE=#{roleCode}
 		
 	</update>

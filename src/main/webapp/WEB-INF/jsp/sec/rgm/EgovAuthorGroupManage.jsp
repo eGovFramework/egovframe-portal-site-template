@@ -44,10 +44,10 @@ function fncCheckAll() {
         if(checkField) {
             if(checkField.length > 1) {
                 for(var i=0; i < checkField.length; i++) {
-                    checkField[i].checked = true;
+                    checkField[i].checked = !checkField[i].disabled;
                 }
             } else {
-                checkField.checked = true;
+                checkField.checked = !checkField.disabled;
             }
         }
     } else {
@@ -350,7 +350,8 @@ function press() {
                                             <tr>
                                                 <td>
                                                     <span class="f_chk_only">
-                                                        <input type="checkbox" name="delYn" class="check2" title="선택">
+                                                        <%-- 이미 할당된 권한은 등록자 본인만 수정/삭제 가능 --%>
+                                                        <input type="checkbox" name="delYn" class="check2" title="선택"<c:if test="${authorGroup.regYn == 'Y' and authorGroup.frstRegisterId != loginUniqId}"> disabled="disabled"</c:if>>
                                                         <input type="hidden" name="checkId" value="<c:out value="${authorGroup.uniqId}"/>"/>
                                                     </span>
                                                 </td>

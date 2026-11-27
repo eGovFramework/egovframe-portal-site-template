@@ -6,13 +6,13 @@ import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.egovframe.rte.fdl.cmmn.exception.BaseRuntimeException;
 import org.egovframe.rte.fdl.cmmn.exception.FdlException;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import egovframework.let.cop.bbs.util.EgovBBSAuthUtil;
 import egovframework.let.uss.olh.qna.service.EgovQnaManageService;
 import egovframework.let.uss.olh.qna.service.QnaManageDefaultVO;
 import egovframework.let.uss.olh.qna.service.QnaManageVO;
-import egovframework.let.utl.sim.service.EgovFileScrty;
 import jakarta.annotation.Resource;
 
 /**
@@ -43,6 +43,10 @@ public class EgovQnaManageServiceImpl extends EgovAbstractServiceImpl implements
     /** ID Generation */
 	@Resource(name="egovQnaManageIdGnrService")
 	private EgovIdGnrService idgenService;
+
+	/** 작성비밀번호 해시(BCrypt) */
+	@Resource(name="egovPasswordEncoder")
+	private PasswordEncoder passwordEncoder;
 
 
     /**
@@ -105,11 +109,8 @@ public class EgovQnaManageServiceImpl extends EgovAbstractServiceImpl implements
 
 		vo.setQaId(qaId);
 
-		// 26.08.19 조치 : 작성비밀번호는 qaId를 salt로 사용해 해시한다.
-		// salt가 되는 qaId가 이 시점에 채번되므로 해싱을 컨트롤러가 아닌 여기에서 수행한다.
-		// deprecated된 EgovFileScrty.encryptPassword(String) 대신 salt 지정 버전을 사용한다.
-		if (vo.getWritngPassword() != null) {
-			vo.setWritngPassword(EgovFileScrty.encryptPassword(vo.getWritngPassword(), qaId));
+		if (vo.getWritngPassword() != null && !vo.getWritngPassword().isEmpty()) {
+			vo.setWritngPassword(passwordEncoder.encode(vo.getWritngPassword()));
 		}
 
     	qnaManageDAO.insertQnaCn(vo);
@@ -118,11 +119,13 @@ public class EgovQnaManageServiceImpl extends EgovAbstractServiceImpl implements
     /**
 	 * 작성비밀번호를 확인한다.
 	 * @param vo
-	 * @return 글 총 갯수
+	 * @return 일치 여부
 	 */
     @Override
-	public int selectQnaPasswordConfirmCnt(QnaManageVO vo) {
-		return qnaManageDAO.selectQnaPasswordConfirmCnt(vo);
+	public boolean checkQnaPassword(QnaManageVO vo) {
+		QnaManageVO stored = qnaManageDAO.selectQnaListDetail(vo);
+		return stored != null && vo.getWritngPassword() != null && stored.getWritngPassword() != null
+				&& passwordEncoder.matches(vo.getWritngPassword(), stored.getWritngPassword());
 	}
 
 	/**
@@ -148,9 +151,7 @@ public class EgovQnaManageServiceImpl extends EgovAbstractServiceImpl implements
     }
 
 	/**
-	 * 26.08.19 조치 : updateQnaCn/deleteQnaCn SQL에 추가된 소유자 방어 조건
-	 * (AND FRST_REGISTER_ID = #{lastUpdusrId})은 관리자에게는 적용되면 안 된다.
-	 * mngrAt이 설정되지 않으면 기본값 "N"이 유지되어 관리자도 타인 글을 수정/삭제할 수 없다.
+	 * 관리자는 updateQnaCn/deleteQnaCn 의 소유자 조건(FRST_REGISTER_ID)을 면제한다.
 	 *
 	 * @param vo
 	 */

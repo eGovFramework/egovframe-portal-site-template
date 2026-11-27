@@ -20,13 +20,13 @@
 	<select id="selectIndvdlInfoPolicy" parameterType="comDefaultVO" resultType="egovMap">
 	 
 		SELECT
-		A.INDVDL_INFO_POLICY_ID indvdlInfoId,
-		A.INDVDL_INFO_POLICY_NM indvdlInfoNm,
-		A.INDVDL_INFO_POLICY_CN indvdlInfoDc,
-		A.INDVDL_INFO_POLICY_AGRE_AT indvdlInfoYn,
-		A.FRST_REGISTER_ID frstRegisterId,
-		TO_CHAR(A.FRST_REGIST_PNTTM, 'YYYY-MM-DD') frstRegistPnttm,
-		(SELECT MBER_NM FROM LETTNGNRLMBER WHERE ESNTL_ID = A.FRST_REGISTER_ID) frstRegisterNm 
+		A.INDVDL_INFO_POLICY_ID "indvdlInfoId",
+		A.INDVDL_INFO_POLICY_NM "indvdlInfoNm",
+		A.INDVDL_INFO_POLICY_CN "indvdlInfoDc",
+		A.INDVDL_INFO_POLICY_AGRE_AT "indvdlInfoYn",
+		A.FRST_REGISTER_ID "frstRegisterId",
+		TO_CHAR(A.FRST_REGIST_PNTTM, 'YYYY-MM-DD') "frstRegistPnttm",
+		(SELECT MBER_NM FROM LETTNGNRLMBER WHERE ESNTL_ID = A.FRST_REGISTER_ID) "frstRegisterNm" 
 		FROM LETTNINDVDLINFOPOLICY A
 		WHERE 1=1
 	 

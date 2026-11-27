@@ -57,39 +57,4 @@ class EgovBBSAttributeManageControllerTestInsertBBSMasterInfTest extends EgovTes
 		log.debug("then");
 	}
 
-//	/**
-//	 * 신규 게시판 마스터 정보를 등록한다. 실패
-//	 */
-//	@Test
-//	void test2() {
-//		// given
-//		// bbsId는 서비스에서 생성한다.
-//		// posblAtchFileSize, useAt, frstRegisterId는 컨트롤러에서 설정한다.
-//		// 등록일시는 INSERT SQL의 SYSDATE()로 설정한다.
-//
-//		// when
-//		ServletException exception = assertThrows(ServletException.class, () ->
-//
-//		mockMvc.perform(post("/cop/bbs/insertBBSMasterInf.do")
-//
-////				.param("bbsTyCode", "BBST01") // 게시판유형코드
-//				.param("bbsTyCode", "test 이백행 2026-09-18") // 게시판유형코드
-//
-//				.param("bbsAttrbCode", "BBSA03") // 게시판속성코드
-//				.param("bbsNm", "테스트 게시판") // 게시판명
-//				.param("bbsIntrcn", "테스트 게시판 소개") // 게시판소개
-//				.param("replyPosblAt", "N") // 답장가능여부
-//				.param("fileAtchPosblAt", "Y") // 파일첨부가능여부
-//				.param("posblAtchFileNumber", "3") // 첨부가능파일숫자
-//				.param("tmplatId", "TMPLAT_BOARD_DEFAULT")) // 템플릿ID
-//
-//				.andExpect(status().isOk())
-//
-//		);
-//
-//		// then
-////		assertInstanceOf(NullPointerException.class, exception.getCause());
-//		assertInstanceOf(DataAccessException.class, exception.getCause());
-//	}
-
 }

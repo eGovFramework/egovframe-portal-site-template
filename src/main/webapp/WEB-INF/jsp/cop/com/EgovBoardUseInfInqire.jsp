@@ -171,7 +171,10 @@
                                     </div>
 
                                     <div class="right_col btn1">
+                                        <%-- 저장 버튼은 등록자 본인에게만 노출 --%>
+                                        <c:if test="${ownerAt == 'Y'}">
                                         <a href="<c:url value='/cop/com/updateBBSUseInf.do'/>" class="btn btn_blue_46 w_100" onclick="fn_egov_updt_bbsUseInf(); return false;">저장</a><!-- 저장 -->
+                                        </c:if>
                                         <a href="<c:url value='/cop/com/selectBBSUseInfs.do'/>" class="btn btn_blue_46 w_100" onclick="fn_egov_select_bbsUseInfs(); return false;">목록</a><!-- 목록 -->
                                     </div>
                                 </div>

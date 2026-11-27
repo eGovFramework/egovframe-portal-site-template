@@ -190,7 +190,10 @@ function fn_egov_delete_QustnrQestnManage(){
                                     <div class="left_col btn3">
                                         <form name="formDelete" action="<c:url value='/uss/olp/qqm/EgovQustnrQestnManageDetail.do'/>" method="post">
                                         <c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
+                                        	<%-- 등록자 본인에게만 노출 --%>
+                                        	<c:if test="${ownerAt == 'Y'}">
                                         	<a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_QustnrQestnManage(); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
+                                        	</c:if>
                                         	<input name="qestnrQesitmId" type="hidden" value="${resultList[0].qestnrQesitmId}" />
                                         	<input name="cmd" type="hidden" value="del" />
                                         </form>
@@ -199,7 +202,10 @@ function fn_egov_delete_QustnrQestnManage(){
                                     <div class="right_col btn1">
                                         <form name="formUpdt" action="<c:url value='/uss/olp/qqm/EgovQustnrQestnManageModify.do'/>" method="post" style="display: inline;">
                                         <c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
+                                        	<%-- 등록자 본인에게만 노출 --%>
+                                        	<c:if test="${ownerAt == 'Y'}">
                                         	<a href="#LINK" class="btn btn_blue_46 w_100" onclick="fn_egov_modify_QustnrQestnManage(); return false;"><spring:message code="button.update" /></a><!-- 저장 -->
+                                        	</c:if>
                                         	<c:if test="${qustnrQestnManageVO.searchMode == 'Y'}">
                                         		<input name="qestnrTmplatId" type="hidden" value="${qustnrQestnManageVO.qestnrTmplatId}"/>
                                         		<input name="qestnrId" type="hidden" value="${qustnrQestnManageVO.qestnrId}"/>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import egovframework.com.cmm.util.EgovOwnerAuthUtil;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.com.cmm.LoginVO;
@@ -118,6 +119,8 @@ public class EgovFaqAdminManageController {
 		FaqManageVO vo = faqManageService.selectFaqListDetail(faqManageVO);
 
 		model.addAttribute("result", vo);
+		// 수정/삭제 버튼은 등록자 본인에게만 노출
+		model.addAttribute("ownerAt", EgovOwnerAuthUtil.ownerAt(vo == null ? null : vo.getFrstRegisterId()));
 
 		// 첨부파일 목록 조회
 		if(vo != null && vo.getAtchFileId() != null && !vo.getAtchFileId().isEmpty()) {
@@ -283,6 +286,9 @@ public class EgovFaqAdminManageController {
         // Primary Key 값 세팅
         faqManageVO.setFaqId(faqId);
 
+        // 등록자 본인만 수정 가능
+        assertFaqOwner(faqManageVO);
+
         // 변수명은 CoC 에 따라
         model.addAttribute(selectFaqListDetail(faqManageVO, searchVO, model, request));
 
@@ -310,6 +316,9 @@ public class EgovFaqAdminManageController {
             @Valid @ModelAttribute("faqManageVO") FaqManageVO faqManageVO,
             BindingResult bindingResult,
             ModelMap model) {
+
+		// 등록자 본인만 수정 가능
+		assertFaqOwner(faqManageVO);
 
 		if(bindingResult.hasErrors()){
 			return "/uss/olh/faq/admin/EgovFaqCnUpdt";
@@ -378,6 +387,9 @@ public class EgovFaqAdminManageController {
             @ModelAttribute("searchVO") FaqManageDefaultVO searchVO) {
 
 
+    	// 등록자 본인만 삭제 가능
+    	assertFaqOwner(faqManageVO);
+
     	// 첨부파일 삭제를 위한 ID 생성 start....
 		String _atchFileId = faqManageVO.getAtchFileId();
 
@@ -391,5 +403,14 @@ public class EgovFaqAdminManageController {
     	// 첨부파일 삭제 End.............
 
         return "forward:/uss/olh/faq/admin/FaqListInqire.do";
+    }
+
+    /**
+     * 등록자 본인 여부를 검증한다.
+     * @param faqManageVO
+     */
+    private void assertFaqOwner(FaqManageVO faqManageVO) {
+    	FaqManageVO existing = faqManageService.selectFaqListDetail(faqManageVO);
+    	EgovOwnerAuthUtil.assertOwner(existing == null ? null : existing.getFrstRegisterId());
     }
 }

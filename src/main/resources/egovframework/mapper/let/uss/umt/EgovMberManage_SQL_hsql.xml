@@ -12,21 +12,21 @@
     
  <select id="selectMberList" parameterType="egovframework.let.uss.umt.service.UserDefaultVO" resultType="egovMap">
 SELECT 
-    uniqId, userTy, userId , userNm, emailAdres, areaNo, middleTelno, endTelno, moblphonNo, groupId, sttus, sbscrbDe
+    "uniqId", "userTy", "userId" , "userNm", "emailAdres", "areaNo", "middleTelno", "endTelno", "moblphonNo", "groupId", sttus, "sbscrbDe"
 FROM(
     SELECT 
-        ESNTL_ID               uniqId,
-        'USR01'               userTy,
-        MBER_ID               userId,
-        MBER_NM               userNm,
-        MBER_EMAIL_ADRES      emailAdres,
-        AREA_NO               areaNo,
-        MIDDLE_TELNO          middleTelno,
-        END_TELNO             endTelno,
-        MBTLNUM           moblphonNo,
-        GROUP_ID              groupId,
+        ESNTL_ID               "uniqId",
+        'USR01'               "userTy",
+        MBER_ID               "userId",
+        MBER_NM               "userNm",
+        MBER_EMAIL_ADRES      "emailAdres",
+        AREA_NO               "areaNo",
+        MIDDLE_TELNO          "middleTelno",
+        END_TELNO             "endTelno",
+        MBTLNUM           "moblphonNo",
+        GROUP_ID              "groupId",
         MBER_STTUS            sttus,
-        TO_CHAR(SBSCRB_DE, 'YYYY-MM-DD') sbscrbDe
+        TO_CHAR(SBSCRB_DE, 'YYYY-MM-DD') "sbscrbDe"
     FROM    LETTNGNRLMBER
     ) A
         WHERE 1=1
@@ -34,12 +34,12 @@ FROM(
             AND sttus LIKE  #{sbscrbSttus}
         </if>
         <if test='searchCondition == "0"'>
-            AND userId LIKE #{searchKeyword}
+            AND "userId" LIKE #{searchKeyword}
         </if>
         <if test='searchCondition == "1"'>
-            AND userNm LIKE CONCAT('%', #{searchKeyword}, '%')
+            AND "userNm" LIKE CONCAT('%', #{searchKeyword}, '%')
         </if>
-        ORDER BY sbscrbDe DESC
+        ORDER BY "sbscrbDe" DESC
         LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
     </select>
     
@@ -48,18 +48,18 @@ FROM(
             SELECT COUNT(1) totcnt
             FROM(
             SELECT 
-                ESNTL_ID               uniqId,
-                'USR01'               userTy,
-                MBER_ID               userId,
-                MBER_NM               userNm,
-                MBER_EMAIL_ADRES      emailAdres,
-                AREA_NO               areaNo,
-                MIDDLE_TELNO          middleTelno,
-                END_TELNO             endTelno,
-                MBTLNUM           moblphonNo,
-                GROUP_ID              groupId,
+                ESNTL_ID               "uniqId",
+                'USR01'               "userTy",
+                MBER_ID               "userId",
+                MBER_NM               "userNm",
+                MBER_EMAIL_ADRES      "emailAdres",
+                AREA_NO               "areaNo",
+                MIDDLE_TELNO          "middleTelno",
+                END_TELNO             "endTelno",
+                MBTLNUM           "moblphonNo",
+                GROUP_ID              "groupId",
                 MBER_STTUS            sttus,
-                SBSCRB_DE             sbscrbDe
+                SBSCRB_DE             "sbscrbDe"
             FROM    LETTNGNRLMBER
             ) A
         WHERE 1=1
@@ -67,10 +67,10 @@ FROM(
                 AND sttus LIKE  #{sbscrbSttus}
             </if>
             <if test='searchCondition == "0"'>
-                AND userId LIKE #{searchKeyword}
+                AND "userId" LIKE #{searchKeyword}
             </if>
             <if test='searchCondition == "1"'>
-                AND userNm LIKE CONCAT('%', #{searchKeyword}, '%')
+                AND "userNm" LIKE CONCAT('%', #{searchKeyword}, '%')
             </if>
     </select>
     
@@ -79,6 +79,7 @@ FROM(
             INSERT INTO LETTNGNRLMBER 
                 (   
                     ESNTL_ID          ,
+                    FRST_REGISTER_ID ,
                     MBER_ID          ,
                     MBER_NM          ,
                     PASSWORD         ,
@@ -100,6 +101,7 @@ FROM(
                     SBSCRB_DE        )
               VALUES(
                     #{uniqId},
+                    #{frstRegisterId},
                     #{mberId},
                     #{mberNm},
                     #{password},
@@ -132,27 +134,28 @@ FROM(
     <select id="selectMber_S" resultType="egovframework.let.uss.umt.service.MberManageVO">
         
             SELECT
-                ESNTL_ID          uniqId,
-                'USR01'          userTy,
-                MBER_ID          mberId,
-                MBER_NM          mberNm,
+                ESNTL_ID          "uniqId",
+                FRST_REGISTER_ID  "frstRegisterId",
+                'USR01'          "userTy",
+                MBER_ID          "mberId",
+                MBER_NM          "mberNm",
                 PASSWORD         password,
-                PASSWORD_HINT    passwordHint,
-                PASSWORD_CNSR    passwordCnsr,
+                PASSWORD_HINT    "passwordHint",
+                PASSWORD_CNSR    "passwordCnsr",
                 IHIDNUM          ihidnum,
-                SEXDSTN_CODE     sexdstnCode,
+                SEXDSTN_CODE     "sexdstnCode",
                 ZIP              zip,
                 ADRES            adres,
-                AREA_NO          areaNo,
-                MBER_STTUS       mberSttus,
-                DETAIL_ADRES     detailAdres,
-                END_TELNO        endTelno,
-                MBTLNUM      moblphonNo,
-                GROUP_ID         groupId,
-                MBER_FXNUM       mberFxnum,
-                MBER_EMAIL_ADRES mberEmailAdres,
-                MIDDLE_TELNO     middleTelno,
-                TO_CHAR(SBSCRB_DE, 'YYYY-MM-DD') sbscrbDe
+                AREA_NO          "areaNo",
+                MBER_STTUS       "mberSttus",
+                DETAIL_ADRES     "detailAdres",
+                END_TELNO        "endTelno",
+                MBTLNUM      "moblphonNo",
+                GROUP_ID         "groupId",
+                MBER_FXNUM       "mberFxnum",
+                MBER_EMAIL_ADRES "mberEmailAdres",
+                MIDDLE_TELNO     "middleTelno",
+                TO_CHAR(SBSCRB_DE, 'YYYY-MM-DD') "sbscrbDe"
             FROM LETTNGNRLMBER
             WHERE ESNTL_ID=#{uniqId}
         
@@ -213,21 +216,21 @@ FROM(
     
     <select id="checkIdDplct_S" resultType="int">
      
-         SELECT COUNT(1) usedCnt
+         SELECT COUNT(1) "usedCnt"
              FROM(
              SELECT
-                 EMPLYR_ID             userId
+                 EMPLYR_ID             "userId"
              FROM    LETTNEMPLYRINFO
              UNION ALL
              SELECT
-                 ENTRPRS_MBER_ID        userId
+                 ENTRPRS_MBER_ID        "userId"
              FROM    LETTNENTRPRSMBER
              UNION ALL
              SELECT
-                 MBER_ID               userId
+                 MBER_ID               "userId"
              FROM    LETTNGNRLMBER
              ) A
-         WHERE userId = #{checkId}
+         WHERE "userId" = #{checkId}
      
     </select>
 </mapper>

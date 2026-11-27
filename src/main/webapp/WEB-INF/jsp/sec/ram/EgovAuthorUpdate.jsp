@@ -178,7 +178,7 @@ function fncAuthorDelete() {
                                     	<c:if test="${registerFlag == 'INSERT'}">
                                         <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncAuthorInsert()" style="selector-dummy:expression(this.hideFocus=false);">저장</a><!-- 저장 -->
                                         </c:if>
-                                        <c:if test="${registerFlag == 'UPDATE'}">
+                                        <c:if test="${registerFlag == 'UPDATE' and ownerAt == 'Y'}">
                                         <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncAuthorInsert()" style="selector-dummy:expression(this.hideFocus=false);">저장</a><!-- 저장 -->
                                         <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncAuthorDelete()" style="selector-dummy:expression(this.hideFocus=false);">삭제</a><!-- 저장 -->
                                         </c:if>

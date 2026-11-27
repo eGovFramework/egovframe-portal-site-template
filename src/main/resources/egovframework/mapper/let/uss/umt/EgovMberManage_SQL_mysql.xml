@@ -79,6 +79,7 @@ FROM(
             INSERT INTO LETTNGNRLMBER 
                 (   
                     ESNTL_ID          ,
+                    FRST_REGISTER_ID ,
                     MBER_ID          ,
                     MBER_NM          ,
                     PASSWORD         ,
@@ -100,6 +101,7 @@ FROM(
                     SBSCRB_DE        )
               VALUES(
                     #{uniqId},
+                    #{frstRegisterId},
                     #{mberId},
                     #{mberNm},
                     #{password},
@@ -133,6 +135,7 @@ FROM(
         
             SELECT
                 ESNTL_ID          uniqId,
+                FRST_REGISTER_ID  frstRegisterId,
                 'USR01'          userTy,
                 MBER_ID          mberId,
                 MBER_NM          mberNm,

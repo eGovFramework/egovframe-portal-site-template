@@ -26,6 +26,46 @@
 	<script src="<c:url value='/js/ui.js'/>"></script>
 <title>샘플 포털 > 민원광장 > 민원결과확인</title>
 <!-- <link href="css_old/default.css" rel="stylesheet" type="text/css" > -->
+<script type="text/javascript">
+/* 샘플화면 : 기간별 검색 기본값을 금주(일요일 ~ 토요일)로 설정 */
+function fn_egov_fill_select(sel, from, to, val) {
+	var html = '';
+	for (var i = from; i <= to; i++) {
+		var v = (i < 10 ? '0' : '') + i;
+		html += '<option value="' + v + '"' + (i === val ? ' selected="selected"' : '') + '>' + v + '</option>';
+	}
+	$(sel).html(html);
+}
+
+function fn_egov_set_date(prefix, date) {
+	var y = date.getFullYear();
+	fn_egov_fill_select('#' + prefix + 'Year', y - 5, y + 1, y);
+	fn_egov_fill_select('#' + prefix + 'Month', 1, 12, date.getMonth() + 1);
+	fn_egov_fill_days(prefix, date.getDate());
+}
+
+function fn_egov_fill_days(prefix, day) {
+	var y = parseInt($('#' + prefix + 'Year').val(), 10);
+	var m = parseInt($('#' + prefix + 'Month').val(), 10);
+	var last = new Date(y, m, 0).getDate();
+	var cur = day || parseInt($('#' + prefix + 'Day').val(), 10) || 1;
+	fn_egov_fill_select('#' + prefix + 'Day', 1, last, Math.min(cur, last));
+}
+
+function fn_egov_sample_detail() {
+	alert('민원 상세페이지입니다.(샘플 화면입니다.)');
+}
+
+$(function() {
+	var today = new Date();
+	var sunday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay());
+	var saturday = new Date(sunday.getFullYear(), sunday.getMonth(), sunday.getDate() + 6);
+	fn_egov_set_date('s', sunday);
+	fn_egov_set_date('e', saturday);
+	$('#sYear, #sMonth').on('change', function() { fn_egov_fill_days('s'); });
+	$('#eYear, #eMonth').on('change', function() { fn_egov_fill_days('e'); });
+});
+</script>
 </head>
 <body>
 
@@ -69,36 +109,30 @@
                                 <div class="condition2 terms">
                                     <span class="lb mr15">기간별 검색</span>
 
-                                    <label class="f_select mr5" for="yy">
-                                        <select name="" id="y" title="연도">
-                                            <option value="">2021</option>
-                                        </select>
+                                    <label class="f_select mr5" for="sYear">
+                                        <select name="sYear" id="sYear" title="시작연도"></select>
                                     </label>
 
-                                    <label class="f_select mr5" for="mm">
-                                        <select name="" id="mm" title="월">
-                                            <option value="">08</option>
-                                        </select>
+                                    <label class="f_select mr5" for="sMonth">
+                                        <select name="sMonth" id="sMonth" title="시작월"></select>
                                     </label>
 
-                                    <label class="f_select mr5" for="dd">
-                                        <select name="" id="dd" title="일">
-                                            <option value="">08</option>
-                                        </select>
+                                    <label class="f_select mr5" for="sDay">
+                                        <select name="sDay" id="sDay" title="시작일"></select>
                                     </label>
 
                                     <span class="lb mr5">부터~</span>
 
-                                    <label class="f_select mr5" for="mm">
-                                        <select name="" id="mm" title="월">
-                                            <option value="">08</option>
-                                        </select>
+                                    <label class="f_select mr5" for="eYear">
+                                        <select name="eYear" id="eYear" title="종료연도"></select>
                                     </label>
 
-                                    <label class="f_select mr5" for="dd">
-                                        <select name="" id="dd" title="일">
-                                            <option value="">08</option>
-                                        </select>
+                                    <label class="f_select mr5" for="eMonth">
+                                        <select name="eMonth" id="eMonth" title="종료월"></select>
+                                    </label>
+
+                                    <label class="f_select mr5" for="eDay">
+                                        <select name="eDay" id="eDay" title="종료일"></select>
                                     </label>
 
                                     <span class="lb mr15">까지</span>
@@ -121,7 +155,7 @@
                                         </colgroup>
                                         <thead>
                                             <tr>
-                                                <th scope="col">민원접수번호 [신청일]</th>
+                                                <th scope="col">민원접수번호</th>
                                                 <th scope="col">민원사무명</th>
                                                 <th scope="col">부수</th>
                                                 <th scope="col">처리상태</th>
@@ -132,8 +166,8 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>2021-06-13</td>
-                                                <td><a href="/pst_webapp/EgovPageLink.do?linkIndex=0" class="lnk">표준프레임워크 인증서 발급</a></td>
+                                                <td>1</td>
+                                                <td><a href="#LINK" class="lnk" onclick="fn_egov_sample_detail(); return false;">표준프레임워크 인증서 발급</a></td>
                                                 <td>300</td>
                                                 <td>발급대기</td>
                                                 <td>행정안전부</td>
@@ -141,8 +175,8 @@
                                                 <td>신청</td>
                                             </tr>
                                             <tr>
-                                                <td>2021-06-13</td>
-                                                <td><a href="/pst_webapp/EgovPageLink.do?linkIndex=0" class="lnk">표준프레임워크 인증서 발급</a></td>
+                                                <td>2</td>
+                                                <td><a href="#LINK" class="lnk" onclick="fn_egov_sample_detail(); return false;">표준프레임워크 인증서 발급</a></td>
                                                 <td>300</td>
                                                 <td>발급대기</td>
                                                 <td>행정안전부</td>
@@ -150,8 +184,8 @@
                                                 <td>신청</td>
                                             </tr>
                                             <tr>
-                                                <td>2021-06-13</td>
-                                                <td><a href="/pst_webapp/EgovPageLink.do?linkIndex=0" class="lnk">표준프레임워크 인증서 발급</a></td>
+                                                <td>3</td>
+                                                <td><a href="#LINK" class="lnk" onclick="fn_egov_sample_detail(); return false;">표준프레임워크 인증서 발급</a></td>
                                                 <td>300</td>
                                                 <td>발급대기</td>
                                                 <td>행정안전부</td>

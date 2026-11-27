@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import egovframework.com.cmm.util.EgovOwnerAuthUtil;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.com.cmm.LoginVO;
@@ -29,7 +30,6 @@ import egovframework.let.cop.bbs.service.BoardMasterVO;
 import egovframework.let.cop.bbs.service.BoardVO;
 import egovframework.let.cop.bbs.service.EgovBBSAttributeManageService;
 import egovframework.let.cop.bbs.service.EgovBBSManageService;
-import egovframework.let.cop.bbs.util.EgovBBSAuthUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -136,9 +136,7 @@ public class EgovBBSAdminManageController {
 		
 		BoardMasterVO master = bbsAttrbService.selectBBSMasterInf(vo);
 		
-		//-------------------------------
 		// 방명록이면 방명록 URL로 forward
-		//-------------------------------
 		if (master.getBbsTyCode().equals("BBST04")) {
 			return "forward:/cop/bbs/selectGuestList.do";
 		}
@@ -162,9 +160,7 @@ public class EgovBBSAdminManageController {
 
 		paginationInfo.setTotalRecordCount(totCnt);
 
-		//-------------------------------
 		// 기본 BBS template 지정
-		//-------------------------------
 		if (master.getTmplatCours() == null || master.getTmplatCours().equals("")) {
 			master.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 		}
@@ -207,11 +203,9 @@ public class EgovBBSAdminManageController {
 		model.addAttribute("result", vo);
 
 		model.addAttribute("sessionUniqId", user.getUniqId());
-		// 관리자는 무조건 수정/삭제 버튼 노출
-		model.addAttribute("modifyAt", EgovBBSAuthUtil.canShowModifyButtons(vo, user) ? "Y" : "N");
-		//----------------------------
+		// 수정/삭제 버튼은 등록자 본인에게만 노출
+		model.addAttribute("modifyAt", EgovOwnerAuthUtil.ownerAt(vo == null ? null : vo.getFrstRegisterId()));
 		// template 처리 (기본 BBS template 지정  포함)
-		//----------------------------
 		BoardMasterVO master = new BoardMasterVO();
 
 		master.setBbsId(boardVO.getBbsId());
@@ -256,9 +250,7 @@ public class EgovBBSAdminManageController {
 			model.addAttribute("bdMstr", bdMstr);
 		}
 
-		//----------------------------
 		// 기본 BBS template 지정
-		//----------------------------
 		if (bdMstr.getTmplatCours() == null || bdMstr.getTmplatCours().equals("")) {
 			bdMstr.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 		}
@@ -299,9 +291,7 @@ public class EgovBBSAdminManageController {
 
 			model.addAttribute("bdMstr", master);
 
-			//----------------------------
 			// 기본 BBS template 지정
-			//----------------------------
 			if (master.getTmplatCours() == null || master.getTmplatCours().equals("")) {
 				master.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 			}
@@ -370,9 +360,7 @@ public class EgovBBSAdminManageController {
 		model.addAttribute("bdMstr", master);
 		model.addAttribute("result", boardVO);
 
-		//----------------------------
 		// 기본 BBS template 지정
-		//----------------------------
 		if (master.getTmplatCours() == null || master.getTmplatCours().equals("")) {
 			master.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 		}
@@ -414,9 +402,7 @@ public class EgovBBSAdminManageController {
 			model.addAttribute("bdMstr", master);
 			model.addAttribute("result", boardVO);
 
-			//----------------------------
 			// 기본 BBS template 지정
-			//----------------------------
 			if (master.getTmplatCours() == null || master.getTmplatCours().equals("")) {
 				master.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 			}
@@ -492,12 +478,13 @@ public class EgovBBSAdminManageController {
 			bdvo = bbsMngService.selectBoardArticle(boardVO);
 		}
 
+		// 등록자 본인만 수정 가능
+		EgovOwnerAuthUtil.assertOwner(bdvo.getFrstRegisterId());
+
 		model.addAttribute("result", bdvo);
 		model.addAttribute("bdMstr", bmvo);
 
-		//----------------------------
 		// 기본 BBS template 지정
-		//----------------------------
 		if (bmvo.getTmplatCours() == null || bmvo.getTmplatCours().equals("")) {
 			bmvo.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 		}
@@ -528,6 +515,8 @@ public class EgovBBSAdminManageController {
 
 		// 기존 게시글의 첨부파일 ID를 조회
 		BoardVO existingBoard = bbsMngService.selectBoardArticle(boardVO);
+		// 등록자 본인만 수정 가능
+		EgovOwnerAuthUtil.assertOwner(existingBoard == null ? null : existingBoard.getFrstRegisterId());
 		String atchFileId = existingBoard.getAtchFileId();
 
 		// null 처리
@@ -612,6 +601,10 @@ public class EgovBBSAdminManageController {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+
+		// 등록자 본인만 삭제 가능
+		BoardVO existingBoard = bbsMngService.selectBoardArticle(boardVO);
+		EgovOwnerAuthUtil.assertOwner(existingBoard == null ? null : existingBoard.getFrstRegisterId());
 
 		if (isAuthenticated) {
 			board.setLastUpdusrId(user.getUniqId());

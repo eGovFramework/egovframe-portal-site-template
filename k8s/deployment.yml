@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: egovframe-portal-site-template
+  labels:
+    app.kubernetes.io/name: egovframe-portal-site-template
+    app.kubernetes.io/part-of: egovframe-template
+spec:
+  # 내장 HSQLDB(인메모리)는 Pod 간 데이터가 공유되지 않음. 외부 DB 연동 전까지 1개로 유지
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: egovframe-portal-site-template
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: egovframe-portal-site-template
+        app.kubernetes.io/part-of: egovframe-template
+    spec:
+      # Dockerfile 의 실행 계정(UID/GID 1000)과 동일
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: app
+          # Replace with your registry/tag, e.g. ghcr.io/<org>/egovframe-portal-site-template:5.1.0
+          image: egovframe-portal-site-template:5.1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            # JVM 옵션 : 컨테이너 메모리 limit 기준으로 힙 크기 결정
+            - name: JAVA_OPTS
+              value: "-XX:MaxRAMPercentage=75 -XX:+ExitOnOutOfMemoryError"
+            # 첨부파일 ID 암호화 키 (secret.yml)
+            - name: GLOBALS_FILE_ALGORITHMKEY
+              valueFrom:
+                secretKeyRef:
+                  name: egovframe-portal-site-template
+                  key: GLOBALS_FILE_ALGORITHMKEY
+                  optional: true
+          # 외부 DB 접속정보 (k8s/mysql/secret.yml), 없으면 내장 HSQLDB 사용
+          envFrom:
+            - secretRef:
+                name: egovframe-portal-site-template-db
+                optional: true
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 90
+            periodSeconds: 20
+            failureThreshold: 3
+          securityContext:
+            allowPrivilegeEscalation: false
+            # Tomcat 이 work · logs 에 기록하므로 false
+            readOnlyRootFilesystem: false
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: upload
+              mountPath: /upload
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        # 첨부파일 저장소 : Pod 재생성 시 유실되므로 운영은 PVC(ReadWriteMany 권장)로 교체
+        - name: upload
+          emptyDir: {}
+        - name: tmp
+          emptyDir: {}

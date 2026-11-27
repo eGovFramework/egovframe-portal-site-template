@@ -58,9 +58,9 @@ public interface EgovQnaManageService {
     /**
 	 * Q&A  작성비밀번호를 확인한다.
 	 * @param vo
-	 * @return 확인결과
+	 * @return 일치 여부
 	 */
-    int selectQnaPasswordConfirmCnt(QnaManageVO vo);
+    boolean checkQnaPassword(QnaManageVO vo);
 
 	/**
 	 * Q&A 글을 수정한다.

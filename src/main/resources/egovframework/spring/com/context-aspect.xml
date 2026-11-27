@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	<!-- 포털사이트의 기능 작동과정에서 Exception 발생시 후처리를 위한 AOP설정  -->
+	<!-- 서비스 예외 후처리 AOP -->
 	<aop:config>
 		<aop:pointcut id="serviceMethod" expression="execution(* egovframework.let..impl.*Impl.*(..)) or execution(* egovframework.com..impl.*Impl.*(..))" />
 		<aop:aspect ref="exceptionTransfer">
@@ -12,7 +12,7 @@
 		</aop:aspect>
 	</aop:config>
 
-	<!-- Exception 발생시 후처리를 위해 표준프레임워크 실행환경의 ExceptionTransfer를 활용하도록  설정-->
+	<!-- 예외 전달 : ExceptionTransfer -->
 	<bean id="exceptionTransfer" class="org.egovframe.rte.fdl.cmmn.aspect.ExceptionTransfer">
 		<property name="exceptionHandlerService">
 			<list>
@@ -22,7 +22,7 @@
 		</property>
 	</bean>
 
-	<!-- Exception 발생에 대한 기본Excpton처리를 위해 표준프레임워크 실행환경의 DefaultExceptionTransfer를 활용하도록 설정-->
+	<!-- 기본 예외 처리 매니저 -->
 	<bean id="defaultExceptionHandleManager" class="org.egovframe.rte.fdl.cmmn.exception.manager.DefaultExceptionHandleManager">
 		<property name="reqExpMatcher">
 			<ref bean="antPathMater"/>
@@ -39,7 +39,7 @@
 		</property>
 	</bean>
 
-	<!-- Exception 발생에 대한 기타Excpton처리를 위해 표준프레임워크 실행환경의 DefaultExceptionTransfer를 활용하도록 설정-->
+	<!-- 기타 예외 처리 매니저 -->
 	<bean id="otherExceptionHandleManager" class="org.egovframe.rte.fdl.cmmn.exception.manager.DefaultExceptionHandleManager">
 		<property name="reqExpMatcher">
 			<ref bean="antPathMater"/>
@@ -56,7 +56,7 @@
 		</property>
 	</bean>
 
-	<!-- 템플릿 내에서 Exception 발생시 실제 처리를 위한 클래스 설정-->
+	<!-- 예외 처리 핸들러 -->
 	<bean id="egovHandler" class="egovframework.com.cmm.EgovComExcepHndlr" />
 	<bean id="otherHandler" class="egovframework.com.cmm.EgovComOthersExcepHndlr" />
 

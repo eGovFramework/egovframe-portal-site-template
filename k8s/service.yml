@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: egovframe-portal-site-template
+  labels:
+    app.kubernetes.io/name: egovframe-portal-site-template
+    app.kubernetes.io/part-of: egovframe-template
+spec:
+  # 로컬 클러스터(minikube / Docker Desktop / kind) 접속용 NodePort
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: egovframe-portal-site-template
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+      nodePort: 30080

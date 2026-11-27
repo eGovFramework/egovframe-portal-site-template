@@ -169,8 +169,11 @@ function fn_egov_delete_faq(faqId){
 									<!-- 목록/저장버튼  시작-->
                                     <div class="board_view_bot">
                                         <div class="left_col btn3">
+                                            <%-- 수정/삭제 버튼은 등록자 본인에게만 노출 --%>
+                                            <c:if test="${ownerAt == 'Y'}">
                                             <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_updt_faq('<c:out value="${result.faqId}"/>'); return false;"><spring:message code="button.update" /></a><!-- 수정 -->
                                             <a href="<c:url value='/uss/olh/faq/admin/FaqCnDelete.do'/>?faqId=<c:out value='${result.faqId}'/>" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_faq('<c:out value="${result.faqId}"/>'); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
+                                            </c:if>
                                         </div>
 
                                         <div class="right_col btn1">

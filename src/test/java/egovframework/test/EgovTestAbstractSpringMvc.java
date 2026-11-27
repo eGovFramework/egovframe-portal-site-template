@@ -27,14 +27,8 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2024-09-21
  */
 
+// 다른 DB: oracle, altibase, tibero, cubrid, maria, postgres, goldilocks
 @ActiveProfiles({ "mysql", "dummy" })
-//@ActiveProfiles({ "oracle", "dummy" })
-//@ActiveProfiles({ "altibase", "dummy" })
-//@ActiveProfiles({ "tibero", "dummy" })
-//@ActiveProfiles({ "cubrid", "dummy" })
-//@ActiveProfiles({ "maria", "dummy" })
-//@ActiveProfiles({ "postgres", "dummy" })
-//@ActiveProfiles({ "goldilocks", "dummy" })
 
 @ExtendWith(SpringExtension.class)
 @TestMethodOrder(MethodOrderer.MethodName.class)

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
+import egovframework.com.cmm.util.EgovOwnerAuthUtil;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.let.sec.ram.service.AuthorManageVO;
 import egovframework.let.sec.ram.service.EgovAuthorManageService;
@@ -91,6 +92,8 @@ public class EgovAuthorGroupController {
 
     	authorManageVO.setAuthorManageList(egovAuthorManageService.selectAuthorAllList(authorManageVO));
         model.addAttribute("authorManageList", authorManageVO.getAuthorManageList());
+        // 이미 할당된 권한은 등록자 본인만 수정/삭제 가능 (화면 체크박스 비활성화용)
+        model.addAttribute("loginUniqId", EgovOwnerAuthUtil.getLoginUniqId());
 
         model.addAttribute("message", egovMessageSource.getMessage("success.common.select"));
         
@@ -119,10 +122,17 @@ public class EgovAuthorGroupController {
     	String [] strRegYns = regYns.split(";");
     	String [] strMberTyCode = mberTyCode.split(";");
     	
+    	// 이미 할당된 권한은 등록자 본인만 수정 가능
+    	for(int i=0; i<strUserIds.length;i++) {
+    		if(!strRegYns[i].equals("N"))
+    			assertAuthorGroupOwner(strUserIds[i]);
+    	}
+
     	for(int i=0; i<strUserIds.length;i++) {
     		authorGroup.setUniqId(strUserIds[i]);
     		authorGroup.setAuthorCode(strAuthorCodes[i]);
     		authorGroup.setMberTyCode(strMberTyCode[i]);
+    		authorGroup.setFrstRegisterId(EgovOwnerAuthUtil.getLoginUniqId());
     		if(strRegYns[i].equals("N"))
     		    egovAuthorGroupService.insertAuthorGroup(authorGroup);
     		else 
@@ -147,6 +157,10 @@ public class EgovAuthorGroupController {
                                      ModelMap model) {
 		
     	String [] strUserIds = userIds.split(";");
+    	// 등록자 본인이 아닌 권한 할당이 포함되어 있으면 삭제하지 않음
+    	for(int i=0; i<strUserIds.length;i++) {
+    		assertAuthorGroupOwner(strUserIds[i]);
+    	}
     	for(int i=0; i<strUserIds.length;i++) {
     		authorGroup.setUniqId(strUserIds[i]);
     		egovAuthorGroupService.deleteAuthorGroup(authorGroup);
@@ -157,6 +171,13 @@ public class EgovAuthorGroupController {
 		return "forward:/sec/rgm/EgovAuthorGroupList.do";
 	}
 
-
-
+	/**
+	 * 권한 할당 정보의 등록자 본인 여부를 검증한다.
+	 * @param uniqId String
+	 */
+	private void assertAuthorGroupOwner(String uniqId) {
+		AuthorGroup searchVO = new AuthorGroup();
+		searchVO.setUniqId(uniqId);
+		EgovOwnerAuthUtil.assertOwner(egovAuthorGroupService.selectAuthorGroupFrstRegisterId(searchVO));
+	}
 }

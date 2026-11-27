@@ -174,19 +174,15 @@ public class EgovFormBasedUUID implements Serializable {
     public static EgovFormBasedUUID nameUUIDFromBytes(byte[] name) {
         MessageDigest md;
         try {
-        	// 2011.10.10 보안점검 후속조치 암호화 알고리즘 변경(MD5 -> SHA-256)
-        	//md = MessageDigest.getInstance("MD5");
+        	// SHA-256 해시 (MD5 대체)
             md = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException nsae) {
-        	//throw new InternalError("MD5 not supported");
             throw new InternalError("SHA-256 not supported");
         }
-        // 2011.10.10 보안점검 후속조치
         if (md == null) {
             throw new RuntimeException("MessageDigest is null!!");
         }
-        // 2014.09.20 보안점검 후속 조치
-        // Random 방식의 salt 추가
+        // Random salt 추가
         SecureRandom ng = new SecureRandom();
         byte[] randomBytes = new byte[16];
         ng.nextBytes(randomBytes);
@@ -198,7 +194,6 @@ public class EgovFormBasedUUID implements Serializable {
 
         byte[] md5Bytes = new byte[8];
         System.arraycopy(sha, 0, md5Bytes, 0, 8);
-        //2011.10.10 보안점검 후속조치 끝
 
         md5Bytes[6] &= 0x0f; /* clear version */
         md5Bytes[6] |= 0x30; /* set to version 3 */

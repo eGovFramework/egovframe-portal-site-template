@@ -3,6 +3,8 @@ package egovframework.let.uss.olh.qna.web;
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
+import egovframework.com.cmm.service.CmmnDetailCode;
 import egovframework.com.cmm.service.EgovCmmUseService;
 import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.com.cmm.web.EgovFileMngController;
@@ -22,7 +25,6 @@ import egovframework.let.uss.olh.qna.service.EgovQnaManageService;
 import egovframework.let.uss.olh.qna.util.EgovQnaAuthUtil;
 import egovframework.let.uss.olh.qna.service.QnaManageDefaultVO;
 import egovframework.let.uss.olh.qna.service.QnaManageVO;
-import egovframework.let.utl.sim.service.EgovFileScrty;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -51,6 +53,9 @@ public class EgovQnaManageController {
 
 	@Resource(name = "QnaManageService")
 	private EgovQnaManageService qnaManageService;
+
+	@Resource(name = "egovPasswordEncoder")
+	private PasswordEncoder passwordEncoder;
 
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
@@ -161,14 +166,12 @@ public class EgovQnaManageController {
 		vo.setWritngPassword(null);
 
 		model.addAttribute("result", vo);
-		// 26.08.24 조치 : 작성 비밀번호 확인에 실패해 되돌아온 경우에만 안내 문구를 띄운다.
-		// 실패 여부를 별도 모델 속성으로 명시해 전달한다.
+		// 작성 비밀번호 확인 실패 시에만 안내 문구 표시
 		model.addAttribute("passwordFailAt",
 				passwordConfirmAt != null && passwordConfirmAt.startsWith("N") ? "Y" : "N");
-		// 26.08.20 조치 : modifyAt 은 모델에만 담기고 JSP가 쓰지 않아 수정/삭제 버튼이 타인 글에도 노출되고 있었다.
+		// 수정/삭제 버튼 노출 여부 (등록자 본인)
 		model.addAttribute("modifyAt", EgovQnaAuthUtil.canShowModifyButtons(vo) ? "Y" : "N");
-		// 26.08.20 조치 : 관리자는 작성 비밀번호 확인 없이 수정화면으로 직행한다.
-		// assertCanModifyQna()가 관리자를 무조건 통과시키므로 모달은 불필요하다.
+		// 관리자는 작성 비밀번호 확인 없이 수정화면으로 이동
 		model.addAttribute("adminAt", EgovBBSAuthUtil.isAdminUser() ? "Y" : "N");
 
 		return "/uss/olh/qna/EgovQnaDetailInqire";
@@ -270,8 +273,7 @@ public class EgovQnaManageController {
 		qnaManageVO.setFrstRegisterId(frstRegisterId); // 최초등록자ID
 		qnaManageVO.setLastUpdusrId(frstRegisterId); // 최종수정자ID
 
-		// 26.08.19 조치 : 작성비밀번호 해싱은 salt로 쓰이는 qaId가 채번되는
-		// EgovQnaManageServiceImpl.insertQnaCn에서 수행한다.
+		// 작성비밀번호 BCrypt 해시는 insertQnaCn 에서 수행
 		qnaManageService.insertQnaCn(qnaManageVO);
 
 		return "forward:/uss/olh/qna/QnaListInqire.do";
@@ -313,18 +315,8 @@ public class EgovQnaManageController {
 			return "uat/uia/EgovLoginUsr";
 		} else {
 			decryptQaId(qnaManageVO);
-			String writngPassword = qnaManageVO.getWritngPassword();
 
-			// 26.08.19 조치 : deprecated된 encryptPassword(String) 대신 qaId를 salt로 사용한다.
-			// 위에서 복호화된 평문 qaId가 salt이므로 decryptQaId() 이후에 수행해야 한다.
-			if (writngPassword != null) {
-				qnaManageVO.setWritngPassword(
-						EgovFileScrty.encryptPassword(writngPassword, qnaManageVO.getQaId()));
-			}
-
-			int searchCnt = qnaManageService.selectQnaPasswordConfirmCnt(qnaManageVO);
-
-			if (searchCnt > 0) {
+			if (qnaManageService.checkQnaPassword(qnaManageVO)) {
 				EgovQnaAuthUtil.markPasswordConfirmed(session, qnaManageVO.getQaId());
 				return "forward:/uss/olh/qna/QnaCnUpdtView.do";
 			} else {
@@ -383,9 +375,9 @@ public class EgovQnaManageController {
 
 		String writngPassword = qnaManageVO.getWritngPassword();
 		if (writngPassword != null && !writngPassword.isEmpty()) {
-			// 26.08.19 조치 : deprecated된 encryptPassword(String) 대신 qaId를 salt로 사용한다.
+			// BCrypt 해시
 			qnaManageVO.setWritngPassword(
-					EgovFileScrty.encryptPassword(writngPassword, qnaManageVO.getQaId()));
+					passwordEncoder.encode(writngPassword));
 		} else {
 			qnaManageVO.setWritngPassword(existing.getWritngPassword());
 		}
@@ -472,7 +464,7 @@ public class EgovQnaManageController {
 		QnaManageVO vo = qnaManageService.selectQnaListDetail(qnaManageVO);
 
 		model.addAttribute("result", vo);
-		// 26.08.20 조치 : 답변 버튼은 관리자에게만 노출한다.
+		// 답변 버튼은 관리자에게만 노출
 		model.addAttribute("adminAt", EgovBBSAuthUtil.isAdminUser() ? "Y" : "N");
 
 		return "/uss/olh/qna/EgovQnaAnswerDetailInqire";
@@ -486,9 +478,7 @@ public class EgovQnaManageController {
 	 * @param model
 	 * @return "/uss/olh/qna/EgovQnaCnAnswerUpdt"
 	 */
-	// 26.08.20 조치 : 답변 작성·수정은 관리자 기능이다. 이 사용자 경로에는 권한 검증이 전혀 없어
-	// 로그인한 일반 회원이 qaId 만 바꿔 타인 글의 답변을 덮어쓸 수 있었다.
-	// (updateQnaCnAnswer SQL 도 WHERE QA_ID 단독이라 소유자 조건이 없다)
+	// 답변 작성·수정은 관리자 전용
 	@RequireAdmin
 	@RequestMapping("/uss/olh/qnm/QnaCnAnswerUpdtView.do")
 	public String updateQnaCnAnswerView(QnaManageVO qnaManageVO,
@@ -513,13 +503,15 @@ public class EgovQnaManageController {
 	 * @param searchVO
 	 * @return "forward:/uss/olh/qnm/QnaAnswerListInqire.do"
 	 */
-	// 26.08.20 조치 : 답변 작성·수정은 관리자 기능이다. 이 사용자 경로에는 권한 검증이 전혀 없어
-	// 로그인한 일반 회원이 qaId 만 바꿔 타인 글의 답변을 덮어쓸 수 있었다.
-	// (updateQnaCnAnswer SQL 도 WHERE QA_ID 단독이라 소유자 조건이 없다)
+	// 답변 작성·수정은 관리자 전용
 	@RequireAdmin
 	@RequestMapping("/uss/olh/qnm/QnaCnAnswerUpdt.do")
-	public String updateQnaCnAnswer(@Valid @ModelAttribute("qnaManageVO") QnaManageVO qnaManageVO,
+	public String updateQnaCnAnswer(@ModelAttribute("qnaManageVO") QnaManageVO qnaManageVO,
 			BindingResult bindingResult, @ModelAttribute("searchVO") QnaManageDefaultVO searchVO, ModelMap model) {
+
+		// 답변 저장은 답변내용·처리상태만 수정하므로 해당 항목만 검증한다.
+		// (QnaManageVO 전체를 @Valid 로 검증하면 화면에 없는 작성비밀번호 등 질문 항목 때문에 저장되지 않음)
+		validateQnaAnswer(qnaManageVO, bindingResult);
 
 		if (bindingResult.hasErrors()) {
 			ComDefaultCodeVO vo = new ComDefaultCodeVO();
@@ -542,6 +534,41 @@ public class EgovQnaManageController {
 
 		return "forward:/uss/olh/qnm/QnaAnswerListInqire.do";
 
+	}
+
+	/**
+	 * Q&A답변 저장 항목(답변내용, 처리상태)을 검증한다.
+	 * 
+	 * @param qnaManageVO
+	 * @param bindingResult
+	 */
+	private void validateQnaAnswer(QnaManageVO qnaManageVO, BindingResult bindingResult) {
+
+		String answerCn = qnaManageVO.getAnswerCn();
+		DefaultMessageSourceResolvable answerCnLabel = new DefaultMessageSourceResolvable(
+				new String[] { "qnaManageVO.answerCn" }, "답변내용");
+
+		if (answerCn == null || answerCn.trim().isEmpty()) {
+			bindingResult.rejectValue("answerCn", "errors.required", new Object[] { answerCnLabel }, "답변내용은(는) 필수 입력값입니다.");
+		} else if (answerCn.length() > 2500) {
+			bindingResult.rejectValue("answerCn", "errors.maxlength", new Object[] { answerCnLabel, 2500 }, "답변내용은(는) 2500자 이상 입력할수 없습니다.");
+		}
+
+		// 처리상태는 공통코드(COM028)에 등록된 값만 허용
+		ComDefaultCodeVO codeVO = new ComDefaultCodeVO();
+		codeVO.setCodeId("COM028");
+		boolean validSttus = false;
+		for (CmmnDetailCode code : cmmUseService.selectCmmCodeDetail(codeVO)) {
+			if (code.getCode().equals(qnaManageVO.getQnaProcessSttusCode())) {
+				validSttus = true;
+				break;
+			}
+		}
+		if (!validSttus) {
+			DefaultMessageSourceResolvable sttusLabel = new DefaultMessageSourceResolvable(
+					new String[] { "qnaManageVO.qnaProcessSttusCode" }, "진행처리상태");
+			bindingResult.rejectValue("qnaProcessSttusCode", "errors.invalid", new Object[] { sttusLabel }, "진행처리상태은(는) 유효하지 않은 값입니다.");
+		}
 	}
 
 }

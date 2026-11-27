@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import egovframework.com.cmm.util.EgovOwnerAuthUtil;
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
@@ -112,11 +113,15 @@ public class EgovIndvdlInfoPolicyController {
         String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
 
         if (sCmd.equals("del")) {
+            // 등록자 본인만 삭제 가능
+            assertIndvdlInfoPolicyOwner(indvdlInfoPolicy);
             egovIndvdlInfoPolicyService.deleteIndvdlInfoPolicy(indvdlInfoPolicy);
             sLocationUrl = "forward:/uss/sam/ipm/listIndvdlInfoPolicy.do";
         } else {
             IndvdlInfoPolicy indvdlInfoPolicyVO = egovIndvdlInfoPolicyService.selectIndvdlInfoPolicyDetail(indvdlInfoPolicy);
             model.addAttribute("indvdlInfoPolicy", indvdlInfoPolicyVO);
+            // 수정/삭제 버튼은 등록자 본인에게만 노출
+            model.addAttribute("ownerAt", EgovOwnerAuthUtil.ownerAt(indvdlInfoPolicyVO == null ? null : indvdlInfoPolicyVO.getFrstRegisterId()));
         }
 
         return sLocationUrl;
@@ -149,6 +154,9 @@ public class EgovIndvdlInfoPolicyController {
         LoginVO loginVO = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
 
         String sLocationUrl = "/uss/sam/ipm/EgovIndvdlInfoPolicyUpdt";
+
+        // 등록자 본인만 수정 가능
+        assertIndvdlInfoPolicyOwner(indvdlInfoPolicy);
 
         String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
 
@@ -229,5 +237,12 @@ public class EgovIndvdlInfoPolicyController {
         return sLocationUrl;
     }
 
-
+    /**
+     * 개인정보보호정책의 등록자 본인 여부를 검증한다.
+     * @param indvdlInfoPolicy
+     */
+    private void assertIndvdlInfoPolicyOwner(IndvdlInfoPolicy indvdlInfoPolicy) {
+        IndvdlInfoPolicy existing = egovIndvdlInfoPolicyService.selectIndvdlInfoPolicyDetail(indvdlInfoPolicy);
+        EgovOwnerAuthUtil.assertOwner(existing == null ? null : existing.getFrstRegisterId());
+    }
 }

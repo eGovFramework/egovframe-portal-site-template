@@ -1,0 +1,46 @@
+# egovframe-portal-site-template MySQL 연동 (docker-compose.yml 에 덧붙여 사용)
+# 실행 : docker compose -f docker-compose.yml -f docker-compose.mysql.yml up -d --build
+# 최초 기동(빈 볼륨) 시 DATABASE/mysql 의 DDL·데이터 스크립트를 자동 적재합니다.
+
+services:
+  egovframe-portal-site-template-mysql:
+    image: mysql:8.4
+    container_name: egovframe-portal-site-template-mysql
+    environment:
+      # 운영 시 .env 또는 환경변수로 반드시 변경
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root1234}
+      MYSQL_DATABASE: pst
+      MYSQL_USER: pst
+      MYSQL_PASSWORD: ${DB_PASSWORD:-pst01}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./DATABASE/mysql/all_pst_ddl_mysql.sql:/docker-entrypoint-initdb.d/01-ddl.sql:ro
+      - ./DATABASE/mysql/all_pst_data_mysql.sql:/docker-entrypoint-initdb.d/02-data.sql:ro
+    ports:
+      # 호스트 접속 포트 (이미 사용 중이면 MYSQL_PORT 로 변경)
+      - "127.0.0.1:${MYSQL_PORT:-3306}:3306"
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+  egovframe-portal-site-template:
+    environment:
+      # globals.properties 의 DB 접속정보를 환경변수로 덮어씀 (Globals.DbType → GLOBALS_DBTYPE)
+      GLOBALS_DBTYPE: mysql
+      GLOBALS_URL: jdbc:log4jdbc:mysql://egovframe-portal-site-template-mysql:3306/pst
+      GLOBALS_USERNAME: pst
+      GLOBALS_PASSWORD: ${DB_PASSWORD:-pst01}
+      GLOBALS_HSQL_AUTOINIT: "false"
+    depends_on:
+      egovframe-portal-site-template-mysql:
+        condition: service_healthy
+
+volumes:
+  mysql-data:

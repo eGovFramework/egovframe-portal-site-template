@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import egovframework.com.cmm.util.EgovOwnerAuthUtil;
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.com.cmm.ComDefaultVO;
@@ -81,15 +82,12 @@ public class EgovQustnrQestnManageController {
 
 		String sLocationUrl = "/uss/olp/qqm/EgovQustnrQestnManageStatistics";
 
-        //List sampleList = egovQustnrQestnManageService.selectQustnrQestnManageDetail(qustnrQestnManageVO);
         model.addAttribute("resultList", egovQustnrQestnManageService.selectQustnrQestnManageDetail(qustnrQestnManageVO));
         // 객관식설문통계
         HashMap<String,String> mapParam = new HashMap<String,String>();
         mapParam.put("qestnrQesitmId", (String)qustnrQestnManageVO.getQestnrQesitmId());
-        //List statisticsList = egovQustnrQestnManageService.selectQustnrManageStatistics(mapParam);
         model.addAttribute("statisticsList", egovQustnrQestnManageService.selectQustnrManageStatistics(mapParam));
         // 주관식설문통계
-        //List statisticsList2 = egovQustnrQestnManageService.selectQustnrManageStatistics2(mapParam);
         model.addAttribute("statisticsList2", egovQustnrQestnManageService.selectQustnrManageStatistics2(mapParam));
 		return sLocationUrl;
 	}
@@ -167,6 +165,8 @@ public class EgovQustnrQestnManageController {
 		String sSearchMode = commandMap.get("searchMode") == null ? "" : (String)commandMap.get("searchMode");
 
 		if(sCmd.equals("del")){
+			// 등록자 본인만 삭제 가능
+			EgovOwnerAuthUtil.assertOwner(EgovOwnerAuthUtil.frstRegisterIdOf(egovQustnrQestnManageService.selectQustnrQestnManageDetail(qustnrQestnManageVO)));
 			egovQustnrQestnManageService.deleteQustnrQestnManage(qustnrQestnManageVO);
 		}
 
@@ -220,6 +220,8 @@ public class EgovQustnrQestnManageController {
 		String sCmd = commandMap.get("cmd") == null ? "" : (String)commandMap.get("cmd");
 
 		if(sCmd.equals("del")){
+			// 등록자 본인만 삭제 가능
+			EgovOwnerAuthUtil.assertOwner(EgovOwnerAuthUtil.frstRegisterIdOf(egovQustnrQestnManageService.selectQustnrQestnManageDetail(qustnrQestnManageVO)));
 			egovQustnrQestnManageService.deleteQustnrQestnManage(qustnrQestnManageVO);
 			/** 목록으로갈때 검색조건 유지 */
 			sLocationUrl = "redirect:/uss/olp/qqm/EgovQustnrQestnManageList.do?";
@@ -233,6 +235,8 @@ public class EgovQustnrQestnManageController {
 	    	model.addAttribute("cmmCode018", cmmUseService.selectCmmCodeDetail(voComCode));
 
 	        model.addAttribute("resultList", egovQustnrQestnManageService.selectQustnrQestnManageDetail(qustnrQestnManageVO));
+	        // 수정/삭제 버튼은 등록자 본인에게만 노출
+	        model.addAttribute("ownerAt", EgovOwnerAuthUtil.ownerAt(EgovOwnerAuthUtil.frstRegisterIdOf(model.get("resultList"))));
 		}
 
 		return sLocationUrl;
@@ -266,6 +270,9 @@ public class EgovQustnrQestnManageController {
 		LoginVO loginVO = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
 
 		String sLocationUrl = "/uss/olp/qqm/EgovQustnrQestnManageModify";
+
+		// 등록자 본인만 수정 가능
+		EgovOwnerAuthUtil.assertOwner(EgovOwnerAuthUtil.frstRegisterIdOf(egovQustnrQestnManageService.selectQustnrQestnManageDetail(qustnrQestnManageVO)));
 
 		String sCmd = commandMap.get("cmd") == null ? "" : (String)commandMap.get("cmd");
 

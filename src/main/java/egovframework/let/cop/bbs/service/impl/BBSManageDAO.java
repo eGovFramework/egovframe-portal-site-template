@@ -52,10 +52,7 @@ public class BBSManageDAO extends EgovAbstractMapper {
 	
 		insert("BBSManageDAO.replyBoardArticle", board);
 	
-		//----------------------------------------------------------
 		// 현재 글 이후 게시물에 대한 NTT_NO를 증가 (정렬을 추가하기 위해)
-		//----------------------------------------------------------
-		//String parentId = board.getParnts();
 		long nttNo = (Long)selectOne("BBSManageDAO.getParentNttNo", board);
 	
 		board.setNttNo(nttNo);

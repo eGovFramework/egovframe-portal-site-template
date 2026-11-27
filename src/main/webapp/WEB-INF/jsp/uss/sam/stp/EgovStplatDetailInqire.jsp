@@ -161,11 +161,17 @@ function fn_egov_updt_stplatcn(useStplatId){
 								<!-- 목록/저장버튼  시작-->
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
+                                        <%-- 등록자 본인에게만 노출 --%>
+                                        <c:if test="${ownerAt == 'Y'}">
                                         <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_stplatcn('<c:out value="${result.useStplatId}"/>'); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
+                                        </c:if>
                                     </div>
 
                                     <div class="right_col btn1">
+                                        <%-- 등록자 본인에게만 노출 --%>
+                                        <c:if test="${ownerAt == 'Y'}">
                                         <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fn_egov_updt_stplatcn('<c:out value="${result.useStplatId}"/>'); return false;"><spring:message code="button.update" /></a><!-- 수정 -->
+                                        </c:if>
                                         <form name="formList" action="<c:url value='/uss/sam/stp/StplatListInqire.do'/>" method="post" style="display: inline; margin-left: 10px;">
                                         <c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
                                         	<a href="<c:url value='/uss/sam/stp/StplatListInqire.do'/>" class="btn btn_blue_46 w_100" onclick="fn_egov_inqire_stplatlist(); return false;" type="submit"><spring:message code="button.list" /></a><!-- 목록 -->

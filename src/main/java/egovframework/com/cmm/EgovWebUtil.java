@@ -49,13 +49,10 @@ public class EgovWebUtil {
 		String returnValue = value;
 		returnValue = clearXSSMinimum(returnValue);
 
-		// 정확성: 기존 코드는 replaceAll("%00", null) 로 replacement 에 null 을 넘겨
-		// 입력에 "%00" 이 포함되면 NullPointerException 이 발생했다("%00" 제거가 의도).
+		// 널 바이트(%00) 제거
 		returnValue = returnValue.replace("%00", "");
 
 		returnValue = returnValue.replace("%", "&#37;");
-
-		// \\. => .
 
 		returnValue = returnValue.replace("../", ""); // ../
 		returnValue = returnValue.replace("..\\", ""); // ..\
@@ -121,10 +118,7 @@ public class EgovWebUtil {
 			return "";
 		}
 
-		// 정확성: 기존 정규식 "\\.." 은 주석("// ..")과 달리 '.' + 임의 1문자를 의미해
-		// report.txt -> reportxt 처럼 정상 파일명을 훼손했다. 또한 구분자를 나중에 제거하면
-		// ".\." 같은 입력이 ".." 로 되살아난다. filePathReplaceAll 과 동일하게
-		// 구분자(/,\)를 먼저 제거한 뒤 문자 그대로의 ".." 을 제거한다.
+		// 구분자(/,\)를 먼저 제거한 뒤 ".." 를 제거 (".\." → ".." 우회 방지)
 		returnValue = returnValue.replace("/", "");
 		returnValue = returnValue.replace("\\", ""); // \
 		returnValue = returnValue.replace("..", ""); // ..

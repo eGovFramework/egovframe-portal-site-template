@@ -16,9 +16,7 @@ import org.junit.jupiter.api.Test;
  */
 class EgovDateUtilTest {
 
-    // -------------------------------------------------------------------------
     // addYearMonthDay
-    // -------------------------------------------------------------------------
 
     @Test
     @DisplayName("addYearMonthDay: 일 증가 - 월 경계 넘김")
@@ -71,9 +69,7 @@ class EgovDateUtilTest {
                 () -> EgovDateUtil.addYearMonthDay("2006228", 0, 0, 1));
     }
 
-    // -------------------------------------------------------------------------
     // addYear / addMonth / addDay
-    // -------------------------------------------------------------------------
 
     @Test
     @DisplayName("addYear: 연도 증가")
@@ -117,9 +113,7 @@ class EgovDateUtilTest {
         assertEquals("19991201", EgovDateUtil.addDay("20000201", -62));
     }
 
-    // -------------------------------------------------------------------------
     // getDaysDiff
-    // -------------------------------------------------------------------------
 
     @Test
     @DisplayName("getDaysDiff: 양수 차이")
@@ -151,9 +145,7 @@ class EgovDateUtilTest {
         assertEquals(1, EgovDateUtil.getDaysDiff("20060801", "20060802"));
     }
 
-    // -------------------------------------------------------------------------
     // checkDate
-    // -------------------------------------------------------------------------
 
     @Test
     @DisplayName("checkDate: 유효한 날짜 - yyyyMMdd")
@@ -191,9 +183,7 @@ class EgovDateUtilTest {
         assertTrue(EgovDateUtil.checkDate("20040229"));
     }
 
-    // -------------------------------------------------------------------------
     // isLeapYear
-    // -------------------------------------------------------------------------
 
     @Test
     @DisplayName("isLeapYear: 4의 배수이고 100의 배수가 아닌 해 - 윤년(true 반환)")
@@ -219,9 +209,7 @@ class EgovDateUtilTest {
         assertFalse(EgovDateUtil.isLeapYear(2005));
     }
 
-    // -------------------------------------------------------------------------
     // formatDate
-    // -------------------------------------------------------------------------
 
     @Test
     @DisplayName("formatDate: yyyyMMdd를 구분자 dot으로 변환")
@@ -247,9 +235,7 @@ class EgovDateUtilTest {
         assertEquals("2003.04", EgovDateUtil.formatDate("20030400", "."));
     }
 
-    // -------------------------------------------------------------------------
     // convertWeek
-    // -------------------------------------------------------------------------
 
     @Test
     @DisplayName("convertWeek: MON → 월요일")

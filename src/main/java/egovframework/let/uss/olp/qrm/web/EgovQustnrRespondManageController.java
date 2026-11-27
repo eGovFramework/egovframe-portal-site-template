@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import egovframework.com.cmm.util.EgovOwnerAuthUtil;
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.com.cmm.ComDefaultVO;
@@ -133,6 +134,8 @@ public class EgovQustnrRespondManageController {
 		String sCmd = commandMap.get("cmd") == null ? "" : (String)commandMap.get("cmd");
 
 		if(sCmd.equals("del")){
+			// 등록자 본인만 삭제 가능
+			EgovOwnerAuthUtil.assertOwner(EgovOwnerAuthUtil.frstRegisterIdOf(egovQustnrRespondManageService.selectQustnrRespondManageDetail(qustnrRespondManageVO)));
 			egovQustnrRespondManageService.deleteQustnrRespondManage(qustnrRespondManageVO);
 			sLocationUrl = "redirect:/uss/olp/qrm/EgovQustnrRespondManageList.do";
 		}else{
@@ -146,6 +149,8 @@ public class EgovQustnrRespondManageController {
 	    	model.addAttribute("comCode034", cmmUseService.selectCmmCodeDetail(voComCode));
 
 	        model.addAttribute("resultList", egovQustnrRespondManageService.selectQustnrRespondManageDetail(qustnrRespondManageVO));
+	        // 수정/삭제 버튼은 등록자 본인에게만 노출
+	        model.addAttribute("ownerAt", EgovOwnerAuthUtil.ownerAt(EgovOwnerAuthUtil.frstRegisterIdOf(model.get("resultList"))));
 		}
 
 		return sLocationUrl;
@@ -180,6 +185,9 @@ public class EgovQustnrRespondManageController {
 		LoginVO loginVO = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
 
 		String sLocationUrl = "/uss/olp/qrm/EgovQustnrRespondManageModify";
+
+		// 등록자 본인만 수정 가능
+		EgovOwnerAuthUtil.assertOwner(EgovOwnerAuthUtil.frstRegisterIdOf(egovQustnrRespondManageService.selectQustnrRespondManageDetail(qustnrRespondManageVO)));
 
 		String sCmd = commandMap.get("cmd") == null ? "" : (String)commandMap.get("cmd");
 

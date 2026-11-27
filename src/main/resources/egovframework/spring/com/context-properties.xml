@@ -2,17 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
     
-    <!-- globals.properties 파일을 로드하기 위한 PropertyPlaceholderConfigurer -->
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:/egovframework/egovProps/globals.properties</value>
-            </list>
-        </property>
+    <!-- globals.properties 플레이스홀더 (시스템 프로퍼티·환경변수 우선) -->
+    <bean id="propertyConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="location" value="classpath:/egovframework/egovProps/globals.properties"/>
+        <property name="fileEncoding" value="UTF-8"/>
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
     </bean>
     
-    <!-- 프로퍼티 정보 설정 -->
+    <!-- 프로퍼티 서비스 -->
     <bean name="propertiesService" class="org.egovframe.rte.fdl.property.impl.EgovPropertyServiceImpl" destroy-method="destroy">
         <property name="properties">
             <map>

@@ -82,17 +82,6 @@ public class QnaManageDAO extends EgovAbstractMapper {
 
     }
 
-    /**
-	 * 작성비밀번호를 확인한다.
-	 * @param vo
-	 * @return 글 총 갯수
-	 */
-    public int selectQnaPasswordConfirmCnt(QnaManageVO vo) {
-
-        return (Integer)selectOne("QnaManageDAO.selectQnaPasswordConfirmCnt", vo);
-
-    }
-
 	/**
 	 * Q&A 글을 수정한다.
 	 * @param vo

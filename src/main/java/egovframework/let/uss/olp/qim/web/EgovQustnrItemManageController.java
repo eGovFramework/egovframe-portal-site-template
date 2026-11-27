@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import egovframework.com.cmm.util.EgovOwnerAuthUtil;
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.com.cmm.EgovMessageSource;
@@ -75,6 +76,8 @@ public class EgovQustnrItemManageController {
 
 		String sCmd = commandMap.get("cmd") == null ? "" : (String)commandMap.get("cmd");
 		if(sCmd.equals("del")){
+			// 등록자 본인만 삭제 가능
+			EgovOwnerAuthUtil.assertOwner(EgovOwnerAuthUtil.frstRegisterIdOf(egovQustnrItemManageService.selectQustnrItemManageDetail(qustnrItemManageVO)));
 			egovQustnrItemManageService.deleteQustnrItemManage(qustnrItemManageVO);
 		}
 
@@ -175,10 +178,14 @@ public class EgovQustnrItemManageController {
 		String sCmd = commandMap.get("cmd") == null ? "" : (String)commandMap.get("cmd");
 
 		if(sCmd.equals("del")){
+			// 등록자 본인만 삭제 가능
+			EgovOwnerAuthUtil.assertOwner(EgovOwnerAuthUtil.frstRegisterIdOf(egovQustnrItemManageService.selectQustnrItemManageDetail(qustnrItemManageVO)));
 			egovQustnrItemManageService.deleteQustnrItemManage(qustnrItemManageVO);
 			sLocationUrl = "redirect:/uss/olp/qim/EgovQustnrItemManageList.do";
 		}else{
 	        model.addAttribute("resultList", egovQustnrItemManageService.selectQustnrItemManageDetail(qustnrItemManageVO));
+	        // 수정/삭제 버튼은 등록자 본인에게만 노출
+	        model.addAttribute("ownerAt", EgovOwnerAuthUtil.ownerAt(EgovOwnerAuthUtil.frstRegisterIdOf(model.get("resultList"))));
 		}
 
 		return sLocationUrl;
@@ -212,6 +219,9 @@ public class EgovQustnrItemManageController {
 		LoginVO loginVO = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
 
 		String sLocationUrl = "/uss/olp/qim/EgovQustnrItemManageModify";
+
+		// 등록자 본인만 수정 가능
+		EgovOwnerAuthUtil.assertOwner(EgovOwnerAuthUtil.frstRegisterIdOf(egovQustnrItemManageService.selectQustnrItemManageDetail(qustnrItemManageVO)));
 
 		String sCmd = commandMap.get("cmd") == null ? "" : (String)commandMap.get("cmd");
 

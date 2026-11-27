@@ -103,9 +103,7 @@ public class HTMLTagFilterRequestWrapper extends HttpServletRequestWrapper {
 				else 
 					strBuff.append(c);
 				break;
-			//case '&':
-			//	strBuff.append("&amp;");
-			//	break;
+			// '&' 는 치환하지 않음
 			case '"':
 				strBuff.append("&quot;");
 				break;
@@ -118,9 +116,7 @@ public class HTMLTagFilterRequestWrapper extends HttpServletRequestWrapper {
 			case ')':
 				strBuff.append("&#41;");
 				break;
-			//case '.':
-			//	strBuff.append("&#46;");
-			//	break;
+			// '.' 은 치환하지 않음
 			default:
 				strBuff.append(c);
 				break;

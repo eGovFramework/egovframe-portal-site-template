@@ -5,6 +5,7 @@
 
 
     <resultMap id="role" type="egovframework.let.sec.rmt.service.RoleManageVO">
+        <result property="frstRegisterId" column="FRST_REGISTER_ID"/>
         <result property="roleCode" column="ROLE_CODE"/>
         <result property="roleNm" column="ROLE_NM"/>
         <result property="rolePtn" column="ROLE_PTTRN"/>
@@ -17,7 +18,7 @@
 
     <select id="selectRole" resultMap="role">
         
-            SELECT ROLE_CODE, 
+            SELECT ROLE_CODE, FRST_REGISTER_ID, 
                    ROLE_NM, 
                    ROLE_PTTRN, 
                    ROLE_DC, 
@@ -66,6 +67,7 @@
         
             INSERT INTO LETTNROLEINFO 
                   ( ROLE_CODE
+                  , FRST_REGISTER_ID
                   , ROLE_NM
                   , ROLE_PTTRN
                   , ROLE_DC
@@ -73,6 +75,7 @@
                   , ROLE_SORT
                   , ROLE_CREAT_DE )
            VALUES ( #{roleCode}
+                  , #{frstRegisterId}
                   , #{roleNm}
                   , #{rolePtn}
                   , #{roleDc}

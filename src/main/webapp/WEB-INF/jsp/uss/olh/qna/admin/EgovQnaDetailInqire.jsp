@@ -52,10 +52,7 @@ function fn_egov_inqire_qnalist() {
 function fn_egov_updt_qnacn(qaId){
 	// qaId 값 세팅
 	document.QnaManageForm.qaId.value = qaId;
-	// 26.08.20 조치 : 관리자에게 작성 비밀번호를 요구하던 모달을 제거한다.
-	// 타인의 작성 비밀번호를 알 방법이 없어 관리자가 수정화면에 진입할 수 없었다.
-	// 이 화면과 QnaCnUpdtView.do / QnaCnUpdt.do 모두 @RequireAdmin 이므로
-	// 관리자 외 접근은 AOP에서 차단된다. 비밀번호는 관리자 권한의 전제가 아니다.
+	// 관리자 화면은 @RequireAdmin 으로 보호되므로 작성 비밀번호 확인 없이 이동
 	document.QnaManageForm.action = "<c:url value='/uss/olh/qna/admin/QnaCnUpdtView.do'/>";
 	document.QnaManageForm.submit();
 }
@@ -69,8 +66,7 @@ function fn_egov_updt_qnacn(qaId){
 
 		// Delete하기 위한 키값을 셋팅
 		document.QnaManageForm.qaId.value = qaId;	
-		// 26.08.20 조치 : 관리자 화면인데 사용자 엔드포인트로 POST 하고 있었다.
-		// 삭제 자체는 되지만 forward 대상이 사용자 목록이라 관리자 화면을 벗어난다.
+		// 관리자 삭제 엔드포인트 사용 (처리 후 관리자 목록으로 이동)
 		document.QnaManageForm.action = "<c:url value='/uss/olh/qna/admin/QnaCnDelete.do'/>";
 		document.QnaManageForm.submit();
 	}
@@ -249,15 +245,15 @@ function fn_egov_updt_qnacn(qaId){
 								<!-- 목록/저장버튼  시작-->
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
+                                        <%-- 등록된 질문은 관리자가 수정할 수 없음. 삭제는 등록자 본인만 가능(컨트롤러의 deleteAt) --%>
+                                        <c:if test="${deleteAt == 'Y'}">
                                         <a href="<c:url value='/uss/olh/qna/admin/QnaCnDelete.do'/>?qaId=<c:out value='${egovc:encrypt(result.qaId)}'/>" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_qnacn('<c:out value="${egovc:encrypt(result.qaId)}"/>'); return false;">
                                         	<spring:message code="button.delete" />
                                         </a><!-- 삭제 -->
+                                        </c:if>
                                     </div>
 
                                     <div class="right_col btn1">
-                                    	<a href="#LINK" class="btn btn_blue_46 w_100" onclick="fn_egov_updt_qnacn('<c:out value="${egovc:encrypt(result.qaId)}"/>'); return false;">
-                                    		<spring:message code="button.update" />
-                                    	</a><!-- 수정 -->
                                         <a href="<c:url value='/uss/olh/qna/admin/QnaListInqire.do'/>" class="btn btn_blue_46 w_100" onclick="fn_egov_inqire_qnalist(); return false;">
                                         	<spring:message code="button.list" />
                                         </a><!-- 목록 -->

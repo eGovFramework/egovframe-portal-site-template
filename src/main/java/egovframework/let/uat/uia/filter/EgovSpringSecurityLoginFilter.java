@@ -26,8 +26,11 @@ import jakarta.servlet.http.HttpServletRequestWrapper;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * 로그인 폼(id/password)을 검증한 뒤 Spring Security 폼 파라미터(username/uniqId)로 변환하는 브리지 필터.
- * 비밀번호 검증 없이 Spring Security 인증 컨텍스트가 생성되는 것을 방지한다.
+ * 로그인 폼(id/password/userSe)을 Spring Security 폼 로그인 파라미터(username/password)로 변환하는 브리지 필터.
+ * <p>
+ * 회원 상태(승인 여부)와 BCrypt 비밀번호를 사전 확인한 뒤 username 을 USER_SE + ID 로 바꿔 전달하며,
+ * 최종 인증·권한 부여는 Spring Security(DaoAuthenticationProvider + BCryptPasswordEncoder)가 수행한다.
+ * </p>
  */
 @Component("egovSpringSecurityLoginFilter")
 public class EgovSpringSecurityLoginFilter extends OncePerRequestFilter {
@@ -81,7 +84,7 @@ public class EgovSpringSecurityLoginFilter extends OncePerRequestFilter {
 			String securityUser = resultVO.getUserSe().concat(resultVO.getId());
 			String securityPass = password;
 			if (!StringUtils.hasText(securityPass)) {
-				LOGGER.warn("Login succeeded but uniqId is empty for user {}", securityUser);
+				LOGGER.warn("Login password is empty for user {}", securityUser);
 				forwardLoginFailure(request, response);
 				return;
 			}

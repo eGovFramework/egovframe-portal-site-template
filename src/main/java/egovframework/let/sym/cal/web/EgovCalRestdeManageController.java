@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.map.ListOrderedMap;
+import org.apache.commons.collections4.map.ListOrderedMap;
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.stereotype.Controller;
@@ -110,7 +110,6 @@ public class EgovCalRestdeManageController {
 		
 		String year   = Integer.toString(iYear);
 		String month  = Integer.toString(iMonth);
-		//String day    = Integer.toString(cal.get(Calendar.DAY_OF_MONTH));
 		
 		restde.setStartWeekMonth(firstWeek);
 		restde.setLastDayMonth(lastDay);
@@ -224,7 +223,6 @@ public class EgovCalRestdeManageController {
  
         String year   = Integer.toString(iYear);
         String month  = Integer.toString(iMonth);
-        //String day    = Integer.toString(cal.get(Calendar.DAY_OF_MONTH));
  
         restde.setStartWeekMonth(firstWeek);
         restde.setLastDayMonth(lastDay);
@@ -388,8 +386,6 @@ public class EgovCalRestdeManageController {
 		restde.setWeek(cal.get(Calendar.DAY_OF_WEEK));
 		restde.setLastDayMonth(cal.getActualMaximum(Calendar.DATE));
 		
-		//List CalInfoList          = restdeManageService.selectNormalDayCal(restde);
-        //List NormalWeekRestdeList = restdeManageService.selectNormalDayRestde(restde);
 
         model.addAttribute("resultList", restdeManageService.selectNormalDayCal(restde));
         model.addAttribute("RestdeList", restdeManageService.selectNormalDayRestde(restde));
@@ -506,8 +502,6 @@ public class EgovCalRestdeManageController {
 		vo.setMonth(Integer.toString(weekCal.get(Calendar.MONTH)+1));
 		vo.setDay(Integer.toString(weekCal.get(Calendar.DAY_OF_MONTH)));
 		vo.setWeek(weekCal.get(Calendar.DAY_OF_WEEK));
-		//List CalInfoList_4          = restdeManageService.selectNormalDayCal(vo);
-        //List NormalWeekRestdeList_4 = restdeManageService.selectNormalDayRestde(vo);
         model.addAttribute("resultList_4", restdeManageService.selectNormalDayCal(vo));
         model.addAttribute("RestdeList_4", restdeManageService.selectNormalDayRestde(vo));
 
@@ -882,7 +876,6 @@ public class EgovCalRestdeManageController {
 			}
 			restde.setDay(Integer.toString(weekCal.get(Calendar.DAY_OF_MONTH)+1));
 		}
-		//List CalInfoList = restdeManageService.selectAdministDayCal(restde);
 		model.addAttribute("resultList", restdeManageService.selectAdministDayCal(restde));
 		
 		iDayWeek  = weekCal.get(Calendar.DAY_OF_WEEK);
@@ -893,8 +886,6 @@ public class EgovCalRestdeManageController {
 		vo.setMonth(Integer.toString(weekCal.get(Calendar.MONTH)+1));
 		vo.setDay(Integer.toString(weekCal.get(Calendar.DAY_OF_MONTH)));
 		vo.setWeek(weekCal.get(Calendar.DAY_OF_WEEK));
-		//List CalInfoList_1          = restdeManageService.selectAdministDayCal(vo);
-        //List AdministWeekRestdeList_1 = restdeManageService.selectAdministDayRestde(vo);
         model.addAttribute("resultList_1", restdeManageService.selectAdministDayCal(vo));
         model.addAttribute("RestdeList_1", restdeManageService.selectAdministDayRestde(vo));
         

@@ -31,7 +31,6 @@ public class EgovAtchFileIdPropertyEditor extends PropertyEditorSupport {
 	public void setAsText(String text) throws IllegalArgumentException {
 		LOGGER.debug("===>>> setText : "+text);
 		String decryptText = "";
-		// 26.03.06 KISA 보안취약점 조치 : 불필요한 try-catch 제거
 		if (text != null && !"".equals(text) ) {
 			decryptText = EgovFileMngController.decrypt(text);
 		}

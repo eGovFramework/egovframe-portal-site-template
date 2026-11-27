@@ -66,6 +66,10 @@ public class RoleManage extends ComDefaultVO {
 	 * 권한 코드
 	 */
 	private String authorCode;
+	/**
+	 * 최초등록자ID
+	 */
+	private String frstRegisterId;
 	
 	/**
 	 * roleManage attribute 를 리턴한다.
@@ -193,6 +197,19 @@ public class RoleManage extends ComDefaultVO {
 	public void setAuthorCode(String authorCode) {
 		this.authorCode = authorCode;
 	}
-	
 
+	/**
+	 * frstRegisterId attribute 를 리턴한다.
+	 * @return String
+	 */
+	public String getFrstRegisterId() {
+		return frstRegisterId;
+	}
+	/**
+	 * frstRegisterId attribute 값을 설정한다.
+	 * @param frstRegisterId String
+	 */
+	public void setFrstRegisterId(String frstRegisterId) {
+		this.frstRegisterId = frstRegisterId;
+	}
 }

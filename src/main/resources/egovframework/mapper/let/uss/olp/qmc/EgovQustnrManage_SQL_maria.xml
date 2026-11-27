@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="QustnrManage">
+
+
+	<resultMap id="QustnrManage" type="egovframework.let.uss.olp.qmc.service.QustnrManageVO">
+		<result property="qestnrId" column="QESTNR_ID"/>
+		<result property="qestnrSj" column="QUSTNR_SJ"/>
+		<result property="qestnrPurps" column="QUSTNR_PURPS"/>
+		<result property="qestnrWritngGuidanceCn" column="QUSTNR_WRITNG_GUIDANCE_CN"/>
+		<result property="qestnrBeginDe" column="QUSTNR_BGNDE"/>
+		<result property="qestnrEndDe" column="QUSTNR_ENDDE"/>
+		<result property="qestnrTrget" column="QUSTNR_TRGET"/>
+		<result property="qestnrTmplatId" column="QUSTNR_TMPLAT_ID"/>
+		<result property="qestnrTmplatTy" column="QUSTNR_TMPLAT_TY"/>
+		<result property="frstRegisterPnttm" column="FRST_REGIST_PNTTM"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDT_PNTTM"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID"/>
+	</resultMap>
+
+	<!-- 설문정보::목록조회_게시물정보 -->
+	<select id="selectQustnrManageDetailModel" resultMap="QustnrManage">
+		SELECT
+			A.QESTNR_ID,
+			A.QUSTNR_SJ,
+			A.QUSTNR_PURPS,
+			A.QUSTNR_WRITNG_GUIDANCE_CN,
+			DATE_FORMAT(A.QUSTNR_BGNDE,'%Y-%m-%d') QUSTNR_BGNDE,
+			DATE_FORMAT(A.QUSTNR_ENDDE,'%Y-%m-%d') QUSTNR_ENDDE,
+			A.QUSTNR_TRGET,
+			A.QUSTNR_TMPLAT_ID,
+			(SELECT QUSTNR_TMPLAT_TY FROM LETTNQUSTNRTMPLAT WHERE  QUSTNR_TMPLAT_ID = A.QUSTNR_TMPLAT_ID) QUSTNR_TMPLAT_TY,
+			DATE_FORMAT(A.FRST_REGIST_PNTTM, '%Y-%m-%d') as FRST_REGIST_PNTTM,
+			A.FRST_REGISTER_ID,
+			DATE_FORMAT(A.LAST_UPDT_PNTTM,'%Y-%m-%d') as LAST_UPDT_PNTTM,
+			A.LAST_UPDUSR_ID
+		FROM LETTNQESTNRINFO A
+		WHERE 1=1
+		AND QESTNR_ID = #{qestnrId}
+	</select>
+
+	<!-- 설문정보::목록조회_게시물정보 -->
+	<select id="selectQustnrManage" parameterType="comDefaultVO" resultType="egovMap">
+	 
+		SELECT
+			A.QESTNR_ID				qestnrId,
+			A.QUSTNR_SJ				qestnrSj,
+			A.QUSTNR_PURPS			qestnrPurps,
+			A.QUSTNR_WRITNG_GUIDANCE_CN		qestnrWritngGuidanceCn,
+			DATE_FORMAT(A.QUSTNR_BGNDE,'%Y-%m-%d') 		qestnrBeginDe,
+			DATE_FORMAT(A.QUSTNR_ENDDE,'%Y-%m-%d') 			qestnrEndDe,
+			A.QUSTNR_TRGET			qestnrTrget,
+			A.QUSTNR_TMPLAT_ID		qestnrTmplatId,
+			DATE_FORMAT(A.FRST_REGIST_PNTTM, '%Y-%m-%d') as FRST_REGIST_PNTTM,
+			A.FRST_REGISTER_ID,
+			(SELECT USER_NM FROM COMVNUSERMASTER WHERE ESNTL_ID = A.FRST_REGISTER_ID) FRST_REGISTER_NM,
+			DATE_FORMAT(A.LAST_UPDT_PNTTM,'%Y-%m-%d') as LAST_UPDT_PNTTM,
+			A.LAST_UPDUSR_ID
+		FROM LETTNQESTNRINFO A
+		WHERE 1=1
+	 
+	 <if test="searchKeyword != null and searchKeyword != ''">
+	 	
+	 	
+                <if test="searchCondition == &quot;QUSTNR_SJ&quot;">
+		 		AND QUSTNR_SJ LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
+		 		</if>
+	 	
+	 	<if test="searchCondition == &quot;FRST_REGISTER_ID&quot;">
+	 		AND  FRST_REGISTER_ID IN (SELECT ESNTL_ID FROM COMVNUSERMASTER WHERE USER_NM LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%') )
+	 	</if>
+	 	
+	 </if>
+
+	 
+		ORDER BY A.FRST_REGIST_PNTTM DESC
+		LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+	
+	</select>
+
+	<!-- 설문정보::목록조회_게시물 총갯수  -->
+	<select id="selectQustnrManageCnt" parameterType="comDefaultVO" resultType="int">
+		SELECT
+		COUNT(*) totcnt
+		FROM LETTNQESTNRINFO
+		WHERE 1=1
+	 <if test="searchKeyword != null and searchKeyword != ''">
+	 	
+	 	
+                <if test="searchCondition == &quot;QUSTNR_SJ&quot;">
+                AND QUSTNR_SJ LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
+                </if>
+        
+	 	<if test="searchCondition == &quot;FRST_REGISTER_ID&quot;">
+	 		AND  FRST_REGISTER_ID IN (SELECT ESNTL_ID FROM COMVNUSERMASTER WHERE USER_NM LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%') )
+	 	</if>
+	 	
+	 </if>
+	</select>
+
+	<!-- 설문정보::설문템플릿정보 -->
+	<select id="selectQustnrTmplatManage" parameterType="egovframework.let.uss.olp.qmc.service.QustnrManageVO" resultType="egovMap">
+		SELECT
+		QUSTNR_TMPLAT_ID		qestnrTmplatId,
+		QUSTNR_TMPLAT_TY		qestnrTmplatTy
+		FROM LETTNQUSTNRTMPLAT
+	</select>
+
+	<!-- 설문응답자 삭제 -->
+	<delete id="deleteQustnrRespondManage">
+	DELETE FROM LETTNQUSTNRRESPONDINFO WHERE QESTNR_ID = #{qestnrId}
+	</delete>
+	<!-- 설문조사(설문결과) 삭제 -->
+	<delete id="deleteQustnrRespondInfo">
+	DELETE FROM LETTNQUSTNRRSPNSRESULT WHERE QESTNR_ID = #{qestnrId}
+	</delete>
+	<!-- 설문항목 삭제 -->
+	<delete id="deleteQustnrItemManage">
+	DELETE FROM LETTNQUSTNRIEM WHERE QESTNR_ID = #{qestnrId}
+	</delete>
+	<!-- 설문문항 삭제 -->
+	<delete id="deleteQustnrQestnManage">
+	DELETE FROM LETTNQUSTNRQESITM WHERE QESTNR_ID = #{qestnrId}
+	</delete>
+
+	<!-- 설문정보::삭제  -->
+	<delete id="deleteQustnrManage">
+		
+			DELETE FROM LETTNQESTNRINFO
+			WHERE QESTNR_ID = #{qestnrId}
+		
+	</delete>
+
+	<!-- 설문정보::수정  -->
+	<update id="updateQustnrManage">
+		UPDATE LETTNQESTNRINFO
+		SET
+			QUSTNR_SJ=#{qestnrSj},
+			QUSTNR_PURPS=#{qestnrPurps},
+			QUSTNR_TMPLAT_ID=#{qestnrTmplatId},
+			QUSTNR_WRITNG_GUIDANCE_CN=#{qestnrWritngGuidanceCn},
+			QUSTNR_BGNDE=REPLACE(#{qestnrBeginDe},'-',''),
+			QUSTNR_TRGET=#{qestnrTrget},
+			QUSTNR_ENDDE=REPLACE(#{qestnrEndDe},'-',''),
+			LAST_UPDT_PNTTM = sysdate(),
+			LAST_UPDUSR_ID = #{lastUpdusrId}
+		WHERE QESTNR_ID = #{qestnrId}
+	</update>
+
+	<!-- 설문정보::상세보기 -->
+	<select id="selectQustnrManageDetail" parameterType="egovframework.let.uss.olp.qmc.service.QustnrManageVO" resultType="egovMap">
+		SELECT
+			A.QESTNR_ID,
+			A.QUSTNR_SJ			qestnrSj,
+			A.QUSTNR_PURPS		qestnrPurps,
+			A.QUSTNR_WRITNG_GUIDANCE_CN		qestnrWritngGuidanceCn,
+			DATE_FORMAT(A.QUSTNR_BGNDE,'%Y-%m-%d') QESTNR_BEGIN_DE,
+			DATE_FORMAT(A.QUSTNR_ENDDE,'%Y-%m-%d') QESTNR_END_DE,
+			DATE_FORMAT(A.FRST_REGIST_PNTTM, '%Y-%m-%d') as FRST_REGIST_PNTTM,
+			A.FRST_REGISTER_ID,
+			DATE_FORMAT(A.LAST_UPDT_PNTTM,'%Y-%m-%d') as LAST_UPDT_PNTTM,
+			A.LAST_UPDUSR_ID,
+			A.QUSTNR_TRGET			qestnrTrget,
+			A.QUSTNR_TMPLAT_ID		qestnrTmplatId,
+            (SELECT QUSTNR_TMPLAT_TY FROM LETTNQUSTNRTMPLAT WHERE  QUSTNR_TMPLAT_ID = A.QUSTNR_TMPLAT_ID) QESTNR_TMPLAT_TY
+		FROM LETTNQESTNRINFO A
+		WHERE 1=1
+		AND QESTNR_ID = #{qestnrId}
+
+	</select>
+
+	<!-- 설문정보::입력  -->
+	<insert id="insertQustnrManage">
+	 
+
+		INSERT INTO LETTNQESTNRINFO (
+			QESTNR_ID,
+			QUSTNR_SJ,
+			QUSTNR_PURPS,
+			QUSTNR_WRITNG_GUIDANCE_CN,
+			QUSTNR_BGNDE,
+			QUSTNR_ENDDE,
+			QUSTNR_TRGET,
+			QUSTNR_TMPLAT_ID,
+			FRST_REGIST_PNTTM,
+			FRST_REGISTER_ID,
+			LAST_UPDT_PNTTM,
+			LAST_UPDUSR_ID
+		)VALUES(
+			#{qestnrId},
+			#{qestnrSj},
+			#{qestnrPurps},
+			#{qestnrWritngGuidanceCn},
+			REPLACE(#{qestnrBeginDe},'-',''),
+			REPLACE(#{qestnrEndDe},'-',''),
+			#{qestnrTrget},
+			#{qestnrTmplatId},
+			sysdate(),
+			#{frstRegisterId},
+			sysdate(),
+			#{lastUpdusrId}
+		)
+
+	 
+	</insert>
+
+
+</mapper>

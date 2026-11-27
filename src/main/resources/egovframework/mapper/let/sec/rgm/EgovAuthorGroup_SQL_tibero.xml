@@ -5,6 +5,7 @@
 
 
     <resultMap id="authorGroup" type="egovframework.let.sec.rgm.service.AuthorGroupVO">
+        <result property="frstRegisterId" column="FRST_REGISTER_ID"/>
         <result property="userId" column="USER_ID"/>
         <result property="userNm" column="USER_NM"/>
         <result property="groupId" column="GROUP_ID"/>
@@ -30,7 +31,7 @@
                      WHERE CODE_ID = 'COM012'
                        AND CODE = A.MBER_TY_CODE
                        AND USE_AT = 'Y') AS MBER_TY_NM,
-                   B.AUTHOR_CODE, 
+                   B.AUTHOR_CODE, B.FRST_REGISTER_ID, 
                    (CASE WHEN B.SCRTY_DTRMN_TRGET_ID IS NULL THEN 'N'
                          ELSE 'Y' 
                      END) AS REG_YN,
@@ -69,9 +70,11 @@
         
             INSERT INTO LETTNEMPLYRSCRTYESTBS 
                   ( SCRTY_DTRMN_TRGET_ID
+                  , FRST_REGISTER_ID
                   , MBER_TY_CODE
                   , AUTHOR_CODE)
            VALUES ( #{uniqId}
+                  , #{frstRegisterId}
                   , #{mberTyCode}
                   , #{authorCode})
         
@@ -85,6 +88,13 @@
              WHERE SCRTY_DTRMN_TRGET_ID=#{uniqId}
         
     </update>
+
+    <!-- 권한 할당 등록자 조회 -->
+    <select id="selectAuthorGroupFrstRegisterId" resultType="java.lang.String">
+    		SELECT FRST_REGISTER_ID
+    		  FROM LETTNEMPLYRSCRTYESTBS
+    		 WHERE SCRTY_DTRMN_TRGET_ID=#{uniqId}
+    </select>
 
     <delete id="deleteAuthorGroup">
         

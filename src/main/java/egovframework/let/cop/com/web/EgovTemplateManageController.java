@@ -137,7 +137,6 @@ public class EgovTemplateManageController {
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		LoginVO user = null;
 
-		// 26.03.06 KISA 보안취약점 조치 : 불필요한 try-catch 제거
 		if (isAuthenticated) {
 			user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		}
@@ -205,7 +204,6 @@ public class EgovTemplateManageController {
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		LoginVO user = null;
 
-		// 26.03.06 KISA 보안취약점 조치 : 불필요한 try-catch 제거
 		if (isAuthenticated) {
 			user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		}

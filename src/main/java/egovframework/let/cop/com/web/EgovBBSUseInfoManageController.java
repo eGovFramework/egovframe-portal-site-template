@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
+import egovframework.com.cmm.util.EgovOwnerAuthUtil;
 import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.let.cop.com.service.BoardUseInf;
@@ -63,6 +64,9 @@ public class EgovBBSUseInfoManageController {
 	@RequestMapping(value = "/cop/com/deleteBBSUseInf.do", method = RequestMethod.POST)
 	public String deleteBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @ModelAttribute("bdUseInf") BoardUseInf bdUseInf, SessionStatus status, ModelMap model) {
 
+		// 등록자 본인만 삭제 가능
+		assertBBSUseInfOwner(bdUseVO);
+
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
 		if (isAuthenticated) {
@@ -109,7 +113,6 @@ public class EgovBBSUseInfoManageController {
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		LoginVO user = null;
 
-		// 26.03.06 KISA 보안취약점 조치 : 불필요한 try-catch 제거
 		if (isAuthenticated) {
 			user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		}
@@ -192,6 +195,9 @@ public class EgovBBSUseInfoManageController {
 	public String updateBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @Valid @ModelAttribute("boardUseInf") BoardUseInf boardUseInf, BindingResult bindingResult, HttpServletRequest request,
 			ModelMap model) {
 
+		// 등록자 본인만 수정 가능
+		assertBBSUseInfOwner(bdUseVO);
+
 		if (bindingResult.hasErrors()) {
 			return "cop/com/EgovBoardUseInfInqire";
 		}
@@ -232,6 +238,8 @@ public class EgovBBSUseInfoManageController {
 		}
 
 		model.addAttribute("bdUseVO", vo);
+		// 저장 버튼은 등록자 본인에게만 노출
+		model.addAttribute("ownerAt", EgovOwnerAuthUtil.ownerAt(vo.getFrstRegisterId()));
 		return "cop/com/EgovBoardUseInfInqire";
 	}
 
@@ -330,5 +338,15 @@ public class EgovBBSUseInfoManageController {
 		}
 
 		return "forward:/cop/com/selectBBSUseInfsByTrget.do";
+	}
+
+	/**
+	 * 게시판 사용정보의 등록자 본인 여부를 검증한다.
+	 *
+	 * @param bdUseVO
+	 */
+	private void assertBBSUseInfOwner(BoardUseInfVO bdUseVO) {
+		BoardUseInfVO existing = bbsUseService.selectBBSUseInf(bdUseVO);
+		EgovOwnerAuthUtil.assertOwner(existing == null ? null : existing.getFrstRegisterId());
 	}
 }

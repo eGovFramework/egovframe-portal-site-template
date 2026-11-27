@@ -62,10 +62,7 @@ function fn_egov_search_faq(){
 	
 }
 
-/*********************************************************
- * 26.08.18 보안취약점 조치 : FAQ 등록/수정은 관리자 전용 기능이므로
- * 사용자 화면의 호출 함수를 제거한다. 관리자는 /uss/olh/faq/admin/ 화면을 사용한다.
- ******************************************************** */
+// FAQ 등록/수정은 관리자 화면(/uss/olh/faq/admin/)에서 처리
 /* ********************************************************
  * 상세회면 처리 함수
  ******************************************************** */
@@ -134,7 +131,7 @@ function fn_egov_inquire_faqlistdetail(faqId) {
                                         <button class="btn" type="submit" onclick="fn_egov_search_faq(); return false;">조회</button><!-- 조회 -->
                                     </span>
 
-                                    <!-- 26.08.18 보안취약점 조치 : FAQ 등록은 관리자 전용 기능이므로 사용자 화면에서 제거 -->
+                                    <!-- FAQ 등록은 관리자 화면에서 처리 -->
                                     
                                     <input name="faqId" type="hidden" value="">
 									<input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>"/>

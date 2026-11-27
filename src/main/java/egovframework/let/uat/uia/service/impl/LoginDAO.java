@@ -34,29 +34,4 @@ public class LoginDAO extends EgovAbstractMapper {
 		return (LoginVO) selectOne("loginDAO.actionLogin", vo);
 	}
 
-	/**
-	 * 아이디를 찾는다.
-	 * @param vo LoginVO
-	 * @return LoginVO
-	 */
-	public LoginVO searchId(LoginVO vo) {
-		return (LoginVO) selectOne("loginDAO.searchId", vo);
-	}
-
-	/**
-	 * 비밀번호를 찾는다.
-	 * @param vo LoginVO
-	 * @return LoginVO
-	 */
-	public LoginVO searchPassword(LoginVO vo) {
-		return (LoginVO) selectOne("loginDAO.searchPassword", vo);
-	}
-
-	/**
-	 * 변경된 비밀번호를 저장한다.
-	 * @param vo LoginVO
-	 */
-	public void updatePassword(LoginVO vo) {
-		update("loginDAO.updatePassword", vo);
-	}
 }

@@ -53,11 +53,28 @@ public class EgovProperties {
 	= RELATIVE_PATH_PREFIX + "egovProps" + System.getProperty("file.separator") + "globals.properties";
 
 	/**
-	 * 인자로 주어진 문자열을 Key값으로 하는 프로퍼티 값을 반환한다(Globals.java 전용)
+	 * 운영 환경에서 비밀값을 소스 밖에서 주입할 수 있도록 시스템 프로퍼티, 환경변수 순으로 조회한다.
+	 * 환경변수명은 키를 대문자로 바꾸고 '.' 을 '_' 로 치환한다. (예: Globals.File.algorithmKey -> GLOBALS_FILE_ALGORITHMKEY)
+	 */
+	private static String getOverride(String keyName) {
+		String value = System.getProperty(keyName);
+		if (value == null) {
+			value = System.getenv(keyName.toUpperCase(java.util.Locale.ROOT).replace('.', '_'));
+		}
+		return value;
+	}
+
+	/**
+	 * 인자로 주어진 문자열을 Key값으로 하는 프로퍼티 값을 반환한다(Globals.java 전용).
+	 * JVM 시스템 프로퍼티(-DGlobals.xxx) 또는 환경변수(GLOBALS_XXX)가 있으면 파일 값보다 우선한다.
 	 * @param keyName String
 	 * @return String
 	*/
 	public static String getProperty(String keyName) {
+		String override = getOverride(keyName);
+		if (override != null) {
+			return override.trim();
+		}
 		String value = ERR_CODE;
 		value = "99";
 		debug(GLOBALS_PROPERTIES_FILE + " : " + keyName);

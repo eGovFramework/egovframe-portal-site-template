@@ -283,9 +283,7 @@ public class EgovMainController {
     public String selectMainMenuLeft(
     		ModelMap model) {
 
-    	//LoginVO user = EgovUserDetailsHelper.isAuthenticated()? (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser():null;
 
-    	//LoginVO user = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
     	if(EgovUserDetailsHelper.isAuthenticated()){
     		//인증된 경우 처리할 사항 추가 ...
     		model.addAttribute("lastLogoutDateTime", "로그아웃 타임: 2011-11-10 11:30");

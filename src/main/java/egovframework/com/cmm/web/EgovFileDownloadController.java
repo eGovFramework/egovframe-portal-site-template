@@ -79,6 +79,9 @@ public class EgovFileDownloadController {
 	 */
 	private String getBrowser(HttpServletRequest request) {
 		String header = request.getHeader("User-Agent");
+		if (header == null) {
+			return "Firefox";
+		}
 		if (header.indexOf("MSIE") > -1) {
 			return "MSIE";
 		} else if (header.indexOf("Trident") > -1) { // IE11 문자열 깨짐 방지
@@ -194,7 +197,6 @@ public class EgovFileDownloadController {
 
 				response.setContentType(mimetype);
 				setDisposition(fvo.getOrignlFileNm(), request, response);
-				//response.setContentLength(fSize);
 
 				BufferedInputStream in = null;
 				BufferedOutputStream out = null;

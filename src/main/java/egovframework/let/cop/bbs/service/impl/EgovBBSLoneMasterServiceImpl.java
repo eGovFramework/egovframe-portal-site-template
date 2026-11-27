@@ -74,9 +74,7 @@ public class EgovBBSLoneMasterServiceImpl extends EgovAbstractServiceImpl implem
 	
 	masterDAO.insertMaster(boardMaster);
 
-	//----------------------------------------------
 	// 게시판 사용 등록 (시스템)
-	//----------------------------------------------
 	BoardUseInf bdUseInf = new BoardUseInf();
 
 	bdUseInf.setBbsId(bbsId);

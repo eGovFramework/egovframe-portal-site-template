@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
+import egovframework.com.cmm.util.EgovOwnerAuthUtil;
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.service.EgovCmmUseService;
@@ -123,7 +124,10 @@ public class EgovRoleManageController {
 
     	authorManageVO.setAuthorManageList(egovAuthorManageService.selectAuthorAllList(authorManageVO));
 
-    	model.addAttribute("roleManage", egovRoleManageService.selectRole(roleManageVO));
+    	RoleManageVO roleManage = egovRoleManageService.selectRole(roleManageVO);
+    	model.addAttribute("roleManage", roleManage);
+    	// 저장/삭제 버튼은 등록자 본인에게만 노출
+    	model.addAttribute("ownerAt", EgovOwnerAuthUtil.ownerAt(roleManage == null ? null : roleManage.getFrstRegisterId()));
         model.addAttribute("authorManageList", authorManageVO.getAuthorManageList());
         model.addAttribute("cmmCodeDetailList", getCmmCodeDetailList(new ComDefaultCodeVO(),"COM029"));
 
@@ -186,6 +190,8 @@ public class EgovRoleManageController {
 				throw new BaseRuntimeException(e);
 			}
 	    	roleManageVO.setRoleCode(roleManage.getRoleCode());
+	    	roleManage.setFrstRegisterId(EgovOwnerAuthUtil.getLoginUniqId());
+	    	model.addAttribute("ownerAt", "Y");
 
 	    	status.setComplete();
 	        model.addAttribute("cmmCodeDetailList", getCmmCodeDetailList(new ComDefaultCodeVO(),"COM029"));
@@ -208,6 +214,10 @@ public class EgovRoleManageController {
 			SessionStatus status,
             ModelMap model) {
 
+    	// 등록자 본인만 수정 가능
+    	assertRoleOwner(roleManage.getRoleCode());
+    	model.addAttribute("ownerAt", "Y");
+
     	if (bindingResult.hasErrors()) {
 			return "/sec/rmt/EgovRoleUpdate";
 		} else {
@@ -228,6 +238,9 @@ public class EgovRoleManageController {
             SessionStatus status,
             ModelMap model) {
 
+    	// 등록자 본인만 삭제 가능
+    	assertRoleOwner(roleManage.getRoleCode());
+
     	egovRoleManageService.deleteRole(roleManage);
     	status.setComplete();
     	model.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
@@ -247,6 +260,10 @@ public class EgovRoleManageController {
 	                              SessionStatus status,
 	                              Model model) {
     	String [] strRoleCodes = roleCodes.split(";");
+    	// 등록자 본인이 아닌 롤이 포함되어 있으면 삭제하지 않음
+    	for(int i=0; i<strRoleCodes.length;i++) {
+    		assertRoleOwner(strRoleCodes[i]);
+    	}
     	for(int i=0; i<strRoleCodes.length;i++) {
     		roleManage.setRoleCode(strRoleCodes[i]);
     		egovRoleManageService.deleteRole(roleManage);
@@ -256,4 +273,14 @@ public class EgovRoleManageController {
 		return "forward:/sec/rmt/EgovRoleList.do";
 	}
 
+	/**
+	 * 롤의 등록자 본인 여부를 검증한다.
+	 * @param roleCode String
+	 */
+	private void assertRoleOwner(String roleCode) {
+		RoleManageVO searchVO = new RoleManageVO();
+		searchVO.setRoleCode(roleCode);
+		RoleManageVO existing = egovRoleManageService.selectRole(searchVO);
+		EgovOwnerAuthUtil.assertOwner(existing == null ? null : existing.getFrstRegisterId());
+	}
 }

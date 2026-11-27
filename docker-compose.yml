@@ -1,45 +1,27 @@
-services:
-  mysql-db:
-    image: mysql:8
-    container_name: egov-portal-mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root1234
-      MYSQL_DATABASE: pst
-      MYSQL_USER: pst
-      MYSQL_PASSWORD: pst01
-    command:
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_unicode_ci
-    volumes:
-      - mysql-data:/var/lib/mysql
-      - ./DATABASE/mysql/all_pst_ddl_mysql.sql:/docker-entrypoint-initdb.d/01-ddl.sql:ro
-      - ./DATABASE/mysql/all_pst_data_mysql.sql:/docker-entrypoint-initdb.d/02-data.sql:ro
-    ports:
-      - "3306:3306"
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot1234"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 30s
-    restart: unless-stopped
+# egovframe-portal-site-template 로컬 실행 (Docker Compose, 내장 HSQLDB)
+# Dockerfile 이 멀티 스테이지로 WAR 를 직접 빌드하므로 `mvn package` 없이 `docker compose up -d --build` 로 실행합니다.
+# MySQL 사용 : docker compose -f docker-compose.yml -f docker-compose.mysql.yml up -d --build
+# 헬스체크는 Dockerfile 의 HEALTHCHECK 를 사용합니다.
+# 접속 URL : http://localhost:8080/
 
-  app:
-    build: .
-    image: egovframe-portal-site-template:${APP_VERSION:-5.0.0}
-    container_name: egov-portal-site
-    environment:
-      DB_HOST: mysql-db
-      DB_PORT: "3306"
-      DB_NAME: pst
-      DB_USERNAME: pst
-      DB_PASSWORD: pst01
+services:
+  egovframe-portal-site-template:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: egovframe-portal-site-template:${APP_VERSION:-5.1.0}
+    container_name: egovframe-portal-site-template
     ports:
       - "8080:8080"
-    depends_on:
-      mysql-db:
-        condition: service_healthy
+    environment:
+      # JVM 옵션
+      JAVA_OPTS: ${JAVA_OPTS:--Xms256m -Xmx512m -XX:+ExitOnOutOfMemoryError}
+      # 첨부파일 ID 암호화 키 (Globals.File.algorithmKey → GLOBALS_FILE_ALGORITHMKEY) : 운영 시 반드시 변경
+      GLOBALS_FILE_ALGORITHMKEY: ${GLOBALS_FILE_ALGORITHMKEY:-change-this-file-key}
+    volumes:
+      # 첨부파일 저장 경로 (Globals.fileStorePath)
+      - upload-data:/upload
     restart: unless-stopped
 
 volumes:
-  mysql-data:
+  upload-data:

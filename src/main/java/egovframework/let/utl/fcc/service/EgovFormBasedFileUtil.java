@@ -69,7 +69,6 @@ public class EgovFormBasedFileUtil {
 	 * @return
 	 */
 	protected static String convert(String filename) {
-		//return java.net.URLEncoder.encode(filename, "utf-8");
 		return filename;
 	}
 
@@ -80,7 +79,6 @@ public class EgovFormBasedFileUtil {
 	 * @throws IOException
 	 */
 	public static long saveFile(InputStream is, File file) throws IOException {
-		//KISA 보안약점 조치 (2018-10-29, 윤창원)
 		if (file.getParentFile() == null) {
 			LOGGER.debug("file.getParentFile() is null");
 			throw new RuntimeException("file.getParentFile() is null");

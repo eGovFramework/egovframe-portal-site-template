@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- component-scan 설정-->
+	<!-- 서비스·DAO 컴포넌트 스캔 -->
 	<context:component-scan base-package="egovframework, egovframework.let.uat.uia.filter">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
@@ -14,14 +14,14 @@
 		<context:exclude-filter type="regex" expression="egovframework\.test\..*"/>
 	</context:component-scan>
 
-	<!-- 메시지소스빈 설정 -->
+	<!-- 메시지 소스 -->
 	<bean id="egovMessageSource" class="egovframework.com.cmm.EgovMessageSource">
 		<property name="reloadableResourceBundleMessageSource">
 			<ref bean="messageSource" />
 		</property> 
 	</bean>
     
-	<!-- 프로퍼티 파일 위치 설정 -->
+	<!-- 메시지 프로퍼티 파일 위치 -->
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
@@ -36,7 +36,7 @@
 		</property>
 	</bean>
 	
-	<!-- Exception 발생시 후처리용 별도작업을 위해 실행환경의 LeveaTrace를 활용하도록 설정 -->
+	<!-- 예외 후처리 : LeaveaTrace -->
 	<bean id="leaveaTrace" class="org.egovframe.rte.fdl.cmmn.trace.LeaveaTrace">
 		<property name="traceHandlerServices">
 			<list>
@@ -45,7 +45,7 @@
 		</property>
 	</bean>
 
-	<!-- Exception 발생시 후처리용 별도작업을 위해 실행환경의 DefaultTrace Handle Manager 를 활용하도록 설정 -->
+	<!-- 예외 후처리 : Trace 핸들러 매니저 -->
 	<bean id="traceHandlerService" class="org.egovframe.rte.fdl.cmmn.trace.manager.DefaultTraceHandleManager">
 		<property name="reqExpMatcher">
 			<ref bean="antPathMater" />
@@ -62,13 +62,13 @@
 		</property>
 	</bean>
 
-	<!-- Exception 발생시 후처리용 별도작업을 위해 실행환경의  AntPathMatcher 를 활용하도록 설정 -->
+	<!-- 예외 후처리 : 경로 매처 -->
 	<bean id="antPathMater" class="org.springframework.util.AntPathMatcher" />
 
-	<!-- Exception 발생시 후처리용 별도작업을 위해 실행환경의 DefaultTraceHandler 를 활용하도록 설정 org.egovframe.rte.fdl.cmmn.trace.handler.DefaultTraceHandler -->
+	<!-- 예외 후처리 : Trace 핸들러 -->
 	<bean id="defaultTraceHandler" class="egovframework.com.cmm.EgovComTraceHandler" />
 	
-	<!-- For Pagination Tag 설정-->
+	<!-- 페이징 태그 렌더러 -->
 	<bean id="imageRenderer" class="egovframework.com.cmm.ImagePaginationRenderer"/>
 	<bean id="renewRenderer" class="egovframework.com.cmm.RenewPaginationRenderer"/>
 	<bean id="paginationManager" class="org.egovframe.rte.ptl.mvc.tags.ui.pagination.DefaultPaginationManager">
@@ -80,7 +80,7 @@
 		</property>
 	</bean>
 
-	<!-- MULTIPART RESOLVERS : Spring Framework 6.2.8 기반 파일 업로드 설정 -->
+	<!-- 멀티파트(파일 업로드) 리졸버 -->
 	<bean id="local.MultiCommonsMultipartResolver" class="egovframework.com.cmm.web.EgovMultipartResolver" />
 
 </beans>

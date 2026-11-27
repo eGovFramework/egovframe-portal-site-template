@@ -54,5 +54,9 @@ public class AuthorManage extends ComDefaultVO {
 	 */
 	@EgovNullCheck
 	private String authorNm;
+	/**
+	 * 최초등록자ID
+	 */
+	private String frstRegisterId;
 
 }

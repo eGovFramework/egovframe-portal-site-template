@@ -75,5 +75,14 @@ public class EgovAuthorGroupServiceImpl  extends EgovAbstractServiceImpl impleme
 	public int selectAuthorGroupListTotCnt(AuthorGroupVO authorGroupVO) {
 		return authorGroupDAO.selectAuthorGroupListTotCnt(authorGroupVO);
     }
+
+	/**
+	 * 권한 할당 정보의 등록자ID를 조회한다.
+	 * @param authorGroup AuthorGroup
+	 * @return String
+	 */
+	public String selectAuthorGroupFrstRegisterId(AuthorGroup authorGroup) {
+		return authorGroupDAO.selectAuthorGroupFrstRegisterId(authorGroup);
+	}
 	
 }

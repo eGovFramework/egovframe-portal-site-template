@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
+import egovframework.com.cmm.util.EgovOwnerAuthUtil;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.let.sec.ram.service.AuthorManage;
 import egovframework.let.sec.ram.service.AuthorManageVO;
@@ -99,7 +100,10 @@ public class EgovAuthorManageController {
 
 		authorManageVO.setAuthorCode(authorCode);
 
-		model.addAttribute("authorManage", egovAuthorManageService.selectAuthor(authorManageVO));
+		AuthorManageVO authorManage = egovAuthorManageService.selectAuthor(authorManageVO);
+		model.addAttribute("authorManage", authorManage);
+		// 저장/삭제 버튼은 등록자 본인에게만 노출
+		model.addAttribute("ownerAt", EgovOwnerAuthUtil.ownerAt(authorManage == null ? null : authorManage.getFrstRegisterId()));
 		model.addAttribute("message", egovMessageSource.getMessage("success.common.select"));
 		return "/sec/ram/EgovAuthorUpdate";
 	}
@@ -125,6 +129,7 @@ public class EgovAuthorManageController {
 		if (bindingResult.hasErrors()) {
 			return "/sec/ram/EgovAuthorInsert";
 		} else {
+			authorManage.setFrstRegisterId(EgovOwnerAuthUtil.getLoginUniqId());
 			egovAuthorManageService.insertAuthor(authorManage);
 			status.setComplete();
 			model.addAttribute("message", egovMessageSource.getMessage("success.common.insert"));
@@ -140,6 +145,10 @@ public class EgovAuthorManageController {
 	 */
 	@RequestMapping(value = "/sec/ram/EgovAuthorUpdate.do", method = RequestMethod.POST)
 	public String updateAuthor(@Valid @ModelAttribute("authorManage") AuthorManage authorManage, BindingResult bindingResult, SessionStatus status, Model model) {
+
+		// 등록자 본인만 수정 가능
+		assertAuthorOwner(authorManage.getAuthorCode());
+		model.addAttribute("ownerAt", "Y");
 
 		if (bindingResult.hasErrors()) {
 			return "/sec/ram/EgovAuthorUpdate";
@@ -159,6 +168,9 @@ public class EgovAuthorManageController {
 	@RequestMapping(value = "/sec/ram/EgovAuthorDelete.do", method = RequestMethod.POST)
 	public String deleteAuthor(@ModelAttribute("authorManage") AuthorManage authorManage, SessionStatus status, Model model) {
 
+		// 등록자 본인만 삭제 가능
+		assertAuthorOwner(authorManage.getAuthorCode());
+
 		egovAuthorManageService.deleteAuthor(authorManage);
 		status.setComplete();
 		model.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
@@ -175,6 +187,10 @@ public class EgovAuthorManageController {
 	public String deleteAuthorList(@RequestParam("authorCodes") String authorCodes, @ModelAttribute("authorManage") AuthorManage authorManage, SessionStatus status, Model model) {
 
 		String[] strAuthorCodes = authorCodes.split(";");
+		// 등록자 본인이 아닌 권한이 포함되어 있으면 삭제하지 않음
+		for (int i = 0; i < strAuthorCodes.length; i++) {
+			assertAuthorOwner(strAuthorCodes[i]);
+		}
 		for (int i = 0; i < strAuthorCodes.length; i++) {
 			authorManage.setAuthorCode(strAuthorCodes[i]);
 			egovAuthorManageService.deleteAuthor(authorManage);
@@ -191,5 +207,16 @@ public class EgovAuthorManageController {
 	@RequestMapping("/sec/ram/accessDenied.do")
 	public String accessDenied() {
 		return "sec/accessDenied";
+	}
+
+	/**
+	 * 권한의 등록자 본인 여부를 검증한다.
+	 * @param authorCode String
+	 */
+	private void assertAuthorOwner(String authorCode) {
+		AuthorManageVO searchVO = new AuthorManageVO();
+		searchVO.setAuthorCode(authorCode);
+		AuthorManageVO existing = egovAuthorManageService.selectAuthor(searchVO);
+		EgovOwnerAuthUtil.assertOwner(existing == null ? null : existing.getFrstRegisterId());
 	}
 }

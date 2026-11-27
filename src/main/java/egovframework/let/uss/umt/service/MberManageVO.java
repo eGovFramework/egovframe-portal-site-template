@@ -42,6 +42,11 @@ public class MberManageVO extends UserDefaultVO {
 	private String uniqId = "";
 
 	/**
+	 * 최초등록자 고유아이디 (회원관리에서 등록한 경우 등록한 관리자, 회원가입한 경우 본인)
+	 */
+	private String frstRegisterId;
+
+	/**
 	 * 사용자 유형
 	 */
 	private String userTy;
@@ -152,12 +157,8 @@ public class MberManageVO extends UserDefaultVO {
 
 	/**
 	 * 이메일주소
-	 */	// 26.08.20 조치 : EgovEmailCheck 는 빈 값을 형식오류로 거부한다.
-	// 가입폼·수정폼 어디에도 이메일은 필수 표시가 없는데 서버만 필수처럼 동작해,
-	// 이메일이 비어 있는 회원(시드의 admin·user1 포함)은 수정 자체가 불가했다.
-	// jakarta 의 @Email 은 null·빈 문자열을 유효로 보므로 형식 검증은 유지하면서 선택 항목이 된다.
-	// 26.08.24 조치 : 이 필드만 @Size 가 없어 51자 이상 입력 시 필드 오류가 아니라
-	// DB 에서 실패했다(MBER_EMAIL_ADRES varchar(50) → Data too long / ORA-12899 → 500)
+	 */
+	// 선택 항목 : 빈 값 허용(@Email), 컬럼 길이 varchar(50)
 	@Email
 	@Size(max=50)
 	private String mberEmailAdres;

@@ -173,12 +173,18 @@ function fn_egov_delete_QustnrTmplatManage(){
                                     <div class="left_col btn3">
                                         <form name="formUpdt" action="<c:url value='/uss/olp/qtm/EgovQustnrTmplatManageModify.do'/>" method="post" style="display: inline;">
                                         <c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
+                                        	<%-- 등록자 본인에게만 노출 --%>
+                                        	<c:if test="${ownerAt == 'Y'}">
                                         	<a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_modify_QustnrTmplatManage(); return false;"><spring:message code="button.update" /></a><!-- 수정 -->
+                                        	</c:if>
                                         	<input name="qestnrTmplatId" type="hidden" value="<c:out value='${resultList[0].qestnrTmplatId}'/>" />
                                        	</form>
                                         <form name="formDelete" action="<c:url value='/uss/olp/qtm/EgovQustnrTmplatManageDetail.do'/>" method="post" style="display: inline; margin-left: 10px;">
                                         <c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
+                                        	<%-- 등록자 본인에게만 노출 --%>
+                                        	<c:if test="${ownerAt == 'Y'}">
                                         	<a href="" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_QustnrTmplatManage(); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
+                                        	</c:if>
                                         	<input name="qestnrTmplatId" type="hidden" value="<c:out value='${resultList[0].qestnrTmplatId}'/>" />
                                         	<input name="cmd" type="hidden" value="del">
                                         </form>

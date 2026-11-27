@@ -9,7 +9,7 @@
                      fileName="${sys:catalina.base:-./logs}/logs/app.log"
                      filePattern="${sys:catalina.base:-./logs}/logs/app-%d{yyyy-MM-dd}-%i.log.gz">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%t] %logger{36} - %msg%n" />
-            <!-- JSON 형식이 필요한 경우 아래 JsonLayout을 활성화하고 PatternLayout을 제거하세요.
+            <!-- JSON 로그 필요 시 PatternLayout 대신 사용
             <JsonLayout compact="true" eventEol="true" includeTimeMillis="true" />
             -->
             <Policies>
@@ -32,7 +32,7 @@
             <AppenderRef ref="console" />
             <AppenderRef ref="rollingFile" />
         </Logger>
-          <!-- log SQL with timing information, post execution -->
+          <!-- SQL 실행 시간 로그 -->
         <Logger name="jdbc.sqltiming" level="INFO" additivity="false">
             <AppenderRef ref="console" />
             <AppenderRef ref="rollingFile" />

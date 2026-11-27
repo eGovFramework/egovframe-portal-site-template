@@ -64,15 +64,15 @@
 
 	<select id="selectQustnrTmplatManageDetail" parameterType="egovframework.let.uss.olp.qtm.service.QustnrTmplatManageVO" resultType="egovMap">
 		SELECT
-			QUSTNR_TMPLAT_ID			qestnrTmplatId,
-			QUSTNR_TMPLAT_TY			qestnrTmplatTy,
+			QUSTNR_TMPLAT_ID			"qestnrTmplatId",
+			QUSTNR_TMPLAT_TY			"qestnrTmplatTy",
 			TO_CHAR(FRST_REGIST_PNTTM, 'YYYY-MM-DD') as FRST_REGIST_PNTTM,
 			FRST_REGISTER_ID,
 			TO_CHAR(LAST_UPDT_PNTTM, 'YYYY-MM-DD') as LAST_UPDT_PNTTM,
 			LAST_UPDUSR_ID,
-			QUSTNR_TMPLAT_IMAGE_INFO  	qestnrTmplatImagepathnm,
-			QUSTNR_TMPLAT_DC			qestnrTmplatCn,
-			QUSTNR_TMPLAT_PATH_NM		qestnrTmplatCours
+			QUSTNR_TMPLAT_IMAGE_INFO  	"qestnrTmplatImagepathnm",
+			QUSTNR_TMPLAT_DC			"qestnrTmplatCn",
+			QUSTNR_TMPLAT_PATH_NM		"qestnrTmplatCours"
 		FROM LETTNQUSTNRTMPLAT
 		WHERE 1=1
 		AND QUSTNR_TMPLAT_ID = #{qestnrTmplatId}
@@ -81,16 +81,16 @@
 	<select id="selectQustnrTmplatManage" parameterType="comDefaultVO" resultType="egovMap">
 	 
 		SELECT
-			A.QUSTNR_TMPLAT_ID			qestnrTmplatId,
-			A.QUSTNR_TMPLAT_TY			qestnrTmplatTy,
+			A.QUSTNR_TMPLAT_ID			"qestnrTmplatId",
+			A.QUSTNR_TMPLAT_TY			"qestnrTmplatTy",
 			TO_CHAR(A.FRST_REGIST_PNTTM, 'YYYY-MM-DD') as FRST_REGIST_PNTTM,
 			(SELECT USER_NM FROM COMVNUSERMASTER WHERE ESNTL_ID = A.FRST_REGISTER_ID) FRST_REGISTER_NM,
 			A.FRST_REGISTER_ID,
 			TO_CHAR(A.LAST_UPDT_PNTTM, 'YYYY-MM-DD') as LAST_UPDT_PNTTM,
 			A.LAST_UPDUSR_ID,
-			A.QUSTNR_TMPLAT_IMAGE_INFO	qestnrTmplatImagepathnm,
-			A.QUSTNR_TMPLAT_DC			qestnrTmplatCn,
-			A.QUSTNR_TMPLAT_PATH_NM		qestnrTmplatCours
+			A.QUSTNR_TMPLAT_IMAGE_INFO	"qestnrTmplatImagepathnm",
+			A.QUSTNR_TMPLAT_DC			"qestnrTmplatCn",
+			A.QUSTNR_TMPLAT_PATH_NM		"qestnrTmplatCours"
 			FROM LETTNQUSTNRTMPLAT A
 		WHERE 1=1
 	 

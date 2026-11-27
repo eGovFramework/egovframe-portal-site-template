@@ -6,7 +6,7 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-	<!-- /EgovPageLink.do 화이트 리스트 처리 (대상목록) -->
+	<!-- /EgovPageLink.do 허용 화면 목록 -->
 	<util:list id="egovPageLinkWhitelist" value-type="java.lang.String">
 		<value>main/sample_menu/EgovServiceIssuance</value>
 		<value>main/sample_menu/EgovServiceManage</value>

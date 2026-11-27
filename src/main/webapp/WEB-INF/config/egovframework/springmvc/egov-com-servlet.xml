@@ -16,18 +16,8 @@
 		<context:exclude-filter type="regex" expression="egovframework\.test\..*"/>
 	</context:component-scan>
 
-	<!-- 서블릿컨네이너상의 exception에 대한 오류 페이지를 연결하는 mvc 설정 -->
-	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-	        <!-- <property name="defaultErrorView" value="cmm/error/egovError"/>
-	        <property name="exceptionMappings">
-	            <props>
-	                <prop key="org.springframework.dao.DataAccessException">cmm/error/dataAccessFailure</prop>
-	                <prop key="org.springframework.transaction.TransactionException">cmm/error/transactionFailure</prop>
-	                <prop key="org.egovframe.rte.fdl.cmmn.exception.EgovBizException">cmm/error/egovError</prop>
-	                <prop key="org.springframework.security.AccessDeniedException">cmm/error/accessDenied</prop>
-	            </props>
-	        </property> -->
-    	</bean>
+	<!-- 예외 → 오류 화면 매핑 (web.xml error-page 와 함께 사용) -->
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"/>
 
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="webBindingInitializer">
@@ -38,24 +28,11 @@
 	<!-- form:form CSRF 자동 필드 (RequestMappingHandlerAdapter 속성 대신 빈 등록) -->
 	<bean id="requestDataValueProcessor" class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor"/>
 
-	<!-- 화면처리용 JSP 파일명의  prefix, suffix 처리에 대한 mvc 설정  -->
+	<!-- JSP 뷰 리졸버 -->
 	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="1"
 		p:viewClass="org.springframework.web.servlet.view.JstlView"
 		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
 
-	<!-- 로그인 체크가 필요한 URL과 로그인 여부를 체크해준다 -->
-	<!--
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/cop/com/*.do"/>
-			<mvc:mapping path="/cop/bbs/*Master*.do"/>
-			<mvc:mapping path="/uat/uia/*.do"/>
-			<mvc:exclude-mapping path="/uat/uia/actionLogin.do"/>
-			<mvc:exclude-mapping path="/uat/uia/egovLoginUsr.do"/>
-			<bean class="egovframework.com.cmm.interceptor.AuthenticInterceptor" />
-		</mvc:interceptor>
-	</mvc:interceptors>
-	-->
 
 	<mvc:annotation-driven/>
 

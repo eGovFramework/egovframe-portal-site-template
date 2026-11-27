@@ -173,8 +173,6 @@ public class EgovCcmZipManageController {
 		
 			file = entry.getValue();
 			if (!"".equals(file.getOriginalFilename())) {
-		    	//zipManageService.deleteAllZip();
-				//excelZipService.uploadExcel("ZipManageDAO.insertExcelZip", file.getInputStream(), 2);
 				try {
 					zipManageService.insertExcelZip(file.getInputStream());
 				} catch (IOException e) {
